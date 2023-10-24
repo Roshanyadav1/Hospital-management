@@ -1,7 +1,7 @@
-### Hospital Management API ->
+# Hospital Management API ->
 This is a hospital management API based on Django REST Framework. This API features three types of users - Doctor, Patient and Admin . For authenticating user, Django REST Framework Simple Jwt authentication is used. Installation guide, API endpoints and sample request/response are given below.
 
-### Endpoints ->
+# Endpoints ->
 
 # Doctor ->
 * api/doctor/registration/
