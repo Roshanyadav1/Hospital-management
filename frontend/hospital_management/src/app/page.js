@@ -1,13 +1,26 @@
-import Header from './profile/user/header';
-import styles from './page.module.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {useRouter} from 'next/navigation'
-export default function Home() {
-  return (
-    <main >
-      <h1>Routing in Next Js</h1>
-        <Header/>
-    </main>
+"use client";
+import { Button, TextField } from "@mui/material";
+import Switch from "@mui/material/Switch";
+import { useRouter } from "next/navigation";
 
+export default function Home() {
+
+  const router = useRouter();
+
+  const navigateToDashboard = () => {
+    router.push("/dashboard");
+  }
+
+  return (
+    <main>
+      <h1>Material ui and Redux !</h1>
+      <Switch />
+      <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+      <TextField id="filled-basic" label="Filled" variant="filled" />
+      <TextField id="standard-basic" label="Standard" variant="standard" />
+
+      <Button onClick={navigateToDashboard} variant="contained">Go to dashboard</Button>
+    </main>
   )
 }
+
