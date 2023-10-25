@@ -1,10 +1,7 @@
-import MiniDrawer from "@/components/sidebar";
-
 export default function Home() {
   return (
     <main>
-      <MiniDrawer />
-    
+      <h1>this is home</h1>
     </main>
   )
 }
