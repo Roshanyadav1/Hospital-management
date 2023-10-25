@@ -1,12 +1,12 @@
 
-
-
 const AdminPage=()=> {
   return (
     <div>
-      <h1>Adminnnnnnnnnnnnnnnnnnnnnnnnnn pageeeeeeeee</h1>
+      <h1>This is admin page</h1>
     </div>
   )
 }
 
-export default page
+export default AdminPage
+
+

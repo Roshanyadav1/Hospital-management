@@ -1,11 +1,8 @@
 
-
-
-
 function AboutPage() {
   return (
     <div>
-      <h1>This is about  page</h1>
+      <h1>This is about  pagee</h1>
     </div>
   )
 }

@@ -10,5 +10,5 @@ const ProfilePage=()=> {
   )
 }
 
-export default Page
+export default ProfilePage
 

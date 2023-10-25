@@ -1,11 +1,10 @@
-
-
+import Header from "./header"
 const UserPage=()=> {
   return (
     <div>
-      <h1>Userrrrrrrrrrrrrrr pageeeeeeeee</h1>
+      <h1>This is User page</h1>
     </div>
   )
 }
 
-export default page
+export default UserPage
