@@ -55,7 +55,7 @@ class DoctorProfileView(APIView):
 
         if id is not None:
             if Doctor.objects.all().filter(id=id).exists():
-                doctor = Doctor.objects.get(id=id)
+                doctor = Doctor.objects.get(pk=id)
                 serializer = DoctorSerializer(doctor)
                 return Response(serializer.data)
             return Response({'msg': 'Doctor Is Not Registered'}, status = status.HTTP_400_BAD_REQUEST)
