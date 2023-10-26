@@ -1,0 +1,29 @@
+***************************Create firstly environment*************************
+python -m venv <env-name>
+
+
+***********************Activate env********************* 
+navigate on env then Script\Activate
+
+
+**************************install django inside env***************************
+pip install django
+
+***********************install django rest frameword inside env***********************
+pip install djangorestframeowrk
+
+
+*********************  start project  ************************** 
+python -m django startproject <project-name>
+
+
+********************now navigate to manage.py*********************
+
+
+*******************Create a start app************************************
+python manage.py startapp <app-name>
+
+
+
+
+
