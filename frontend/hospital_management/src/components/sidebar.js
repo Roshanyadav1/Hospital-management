@@ -24,7 +24,16 @@ import { FaHistory } from 'react-icons/fa';
 import { FaHome } from 'react-icons/fa';
 import { FcAbout } from 'react-icons/fc';
 import { FaHospital } from 'react-icons/fa6';
+import { FaBloggerB } from 'react-icons/fa';
+import { GrUserWorker } from 'react-icons/Gr';
+import { BiSolidHelpCircle } from 'react-icons/bi';
 
+let Icons1 =[
+    <FaHome /> , <FcAbout /> , <FaBloggerB/> ,  <GrUserWorker />
+]
+let Icons2 =[
+    <SiGoogleanalytics /> , <FaHistory /> , <BiSolidHelpCircle/> 
+]
 
 const drawerWidth = 240;
 
@@ -105,10 +114,12 @@ function MiniDrawer() {
         setOpen(false);
     };
 
+
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open} sx={{backgroundColor:' #18694d',color:'#c0b598'}}>
+            <AppBar position="fixed" open={open} elevation={8} sx={{backgroundColor:' #18694d',color:'#c0b598'}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -153,7 +164,8 @@ function MiniDrawer() {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    {index % 2 === 0 ? <FaHome /> : <FcAbout />}
+                                    {Icons1[index]}
+                                  
                                 </ListItemIcon>
                                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
@@ -178,7 +190,7 @@ function MiniDrawer() {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    {index % 2 == 0 ? <SiGoogleanalytics /> : <FaHistory />  }
+                                    {Icons2[index]}
                                 </ListItemIcon>
                                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
