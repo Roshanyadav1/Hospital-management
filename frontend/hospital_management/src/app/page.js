@@ -6,7 +6,13 @@ import { useRouter } from "next/navigation";
 // import MediaControlCard from "@/app/profile/user/cards/page";
 // import BasicModal from "@/app/profile/user/modal/page";
 import AboutPage from "@/app/about/page";
+import { useGetPokemonByNameQuery } from "@/services/Hospital";
 export default function Home() {
+
+  const { data, error, isLoading } = useGetPokemonByNameQuery('bulbasaur')
+
+  console.log(data , isLoading , error)
+
 
   // const router = useRouter();
 
@@ -24,9 +30,9 @@ export default function Home() {
 
       <Button onClick={navigateToDashboard} variant="contained">Go to dashboard</Button> */}
       {/* <ResponsiveAppBar/> */}
-     {/* <MediaControlCard/> */}
-    {/* <BasicModal/> */}
-    <AboutPage/>
+      {/* <MediaControlCard/> */}
+      {/* <BasicModal/> */}
+      <AboutPage />
     </main>
   )
 }
