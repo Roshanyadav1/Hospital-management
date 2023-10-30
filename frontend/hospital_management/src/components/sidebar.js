@@ -17,19 +17,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { SiGoogleanalytics } from 'react-icons/si';
 import { FaHistory } from 'react-icons/fa';
 import { FaHome } from 'react-icons/fa';
 import { FcAbout } from 'react-icons/fc';
 import { FaHospital } from 'react-icons/fa6';
 import { FaBloggerB } from 'react-icons/fa';
-import { GrUserWorker } from 'react-icons/Gr';
 import { BiSolidHelpCircle } from 'react-icons/bi';
 
 let Icons1 =[
-    <FaHome /> , <FcAbout /> , <FaBloggerB/> ,  <GrUserWorker />
+    <FaHome /> , <FcAbout /> , <FaBloggerB/> ,  <FaHistory />
 ]
 let Icons2 =[
     <SiGoogleanalytics /> , <FaHistory /> , <BiSolidHelpCircle/> 
