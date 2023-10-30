@@ -146,7 +146,7 @@ function MiniDrawer() {
                 <Divider />
                 <List>
                     {['Home', 'About', 'Blog', 'Career'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
@@ -172,7 +172,7 @@ function MiniDrawer() {
                 <Divider />
                 <List>
                     {['Analytics','History' ,'Help'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
