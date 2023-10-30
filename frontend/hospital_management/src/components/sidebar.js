@@ -25,11 +25,11 @@ import { FaHospital } from 'react-icons/fa6';
 import { FaBloggerB } from 'react-icons/fa';
 import { BiSolidHelpCircle } from 'react-icons/bi';
 
-let Icons1 =[
-    <FaHome /> , <FcAbout /> , <FaBloggerB/> ,  <FaHistory />
+let Icons1 = [
+    <FaHome />, <FcAbout />, <FaBloggerB />, <FaHistory />
 ]
-let Icons2 =[
-    <SiGoogleanalytics /> , <FaHistory /> , <BiSolidHelpCircle/> 
+let Icons2 = [
+    <SiGoogleanalytics />, <FaHistory />, <BiSolidHelpCircle />
 ]
 
 const drawerWidth = 240;
@@ -99,7 +99,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-function MiniDrawer() {
+function Sidebar() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -116,7 +116,7 @@ function MiniDrawer() {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open} elevation={8} sx={{backgroundColor:' #18694d',color:'#c0b598'}}>
+            <AppBar position="fixed" open={open} elevation={8} sx={{ backgroundColor: ' #18694d', color: '#c0b598' }}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -131,9 +131,9 @@ function MiniDrawer() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Vedantu Hospitals 
+                        Vedantu Hospitals
                         <span> </span>
-                        <FaHospital  />
+                        <FaHospital />
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -162,7 +162,7 @@ function MiniDrawer() {
                                     }}
                                 >
                                     {Icons1[index]}
-                                  
+
                                 </ListItemIcon>
                                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
@@ -171,7 +171,7 @@ function MiniDrawer() {
                 </List>
                 <Divider />
                 <List>
-                    {['Analytics','History' ,'Help'].map((text, index) => (
+                    {['Analytics', 'History', 'Help'].map((text, index) => (
                         <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
@@ -197,10 +197,10 @@ function MiniDrawer() {
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
-                
+
             </Box>
         </Box>
     );
 }
 
-export default MiniDrawer
+export default Sidebar
