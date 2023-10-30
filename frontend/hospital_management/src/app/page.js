@@ -1,23 +1,18 @@
 "use client";
-import { Button, TextField } from "@mui/material";
-import Switch from "@mui/material/Switch";
-import { useRouter } from "next/navigation";
-import AboutPage from "@/app/about/page";
-import { useGetPokemonByNameQuery } from "@/services/Hospital";
-export default function Home() {
-
-  // const { data, error, isLoading } = useGetPokemonByNameQuery('bulbasaur')
-  // console.log(data , isLoading , error)
-
-
+import ColorInversionFooter from "@/components/Footer";
+import MiniDrawer from '@/components/Sidebar';
+import DrawerAppBar from '@/components/Navbar'; 
+import MargeUi from '@/components/MargeUi'
+ function Home() {
   return (
     <main>
-      {/* <ResponsiveAppBar/>
-      <MediaControlCard/>
-      <BasicModal/> */}
-      <AboutPage />
+      {/* <DrawerAppBar /> */}
+       {/* <MiniDrawer/> */}
+      <ColorInversionFooter/>
+      {/* <MargeUi/> */}
     </main>
   )
-}
+};
+export default Home;
 
 
