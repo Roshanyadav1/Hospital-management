@@ -10,9 +10,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-    <head>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Slab:wght@500&display=swap" rel="stylesheet"/>
-    </head>
       <CustomProvider>
         <body className={inter.className}>{children}</body>
       </CustomProvider>
