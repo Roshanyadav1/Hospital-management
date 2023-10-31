@@ -36,6 +36,7 @@ let Icons2 =[
 ]
 
 const drawerWidth = 240;
+
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
