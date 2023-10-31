@@ -6,7 +6,7 @@ import DrawerAppBar from '@/components/Navbar';
 
 function MargeUi() {
   return (
-    <div>
+    <div >
       
     </div>
   )
