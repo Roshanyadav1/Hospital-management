@@ -12,6 +12,7 @@ export const theme = createTheme(themeOptions);
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+    
       <CustomProvider>
         <ThemeProvider theme={theme}>
           <body className={inter.className}>{children}</body>
@@ -19,9 +20,4 @@ export default function RootLayout({ children }) {
       </CustomProvider>
     </html>
   )
-<<<<<<< HEAD:frontend/hospital_management/src/app/layout.jsx
 }
-=======
-}
-
->>>>>>> d4aee6ad848ea92f6848f970def21f526f3bde4b:frontend/hospital_management/src/app/layout.js
