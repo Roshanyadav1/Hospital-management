@@ -28,8 +28,6 @@ import { FaBloggerB } from 'react-icons/fa';
 import { GrUserWorker } from 'react-icons/Gr';
 import { BiSolidHelpCircle } from 'react-icons/bi';
 
-
-
 let Icons1 =[
     <FaHome /> , <FcAbout /> , <FaBloggerB/> ,  <GrUserWorker />
 ]
@@ -119,10 +117,9 @@ function MiniDrawer() {
 
 
     return (
-        
-     <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open} elevation={8} sx={{backgroundColor:'#ffff',color:'#13293D', fontWeight:'700'}}>
+            <AppBar position="fixed" open={open} elevation={8} sx={{backgroundColor:' #18694d',color:'#c0b598'}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -137,7 +134,7 @@ function MiniDrawer() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        VEDANTU HOSPITAL
+                        Vedantu Hospitals 
                         <span> </span>
                         <FaHospital  />
                     </Typography>
@@ -152,13 +149,12 @@ function MiniDrawer() {
                 <Divider />
                 <List>
                     {['Home', 'About', 'Blog', 'Career'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block', background:'#fff',color:'13293d' }}>
+                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    background:'#13293D',color:'#fff'
                                 }}
                             >
                                 <ListItemIcon
@@ -166,7 +162,6 @@ function MiniDrawer() {
                                         minWidth: 0,
                                         mr: open ? 3 : 'auto',
                                         justifyContent: 'center',
-                                        color:'white'
                                     }}
                                 >
                                     {Icons1[index]}
