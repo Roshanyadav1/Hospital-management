@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const theme = createTheme(themeOptions);
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
