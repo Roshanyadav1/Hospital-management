@@ -152,13 +152,19 @@ function MiniDrawer() {
                 <Divider />
                 <List>
                     {['Home', 'About', 'Blog', 'Career'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block', background:'#fff',color:'13293d' }}>
+                        <ListItem key={text} disablePadding sx={{ display: 'block', 
+                        // background:'#fff',color:'#13293d'
+                         }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    background:'#13293D',color:'#fff'
+                                    background:'#13293D',color:'#fff',
+                                    '& MuiButtonBase-root-MuiListItemButton-root:hover' :{
+                                        backgroundColor:'red'
+                                    }
+                                    
                                 }}
                             >
                                 <ListItemIcon
