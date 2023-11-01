@@ -230,6 +230,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import './Navbar.css';
 
 const pages = ["Home", "About", "contact"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -257,7 +258,8 @@ function ResponsiveAppBar() {
     <AppBar
       sx={{
         backgroundColor:'#FFFFFF',
-        color:'#13293D'
+        color:'#13293D',
+        margin:'0'
       }}
       position="static"
       className="appbar"
@@ -372,14 +374,18 @@ function ResponsiveAppBar() {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
+           >
+               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+               ))}
             </Menu>
           </Box>
+      
+
+
+        
         </Toolbar>
       </Container>
     </AppBar>

@@ -15,6 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <CustomProvider>
         <ThemeProvider theme={theme}>
+
           <body className={inter.className}>{children}</body>
         </ThemeProvider>
       </CustomProvider>
