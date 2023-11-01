@@ -13,7 +13,7 @@ function Form() {
     function handleData(e){
         setInputData({...inputData, [e.target.name]:e.target.value})
         console.log(inputData)
-    }
+    }``
     function handleSubmit(e){
         e.preventDefault();
         if(!inputData.name || !inputData.email || !inputData.password ){
