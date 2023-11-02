@@ -1,43 +1,75 @@
-from django.shortcuts import render
+from hospital.models import Hospital
+from hospital.serializers import HospitalSerializer
 from rest_framework.response import Response
-from .serializers import HospitalSerializer
 from rest_framework import status
-from rest_framework.views import APIView
-from .models import Hospital
+from rest_framework import viewsets
 
-class HospitalRegisterView(APIView):
-   def post(self, request,format=None):
-      serializer = HospitalSerializer(data=request.data)
-      serializer.is_valid(raise_exception=True)
-      serializer.save()
-      return Response({"msg":"data inserted"}, status=status.HTTP_201_CREATED)
 
-class HospitalInformationView(APIView):
-   def get(self, request,uid = None,format=None):
-      iid = uid
-      if iid is not None :
-         hospital = hospital.objects.get(uid = iid)
-         serializer = HospitalSerializer(hospital)
-         return Response(serializer.data)
-      hospital = Hospital.objects.all()
-      serializer = HospitalSerializer(hospital,many=True)
-      return Response(serializer.data) 
-      
+class HospitalViewSet(viewsets.ModelViewSet):
+    queryset = Hospital.objects.all()
+    serializer_class = HospitalSerializer
 
-class UpdateInformationView(APIView):
-   def patch(self, request,uid,format=None):
-      iid = uid
-      hospital=Hospital.objects.get(uid = uid)
-      serializer = HospitalSerializer(hospital,data=request.data,partial=True)
-      if serializer.is_valid():
-         serializer.save() 
-         return Response({'msg':"Update Information"})
-      return Response(serializer.errors)
-   
+    def list(self, request, *args, **kwargs):
+        data = list(Hospital.objects.all().values())
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'message': "Hospital Data Retrieved Successfully",
+                'data': data
+            },
+        )
 
-class DeleteInformationView(APIView):
-   def delete(self, request,uid,format=None):
-      iid = uid
-      hospital=Hospital.objects.get(uid = uid)
-      hospital.delete()
-      return Response({'msg':"Delete Information"})
+    def retrieve(self, request, *args, **kwargs):
+            data = list(Hospital.objects.filter(hospital_id = kwargs['pk']).values())
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': "Hospital Data Retrieved Successfully",
+                    'data': data
+                },
+            )
+    
+    def create(self, request, *args, **kwargs):
+        product_serializer_data = HospitalSerializer(data = request.data)
+        product_serializer_data.is_valid(raise_exception = True)
+        product_serializer_data.save()
+        return Response(
+            {
+                'status': status.HTTP_201_CREATED,
+                'message': 'Hospital Added Successfully'
+            },
+        )
+    
+    def destroy(self, request, *args, **kwargs):
+        product_data = Hospital.objects.filter(hospital_id = kwargs['pk'])
+        if product_data:
+            product_data.delete()
+            status_code = status.HTTP_201_CREATED
+            return Response(
+            {
+                'status': status.HTTP_201_CREATED,
+                'message': 'Hospital Deleted Successfully'
+            },
+        )
+        else:
+            status_code = status.HTTP_400_BAD_REQUEST
+            return Response(
+            {
+                'status': status.HTTP_201_CREATED,
+                'message': 'Hospital Data Not Found'
+            },
+        )
+
+    def update(self, request, *args, **kwargs):
+        product_details = Hospital.objects.get(hospital_id = kwargs['pk'])
+        product_serializer_data = HospitalSerializer(product_details, data=request.data, partial=True)
+        product_serializer_data.is_valid(raise_exception = True)
+        product_serializer_data.save()
+        status_code = status.HTTP_201_CREATED
+        return Response(
+            {
+                'status': status.HTTP_201_CREATED,
+                'message': 'Hospital Data Updated Successfully'
+            },
+        )
+        
