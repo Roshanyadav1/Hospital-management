@@ -8,8 +8,8 @@ from email import encoders
 
 smtp_server = "smtp.gmail.com"
 smtp_port = 587  
-smtp_username = "agrkeshav04@gmail.com"
-smtp_password = "iqcbexiduucluazm"
+smtp_username = "achieversgrand@gmail.com"
+smtp_password = "Code@123"
 
 def send_email_to_client(data):
     cal = Calendar()
@@ -24,7 +24,7 @@ def send_email_to_client(data):
 
     ics_content = cal.to_ical().decode('utf-8')
 
-    from_email = "agrkeshav04@gmail.com"
+    from_email = "achieversgrand@gmail.com"
     to_email = "keshava.bca2022@ssism.org"
     subject = "Appointment Booking Confirmation"
     body = "Test Email Using Django Rest App"
