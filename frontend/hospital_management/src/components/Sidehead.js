@@ -17,26 +17,22 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 import { SiGoogleanalytics } from 'react-icons/si';
 import { FaHistory } from 'react-icons/fa';
 import { FaHome } from 'react-icons/fa';
 import { FcAbout } from 'react-icons/fc';
 import { FaHospital } from 'react-icons/fa6';
 import { FaBloggerB } from 'react-icons/fa';
+import { GrUserWorker } from 'react-icons/Gr';
 import { BiSolidHelpCircle } from 'react-icons/bi';
-
-<<<<<<< HEAD
-let Icons1 = [
-    <FaHome />, <FcAbout />, <FaBloggerB />, <FaHistory />
-=======
-
 
 let Icons1 =[
     <FaHome /> , <FcAbout /> , <FaBloggerB/> ,  <GrUserWorker />
->>>>>>> 250c821e99b372e461ffbd925421ced3b43167f5
 ]
-let Icons2 = [
-    <SiGoogleanalytics />, <FaHistory />, <BiSolidHelpCircle />
+let Icons2 =[
+    <SiGoogleanalytics /> , <FaHistory /> , <BiSolidHelpCircle/> 
 ]
 
 const drawerWidth = 240;
@@ -106,7 +102,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-function Sidebar() {
+function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -121,14 +117,9 @@ function Sidebar() {
 
 
     return (
-        
-     <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-<<<<<<< HEAD
-            <AppBar position="fixed" open={open} elevation={8} sx={{ backgroundColor: ' #18694d', color: '#c0b598' }}>
-=======
-            <AppBar position="fixed" open={open} elevation={8} sx={{backgroundColor:'#ffff',color:'#13293D', fontWeight:'700'}}>
->>>>>>> 250c821e99b372e461ffbd925421ced3b43167f5
+            <AppBar position="fixed" open={open} elevation={8} sx={{backgroundColor:' #18694d',color:'#c0b598'}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -143,13 +134,9 @@ function Sidebar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-<<<<<<< HEAD
-                        Vedantu Hospitals
-=======
-                        VEDANTU HOSPITAL
->>>>>>> 250c821e99b372e461ffbd925421ced3b43167f5
+                        Vedantu Hospitals 
                         <span> </span>
-                        <FaHospital />
+                        <FaHospital  />
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -162,23 +149,12 @@ function Sidebar() {
                 <Divider />
                 <List>
                     {['Home', 'About', 'Blog', 'Career'].map((text, index) => (
-<<<<<<< HEAD
-                        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-=======
-                        <ListItem key={text} disablePadding sx={{ display: 'block', 
-                        // background:'#fff',color:'#13293d'
-                         }}>
->>>>>>> 250c821e99b372e461ffbd925421ced3b43167f5
+                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    background:'#13293D',color:'#fff',
-                                    '& MuiButtonBase-root-MuiListItemButton-root:hover' :{
-                                        backgroundColor:'red'
-                                    }
-                                    
                                 }}
                             >
                                 <ListItemIcon
@@ -186,11 +162,10 @@ function Sidebar() {
                                         minWidth: 0,
                                         mr: open ? 3 : 'auto',
                                         justifyContent: 'center',
-                                        color:'white'
                                     }}
                                 >
                                     {Icons1[index]}
-
+                                  
                                 </ListItemIcon>
                                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
@@ -199,8 +174,8 @@ function Sidebar() {
                 </List>
                 <Divider />
                 <List>
-                    {['Analytics', 'History', 'Help'].map((text, index) => (
-                        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                    {['Analytics','History' ,'Help'].map((text, index) => (
+                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
@@ -225,10 +200,10 @@ function Sidebar() {
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
-
+                
             </Box>
         </Box>
     );
 }
 
-export default Sidebar
+export default MiniDrawer
