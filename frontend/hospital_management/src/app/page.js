@@ -1,9 +1,11 @@
 import React from 'react'
-
+// import ColorInversionFooter from '@/components/Footer'
+import Sidebar from '@/components/sidebar'
 function Home() {
   return (
     <div>
-      <h1>Hello Meghaa</h1>
+      {/* <ColorInversionFooter/> */}
+      <Sidebar/>
     </div>
   )
 }
