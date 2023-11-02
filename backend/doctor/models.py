@@ -1,13 +1,15 @@
 from django.db import models
-import uuid 
+from employee.models import Employee
+import uuid
 
-# Create your models here.
+
+# Doctor Model Class
 class Doctor(models.Model):
-    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False) 
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    specialty = models.CharField(max_length=200)
-    contact_number = models.CharField(max_length=10)
-    email = models.EmailField(max_length=100)
-    password = models.CharField(max_length=100)
-    password2 = models.CharField(max_length=100)
+    doctor_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    employee_id = models.ForeignKey(Employee, default = uuid.uuid4, on_delete=models.CASCADE)
+    # doctor_profile_picture = models.ImageField(upload_to='doctor_profile_picture/')
+    disease_specialist = models.CharField(max_length = 255)
+    doctor_type = models.CharField(max_length = 255)
+    # doctor_time_schedule = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
