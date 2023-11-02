@@ -6,6 +6,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
+
 smtp_server = "smtp.gmail.com"
 smtp_port = 587  
 smtp_username = "agrkeshav04@gmail.com"

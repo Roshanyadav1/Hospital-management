@@ -165,33 +165,22 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{asctime} {message} {lineno}',
-            'style': '{',
+        'json': {
+            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            'format': '%(levelname)s %(asctime)s %(message)s %(filename)s',
         },
     },
     'handlers': {
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+        'json_file': {
+            'level': 'INFO', 
+            'class': 'logging.FileHandler',
+            'filename': 'logs.log',
+            'formatter': 'json',
         },
-       'file': {
-           'level': 'INFO',
-           'class': 'logging.FileHandler',
-           'filename': 'logs.log',
-            'formatter': 'simple',
-       },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['console','file'],
-            'level': "INFO",
-        },
+    'root': {
+        'handlers': ['json_file'],
+        'level': 'INFO', 
     },
 }
 
