@@ -2,7 +2,6 @@ from rest_framework.response import Response
 from employee.models import Employee
 from rest_framework import viewsets
 from rest_framework import status
-from rest_framework.generics import ListAPIView
 from employee.serializers import EmployeeSerializer
 
 
@@ -74,8 +73,3 @@ class EmployeeViewSet(viewsets.ModelViewSet):
                 'message': 'Employee Data Updated Successfully'
             },
         )
-        
-class EmployeeFilter(ListAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
-    filterset_fields = ['employee_role']

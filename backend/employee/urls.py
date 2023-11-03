@@ -4,8 +4,4 @@ from employee.views import *
 
 router = DefaultRouter()
 router.register('employee', EmployeeViewSet, basename='employee')
-
-urlpatterns = [
-    path('', include(router.urls)),
-    path('employee-filter/', EmployeeFilter.as_view()),
-]
+urlPattern = router.urls
