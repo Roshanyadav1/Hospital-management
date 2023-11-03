@@ -1,13 +1,12 @@
 "use client"
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CustomProvider from '@/redux/CustomProvider'
 import { Inter } from 'next/font/google'
-import { themeOptions } from '@/styles/theme';
+import theme from '@/styles/theme';
 
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const theme = createTheme(themeOptions);
 
 
 export default function RootLayout({ children }) {

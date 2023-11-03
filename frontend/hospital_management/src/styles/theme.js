@@ -1,17 +1,42 @@
-export const themeOptions = {
+import { createTheme } from "@mui/material/styles";
+
+const colors = {
+    primary: '#13293D',
+    secondary: '#35CFF4',
+    info: '#5E71BD',
+    success: '#BD5EA0',
+    warning: '#F5A623',
+    danger: '#D0021B',
+    white: '#fff',
+    black: '#000',
+    gray: '#9B9B9B',
+}
+const theme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#a683b0',
+            main: colors.primary,
         },
         secondary: {
-            main: '#7a5ebd',
+            main: colors.secondary,
         },
         info: {
-            main: '#5e71bd',
+            main: colors.info,
         },
         success: {
-            main: '#bd5ea0',
+            main: colors.success,
         },
     },
-};
+    components: {
+        MuiDrawer: {
+            styleOverrides: {
+                paper: {
+                    backgroundColor: colors.primary,
+                    color: colors.white,
+                    
+                },
+            },
+        },
+    }
+});
+export default theme
