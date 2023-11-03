@@ -11,22 +11,13 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { SiGoogleanalytics } from "react-icons/si";
-import { FaHistory } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
-import { FcAbout } from "react-icons/fc";
-import { FaHospital } from "react-icons/fa6";
-import { FaBloggerB } from "react-icons/fa";
-import { GrUserWorker } from "react-icons/Gr";
 import { BiRadioCircle } from "react-icons/bi";
+import ResponsiveAppBar from "./Navbar";
 
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
@@ -98,54 +89,18 @@ function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const sidebarChanges = () => {
+    setOpen(!open);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        open={open}
-        elevation={8}
-        sx={{ backgroundColor: "#ffff", color: "#13293D", fontWeight: "700" }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            VEDANTU HOSPITAL
-            <span> </span>
-            <FaHospital />
-          </Typography>
-        </Toolbar>
+      <AppBar position="fixed" open={false} elevation={8}>
+        <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
+        <DrawerHeader></DrawerHeader>
         <List>
           {[
             "Home",
@@ -161,7 +116,7 @@ function MiniDrawer() {
               disablePadding
               sx={{
                 display: "block",
-                "&:hover": {
+                "&:hover": {  
                   backgroundColor: "#fff",
                   color: "#13293d",
                 },
@@ -172,7 +127,7 @@ function MiniDrawer() {
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
+                  justifyContent: open   ? "initial" : "center",
                   px: 2.5,
                   // background:'#13293D',color:'#fff',
                   // '& MuiButtonBase-root-MuiListItemButton-root:hover' :{

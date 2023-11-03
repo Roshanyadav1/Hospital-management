@@ -14,12 +14,14 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import './Navbar.css';
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import "./Navbar.css";
 
 const pages = ["Home", "About", "contact"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ sidebarChanges, open }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -41,16 +43,18 @@ function ResponsiveAppBar() {
   return (
     <AppBar
       sx={{
-        // backgroundColor:'#FFFFFF',
-        // color:'#13293D',
-        margin:'0'
+        backgroundColor: "#FFFFFF",
+        color: "#13293D",
+        margin: "0",
       }}
       position="static"
       className="appbar"
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <IconButton onClick={sidebarChanges}>
+            {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -86,7 +90,7 @@ function ResponsiveAppBar() {
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "center",
-                color:'inherit'
+                color: "inherit",
               }}
               keepMounted
               transformOrigin={{
@@ -122,9 +126,7 @@ function ResponsiveAppBar() {
               color: "inherit",
               textDecoration: "none",
             }}
-          >
-          
-          </Typography>
+          ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -158,18 +160,14 @@ function ResponsiveAppBar() {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-           >
-               {settings.map((setting) => (
+            >
+              {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-               ))}
+              ))}
             </Menu>
           </Box>
-      
-
-
-        
         </Toolbar>
       </Container>
     </AppBar>
