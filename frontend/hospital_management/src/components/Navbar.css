@@ -1,4 +1,14 @@
+*{
+    margin: 0;padding: 0;box-sizing: border-box;
+}
 
-.appbar{
-    background-color: rgb(74, 7, 9);
+*{
+font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-medium) 24px/24.17px var(--unnamed-font-family-noto-sans);
+letter-spacing: var(--unnamed-character-spacing-0);
+color: var(--unnamed-color-13293d);
+text-align: left;
+font: normal normal medium 24px/24px Noto Sans;
+letter-spacing: 0px;
+color: #13293D;
+opacity: 1;
 }
