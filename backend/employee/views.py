@@ -4,20 +4,33 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from employee.serializers import EmployeeSerializer
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.filters import SearchFilter
 
 
 # Create your views here.
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    pagination_class  = PageNumberPagination
+    filter_backends = [SearchFilter]
+    search_fields = ['employee_role']
+    # filterset_fields = ['employee_role']
+    
 
     def list(self, request, *args, **kwargs):
-        data = list(Employee.objects.all().values())
+        data = (Employee.objects.all().values())
+        filtered_data = self.filter_queryset(data)
+     
+        
+        paginated_data = self.paginate_queryset(filtered_data)
+        
+        serializer = EmployeeSerializer(paginated_data, many = True)
         return Response(
             {
                 'status': status.HTTP_200_OK,
                 'message': "Employees Data Retrieved Successfully",
-                'data': data
+                'data': serializer.data
             },
         )
 
@@ -74,8 +87,3 @@ class EmployeeViewSet(viewsets.ModelViewSet):
                 'message': 'Employee Data Updated Successfully'
             },
         )
-        
-class EmployeeFilter(ListAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
-    filterset_fields = ['employee_role']

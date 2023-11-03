@@ -7,5 +7,5 @@ router.register('employee', EmployeeViewSet, basename='employee')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('employee-filter/', EmployeeFilter.as_view()),
+    # path('employee-filter/', EmployeeFilter.as_view()),
 ]

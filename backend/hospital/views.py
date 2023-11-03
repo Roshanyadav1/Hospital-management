@@ -8,6 +8,7 @@ from rest_framework import viewsets
 class HospitalViewSet(viewsets.ModelViewSet):
     queryset = Hospital.objects.all()
     serializer_class = HospitalSerializer
+    # authentication_classes = [isA]
 
     def list(self, request, *args, **kwargs):
         data = list(Hospital.objects.all().values())
@@ -72,4 +73,5 @@ class HospitalViewSet(viewsets.ModelViewSet):
                 'message': 'Hospital Data Updated Successfully'
             },
         )
+        
         
