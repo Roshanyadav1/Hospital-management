@@ -9,7 +9,6 @@ function Auth() {
 
     return (
         <div className="App">
-
             <header className="App-header">
 
                 {

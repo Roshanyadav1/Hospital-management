@@ -5,13 +5,8 @@ import { Inter } from 'next/font/google'
 import { themeOptions } from '@/styles/theme';
 import { Auth0Provider } from '@auth0/auth0-react';
 import Auth from '@/components/auth';
-
-
 const inter = Inter({ subsets: ['latin'] })
-
 export const theme = createTheme(themeOptions);
-
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -25,7 +20,7 @@ export default function RootLayout({ children }) {
           <CustomProvider>
             <ThemeProvider theme={theme}>
               <body className={inter.className}>{children}
-              <Auth />
+              {/* <Auth /> */}
               </body>
             </ThemeProvider>
           </CustomProvider>
