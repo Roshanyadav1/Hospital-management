@@ -4,7 +4,4 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register('doctor', DoctorViewSet, basename='doctor')
-
-urlpatterns = [
-    path('', include(router.urls)),
-]
+urlPattern = router.urls
