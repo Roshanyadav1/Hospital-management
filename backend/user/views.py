@@ -69,4 +69,3 @@ class UserViewSet(viewsets.ModelViewSet):
                 'message': 'User Data Updated Successfully'
             },
         )
-        
