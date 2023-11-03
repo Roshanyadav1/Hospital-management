@@ -14,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(
             {
                 'status': status.HTTP_200_OK,
-                'message': "Appointments Data Retrieved Successfully",
+                'message': "User Data Retrieved Successfully",
                 'data': data
             },
         )
@@ -24,7 +24,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(
                 {
                     'status': status.HTTP_200_OK,
-                    'message': "Appointment Data Retrieved Successfully",
+                    'message': "User Data Retrieved Successfully",
                     'data': data
                 },
             )
