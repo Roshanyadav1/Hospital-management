@@ -28,7 +28,6 @@ import { FaBloggerB } from "react-icons/fa";
 import { GrUserWorker } from "react-icons/Gr";
 import { BiRadioCircle } from "react-icons/bi";
 
-
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -124,7 +123,7 @@ function MiniDrawer() {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && {display: "none" }),
+              ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
@@ -198,8 +197,6 @@ function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-          
-    
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
