@@ -4,7 +4,7 @@ import CustomProvider from '@/redux/CustomProvider'
 import { Inter } from 'next/font/google'
 import { themeOptions } from '@/styles/theme';
 import { Auth0Provider } from '@auth0/auth0-react';
-import Auth from '@/components/auth';
+// import Auth from '@/components/auth';
 const inter = Inter({ subsets: ['latin'] })
 export const theme = createTheme(themeOptions);
 export default function RootLayout({ children }) {
