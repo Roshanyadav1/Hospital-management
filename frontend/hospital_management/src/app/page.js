@@ -1,15 +1,17 @@
 import React from 'react'
 import FetchData from '@/app/data/page'
 import Link from 'next/link'
-// import ResponsiveAppBar from '@/components/Navbar'
+import SwipeableTextMobileStepper from '@/components/Steper'
+import { NavigateBeforeRounded } from '@mui/icons-material'
+
 function page() {
   return (
     <div>
-     <h1>Page component</h1>
-     <Link href='/data'>Go To Fetching data page</Link>
-    </div>
-  )
-}
+<SwipeableTextMobileStepper/> 
 
+ </div> 
+  )
+
+  }
 export default page
 

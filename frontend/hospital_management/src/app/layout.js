@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider theme={theme}>
             <body className={inter.className}>
               {children}
-              <Auth />
+              {/* <Auth /> */}
             </body>
           </ThemeProvider>
         </CustomProvider>
