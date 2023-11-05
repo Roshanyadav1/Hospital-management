@@ -42,10 +42,7 @@ const Footer = () => {
         
         <Grid item sx={12} sm={4}> Hospital Details</Grid>
       </Grid>
-
-
-
-
+      
       <hr />
       <Typography variant="body2">
         &copy; {new Date().getFullYear()} Your Website Name
