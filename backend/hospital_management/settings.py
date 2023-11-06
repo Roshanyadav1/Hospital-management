@@ -103,9 +103,9 @@ WSGI_APPLICATION = 'hospital_management.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'Hospital_Management_Db',
+        'NAME': 'Hospital_Management',
         'CLIENT' : {
-            'host': 'mongodb+srv://Keshav:Keshav@hospitalmanagement.kkpfiy9.mongodb.net/',
+            'host': 'mongodb+srv://grandachievers:grandachievers@grandachievers.fomfuoj.mongodb.net/',
         },
     }
 }
