@@ -1,72 +1,84 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response 
+from prescription.serializer import PrescriptionSerializer
 from prescription.models import Prescription
-from prescription.serializers import PrescriptionSerializer
-from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import viewsets
+from rest_framework.generics import GenericAPIView
 
 
-class PrescriptionViewSet(viewsets.ModelViewSet):
-    queryset = Prescription.objects.all()
+class PrescriptionAdd(GenericAPIView):
     serializer_class = PrescriptionSerializer
 
-    def list(self, request, *args, **kwargs):
-        data = list(Prescription.objects.all().values())
+    def post(self, request, format = None):
+        serializer = PrescriptionSerializer(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()
         return Response(
             {
-                'status': status.HTTP_200_OK,
-                'message': "Prescriptions Data Retrieved Successfully",
-                'data': data
+                'status': status.HTTP_201_CREATED,
+                'message': 'Prescription Successfully Registered'
             },
         )
-
-    def retrieve(self, request, *args, **kwargs):
-            data = list(Prescription.objects.filter(appointment_id = kwargs['pk']).values())
+    
+class PrescriptionView(APIView):
+    def get(self, request, input = None, format = None):
+        id = input
+        if id is not None:
+            prescription = Prescription.objects.get(prescription_id = id)
+            serializer = PrescriptionSerializer(prescription)   
             return Response(
                 {
                     'status': status.HTTP_200_OK,
                     'message': "Prescription Data Retrieved Successfully",
-                    'data': data
-                },
-            )
-    
-    def create(self, request, *args, **kwargs):
-        product_serializer_data = PrescriptionSerializer(data = request.data)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        return Response(
-            {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Prescription Added Successfully'
-            },
-        )
-    
-    def destroy(self, request, *args, **kwargs):
-        product_data = Prescription.objects.filter(appintment_id = kwargs['pk'])
-        if product_data:
-            product_data.delete()
-            return Response(
-                {
-                    'status': status.HTTP_201_CREATED,
-                    'message': 'Prescription Data Deleted Successfully'
+                    'data': serializer.data
                 },
             )
         else:
+            prescription = Prescription.objects.all()
+            serializer = PrescriptionSerializer(prescription, many = True)   
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Prescription Data Deleted Successfully'
+                    'status': status.HTTP_200_OK,
+                    'message': "Prescriptions Data Retrieved Successfully",
+                    'data': serializer.data
                 },
             )
-
-    def update(self, request, *args, **kwargs):
-        product_details = Prescription.objects.get(appointment_id = kwargs['pk'])
-        product_serializer_data = PrescriptionSerializer(product_details, data=request.data, partial=True)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
+        
+class PrescriptionUpdate(APIView):
+    def put(self, request, input, format = None):
+        id = input
+        prescription = Prescription.objects.get(prescription_id = id) 
+        serializer = PrescriptionSerializer(prescription, data = request.data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()  
         return Response(
             {
                 'status': status.HTTP_200_OK,
-                'message': 'Prescription Data Deleted Successfully'
-            },
+                'message': 'Complete Data Updated',
+            }, 
         )
-        
+    
+    def patch(self, request ,input, format = None):
+        id = input
+        prescription = Prescription.objects.get(prescription_id = id) 
+        serializer = PrescriptionSerializer(prescription, data = request.data, partial = True)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()  
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'message': 'Partial Data Updated',
+            }, 
+        )
+
+class PrescriptionDelete(APIView):
+    def delete(self, request, input, format = None):
+        id = input
+        prescripton = Prescription.objects.get(prescription_id = id)
+        prescripton.delete()
+        return Response(
+            {
+                'status': status.HTTP_400_BAD_REQUEST,
+                'message': "Prescription Data Deleted",
+            },
+        )    

@@ -1,70 +1,80 @@
-from checkup.models import CheckUp
-from checkup.serializers import CheckUpSerializer
 from rest_framework.response import Response
+from rest_framework.generics import GenericAPIView
+from rest_framework.views import APIView
+from checkup.models import CheckUp
 from rest_framework import status
-from rest_framework import viewsets
+from checkup.serializers import CheckupSerializer
 
 
-class CheckUpViewSet(viewsets.ModelViewSet):
-    queryset = CheckUp.objects.all()
-    serializer_class = CheckUpSerializer
-
-    def list(self, request, *args, **kwargs):
-        data = list(CheckUp.objects.all().values())
+class CheckUpAdd(GenericAPIView):
+    serializer_class = CheckupSerializer
+    
+    def post(self, request, format = None):
+        serializer =  CheckupSerializer(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()
         return Response(
             {
-                'status': status.HTTP_200_OK,
-                'message': "Checkup Data Retrieved Successfully",
-                'data': data
+                'status': status.HTTP_201_CREATED,
+                'message': 'Checkup Successfully Added'
             },
         )
 
-    def retrieve(self, request, *args, **kwargs):
-            data = list(CheckUp.objects.filter(checkup_id = kwargs['pk']).values())
+class CheckUpDelete(APIView):
+    def delete(self, request, input = None, format = None):
+        id = input
+        checkup = CheckUp.objects.get(checkup_id =  id)
+        checkup.delete()
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'message': "Checkup Data Deleted",
+            },
+        )
+
+class CheckUpUpdate(APIView):
+    def put(self, request, input = None, format = None):
+        id = input
+        checkup = CheckUp.objects.get(checkup_id = id)
+        serializer =  CheckupSerializer.save(checkup, data = request.data)
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'message': 'Complete Data Updated',
+            }, 
+        )
+    
+    def patch(self, request, input = None, format = None):
+        id = input
+        checkup = CheckUp.objects.get(checkup_id =  id)
+        serializer = CheckupSerializer.save(checkup, data = request.data, partial = True)
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'message': 'Partial Data Updated',
+            }, 
+        )
+
+class CheckUpView(APIView):
+    def get(self, request, input = None, format = None):
+        id = input
+        if id is not None:
+            checkup = CheckUp.objects.get(checkup_id =  id) 
+            serializer = CheckupSerializer(checkup)
             return Response(
                 {
                     'status': status.HTTP_200_OK,
                     'message': "Checkup Data Retrieved Successfully",
-                    'data': data
+                    'data': serializer.data
                 },
             )
-    
-    def create(self, request, *args, **kwargs):
-        product_serializer_data = CheckUpSerializer(data = request.data)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        return Response(
-            {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Checkup Added Successfully'
-            },
-        )
-    
-    def destroy(self, request, *args, **kwargs):
-        product_data = CheckUp.objects.filter(checkup_id = kwargs['pk'])
-        if product_data:
-            product_data.delete()
-            status_code = status.HTTP_201_CREATED
-            return Response({"message": "Product delete Sucessfully", "status": status_code})
         else:
-            status_code = status.HTTP_400_BAD_REQUEST
+            checkup = CheckUp.objects.all()
+            serializer = CheckupSerializer(checkup, many = True)
             return Response(
                 {
-                    'status': status.HTTP_201_CREATED,
-                    'message': 'Checkup Data Not Found'
+                    'status': status.HTTP_200_OK,
+                    'message': "Checkups Data Retrieved Successfully",
+                    'data': serializer.data
                 },
             )
-
-    def update(self, request, *args, **kwargs):
-        product_details = CheckUp.objects.get(checkup_id = kwargs['pk'])
-        product_serializer_data = CheckUpSerializer(product_details, data=request.data, partial=True)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        status_code = status.HTTP_201_CREATED
-        return Response(
-            {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Checkup Data Updated Successfully'
-            },
-        )
-        

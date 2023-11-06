@@ -9,6 +9,8 @@ class Patient(models.Model):
     # patient_profile_picture = models.ImageField(upload_to='patient_profile_picture/')
     patient_age = models.IntegerField()
     patient_address = models.CharField(max_length = 255)
+    patient_email = models.EmailField(max_length = 255)
+    password = models.CharField(max_length = 255)
     patient_mobile = models.BigIntegerField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
