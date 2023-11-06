@@ -1,6 +1,11 @@
-from checkup.views import CheckUpViewSet
-from rest_framework.routers import DefaultRouter
+from django.urls import path
+from checkup.views import *
 
-router = DefaultRouter()
-router.register('checkup', CheckUpViewSet, basename='checkup')
-urlpatterns = router.urls
+
+urlpatterns= [
+    path('add/', CheckUpAdd.as_view(), name='checkup add'),
+    path('view/',CheckUpView.as_view(), name = 'checkup view'),
+    path('view/<uuid:input>/', CheckUpView.as_view(), name = 'checkup view by id'),
+    path('delete/<uuid:input>/', CheckUpDelete.as_view(), name = 'checkup delete'),
+    path('update/<uuid:input>/', CheckUpUpdate.as_view(), name = 'checkup update')
+]

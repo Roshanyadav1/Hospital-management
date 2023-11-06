@@ -1,78 +1,124 @@
 from appointment.models import Appointment
+from rest_framework.generics import GenericAPIView
 from appointment.serializers import AppointmentSerializer
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework import viewsets
-from hospital_management.email import send_email_to_client
 
 
-class AppointmentViewSet(viewsets.ModelViewSet):
-    queryset = Appointment.objects.all()
+class AppointmentAdd(GenericAPIView):
     serializer_class = AppointmentSerializer
-    def list(self, request, *args, **kwargs):
-        data = list(Appointment.objects.all().values())
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "Appointments Data Retrieved Successfully",
-                'data': data
-            },
-        )
 
-    def retrieve(self, request, *args, **kwargs):
-            data = list(Appointment.objects.filter(appointment_id = kwargs['pk']).values())
-            return Response(
-                {
-                    'status': status.HTTP_200_OK,
-                    'message': "Appointment Data Retrieved Successfully",
-                    'data': data
-                },
-            )
-    
-    def create(self, request, *args, **kwargs):
-        product_serializer_data = AppointmentSerializer(data = request.data)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        send_email_to_client(request.data)
-        print(request.data)
-
+    def post(self, request, format = None):
+        serializer = AppointmentSerializer(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()
         return Response(
             {
                 'status': status.HTTP_201_CREATED,
                 'message': 'Appointment Booked Successfully'
             },
         )
-    
-    def destroy(self, request, *args, **kwargs):
-        product_data = Appointment.objects.filter(appintment_id = kwargs['pk'])
-        if product_data:
-            product_data.delete()
-            status_code = status.HTTP_201_CREATED
-            return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "Appointments Deleted Successfully",
-            },
-        )
-        else:
-            status_code = status.HTTP_400_BAD_REQUEST
-            return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "Appointments Data Not Found",
-            },
-        )
 
-    def update(self, request, *args, **kwargs):
-        product_details = Appointment.objects.get(appointment_id = kwargs['pk'])
-        product_serializer_data = AppointmentSerializer(product_details, data=request.data, partial=True)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        status_code = status.HTTP_201_CREATED
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "Appointments Updated Successfully",
-            },
-        )
-        
+class AppointmentView(APIView):
+    def get(self, request, input = None, format = None):
+        id = input
+        if id is not None:
+            if Appointment.objects.filter(appointment_id = id).count() >= 1:
+                appointment = Appointment.objects.get(appointment_id = id)
+                serializer = AppointmentSerializer(appointment)
+                return Response(
+                    {
+                        'status': status.HTTP_200_OK,
+                        'message': "Appointment Data Retrieved Successfully",
+                        'data': serializer.data
+                    },
+                )
+            else:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': "Appointment Is Not Booked",
+                    },
+                ) 
+        else:
+            appointment = Appointment.objects.all()
+            serializer = AppointmentSerializer(appointment, many = True)
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': "Appointments Data Retrieved Successfully",
+                    'data': serializer.data
+                },
+            )
+
+class AppointmentUpdate(APIView):
+    def put(self, request, input, format = None):
+        id = input
+        if Appointment.objects.filter(appointment_id = id).count() >= 1:
+            appointment = Appointment.objects.get(appointment_id = id)
+            serializer = AppointmentSerializer(appointment, data = request.data)
+            serializer.is_valid(raise_exception = True)
+            serializer.save()
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': 'Complete Data Updated',
+                }, 
+            )
+        else:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': 'Appointment Is Not Booked', 
+                },
+            )
+    
+    def patch(self, request, input, format = None):
+        id = input
+        if request.data == {}:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': 'No Data Provided', 
+                },
+            )
+        else:
+            if Appointment.objects.filter(appointment_id = id).count() >= 1:
+                appointment = Appointment.objects.get(appointment_id = id)
+                serializer = AppointmentSerializer(appointment, data = request.data, partial = True)
+                serializer.is_valid(raise_exception = True)
+                serializer.save()
+                return Response(
+                    {
+                        'status': status.HTTP_200_OK,
+                        'message': 'Complete Data Updated',
+                    }, 
+                )
+            else:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': "Appointment Is Not Booked",
+                    },
+                )
+
+class AppointmentDelete(APIView):
+    def delete(self, request, input, format = None):
+        id = input
+        if Appointment.objects.filter(appointment_id = id).count() >= 1:
+            appointment = Appointment.objects.get(appointment_id = id)
+            appointment.delete()
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message':'Appointment Deleted Successfully'
+                },
+            ) 
+        else:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': "Appointment Is Not Booked",
+                },
+            )    

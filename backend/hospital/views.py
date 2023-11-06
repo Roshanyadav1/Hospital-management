@@ -1,77 +1,83 @@
-from hospital.models import Hospital
-from hospital.serializers import HospitalSerializer
 from rest_framework.response import Response
+from .serializers import HospitalSerializer
 from rest_framework import status
-from rest_framework import viewsets
+from user.serializers import UserRegisterSerializer
+from rest_framework.views import APIView
+from .models import Hospital
+from rest_framework.generics import GenericAPIView
 
 
-class HospitalViewSet(viewsets.ModelViewSet):
-    queryset = Hospital.objects.all()
-    serializer_class = HospitalSerializer
-    # authentication_classes = [isA]
+class HospitalRegister(GenericAPIView):
+   serializer_class = HospitalSerializer
 
-    def list(self, request, *args, **kwargs):
-        data = list(Hospital.objects.all().values())
-        return Response(
+   def post(self, request, format = None):
+      serializer = HospitalSerializer(data = request.data)
+      serializer.is_valid(raise_exception = True)
+      serializer.save()
+      hospital = Hospital.objects.get(hospital_email = request.data.get('hospital_email'))
+      data = {
+         "member_id": hospital.hospital_id,
+         "user_name": hospital.hospital_owner_name,
+         "user_email": request.data.get('hospital_owner_email'),
+         "user_password": request.data.get('password'),
+         "user_role": "Admin",
+      }
+      user = UserRegisterSerializer(data = data)
+      user.is_valid()
+      user.save()
+      return Response(
+         {
+            'status': status.HTTP_201_CREATED,
+            'message': 'Hospital Successfully Registered'
+         },
+      )
+   
+class HospitalView(APIView):
+   def get(self, request, input = None, format = None):
+      id = input
+      if id is not None :
+         hospital = hospital.objects.get(hospital_id = id)
+         serializer = HospitalSerializer(hospital)
+         return Response(
             {
-                'status': status.HTTP_200_OK,
-                'message': "Hospital Data Retrieved Successfully",
-                'data': data
+               'status': status.HTTP_200_OK,
+               'message': "Hospital Data Retrieved Successfully",
+               'data': serializer.data
             },
-        )
-
-    def retrieve(self, request, *args, **kwargs):
-            data = list(Hospital.objects.filter(hospital_id = kwargs['pk']).values())
-            return Response(
-                {
-                    'status': status.HTTP_200_OK,
-                    'message': "Hospital Data Retrieved Successfully",
-                    'data': data
-                },
-            )
-    
-    def create(self, request, *args, **kwargs):
-        product_serializer_data = HospitalSerializer(data = request.data)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        return Response(
+         )
+      else:
+         hospital = Hospital.objects.all()
+         serializer = HospitalSerializer(hospital, many = True)
+         return Response(
             {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Hospital Added Successfully'
+               'status': status.HTTP_200_OK,
+               'message': "Hospital Data Retrieved Successfully",
+               'data': serializer.data
             },
-        )
-    
-    def destroy(self, request, *args, **kwargs):
-        product_data = Hospital.objects.filter(hospital_id = kwargs['pk'])
-        if product_data:
-            product_data.delete()
-            status_code = status.HTTP_201_CREATED
-            return Response(
-            {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Hospital Deleted Successfully'
-            },
-        )
-        else:
-            status_code = status.HTTP_400_BAD_REQUEST
-            return Response(
-            {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Hospital Data Not Found'
-            },
-        )
-
-    def update(self, request, *args, **kwargs):
-        product_details = Hospital.objects.get(hospital_id = kwargs['pk'])
-        product_serializer_data = HospitalSerializer(product_details, data=request.data, partial=True)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        status_code = status.HTTP_201_CREATED
-        return Response(
-            {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Hospital Data Updated Successfully'
-            },
-        )
-        
-        
+         )
+      
+class HospitalUpdate(APIView):
+   def patch(self, request, input, format = None):
+      id = input
+      hospital = Hospital.objects.get(hospital_id = id)
+      serializer = HospitalSerializer(hospital, data = request.data, partial = True)
+      serializer.is_valid(raise_exception = True)
+      serializer.save() 
+      return Response(
+         {
+            'status': status.HTTP_200_OK,
+            'message': 'Partial Data Updated',
+         }, 
+      )
+   
+class HospitalDelete(APIView):
+   def delete(self, request, input, format = None):
+      id = input
+      hospital=Hospital.objects.get(hospital_id = id)
+      hospital.delete()
+      return Response(
+         {
+            'status': status.HTTP_200_OK,
+            'message': "Hospital Data Deleted",
+         },
+      )    
