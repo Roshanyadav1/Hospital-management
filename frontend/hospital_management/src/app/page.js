@@ -11,6 +11,7 @@ export default function Home() {
 =======
 import ResponsiveAppBar from '@/components/Navbar'
 import React from 'react'
+<<<<<<< Updated upstream
 >>>>>>> c315896fc48e8ae000ae220b9401bda7109bbf4d
 
 function page() {
@@ -27,6 +28,19 @@ function page() {
     <div>
       < ResponsiveAppBar/>
       {/* <DemoPage/> */}
+=======
+import FetchData from '@/app/data/page'
+import Link from 'next/link'
+// import Footer from '@/components/Footer'
+import MiniDrawer from "@/components/sidebar";
+function page() {
+  return (
+    <div>
+  
+      {/* <h1>Megha Dhangar</h1>
+     <Link href='/data'>Go To Fetching data page</Link> */}
+ <MiniDrawer />
+>>>>>>> Stashed changes
     </div>
   )
 }
