@@ -12,34 +12,25 @@ class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
 
     def post(self, request, format = None):
-        if Patient.objects.filter(patient_email = request.data.get('patient_email')).count() >= 1:
-            return Response(
-                {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Patient With This Email Is Already Registered'
-                },
-            )
-        else:
-            serializer = PatientSerializer(data = request.data)
-            serializer.is_valid(raise_exception = True)
-            serializer.save()
-            patient = Patient.objects.get(patient_email = request.data.get('patient_email'))
-            data = {
-                "member_id": patient.patient_id,
-                "user_name": patient.patient_name,
-                "user_email": request.data.get('patient_email'),
-                "user_password": request.data.get('password'),
-                "user_role": "Patient",
-            }
-            user = UserRegisterSerializer(data = data)
-            user.is_valid()
-            user.save()
-            return Response(
-                {
-                    'status': status.HTTP_201_CREATED,
-                    'message': 'Patient Successfully Registered'
-                },
-            )
+        serializer = PatientSerializer(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()
+        patient = Patient.objects.get(patient_email = request.data.get('patient_email'))
+        
+        member_id = patient.patient_id
+        user_name = patient.patient_name
+        user_email = request.data.get('patient_email')
+        user_password = request.data.get('password')
+        user_role = "Patient"
+
+        user = User.objects.create_user(member_id, user_name, user_email, user_role, user_password)
+
+        return Response(
+            {
+                'status': status.HTTP_201_CREATED,
+                'message': 'Patient Successfully Registered'
+            },
+        )
 
 class PatientView(APIView):
     def get(self, request, input = None, format = None):

@@ -4,6 +4,7 @@ from rest_framework import status
 from user.serializers import UserRegisterSerializer
 from rest_framework.views import APIView
 from .models import Hospital
+from user.models import User
 from rest_framework.generics import GenericAPIView
 
 
@@ -15,16 +16,24 @@ class HospitalRegister(GenericAPIView):
       serializer.is_valid(raise_exception = True)
       serializer.save()
       hospital = Hospital.objects.get(hospital_email = request.data.get('hospital_email'))
-      data = {
-         "member_id": hospital.hospital_id,
-         "user_name": hospital.hospital_owner_name,
-         "user_email": request.data.get('hospital_owner_email'),
-         "user_password": request.data.get('password'),
-         "user_role": "Admin",
-      }
-      user = UserRegisterSerializer(data = data)
-      user.is_valid()
-      user.save()
+
+      member_id = hospital.hospital_id
+      user_name = hospital.username
+      user_email = request.data.get('hospital_owner_email')
+      user_password = request.data.get('password')
+      user_role = "Admin"
+
+      user = User.objects.create_superuser(member_id, user_name, user_email, user_role, user_password)
+      # data = {
+      #    "member_id": hospital.hospital_id,
+      #    "user_name": hospital.hospital_owner_name,
+      #    "user_email": request.data.get('hospital_owner_email'),
+      #    "user_password": request.data.get('password'),
+      #    "user_role": "Admin",
+      # }
+      # user = UserRegisterSerializer(data = data)
+      # user.is_valid()
+      # user.save()
       return Response(
          {
             'status': status.HTTP_201_CREATED,
@@ -35,8 +44,9 @@ class HospitalRegister(GenericAPIView):
 class HospitalView(APIView):
    def get(self, request, input = None, format = None):
       id = input
+      print(id)
       if id is not None :
-         hospital = hospital.objects.get(hospital_id = id)
+         hospital = Hospital.objects.get(hospital_id = id)
          serializer = HospitalSerializer(hospital)
          return Response(
             {
