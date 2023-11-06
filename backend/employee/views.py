@@ -15,16 +15,13 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     pagination_class  = PageNumberPagination
     filter_backends = [SearchFilter]
     search_fields = ['employee_role']
-    # filterset_fields = ['employee_role']
-    
+ 
+   
 
     def list(self, request, *args, **kwargs):
         data = (Employee.objects.all().values())
-        filtered_data = self.filter_queryset(data)
-     
-        
+        filtered_data = self.filter_queryset(data)   
         paginated_data = self.paginate_queryset(filtered_data)
-        
         serializer = EmployeeSerializer(paginated_data, many = True)
         return Response(
             {

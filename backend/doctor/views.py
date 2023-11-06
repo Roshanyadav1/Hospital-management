@@ -3,19 +3,28 @@ from doctor.serializers import DoctorSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.filters import SearchFilter
 
 
 class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
+    pagination_class  = PageNumberPagination
+    filter_backends = [SearchFilter]
+    search_fields = ['disease_specialist']
 
     def list(self, request, *args, **kwargs):
-        data = list(Doctor.objects.all().values())
+        data = (Doctor.objects.all().values())
+        filtered_data = self.filter_queryset(data)   
+        paginated_data = self.paginate_queryset(filtered_data)
+        serializer = DoctorSerializer(paginated_data, many = True)
+        print(serializer.data)
         return Response(
             {
                 'status': status.HTTP_200_OK,
                 'message': "Doctors Data Retrieved Successfully",
-                'data': data
+                'data': serializer.data
             },
         )
 
