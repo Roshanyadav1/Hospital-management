@@ -5,11 +5,9 @@ import Footer from '@/components/Footer'
 function page() {
   return (
     <div>
-
-     <Footer/>
-  
-    {/* //  <h1>Page component</h1>
-    //  <Link href='/data'>Go To Fetching data page</Link> */}
+             {/* <h1>Welcome this site </h1>
+             <Link href="/sidebar">Go To Sidebar</Link> */}
+             <Footer/>
     </div>
   )
 }

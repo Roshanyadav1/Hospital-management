@@ -99,13 +99,14 @@ function MiniDrawer() {
             "Career",
             "Analytics",
             "History",
-            "Help", // Corrected capitalization for "History"
+            "Help", 
           ].map((text, index) => (
             <ListItem
               key={text}
               disablePadding
               sx={{
                 display: "block",
+                color:"white",
               }}
             >
               <ListItemButton
