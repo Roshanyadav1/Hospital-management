@@ -114,7 +114,7 @@ function MiniDrawer() {
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
-                  // backgroundColor: open ? "#13293D" : "inherit", // Set background color
+                  backgroundColor: open ? "#13293D" : "inherit", // Set background color
                   color: open ? "#fff" : "inherit", // Set text color
                 }}
               >
@@ -134,8 +134,7 @@ function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* Your content here */}
-        <h1>Megha Dhangar </h1>
+      
       </Box>
     </Box>
   );
