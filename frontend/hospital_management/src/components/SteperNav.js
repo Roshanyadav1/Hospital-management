@@ -54,7 +54,7 @@ function SteperNav(props) {
       <AppBar component="nav">
         <Toolbar>
           <IconButton
-            color="#006494"
+            color="#fff"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
