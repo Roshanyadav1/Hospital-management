@@ -1,5 +1,4 @@
-"use client"
-
+'use client'
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -27,12 +26,6 @@ import Textfield from './TextField';
 const useStyles = makeStyles((theme) => ({
   textField: {
     width:'100%',
-    background: 'none', // Remove background color
-    border: 'none',    // Remove border
-    '& input': {
-      border: 'none',  // Remove input border
-      padding: 0,      // Remove input padding
-    },
   },
   formWrapper: {
     minHeight: '100vh',
