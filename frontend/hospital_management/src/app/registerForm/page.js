@@ -1,93 +1,85 @@
 "use client"
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { makeStyles } from '@material-ui/core/styles';
-import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
+import FORM_VALIDATION from './Components/FormValidation/formValidation';
+import { FormControl, FormLabel } from '@mui/material';
 
-import {
-  Button,
-  Container,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  Typography,
-  Select,
-  MenuItem,
-  Paper,
-} from '@material-ui/core';
-import Textfield from './TextField';
-import Image from 'next/image';
-// import Select from 'react-select'; // Import react-select
-
-const useStyles = makeStyles((theme) => ({
-  textField: {
-    width:'100%',
-    background: 'none', // Remove background color
-    border: 'none',    // Remove border
-    '& input': {
-      border: 'none',  // Remove input border
-      padding: 0,      // Remove input padding
-    },
-  },
-  formWrapper: {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  selectField: {
-    minWidth: 200,
-  },
-  submitButton: {
-    margin: '2rem 0',
-    display: 'flex',
-    alignItems: 'center !important',
-    justifyContent: 'center',
-  },
-  paper: {
-    padding: '2rem',
-    width: '100%',
-    maxWidth: '650px',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderRadius: '8px',
-    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
-  },
-  logoField: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    marginBottom: '10px',
-  },
-  chooseFileButton: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    cursor: 'pointer',
-  },
-  fileInput: {
-    display: 'none',
-  },
-  
-  previewImage: {
-    width: '100px',
-    height: '100px',
-    borderRadius: '50%',
-    objectFit: 'cover',
-    marginTop: '10px',
-  },
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: '2rem',
+  width: '100%',
+  maxWidth: '650px',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  borderRadius: '8px',
+  boxShadow: theme.shadows[3],
+  backgroundColor: '#F0F2FA',
+  // borderRadius: '25px',
 }));
+
+const StyledTypography = styled(Typography)(() => ({
+  fontWeight: 'bold',
+  paddingBottom: '1rem',
+  color: '#3f51b5',
+}));
+
+const StyledFormWrapper = styled('div')({
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '#f0f0f0',
+});
+
+const StyledSelectField = styled(Select)({
+  minWidth: 200,
+});
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: '2rem 0',
+  display: 'flex',
+  alignItems: 'center !important',
+  justifyContent: 'center',
+}));
+
+const StyledLogoField = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  marginBottom: '10px',
+});
+
+const StyledChooseFileButton = styled(Button)({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  cursor: 'pointer',
+});
+
+const StyledFileInput = styled('input')({
+  display: 'none',
+});
+
+const StyledPreviewImage = styled('img')({
+  width: '100px',
+  height: '100px',
+  borderRadius: '50%',
+  objectFit: 'cover',
+  marginTop: '10px',
+});
 
 const INITIAL_FORM_STATE = {
   HospitalName: '',
@@ -102,79 +94,16 @@ const INITIAL_FORM_STATE = {
   HospitalOwnerName: '',
   HospitalOwnerNumber: '',
   HospitalOwnerEmail: '',
+  UserName: '',
+  Password: '',
 };
 
-const FORM_VALIDATION = Yup.object().shape({
-  HospitalName: Yup.string()
-    .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
-    .required('Required!'),
-  HospitalNumber: Yup.string()
-  .matches(/^(?!.*(\d)\1{5})[0-9]+$/, 'Invalid phone number')
-  .test('is-ten-digits', 'Invalid phone number', (value) => {
-    if (value) {
-      return value.replace(/[^0-9]/g, '').length === 10;
-    }
-    return false;
-  })
-  .required('Required!'),
-  HospitalEmail: Yup.string()
-    .matches(
-      /^(?=.*[a-zA-Z]).*^(?!.*@(email|yahoo)\.com).*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-      'Invalid email format'
-    )
-    .required('Required!')
-    .test('email-provider', 'Email provider not allowed', (value) => {
-      if (/(email|yahoo)\.com$/.test(value)) {
-        return false;
-      }
-      return true;
-    }),
-  HospitalCity: Yup.string().required('Required!'),
-  HospitalAddress: Yup.string().required('Required!'),
-  radioOptions: Yup.string().required('Please select an option'),
-  category: Yup.string().required('Please select a category'),
-  statusRadio: Yup.string().required('Please select a status'),
-  logo: Yup.mixed().test('fileSize', 'File size is too large', (value) => {
-    if (!value) {
-      return true;
-    }
-    return value && value.size <= 1024 * 1024;
-  }),
-  HospitalOwnerName: Yup.string()
-    .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
-    .required('Required!'),
-  HospitalOwnerNumber: Yup.string()
-  .matches(/^(?!.*(\d)\1{5})[0-9]+$/, 'Invalid phone number')
-  .test('is-ten-digits', 'Invalid phone number', (value) => {
-    if (value) {
-      return value.replace(/[^0-9]/g, '').length === 10;
-    }
-    return false;
-  })
-  .required('Required!'),
-  HospitalOwnerEmail: Yup.string()
-    .matches(
-      /^(?=.*[a-zA-Z]).*^(?!.*@(email|yahoo)\.com).*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-      'Invalid Email format'
-    )
-    .required('Required!')
-    .test('email-provider', 'Email provider not allowed', (value) => {
-      if (/(email|yahoo)\.com$/.test(value)) {
-        return false;
-      }
-      return true;
-    }),
-});
-
 const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
-const cities = [ 'Mumbai','Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur','Surat', 'Indore', 'Bhopal','Vadodara','Coimbatore','Ludhiana','Amritsar','Patna','Ranchi','Bhubaneswar',
-'Thiruvananthapuram','Kochi','Visakhapatnam','Agra','Varanasi','Mysore','Madurai','Vijayawada',
+const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Surat', 'Indore', 'Bhopal', 'Vadodara', 'Coimbatore', 'Ludhiana', 'Amritsar', 'Patna', 'Ranchi', 'Bhubaneswar',
+  'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
 ];
 
-
-
-const Registerform = () => {
-  const classes = useStyles();
+const App = () => {
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -187,31 +116,17 @@ const Registerform = () => {
     }
   };
 
-  return (
-    <div className={classes.formWrapper} >
-      <Paper elevation={3} className={classes.paper} style={{backgroundColor:' #F0F2FA',borderRadius:'25px'}}>
-        <Typography variant="h4" style={{ fontWeight: 'bold', paddingBottom: '1rem',color:'#3f51b5' }}>
-          Registration Form
-        </Typography>
-        <div className={classes.logoField}>
-          <label className={classes.chooseFileButton} style={{backgroundColor:'#3f51b5',color:'#fff',border:'none',height:'1.rem'
-                 ,fontSize:'15px',padding:'3px 5px',borderRadius:'15px'}}>
-            Choose logo
-            <input
-              type="file"
-              id="logoInput"
-              className={classes.fileInput}
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </label>
-          {previewImage && (
-            <div>
-              <Image src={previewImage} alt="Preview" className={classes.previewImage} />
-            </div>
-          )}
-        </div>
+  const handleChooseLogoClick = () => {
+    const fileInput = document.getElementById('logoInput');
+    fileInput.click();
+  };
 
+  return (
+    <StyledFormWrapper>
+      <StyledPaper elevation={3}>
+        <StyledTypography variant="h4">
+          Registration Form
+        </StyledTypography>
         <Formik
           initialValues={{
             ...INITIAL_FORM_STATE,
@@ -222,62 +137,37 @@ const Registerform = () => {
           }}
         >
           {({ values, setFieldValue }) => (
-            <Form >
+            <Form>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
-                  <Textfield
-                    
-                    name="HospitalName"
-                    label="Name"
-                    
-                    className={classes.textfield}
-                    autoComplete=""
+                  <TextField name="HospitalName" label="Name" autoComplete=""
                     InputProps={{
                       style: {
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '20px',
-                        // padding: '10px',
+                        background: 'white', border: 'none', borderRadius: '20px',
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Textfield
-                    name="HospitalNumber"
-                    label="Phone"
-                    className={classes.textfield}
-                    autoComplete="off"
+                  <TextField name="HospitalNumber" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '20px',
-                        // padding: '10px',
+                        background: 'white', border: 'none', borderRadius: '20px',
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Textfield
-                    name="HospitalEmail"
-                    label="Email"
-                    className={classes.textfield}
-                    autoComplete="off"
+                  <TextField name="HospitalEmail" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '20px',
-                        // padding: '10px',
+                        background: 'white', border: 'none', borderRadius: '20px',
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    id="hospitalCity"
-                    options={cities}
+                  <Autocomplete id="hospitalCity" options={cities}
                     getOptionLabel={(option) => option}
                     renderInput={(params) => (
                       <TextField
@@ -286,69 +176,40 @@ const Registerform = () => {
                         InputProps={{
                           ...params.InputProps,
                           style: {
-                            background: 'white',
-                            border: 'none',
-                            borderRadius: '25px',
-                            padding: '10px',
+                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
                           },
                         }}
                       />
                     )}
-                    
+                  />
+                  <ErrorMessage name="HospitalCity" component="div" style={{ color: 'red' }} />
+                </Grid>
+                {/* provide proper error usding yup validation for this field if the city is not selected from the dropdown */}
+                <Grid item xs={12} sm={6}>
+                  <RadioButtonGroup
+                    label="Type"
+                    name="radioOptions"
+                    options={[
+                      { value: 'Public', label: 'Public' },
+                      { value: 'Private', label: 'Private' },
+                      { value: 'General', label: 'General' },
+                    ]}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl>
-                    <FormLabel>Type</FormLabel>
-                    <Field name="radioOptions">
-                      {({ field }) => (
-                        <RadioGroup {...field} row>
-                          <FormControlLabel
-                            value="Public"
-                            control={<Radio color="primary" />}
-                            label="Public"
-                          />
-                          <FormControlLabel
-                            value="Private"
-                            control={<Radio color="primary" />}
-                            label="Private"
-                          />
-                          <FormControlLabel
-                            value="General"
-                            control={<Radio color="primary" />}
-                            label="General"
-                          />
-                        </RadioGroup>
-                      )}
-                    </Field>
-                    <ErrorMessage
-                      name="radioOptions"
-                      component="div"
-                      style={{ color: 'red' }}
-                    />
-                  </FormControl>
-                </Grid>
                 <Grid item xs={12}>
-                  <Textfield
-                    name="HospitalAddress"
-                    label="Address"
-                    className={classes.textfield}
-                    autoComplete="off"
+                  <TextField name="HospitalAddress" label="Address" autoComplete="off"
                     InputProps={{
                       style: {
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '20px',
-                        // padding: '10px',
+                        background: 'white', border: 'none', borderRadius: '20px',
                       },
                     }}
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <FormControl className={classes.selectField}>
+                  <FormControl>
                     <FormLabel >
-                        Category
+                      Category
                     </FormLabel>
                     <Field as={Select} name="category" >
                       <MenuItem value="" disabled>
@@ -360,38 +221,18 @@ const Registerform = () => {
                         </MenuItem>
                       ))}
                     </Field>
-                    <ErrorMessage
-                      name="category"
-                      component="div"
-                      style={{ color: 'red' }}
-                    />
+                    <ErrorMessage name="category" component="div" style={{ color: 'red' }} />
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <FormControl>
-                    <FormLabel>Status</FormLabel>
-                    <Field name="statusRadio">
-                      {({ field }) => (
-                        <RadioGroup {...field}>
-                          <FormControlLabel
-                            value="Active"
-                            control={<Radio color="primary" />}
-                            label="Active"
-                          />
-                          <FormControlLabel
-                            value="Inactive"
-                            control={<Radio color="primary" />}
-                            label="Inactive"
-                          />
-                        </RadioGroup>
-                      )}
-                    </Field>
-                    <ErrorMessage
-                      name="statusRadio"
-                      component="div"
-                      style={{ color: 'red' }}
-                    />
-                  </FormControl>
+                  <RadioButtonGroup
+                    label="Status"
+                    name="statusRadio"
+                    options={[
+                      { value: 'Active', label: 'Active' },
+                      { value: 'Inactive', label: 'Inactive' },
+                    ]}
+                  />
                 </Grid>
                 <hr />
                 <Grid item xs={12}>
@@ -400,73 +241,101 @@ const Registerform = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Textfield
-                    name="HospitalOwnerName"
-                    label="Name"
-                    className={classes.textfield}
-                    autoComplete="off"
+                  <TextField name="HospitalOwnerName" label="Name" autoComplete="off"
                     InputProps={{
                       style: {
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '20px',
-                        // padding: '10px',
+                        background: 'white', border: 'none', borderRadius: '20px',
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Textfield
-                    name="HospitalOwnerNumber"
-                    label="Phone"
-                    className={classes.textfield}
-                    autoComplete="off"
+                  <TextField name="HospitalOwnerNumber" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '20px',
-                        // padding: '10px',
+                        background: 'white', border: 'none', borderRadius: '20px',
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Textfield
-                    name="HospitalOwnerEmail"
-                    label="Email"
-                    className={classes.textfield}
-                    autoComplete="off"
+                  <TextField name="HospitalOwnerEmail" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '20px',
-                        // padding: '10px',
+                        background: 'white', border: 'none', borderRadius: '20px',
                       },
                     }}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
+                  <TextField name="UserName" label="Username" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField name="Password" label="Password" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                    Hospital's logo
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <div>
+                    <Button
+                      Style={{ marginTop: '20px' }}
+                    
+                      onClick={handleChooseLogoClick}
+                    >
+                      Choose Logo
+                    </Button>
+                    <input
+                      type="file"
+                      id="logoInput"
+                    
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                    {previewImage && (
+                      <div >
+                        <img src={previewImage} alt="Preview" style={{ marginBottom: '1rem', boxShadow: 'box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35)' }} />
+                      </div>
+                    )}
+
+                  </div>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
                   <Button
                     variant="contained"
                     color="primary"
                     type="submit"
-                    className={classes.submitButton}
+                  
                   >
                     Submit
                   </Button>
                 </Grid>
+
               </Grid>
             </Form>
           )}
         </Formik>
-      </Paper>
-    </div>
+      </StyledPaper>
+    </StyledFormWrapper>
   );
 };
 
-export default Registerform;
-
+export default App;
 
 
