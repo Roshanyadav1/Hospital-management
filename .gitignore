@@ -12,6 +12,8 @@
 /.next/
 /out/
 
+*.pyc
+
 # production
 /build
 
