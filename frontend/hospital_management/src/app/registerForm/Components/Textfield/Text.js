@@ -1,9 +1,8 @@
 "use client"
-
 import { TextField } from "@mui/material";
 import {useField} from 'formik'
 
-const TextfieldWrapper = ({
+const Text = ({
     name,
     ...otherProps
 }) => {
@@ -27,4 +26,4 @@ const TextfieldWrapper = ({
     )
 }
 
-export default TextfieldWrapper
+export default Text
