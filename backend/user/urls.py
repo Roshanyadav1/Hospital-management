@@ -5,8 +5,8 @@ from django.urls import path, include
 router = DefaultRouter()
 
 urlpatterns = [
-    path('user/login/', UserLoginView.as_view()),
-    path('user/view/', UserView.as_view()),
-    path('user/delete/<uuid:input>', UserLoginView.as_view()),
-    path('user/update/<uuid:input>', UserLoginView.as_view()),
+    path('login/', UserLoginView.as_view()),
+    path('view/', UserView.as_view()),
+    path('delete/<uuid:input>', UserLoginView.as_view()),
+    path('update/<uuid:input>', UserLoginView.as_view()),
 ]
