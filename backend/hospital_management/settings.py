@@ -77,8 +77,11 @@ WSGI_APPLICATION = 'hospital_management.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'Hospital_Management',
+        'CLIENT' : {
+            'host': 'mongodb+srv://grandachievers:grandachievers@grandachievers.fomfuoj.mongodb.net/',
+        },
     }
 }
 
@@ -123,3 +126,44 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{asctime} {message} {lineno}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+       'file': {
+           'level': 'INFO',
+           'class': 'logging.FileHandler',
+           'filename': 'logs.log',
+            'formatter': 'simple',
+       },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console','file'],
+            'level': "INFO",
+        },
+        
+    },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+  'PAGE_SIZE': 3
+}
