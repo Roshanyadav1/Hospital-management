@@ -18,10 +18,3 @@ class Employee(models.Model):
     created_by = models.CharField(max_length=100, default="Default_value")
     updated_at = models.DateTimeField(auto_now=True,)
     updated_by =  models.CharField(max_length=100, default="default_value")
- 
-    
-    # def save(self, *args, **kwargs):
-    #     if hasattr(self, 'request') and self.user.is_authenticated:
-    #         self.Update_by = self.request.user.email
-            
-    #     super(Employee,self).save(*args, **kwargs)   

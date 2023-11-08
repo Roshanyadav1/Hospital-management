@@ -1,0 +1,26 @@
+{"levelname": "INFO", "asctime": "2023-11-08 14:25:44,422", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:27:31,517", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "WARNING", "asctime": "2023-11-08 14:27:36,401", "name": "django.request", "message": "Not Found: /", "taskName": null, "status_code": 404, "request": "<WSGIRequest: GET '/'>"}
+{"levelname": "WARNING", "asctime": "2023-11-08 14:27:45,951", "name": "django.request", "message": "Not Found: /appointment/", "taskName": null, "status_code": 404, "request": "<WSGIRequest: GET '/appointment/'>"}
+{"levelname": "INFO", "asctime": "2023-11-08 14:34:36,969", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:35:07,003", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "WARNING", "asctime": "2023-11-08 14:36:29,695", "name": "django.request", "message": "Bad Request: /api/doctor/", "taskName": null, "status_code": 400, "request": "<WSGIRequest: POST '/api/doctor/'>"}
+{"levelname": "INFO", "asctime": "2023-11-08 14:38:32,902", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:40:03,464", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\appointment\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:40:05,392", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:40:19,985", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\appointment\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:40:21,894", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:41:08,875", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\checkup\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:41:10,651", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:41:16,088", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\checkup\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:41:18,394", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:41:24,166", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\checkup\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:41:26,264", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:42:22,999", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\doctor\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:42:25,329", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:43:28,049", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\employee\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:43:30,212", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:44:10,951", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\prescription\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:44:13,011", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:44:41,186", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\user\\models.py changed, reloading.", "taskName": null}
+{"levelname": "INFO", "asctime": "2023-11-08 14:44:43,107", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
