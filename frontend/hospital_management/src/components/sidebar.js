@@ -116,12 +116,14 @@ function MiniDrawer() {
               disablePadding
               sx={{
                 display: "block",
+                backgroundColor: "#13293d",
+                color: "#fff",
                 "&:hover": {  
                   backgroundColor: "#fff",
                   color: "#13293d",
                 },
-                // background:'#fff',
-                // color:'#fff'
+                
+                
               }}
             >
               <ListItemButton
@@ -141,7 +143,7 @@ function MiniDrawer() {
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
                     //color:'white'
-                    backgroundColor: "inherit",
+                   backgroundColor: "inherit",
                     color: "#fff",
                   }}
                 >

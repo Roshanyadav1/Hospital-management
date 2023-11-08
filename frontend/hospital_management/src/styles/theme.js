@@ -3,13 +3,13 @@ import { createTheme } from "@mui/material/styles";
 const colors = {
     primary: '#13293D',
     secondary: '#35CFF4',
-    info: '#5E71BD',
-    success: '#BD5EA0',
+    info: '#D3E3F7',
+    success: '#826AF9',
     warning: '#F5A623',
     danger: '#D0021B',
     white: '#fff',
     black: '#000',
-    gray: '#9B9B9B',
+    gray: '#A7AFB7',
 }
 const theme = createTheme({
     palette: {
@@ -31,7 +31,7 @@ const theme = createTheme({
         MuiDrawer: {
             styleOverrides: {
                 paper: {
-                    backgroundColor: colors.gray,
+                    backgroundColor: colors.primary,
                     color: colors.white,
                 },
             },
