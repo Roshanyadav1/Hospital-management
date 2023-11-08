@@ -1,142 +1,171 @@
-'use client'
-
-import * as React from 'react';
-
-import AspectRatio from '@mui/joy/AspectRatio';
-import Box from '@mui/joy/Box';
-import IconButton from '@mui/joy/IconButton';
-import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import Divider from '@mui/joy/Divider';
-import Input from '@mui/joy/Input';
-import List from '@mui/joy/List';
-import ListSubheader from '@mui/joy/ListSubheader';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton from '@mui/joy/ListItemButton';
-import Typography from '@mui/joy/Typography';
-import Sheet from '@mui/joy/Sheet';
-import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import SendIcon from '@mui/icons-material/Send';
-import ColorLensRoundedIcon from '@mui/icons-material/ColorLensRounded';
-
-export default function ColorInversionFooter() {
-  const [color, setColor] = React.useState('neutral');
+import React from "react";
+import { Box, Typography, Button, Grid, Input } from "@mui/material";
+import { Facebook, Instagram, Twitter } from "@mui/icons-material";
+import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
+import './footer.css';
+// import Image from "next/image";
+// import instaa from '../assest/instaa.png';
+// import FB from '../assest/fb.png';
+// import Twiter from '../assest/twiter.png';
+const Footer = () => {
   return (
-    <Sheet
-      variant="solid"
-      color={color}
-      invertedColors
+    <Box className="main-body"
+      component="footer"
       sx={{
-        ...(color !== 'neutral' && {
-          bgcolor: `${color}.800`,
-        }),
-        flexGrow: 1,
-        p: 2,
-        borderRadius: { xs: 0, sm: 'sm' },
+        backgroundColor: "#13293D",
+        color: "#fff",
+        padding: 2,
+        textAlign: "center",
+        position: "absolute",
+        width: "100vw",
+        bottom:0,
+        left:0,
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <IconButton
-          variant="soft"
-          size="sm"
-          onClick={() => {
-            const colors = ['primary', 'neutral', 'danger', 'success', 'warning'];
+      <Container maxWidth="lg">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={3}>
+            <Typography variant="h6" sx={{ padding: 2 }}>
+              Hospital Application
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 }}>
+              We are XYZ company, dedicated to providing the best service to our
+              customers.
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1}}>
+             Head- Nilesh Giri, Contact Number,+919691070767 | Roshan Yadav ,Keshav Vishvakarma
+            </Typography>
+          </Grid>
 
-            const nextColor = colors.indexOf(color);
-            setColor(colors[nextColor + 1] ?? colors[0]);
-          }}
-        >
-          <ColorLensRoundedIcon fontSize="small" />
-        </IconButton>
-        <Divider orientation="vertical" />
-        <IconButton variant="plain">
-          <FacebookRoundedIcon />
-        </IconButton>
-        <IconButton variant="plain">
-          <GitHubIcon />
-        </IconButton>
-        <Input
-          variant="soft"
-          placeholder="Type in your email"
-          type="email"
-          name="email"
-          endDecorator={
-            <IconButton variant="soft" aria-label="subscribe">
-              <SendIcon />
-            </IconButton>
-          }
-          sx={{ ml: 'auto', display: { xs: 'none', md: 'flex' } }}
-        />
-      </Box>
-      <Divider sx={{ my: 2 }} />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          alignItems: { md: 'flex-start' },
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: 2,
-        }}
-      >
-        <Card
-          variant="soft"
-          size="sm"
-          sx={{
-            flexDirection: { xs: 'row', md: 'column' },
-            minWidth: { xs: '100%', md: 'auto' },
-            gap: 1,
-          }}
-        >
-          <AspectRatio
-            ratio="21/9"
-            minHeight={80}
-            sx={{ flexBasis: { xs: 200, md: 'initial' } }}
-          >
-            <img alt="" src="/static/blog/mui-product-comparison/ecosystem.png" />
-          </AspectRatio>
-          <CardContent>
-            <Typography level="body-sm">Intro to the MUI ecosystem</Typography>
-            <Typography level="body-xs">Blog post</Typography>
-          </CardContent>
-        </Card>
-        <List
-          size="sm"
-          orientation="horizontal"
-          wrap
-          sx={{ flexGrow: 0, '--ListItem-radius': '8px', '--ListItem-gap': '0px' }}
-        >
-          <ListItem nested sx={{ width: { xs: '50%', md: 140 } }}>
-            <ListSubheader sx={{ fontWeight: 'xl' }}>Sitemap</ListSubheader>
-            <List>
-              <ListItem>
-                <ListItemButton>Services</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>Blog</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>About</ListItemButton>
-              </ListItem>
-            </List>
-          </ListItem>
-          <ListItem nested sx={{ width: { xs: '50%', md: 180 } }}>
-            <ListSubheader sx={{ fontWeight: 'xl' }}>Products</ListSubheader>
-            <List sx={{ '--ListItemDecorator-size': '32px' }}>
-              <ListItem>
-                <ListItemButton>Joy UI</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>Base UI</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>Material UI</ListItemButton>
-              </ListItem>
-            </List>
-          </ListItem>
-        </List>
-      </Box>
-    </Sheet>
+          <Grid item xs={12} sm={3}>
+            <Typography variant="h6" sx={{ padding: 1 }}>
+              Social Media
+            </Typography>
+            <Link href="https://www.facebook.com" color="inherit">
+              <Facebook />
+            </Link>
+            <Link
+              href="https://www.instagram.com"
+              color="inherit"
+              sx={{ pl: 1, pr: 1 }}
+            >
+              <Instagram />
+            </Link>
+            <Link href="https://www.twitter.com" color="inherit">
+              <Twitter />
+            </Link>
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <Typography variant="h6" color="white" sx={{ padding: 1 }}>
+              Centres of Excellence
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 ,
+                  "&:hover": {
+                  borderBottom: "1px solid white",
+                 
+                  }
+            
+            }}>
+              Centre for Neurosciences
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 ,
+                  "&:hover": {
+                    borderBottom: "1px solid white",
+                    }
+            }}>
+              Centre for Transplant
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 ,
+                "&:hover": {
+                  borderBottom: "1px solid white",
+                  }
+            }}>
+              Critical Care Unit
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1  ,
+                    "&:hover": {
+                  borderBottom: "1px solid white",
+              
+                  }
+            }}>
+              Department of Cardiology
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 ,
+                    "&:hover": {
+                  borderBottom: "1px solid white",
+                  
+                  }
+            }}>
+              Department of Orthopedics
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 ,
+                    "&:hover": {
+                  borderBottom: "1px solid white",
+                
+                  }
+            }}>
+              Gynaecology and Obstetrics
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 ,
+                    "&:hover": {
+                  borderBottom: "1px solid white",
+                 
+                  }
+            }}>
+              Pediatrics
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <Typography variant="h6" color="white" sx={{ padding: 1 }}>
+              Hospital Details
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 ,
+                     "&:hover": {
+                      borderBottom: "1px solid white",
+                      
+                      }
+            }}>
+              Contact Us
+            </Typography>
+            <Typography variant="body2" color="white" sx={{ padding: 1 }}>
+              <Input
+                type="text"
+                placeholder="Enter your email"
+                sx={{
+                  padding: 2,
+                  width: "100%",
+                  backgroundColor: "white",
+                  borderRadius: 3,
+                  outline: "none",
+                  border: "none",
+                  height: 17,
+                  margin: 1,
+                  borderBottom: " ipx solid transparent",
+                  "&:focus": {
+                    borderBottom: "none",
+                  }
+                }}
+              />
+              <Button variant="contained" sx={{
+                borderRadius: 3 ,
+                backgroundColor: "#35CFF4",
+                "&:hover": {
+                  backgroundColor: "#35CFF4",
+                } }}>Sigh Up</Button>
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <hr />
+      <Typography variant="body2" sx={{ padding: 2 }}>
+        &copy; {new Date().getFullYear()} Your Website Name
+      </Typography>
+    </Container>
+    </Box >
   );
-}
+};
+
+export default Footer;
