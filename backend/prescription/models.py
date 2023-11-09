@@ -6,7 +6,7 @@ import uuid
 # Prescription View Class
 class Prescription(models.Model):
     prescription_id  = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    disease =  models.ForeignKey(Disease, default = uuid.uuid4, on_delete = models.CASCADE)
+    disease_id =  models.ForeignKey(Disease, default = uuid.uuid4, on_delete = models.CASCADE)
     medication_name = models.CharField(max_length = 255)
     dosage = models.CharField(max_length = 10)
     frequency = models.CharField(max_length = 50)

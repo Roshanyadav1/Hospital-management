@@ -1,10 +1,12 @@
-from hospital.views import HospitalViewSet
-from rest_framework.routers import DefaultRouter
-from django.urls import path, include
+from django.contrib import admin
+from django.urls import path
+from hospital.views import *
 
-router = DefaultRouter()
-router.register('hospital', HospitalViewSet, basename = 'hospital')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('register/', HospitalRegister.as_view(), name = 'hospital'),
+    path('view/', HospitalView.as_view(), name = 'hospital view'),
+    path('view/<uuid:input>', HospitalView.as_view(), name = 'hospital view by id'),
+    path('update/<uuid:input>', HospitalUpdate.as_view(), name = 'hospital update'),
+    path('delete/<uuid:input>', HospitalDelete.as_view(), name = 'hospital delete'),
 ]
