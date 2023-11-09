@@ -1,12 +1,11 @@
+from django.urls import path
 from user.views import *
-from rest_framework.routers import DefaultRouter
-from django.urls import path, include
 
-router = DefaultRouter()
-
-urlpatterns = [
-    path('login/', UserLoginView.as_view()),
-    path('view/', UserView.as_view()),
-    path('delete/<uuid:input>', UserLoginView.as_view()),
-    path('update/<uuid:input>', UserLoginView.as_view()),
+urlpatterns= [
+    path('register/', UserRegister.as_view(), name='user register'),
+    path('login/', UserLoginView.as_view(), name='user login'),
+    path('view/',UserView.as_view(), name = 'user view'),
+    path('view/<uuid:input>/', UserView.as_view(), name = 'user view by id'),
+    path('delete/<uuid:input>/', UserDelete.as_view(), name = 'user delete'),
+    path('update/<uuid:input>/', UserUpdate.as_view(), name = 'user update')
 ]
