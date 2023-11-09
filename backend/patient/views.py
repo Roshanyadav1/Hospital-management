@@ -1,84 +1,136 @@
 from patient.models import Patient
 from patient.serializers import PatientSerializer
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework import viewsets
-
 from user.models import User
+from rest_framework.generics import GenericAPIView
+from user.serializers import UserRegisterSerializer
 
 
-class PatientViewSet(viewsets.ModelViewSet):
-    queryset = Patient.objects.all()
+class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
 
-    def list(self, request, *args, **kwargs):
-        data = list(Patient.objects.all().values())
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "Patients Data Retrieved Successfully",
-                'data': data
-            },
-        )
+    def post(self, request, format = None):
+        if Patient.objects.filter(patient_email = request.data.get('patient_email')).count() >= 1:
+            return Response(
+                {
+                   'status': status.HTTP_400_BAD_REQUEST,
+                   'message': 'Patient Already Exists'
+                },
+            )
+        else:
+            serializer = PatientSerializer(data = request.data)
+            serializer.is_valid(raise_exception = True)
+            serializer.save()
+            patient = Patient.objects.get(patient_email = request.data.get('patient_email'))
 
-    def retrieve(self, request, *args, **kwargs):
-            data = list(Patient.objects.filter(patient_id = kwargs['pk']).values())
+            member_id = patient.patient_id
+            user_name = patient.patient_name
+            user_email = request.data.get('patient_email')
+            user_password = request.data.get('password')
+            user_role = "Patient"
+
+            user = User.objects.create_user(member_id, user_name, user_email, user_role, user_password)
+
+            return Response(
+                {
+                    'status': status.HTTP_201_CREATED,
+                    'message': 'Patient Successfully Registered'
+                },
+            )
+
+class PatientView(APIView):
+    def get(self, request, input = None, format = None):
+        id = input
+        if id is not None:
+            if Patient.objects.filter(patient_id = id).count() >= 1:
+                doctor = Patient.objects.get(patient_id = id)
+                serializer = PatientSerializer(doctor)
+                return Response(
+                    {
+                        'status': status.HTTP_200_OK,
+                        'message': "Patient Data Retrieved Successfully",
+                        'data': serializer.data
+                    },
+                )
+            else:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': "Invalid Patient Id",
+                    },
+                ) 
+        else:
+            patient = Patient.objects.all()
+            serializer = PatientSerializer(patient, many = True)
             return Response(
                 {
                     'status': status.HTTP_200_OK,
-                    'message': "Patient Data Retrieved Successfully",
-                    'data': data
+                    'message': "Patients Data Retrieved Successfully",
+                    'data': serializer.data
                 },
             )
     
-    def create(self, request, *args, **kwargs):
-        product_serializer_data = PatientSerializer(data = request.data)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        patient = Patient.objects.get(patient_email = request.data.get('patient_email'))
-
-        member_id = patient.patient_id
-        user_name = patient.patient_name
-        user_email = request.data.get('patient_email')
-        user_password = request.data.get('patient_password')
-        user_role = "Patient"
-    
-        user = User.objects.create_user(member_id, user_name, user_email, user_role, user_password)
-
-        return Response(
-            {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Patient Registered Successfully'
-            },
-        )
-    
-    def destroy(self, request, *args, **kwargs):
-        product_data = Patient.objects.filter(patient_id = kwargs['pk'])
-        if product_data:
-            product_data.delete()
+class PatientUpdate(APIView):
+    def put(self, request, input, format = None):
+        id = input
+        if Patient.objects.filter(patient_id = id).count() >= 1:
+            doctor = Patient.objects.get(patient_id = id)
+            serializer = PatientSerializer(doctor, data = request.data)
+            serializer.is_valid(raise_exception = True)
+            serializer.save()
             return Response(
-            {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Patient Data Deleted'
-            },
-        )
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': 'Complete Data Updated',
+                }, 
+            )
         else:
             return Response(
                 {
                     'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Patient Data Not Found'
+                    'message': 'Invalid Patient Id', 
+                },
+            )
+    
+    def patch(self, request, input, format = None):
+        id = input
+        if Patient.objects.filter(patient_id = id).count() >= 1:
+            doctor = Patient.objects.get(patient_id = id)
+            serializer = PatientSerializer(doctor, data = request.data, partial = True)
+            serializer.is_valid(raise_exception = True)
+            serializer.save()
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': 'Partial Data Updated',
+                }, 
+            )
+        else:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': "Invalid Patient Id",
                 },
             )
 
-    def update(self, request, *args, **kwargs):
-        product_details = Patient.objects.get(patient_id = kwargs['pk'])
-        product_serializer_data = PatientSerializer(product_details, data=request.data, partial=True)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': 'Patient Data Updated Successefully'
-            },
-        )
-        
+class PatientDelete(APIView):
+    def delete(self, request, input, format = None):
+        id = input
+        if Patient.objects.filter(patient_id = id).count() >= 1:
+            doctor = Patient.objects.get(patient_id = id)
+            doctor.delete()
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': "Patient Data Deleted",
+                },
+            )
+        else:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': "Invalid Patient Id",
+                },
+            )
