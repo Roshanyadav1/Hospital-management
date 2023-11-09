@@ -10,11 +10,16 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+<<<<<<< HEAD
         ('doctor', '__first__'),
         ('appointment', '0001_initial'),
         ('patient', '__first__'),
         ('disease', '__first__'),
         ('prescription', '__first__'),
+=======
+        ('disease', '0001_initial'),
+        ('appointment', '0001_initial'),
+>>>>>>> origin/dev
     ]
 
     operations = [
@@ -27,9 +32,6 @@ class Migration(migrations.Migration):
                 ('next_appointment_time', models.TimeField()),
                 ('appointment_id', models.ForeignKey(default=uuid.uuid4, on_delete=django.db.models.deletion.CASCADE, to='appointment.appointment')),
                 ('disease_id', models.ForeignKey(default=uuid.uuid4, on_delete=django.db.models.deletion.CASCADE, to='disease.disease')),
-                ('doctor_id', models.ForeignKey(default=uuid.uuid4, on_delete=django.db.models.deletion.CASCADE, to='doctor.doctor')),
-                ('patient_id', models.ForeignKey(default=uuid.uuid4, on_delete=django.db.models.deletion.CASCADE, to='patient.patient')),
-                ('prescription_id', models.ForeignKey(default=uuid.uuid4, on_delete=django.db.models.deletion.CASCADE, to='prescription.prescription')),
             ],
         ),
     ]
