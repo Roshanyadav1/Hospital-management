@@ -103,7 +103,7 @@ class PrescriptionDelete(APIView):
             prescripton.delete()
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
+                    'status': status.HTTP_201_CREATED,
                     'message': "Prescription Data Deleted",
                 },
             )   
