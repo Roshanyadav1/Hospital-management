@@ -1,10 +1,11 @@
-from disease.views import DiseaseViewSet
-from rest_framework.routers import DefaultRouter
-from django.urls import path, include
+from django.urls import path
+from disease.views import *
 
-router = DefaultRouter()    
-router.register('disease', DiseaseViewSet, basename='disease')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('add/', DiseaseAdd.as_view(), name = 'disease add'),
+    path('view/', DiseaseView.as_view(), name = 'disease view'),
+    path('view/<uuid:input>', DiseaseView.as_view(), name = 'disese view by id'),
+    path('update/<uuid:input>', DiseaseUpdate.as_view(), name = 'disease update'),
+    path('delete/<uuid:input>', DiseaseDelete.as_view(), name = 'disease delete'),
 ]

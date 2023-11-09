@@ -1,6 +1,7 @@
 "use client";
 import { Field, ErrorMessage } from 'formik';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { colors } from '@/styles/theme';
 
 const RadioButtonGroup = ({ label, name, options }) => {
   return (
@@ -20,7 +21,7 @@ const RadioButtonGroup = ({ label, name, options }) => {
           </RadioGroup>
         )}
       </Field>
-      <ErrorMessage name={name} component="div" style={{ color: 'red' }} />
+      <ErrorMessage name={name} component="div" style={{ color: colors.error , fontSize: 10 }} />
     </FormControl>
   );
 };
