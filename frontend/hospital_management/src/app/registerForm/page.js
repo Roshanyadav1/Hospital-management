@@ -1,9 +1,7 @@
 "use client"
 import { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import Autocomplete from '@mui/material/Autocomplete';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -11,77 +9,75 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
 import FORM_VALIDATION from './Components/FormValidation/formValidation';
-import { FormControl, FormLabel } from '@mui/material';
-import TextField from './Components/Textfield/Text'
+import { Box, TextField } from '@mui/material';
+import Text from './Components/Textfield/Text'
+import { colors } from '@/styles/theme';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Image from 'next/image';
 
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: '2rem',
-  width: '100%',
   maxWidth: '650px',
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  borderRadius: '8px',
   boxShadow: theme.shadows[3],
-  backgroundColor: '#F0F2FA',
-  // borderRadius: '25px',
+  backgroundColor: colors.background,
+  borderRadius: '20px',
+  padding: '2rem',
 }));
 
+//for the heading
 const StyledTypography = styled(Typography)(() => ({
   fontWeight: 'bold',
   paddingBottom: '1rem',
-  color: '#3f51b5',
+  color: colors.primary,
 }));
 
+
+//for hiding the input image button
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
+
+//for the whole form
 const StyledFormWrapper = styled('div')({
   minHeight: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: '#f0f0f0',
+  display: 'grid',
+  placeItems: 'center',
+  padding: '2rem',
+  '@media (max-width: 450px)': {
+    padding: '0rem',
+  },
 });
 
-const StyledSelectField = styled(Select)({
-  minWidth: 200,
-});
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  margin: '2rem 0',
-  display: 'flex',
-  alignItems: 'center !important',
-  justifyContent: 'center',
+// for preview image 
+const StyledImageWrapper = styled(Image)(({height , width}) => ({
+  height: height || '100px',
+  width: width || '100px',
+  borderRadius: 10 ,
+  border : `2px solid ${colors.secondary}`,
 }));
 
-const StyledLogoField = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-  marginBottom: '10px',
-});
-
-const StyledChooseFileButton = styled(Button)({
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-  cursor: 'pointer',
-});
-
-const StyledFileInput = styled('input')({
-  display: 'none',
-});
-
-const StyledPreviewImage = styled('img')({
-  width: '100px',
-  height: '100px',
-  borderRadius: '50%',
-  objectFit: 'cover',
-  marginTop: '10px',
-});
+// for the upload box and hover to show the animation of the upload icon
+const StyledBox = styled(Box)(() => ({
+  height: '150px',
+  width: '150px',
+  borderRadius: 10,
+  backgroundColor: colors.lightGrey,
+  border: `2px dashed ${colors.secondary}`,
+  '&:hover': {
+    cursor: 'pointer',
+    border: `2px solid ${colors.secondary}`,
+    transition: '3s ease-in-out'    
+  },
+}));
 
 const INITIAL_FORM_STATE = {
   HospitalName: '',
@@ -101,9 +97,9 @@ const INITIAL_FORM_STATE = {
 };
 
 const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
-// const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Surat', 'Indore', 'Bhopal', 'Vadodara', 'Coimbatore', 'Ludhiana', 'Amritsar', 'Patna', 'Ranchi', 'Bhubaneswar',
-//   'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
-// ];
+const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Surat', 'Indore', 'Bhopal', 'Vadodara', 'Coimbatore', 'Ludhiana', 'Amritsar', 'Patna', 'Ranchi', 'Bhubaneswar',
+  'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
+];
 
 const App = () => {
   const [previewImage, setPreviewImage] = useState(null);
@@ -119,7 +115,10 @@ const App = () => {
   };
 
   const handleChooseLogoClick = () => {
-    const fileInput = document.getElementById('logoInput');
+    let fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = handleImageChange;
     fileInput.click();
   };
 
@@ -140,9 +139,12 @@ const App = () => {
         >
           {({ values, setFieldValue }) => (
             <Form>
+              {
+                console.log(values , "the values are ")
+              }
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
-                  <TextField name="HospitalName" label="Name" autoComplete=""
+                  <Text name="HospitalName" label="Name" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -151,7 +153,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField name="HospitalNumber" label="Phone" autoComplete="off"
+                  <Text name="HospitalNumber" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -160,7 +162,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField name="HospitalEmail" label="Email" autoComplete="off"
+                  <Text name="HospitalEmail" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -168,9 +170,11 @@ const App = () => {
                     }}
                   />
                 </Grid>
-                    {/* // yha per issue he bro  */}
-                {/* <Grid item xs={12} sm={6}>
-                  <Autocomplete id="hospitalCity" options={cities}
+                {/* // yha per issue he bro  */}
+                <Grid item xs={12} sm={6}>
+                  <Autocomplete
+                    name="hospitalCity"
+                    options={cities}
                     getOptionLabel={(option) => option}
                     renderInput={(params) => (
                       <TextField
@@ -185,8 +189,8 @@ const App = () => {
                       />
                     )}
                   />
-                  <ErrorMessage name="HospitalCity" component="div" style={{ color: 'red' }} />
-                </Grid> */}
+                  <ErrorMessage name="HospitalCity" component="div" style={{ color: colors.error , fontSize: 10 }} />
+                </Grid>
                 {/* provide proper error usding yup validation for this field if the city is not selected from the dropdown */}
                 <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
@@ -200,7 +204,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField name="HospitalAddress" label="Address" autoComplete="off"
+                  <Text name="HospitalAddress" label="Address" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -210,22 +214,24 @@ const App = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <FormControl>
-                    <FormLabel >
-                      Category
-                    </FormLabel>
-                    <Field as={Select} name="category" >
-                      <MenuItem value="" disabled>
-                        Select a category
-                      </MenuItem>
-                      {categories.map((category) => (
-                        <MenuItem key={category} value={category} style={{ background: 'white' }}>
-                          {category}
-                        </MenuItem>
-                      ))}
-                    </Field>
-                    <ErrorMessage name="category" component="div" style={{ color: 'red' }} />
-                  </FormControl>
+                  <Autocomplete
+                    name="category"
+                    options={categories}
+                    getOptionLabel={(option) => option}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Category"
+                        InputProps={{
+                          ...params.InputProps,
+                          style: {
+                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                  <ErrorMessage name="category" component="div" style={{ color: colors.error , fontSize: 10 }} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
@@ -244,7 +250,7 @@ const App = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField name="HospitalOwnerName" label="Name" autoComplete="off"
+                  <Text name="HospitalOwnerName" label="Name" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -253,7 +259,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField name="HospitalOwnerNumber" label="Phone" autoComplete="off"
+                  <Text name="HospitalOwnerNumber" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -262,7 +268,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField name="HospitalOwnerEmail" label="Email" autoComplete="off"
+                  <Text name="HospitalOwnerEmail" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -271,7 +277,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField name="UserName" label="Username" autoComplete="off"
+                  <Text name="UserName" label="Username" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -280,7 +286,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField name="Password" label="Password" autoComplete="off"
+                  <Text name="Password" label="Password" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -292,31 +298,24 @@ const App = () => {
                   <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital's logo
                   </Typography>
+                  <Box  onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px' , margin :'1rem 0rem' }}>
+                  {previewImage ? (
+                      <StyledImageWrapper width={150} height={150} onClick={handleChooseLogoClick} src={previewImage} alt="logo"  />
+                    ):(
+                        <StyledBox item display='flex' justifyContent='center' alignItems='center' >
+                          <Grid display='block'>
+                          <CloudUploadIcon sx={{ height: '35px', color: colors.secondary , position:'relative' , left:'1.6rem' }} />
+                          <StyledTypography variant='body2' >
+                            upload logo
+                          </StyledTypography>
+                            </Grid>
+                        </StyledBox>
+                    )}
+                  </Box>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <div>
-                    <Button
-                      Style={{ marginTop: '20px' }}
-                    
-                      onClick={handleChooseLogoClick}
-                    >
-                      Choose Logo
-                    </Button>
-                    <input
-                      type="file"
-                      id="logoInput"
-                    
-                      accept="image/*"
-                      onChange={handleImageChange}
-                    />
-                    {previewImage && (
-                      <div >
-                        <img src={previewImage} alt="Preview" style={{ marginBottom: '1rem', boxShadow: 'box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35)' }} />
-                      </div>
-                    )}
-
-                  </div>
+                  <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
@@ -324,7 +323,7 @@ const App = () => {
                     variant="contained"
                     color="primary"
                     type="submit"
-                  
+
                   >
                     Submit
                   </Button>
