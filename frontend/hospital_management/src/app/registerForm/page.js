@@ -96,6 +96,7 @@ const INITIAL_FORM_STATE = {
   Password: '',
 };
 
+
 const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
 const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Surat', 'Indore', 'Bhopal', 'Vadodara', 'Coimbatore', 'Ludhiana', 'Amritsar', 'Patna', 'Ranchi', 'Bhubaneswar',
   'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
@@ -125,9 +126,14 @@ const App = () => {
   return (
     <StyledFormWrapper>
       <StyledPaper elevation={3}>
+
+
         <StyledTypography variant="h4">
           Registration Form
         </StyledTypography>
+        <Typography variant="h6">
+              General Information
+        </Typography>
         <Formik
           initialValues={{
             ...INITIAL_FORM_STATE,
@@ -245,7 +251,7 @@ const App = () => {
                 </Grid>
                 <hr />
                 <Grid item xs={12}>
-                  <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital Owner's Information
                   </Typography>
                 </Grid>

@@ -44,6 +44,14 @@ export const themeOptions = {
             fontSize: '1.5rem',
             fontWeight: 'bold',
         },
+        h5 : {
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+        },
+        h6 : {
+            fontSize: '1rem',
+            fontWeight: 'bold',
+        },
         subtitle1: {
             fontSize: '1.2rem',
             fontWeight: 'bold',
