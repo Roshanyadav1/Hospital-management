@@ -10,16 +10,11 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-<<<<<<< HEAD
         ('doctor', '__first__'),
         ('appointment', '0001_initial'),
         ('patient', '__first__'),
         ('disease', '__first__'),
         ('prescription', '__first__'),
-=======
-        ('disease', '0001_initial'),
-        ('appointment', '0001_initial'),
->>>>>>> origin/dev
     ]
 
     operations = [
