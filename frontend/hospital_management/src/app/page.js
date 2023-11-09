@@ -1,5 +1,7 @@
 "use client"
 import { useAuth0 } from "@auth0/auth0-react";
+// import SteperNav from "@/components/SteperNav";
+// import FixedContainer from "@/components/container";
 
 export default function Home() {
   const { loginWithRedirect } = useAuth0();
@@ -14,3 +16,13 @@ export default function Home() {
   )
 }
 
+// function page() {
+
+//   return (
+//     <div>
+//       <SteperNav />
+//       <FixedContainer />
+//     </div>
+//   );
+// }
+// export default page;
