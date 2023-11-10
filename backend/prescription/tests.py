@@ -60,16 +60,17 @@ class Testview(TestSetUp):
         self.assertEqual(res.status_code, 200)
 
     def test_prescription_update_(self):
-           res = self.client.patch(self.prescription_update_url,input=self.test)
-           self.assertEqual(res.status_code,200)
+        res = self.client.patch(self.prescription_update_url, input=self.test)
+        self.assertEqual(res.status_code, 200)
 
     def test_user_prescription_update_(self):
-           res = self.client.patch(self.prescription_update_url)
-           self.assertEqual(res.status_code,200)
+        res = self.client.patch(self.prescription_update_url)
+        self.assertEqual(res.status_code, 200)
 
     def test_prescription_delete(self):
-           res = self.client.delete(self.prescription_delete_url,input=self.test)
-           self.assertEqual(res.status_code,200)
+        res = self.client.delete(self.prescription_delete_url, input=self.test)
+        self.assertEqual(res.status_code, 200)
+
 
 class PrecriptionSerializerTest(TestCase):
     def test_serializer(self):
@@ -81,9 +82,10 @@ class PrecriptionSerializerTest(TestCase):
             "duration": "5"
         }
 
-        serializer = PrescriptionSerializer(data = self.prescription_data)
+        serializer = PrescriptionSerializer(data=self.prescription_data)
         self.assertTrue(serializer.is_valid())
         self.assertEqual(serializer.errors, {})
+
 
 class TestPrescriptionModel(TestCase):
     def test_model(self):
@@ -92,7 +94,7 @@ class TestPrescriptionModel(TestCase):
         frequency = "10mg",
         route = "tablet",
         duration = '5'
-        
+
         prescription = Prescription.objects.create(
             medication_name=medication_name, dosage=dosage, frequency=frequency, route=route, duration=duration)
         self.assertEqual(medication_name, prescription.medication_name)
