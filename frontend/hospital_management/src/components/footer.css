@@ -5,3 +5,18 @@
 .main-div{
     font-family: 'Josefin Sans', sans-serif;
 }
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-body{
+    position: absolute;
+    width: 100vw;
+    bottom: 0;
+}
+
+.hr-line{
+    margin-left: 12px;
+}

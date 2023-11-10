@@ -5,7 +5,7 @@ function page() {
   return (
     <div>
      <h1> Welcome Our First page</h1>
-     <Link href='/data'>Go To Fetching data page</Link>
+     {/* <Link href='/data'>Go To Fetching data page</Link> */}
     </div>
   )
 }
