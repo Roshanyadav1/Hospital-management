@@ -9,7 +9,7 @@ import FixedContainer from "@/components/container";
 // import { NavigateBeforeRounded } from '@mui/icons-material'
 //  import SteperNav from '@/components/SteperNav'
 //  import FixedContainer from '@/components/container'
-//import  MiniDrawer from '@/components/sidebar'
+import  MiniDrawer from '@/components/sidebar'
 
 export default function Home() {
   const { loginWithRedirect } = useAuth0();
@@ -17,8 +17,7 @@ export default function Home() {
   return (
     <>
     <div>
-           <SteperNav />
-           <FixedContainer />
+    <MiniDrawer/>
         </div>
     <main>
       <h1>this is home</h1>
