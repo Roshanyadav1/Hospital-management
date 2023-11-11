@@ -127,6 +127,12 @@ function MiniDrawer() {
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
+                    outline: "none",
+                    borderBottom:'none',
+                    fontWeight: "bold",
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                    },
                   }}
                   className={router.pathname === item.path ? "active" : ""}
                 >
