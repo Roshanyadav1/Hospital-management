@@ -3,6 +3,7 @@ import React from 'react'
 // import FetchData from '@/app/data/page'
 // import Link from 'next/link'
 // import Footer from '@/components/Footer'
+
 import { useGetAllPostByIdQuery, useGetAllPostQuery,useCreatePostMutation } from'@/service/user'
 
 function page() {

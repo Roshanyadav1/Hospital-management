@@ -24,9 +24,9 @@ const openedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: "hidden",
-  backgroundColor: "#13293D", // Set the background color to #13293D
-  color:"white",
+  // overflowX: "hidden",
+  // backgroundColor: "#13293D", // Set the background color to #13293D
+  // color:"white",
 });
 
 const closedMixin = (theme) => ({
@@ -114,8 +114,8 @@ function MiniDrawer() {
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
-                  backgroundColor: open ? "#13293D" : "inherit", // Set background color
-                  color: open ? "#fff" : "inherit", // Set text color
+                  // backgroundColor: open ? "#13293D" : "inherit", // Set background color
+                  // color: open ? "#fff" : "inherit", // Set text color
                 }}
               >
                 <ListItemIcon
