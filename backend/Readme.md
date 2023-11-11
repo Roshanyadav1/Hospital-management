@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Hospital API Endpoints
 * https://domain/api/hospital/register
 * https://domain/api/hospital/view
@@ -47,3 +48,6 @@
 * https://domain/api/prescription/view/uuid
 * https://domain/api/prescription/update/uuid
 * https://domain/api/prescription/delete/uuid
+=======
+
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3

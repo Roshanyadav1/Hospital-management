@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 from doctor.serializers import DoctorSerializer
 from rest_framework.generics import GenericAPIView
+=======
+from rest_framework.pagination import PageNumberPagination
+from doctor.serializers import DoctorSerializer
+from rest_framework.generics import GenericAPIView
+from rest_framework.generics import ListAPIView
+from rest_framework.filters import SearchFilter
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from doctor.models import Doctor
@@ -20,7 +28,19 @@ class DoctorRegister(GenericAPIView):
             },
         )
     
+<<<<<<< HEAD
 class DoctorView(APIView):
+=======
+class DoctorView(ListAPIView):
+    queryset = Doctor.objects.all()
+    serializer_class = DoctorSerializer
+    filterset_fields = ['disease_specialist']
+    pagination_class  = PageNumberPagination
+    filter_backends = [SearchFilter]
+    search_fields = ['disease_specialist']
+
+class DoctorViewById(APIView):
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
     def get(self, request, input = None, format = None):
         id = input
         if id is not None:
@@ -41,6 +61,7 @@ class DoctorView(APIView):
                         'message': "Invalid Doctor Id",
                     },
                 ) 
+<<<<<<< HEAD
         else:
             doctor = Doctor.objects.all()
             serializer = DoctorSerializer(doctor, many = True)
@@ -51,6 +72,8 @@ class DoctorView(APIView):
                     'data': serializer.data
                 },
             )
+=======
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
     
 class DoctorUpdate(APIView):
     def put(self, request, input, format = None):

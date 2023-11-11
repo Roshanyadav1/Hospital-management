@@ -11,6 +11,7 @@ from user.serializers import UserRegisterSerializer
 class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
 
+<<<<<<< HEAD
     def post(self, request, format = None):
         if Patient.objects.filter(patient_email = request.data.get('patient_email')).count() >= 1:
             return Response(
@@ -24,6 +25,22 @@ class PatientRegister(GenericAPIView):
             serializer.is_valid(raise_exception = True)
             serializer.save()
             patient = Patient.objects.get(patient_email = request.data.get('patient_email'))
+=======
+    def post(self, request, format=None):
+        if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() >= 1:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': 'Patient Already Exists'
+                },
+            )
+        else:
+            serializer = PatientSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            patient = Patient.objects.get(
+                patient_email=request.data.get('patient_email'))
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
 
             member_id = patient.patient_id
             user_name = patient.patient_name
@@ -31,7 +48,12 @@ class PatientRegister(GenericAPIView):
             user_password = request.data.get('password')
             user_role = "Patient"
 
+<<<<<<< HEAD
             user = User.objects.create_user(member_id, user_name, user_email, user_role, user_password)
+=======
+            user = User.objects.create_user(
+                member_id, user_name, user_email, user_role, user_password)
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
 
             return Response(
                 {
@@ -40,12 +62,22 @@ class PatientRegister(GenericAPIView):
                 },
             )
 
+<<<<<<< HEAD
 class PatientView(APIView):
     def get(self, request, input = None, format = None):
         id = input
         if id is not None:
             if Patient.objects.filter(patient_id = id).count() >= 1:
                 doctor = Patient.objects.get(patient_id = id)
+=======
+
+class PatientView(APIView):
+    def get(self, request, input=None, format=None):
+        id = input
+        if id is not None:
+            if Patient.objects.filter(patient_id=id).count() >= 1:
+                doctor = Patient.objects.get(patient_id=id)
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
                 serializer = PatientSerializer(doctor)
                 return Response(
                     {
@@ -60,10 +92,17 @@ class PatientView(APIView):
                         'status': status.HTTP_400_BAD_REQUEST,
                         'message': "Invalid Patient Id",
                     },
+<<<<<<< HEAD
                 ) 
         else:
             patient = Patient.objects.all()
             serializer = PatientSerializer(patient, many = True)
+=======
+                )
+        else:
+            patient = Patient.objects.all()
+            serializer = PatientSerializer(patient, many=True)
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
             return Response(
                 {
                     'status': status.HTTP_200_OK,
@@ -71,6 +110,7 @@ class PatientView(APIView):
                     'data': serializer.data
                 },
             )
+<<<<<<< HEAD
     
 class PatientUpdate(APIView):
     def put(self, request, input, format = None):
@@ -79,17 +119,33 @@ class PatientUpdate(APIView):
             doctor = Patient.objects.get(patient_id = id)
             serializer = PatientSerializer(doctor, data = request.data)
             serializer.is_valid(raise_exception = True)
+=======
+
+
+class PatientUpdate(APIView):
+    def put(self, request, input, format=None):
+        id = input
+        if Patient.objects.filter(patient_id=id).count() >= 1:
+            doctor = Patient.objects.get(patient_id=id)
+            serializer = PatientSerializer(doctor, data=request.data)
+            serializer.is_valid(raise_exception=True)
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
             serializer.save()
             return Response(
                 {
                     'status': status.HTTP_200_OK,
                     'message': 'Complete Data Updated',
+<<<<<<< HEAD
                 }, 
+=======
+                },
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
             )
         else:
             return Response(
                 {
                     'status': status.HTTP_400_BAD_REQUEST,
+<<<<<<< HEAD
                     'message': 'Invalid Patient Id', 
                 },
             )
@@ -120,6 +176,40 @@ class PatientDelete(APIView):
         id = input
         if Patient.objects.filter(patient_id = id).count() >= 1:
             doctor = Patient.objects.get(patient_id = id)
+=======
+                    'message': 'Invalid Patient Id',
+                },
+            )
+
+    def patch(self, request, input, format=None):
+        id = input
+        if Patient.objects.filter(patient_id=id).count() >= 1:
+            doctor = Patient.objects.get(patient_id=id)
+            serializer = PatientSerializer(
+                doctor, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': 'Partial Data Updated',
+                },
+            )
+        else:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': "Invalid Patient Id",
+                },
+            )
+
+
+class PatientDelete(APIView):
+    def delete(self, request, input, format=None):
+        id = input
+        if Patient.objects.filter(patient_id=id).count() >= 1:
+            doctor = Patient.objects.get(patient_id=id)
+>>>>>>> 79599d2cde0f0f9c3ae17efbe816d69b234c1eb3
             doctor.delete()
             return Response(
                 {

@@ -1,13 +1,18 @@
-import SteperNav from "@/components/SteperNav";
-import FixedContainer from "@/components/container";
+import SteperNav from '@/components/SteperNav'
+import FixedContainer from '@/components/container'
+ 
 
-function page() {
+
+// for the patient page , the patient page will be the main page for the patient
+function page({ pageProps }) {
 
   return (
     <div>
       <SteperNav />
       <FixedContainer />
     </div>
-  );
+  )
+
 }
-export default page;
+export default page
+
