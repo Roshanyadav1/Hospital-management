@@ -15,6 +15,16 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
+import HomePage from "@/app/pages/home/page";
+import About from "@/app/pages/about/page";
+import Analytics from "@/app/pages/analytics/page";
+import Career from "@/app/pages/career/page";
+import Blog from "@/app/pages/blog/page";
+import Help from "@/app/pages/help/page";
+import History from "@/app/pages/history/page";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Home from "@/app/dashboard/page";
 
 const drawerWidth = 240;
 
@@ -25,7 +35,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   // overflowX: "hidden",
-  // backgroundColor: "#13293D", // Set the background color to #13293D
+  // backgroundColor: "#13293D", 
   // color:"white",
 });
 
@@ -79,7 +89,7 @@ const Drawer = styled(MuiDrawer, {
 function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const router = useRouter();
   const sidebarChanges = () => {
     setOpen(!open);
   };
@@ -91,50 +101,59 @@ function MiniDrawer() {
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <List>
+    <List>
           {[
-            "Home",
-            "About",
-            "Blog",
-            "Career",
-            "Analytics",
-            "History",
-            "Help", 
-          ].map((text, index) => (
+            { text: "HomePage", path: "/" },
+            { text: "About", path: "/pages/about" },
+            { text: "Blog", path: "/pages/blog" },
+            { text: "Career", path: "/pages/career" },
+            { text: "Analytics", path: "/pages/analytics" },
+            { text: "History", path: "/pages/history" },
+            { text: "Help", path: "/pages/help" },
+          ].map((item, index) => (
             <ListItem
-              key={text}
+              key={item.text}
               disablePadding
               sx={{
                 display: "block",
-                color:"white",
+                color: "white",
               }}
             >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  // backgroundColor: open ? "#13293D" : "inherit", // Set background color
-                  // color: open ? "#fff" : "inherit", // Set text color
-                }}
-              >
-                <ListItemIcon
+              {/* Wrap the ListItemButton with Link */}
+              <Link href={item.path} passHref>
+                <ListItemButton
+                  component="a" // Set ListItemButton as a link
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
+                  className={router.pathname === item.path ? "active" : ""}
                 >
-                  <BiRadioCircle />
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <BiRadioCircle />
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-      
+        {router.pathname === "/" && <HomePage />}
+        {router.pathname === "/pages/about" && <About />}
+        {router.pathname === "/pages/blog" && <Blog />}
+        {router.pathname === "/pages/career" && <Career />}
+        {router.pathname === "/pages/analytics" && <Analytics />}
+        {router.pathname === "/pages/history" && <History />}
+        {router.pathname === "/pages/help" && <Help />}
       </Box>
     </Box>
   );
