@@ -7,6 +7,7 @@ class Employee(models.Model):
     employee_name=  models.CharField(max_length=100)
     employee_email = models.EmailField(max_length=100)
     employee_number = models.BigIntegerField()
+    employee_password = models.CharField(max_length=255)
     employee_type = models.CharField(max_length=50,  choices=(('Part Time', 'Part Time'),
                                                               ('Full Time', 'Full Time')))
     employee_role =  models.CharField(max_length=50, choices=(('Doctor','Doctor'),

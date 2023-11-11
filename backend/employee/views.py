@@ -6,6 +6,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from employee.models import Employee
+from user.models import User
 from rest_framework import status
 
 
@@ -24,6 +25,17 @@ class EmployeeAdd(GenericAPIView):
             serializer = EmployeeSerializer(data = request.data)
             serializer.is_valid(raise_exception = True)
             serializer.save()
+            employee = Employee.objects.get(
+                employee_email=request.data.get('employee_email'))
+
+            member_id = employee.employee_id
+            user_name = employee.employee_name
+            user_email = request.data.get('employee_email')
+            user_password = request.data.get('employee_password')
+            user_role = employee.employee_role
+
+            user = User.objects.create_user(
+                member_id, user_name, user_email, user_role, user_password)
             return Response(
                 {
                     'status': status.HTTP_201_CREATED,
