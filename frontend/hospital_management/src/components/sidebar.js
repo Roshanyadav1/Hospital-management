@@ -101,16 +101,16 @@ function MiniDrawer() {
         <DrawerHeader></DrawerHeader>
         <List>
           {[
+            "Doctor",
+            "Disease",
+            "Docter Detail",
+            "Billing",
+            "Analytics",
             "Dashboard",
-            "Appointment Management",
-            "Billing Management",
+            "Appointment",
+            "About Hospital",
             "Prescription Management",
-            "Discharge Summary",
-            "Lab Notifications",
-            "Pharmacy Management",
-            "Stock Management",
-            "Stock Moment",
-            "Intelligent Reports"
+            "Discharge Summary"
           ].map((text, index) => (
             <ListItem
               key={text}
@@ -175,6 +175,8 @@ function MiniDrawer() {
             lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
             faucibus et molestie ac.
           </Typography>
+          
+          
           <Typography paragraph>
             Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
             ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
@@ -189,94 +191,9 @@ function MiniDrawer() {
             eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
             posuere sollicitudin aliquam ultrices sagittis orci a.
           </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-
+          
         </Grid>
-
-        <Footer />
+        <Footer/>
       </Box>
     </Box>
   );
