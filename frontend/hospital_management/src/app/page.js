@@ -5,18 +5,27 @@ import SwipeableTextMobileStepper from '@/components/Steper'
 import { NavigateBeforeRounded } from '@mui/icons-material'
 //  import SteperNav from '@/components/SteperNav'
 //  import FixedContainer from '@/components/container'
-import  MiniDrawer from '@/components/sidebar'
-
-
+//import  MiniDrawer from '@/components/sidebar'
+// import ResponsiveAppBar from '@/components/Navbar'
+// import diffToast from '@/app/login'
+//  import Login from '@/app/login'
+// import FilledAlerts from '@/components/toast'
+import App from '@/components/toastfy';
 
 function page() {
   return (
     <div>
-<MiniDrawer/>
+    <App/>
+     
+{/* <MiniDrawer/> */}
+{/* <ResponsiveAppBar/> */}
+{/* <diffToast/> */}
+{/* <Login/> */}
+{/* <FilledAlerts/> */}
   {/* <SteperNav/> */}
 {/* <SwipeableTextMobileStepper/>  */}
 {/* <FixedContainer/> */}
-
+{/* <ResponsiveAppBar/> */}
  </div> 
   )
 

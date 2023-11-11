@@ -7,6 +7,8 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
+import SGA from "../assets/SGA.png";
+import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
@@ -16,9 +18,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import "./Navbar.css";
+import TextField from "@mui/material/TextField";
 
-const pages = ["Home", "About", "contact"];
+const pages = ["Home   ", "About   ", "contact   ", "HELP", ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar({ sidebarChanges, open }) {
@@ -46,6 +48,9 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
         backgroundColor: "#FFFFFF",
         color: "#13293D",
         margin: "0",
+        display: "flex",
+        justifyContent: "center",
+        padding:"0",
       }}
       position="static"
       className="appbar"
@@ -59,7 +64,7 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="#app-bar-with-responsive-menu" 
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -68,22 +73,32 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              flexGrow: 1,
             }}
           >
-            VEDANTU HOSPITAL
+            <Image
+              src={SGA}
+              alt="logo"
+              width={150}
+              automatically
+              provided
+              height={50}
+              // blurDataURL="data:..." automatically provided
+              // placeholder="blur" // Optional blur-up while loading
+            />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
+            {/* <IconButton */}
+            {/* // size="large" */}
+            {/* // aria-label="account of current user" */}
+            {/* // aria-controls="menu-appbar" */}
+            {/* // aria-haspopup="true" */}
+            {/* // onClick={handleOpenNavMenu} */}
+            {/* // color="inherit" */}
+            {/* // > */}
+            {/* <MenuIcon /> */}
+            {/* </IconButton> */}
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -100,19 +115,30 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
+                fontWeight: 700,
                 display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography
+                    textAlign="center"
+                    sx={{
+                      "&:hover": {
+                        borderBottom:'1px solid black'
+                        
+                      },
+                    }}
+                  >
+                    {page}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
           <Typography
-            variant="h5"
+            variant="h2"
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
@@ -123,6 +149,7 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
+
               color: "inherit",
               textDecoration: "none",
             }}
@@ -132,7 +159,14 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "inherit", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "inherit",
+                  display: "block",
+                  fontWeight: 500,
+                  fontSize: 17,
+                  wordSpacing: 10,
+                }}
               >
                 {page}
               </Button>

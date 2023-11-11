@@ -11,11 +11,12 @@ const colors = {
     black: '#000',
     gray: '#A7AFB7',
 }
-const theme = createTheme({
+const theme1 = createTheme({
     palette: {
         mode: 'light',
         primary: {
             main: colors.primary,
+            contrastText:colors.secondary
         },
         secondary: {
             main: colors.secondary,
@@ -38,4 +39,4 @@ const theme = createTheme({
         },
     }
 });
-export default theme
+export default theme1
