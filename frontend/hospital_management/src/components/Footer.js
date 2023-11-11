@@ -3,7 +3,6 @@ import { Box, Typography, Button, Grid, Input } from "@mui/material";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
-import './footer.css';
 import Image from "next/image";
 // import instaa from '../assest/instaa.png';
 // import FB from '../assest/fb.png';

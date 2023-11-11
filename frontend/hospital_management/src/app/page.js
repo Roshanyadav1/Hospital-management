@@ -1,31 +1,15 @@
-// import React from 'react'
-// import FetchData from '@/app/data/page'
-// import Link from 'next/link'
-// import SwipeableTextMobileStepper from '@/components/Steper'
-// import { NavigateBeforeRounded } from '@mui/icons-material'
-// import SteperNav from '@/components/SteperNav'
-// import FixedContainer from '@/components/container'
-import MiniDrawer from '@/components/sidebar'
-// import  MiniDrawer from '@/components/sidebar'
+import SteperNav from '@/components/SteperNav'
+import FixedContainer from '@/components/container'
+ 
 
-// export default function App () {
-//   return (
-//       <Component {...pageProps} />
-//         this is working
-//     </SessionProvider>
-//   )
-// }
+
+// for the patient page , the patient page will be the main page for the patient
 function page({ pageProps }) {
-
-  // console.log("ENV FILES" , process.env)
 
   return (
     <div>
-     <MiniDrawer/>
-      {/* <SteperNav /> */}
-      {/* <SwipeableTextMobileStepper/>  */}
-      {/* <FixedContainer /> */}
-
+      <SteperNav />
+      <FixedContainer />
     </div>
   )
 
