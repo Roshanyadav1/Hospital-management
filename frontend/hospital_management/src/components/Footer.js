@@ -19,7 +19,7 @@ const Footer = () => {
         textAlign: "center",
       }}
     >
-      <Container  sx={{ margin: 0 }} maxWidth="lg">
+      <Container  sx={{ margin: 'auto' }} maxWidth="lg">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={3}>
             <Box sx={{ marginTop: 1 }}>

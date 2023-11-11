@@ -17,7 +17,7 @@ import ResponsiveAppBar from "./Navbar";
 import Footer from "./Footer";
 import { Grid } from "@mui/material";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -101,13 +101,16 @@ function MiniDrawer() {
         <DrawerHeader></DrawerHeader>
         <List>
           {[
-            "Home",
-            "About",
-            "Blog",
-            "Career",
-            "Analytics",
-            "history",
-            "Help",
+            "Dashboard",
+            "Appointment Management",
+            "Billing Management",
+            "Prescription Management",
+            "Discharge Summary",
+            "Lab Notifications",
+            "Pharmacy Management",
+            "Stock Management",
+            "Stock Moment",
+            "Intelligent Reports"
           ].map((text, index) => (
             <ListItem
               key={text}
@@ -116,18 +119,18 @@ function MiniDrawer() {
                 display: "block",
                 backgroundColor: "#13293d",
                 color: "#fff",
-                "&:hover": {  
+                "&:hover": {
                   backgroundColor: "#fff",
                   color: "#13293d",
                 },
-                
-                
+
+
               }}
             >
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open   ? "initial" : "center",
+                  justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   // background:'#13293D',color:'#fff',
                   // '& MuiButtonBase-root-MuiListItemButton-root:hover' :{
@@ -141,7 +144,7 @@ function MiniDrawer() {
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
                     //color:'white'
-                   backgroundColor: "inherit",
+                    backgroundColor: "inherit",
                     color: "#fff",
                   }}
                 >
@@ -153,123 +156,123 @@ function MiniDrawer() {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1}}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         <DrawerHeader />
-        <Grid container item padding={3}  >
+        <Grid container item padding={3} >
 
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+          <Typography paragraph>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
+            dolor purus non enim praesent elementum facilisis leo vel. Risus at
+            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
+            quisque non tellus. Convallis convallis tellus id interdum velit
+            laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
+            adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
+            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
+            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
+            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
+            vivamus at augue. At augue eget arcu dictum varius duis at consectetur
+            lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
+            faucibus et molestie ac.
+          </Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
 
         </Grid>
 

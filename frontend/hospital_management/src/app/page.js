@@ -1,5 +1,7 @@
+import Footer from '@/components/Footer'
 import SteperNav from '@/components/SteperNav'
 import FixedContainer from '@/components/container'
+import { Grid } from '@mui/material'
  
 
 
@@ -9,7 +11,10 @@ function page({ pageProps }) {
   return (
     <div>
       <SteperNav />
+      <Grid container item padding={3} >
       <FixedContainer />
+      </Grid>
+      <Footer/>
     </div>
   )
 
