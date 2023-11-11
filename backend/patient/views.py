@@ -11,19 +11,20 @@ from user.serializers import UserRegisterSerializer
 class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
 
-    def post(self, request, format = None):
-        if Patient.objects.filter(patient_email = request.data.get('patient_email')).count() >= 1:
+    def post(self, request, format=None):
+        if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() >= 1:
             return Response(
                 {
-                   'status': status.HTTP_400_BAD_REQUEST,
-                   'message': 'Patient Already Exists'
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': 'Patient Already Exists'
                 },
             )
         else:
-            serializer = PatientSerializer(data = request.data)
-            serializer.is_valid(raise_exception = True)
+            serializer = PatientSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
             serializer.save()
-            patient = Patient.objects.get(patient_email = request.data.get('patient_email'))
+            patient = Patient.objects.get(
+                patient_email=request.data.get('patient_email'))
 
             member_id = patient.patient_id
             user_name = patient.patient_name
@@ -31,7 +32,8 @@ class PatientRegister(GenericAPIView):
             user_password = request.data.get('password')
             user_role = "Patient"
 
-            user = User.objects.create_user(member_id, user_name, user_email, user_role, user_password)
+            user = User.objects.create_user(
+                member_id, user_name, user_email, user_role, user_password)
 
             return Response(
                 {
@@ -40,12 +42,13 @@ class PatientRegister(GenericAPIView):
                 },
             )
 
+
 class PatientView(APIView):
-    def get(self, request, input = None, format = None):
+    def get(self, request, input=None, format=None):
         id = input
         if id is not None:
-            if Patient.objects.filter(patient_id = id).count() >= 1:
-                doctor = Patient.objects.get(patient_id = id)
+            if Patient.objects.filter(patient_id=id).count() >= 1:
+                doctor = Patient.objects.get(patient_id=id)
                 serializer = PatientSerializer(doctor)
                 return Response(
                     {
@@ -60,10 +63,10 @@ class PatientView(APIView):
                         'status': status.HTTP_400_BAD_REQUEST,
                         'message': "Invalid Patient Id",
                     },
-                ) 
+                )
         else:
             patient = Patient.objects.all()
-            serializer = PatientSerializer(patient, many = True)
+            serializer = PatientSerializer(patient, many=True)
             return Response(
                 {
                     'status': status.HTTP_200_OK,
@@ -71,41 +74,43 @@ class PatientView(APIView):
                     'data': serializer.data
                 },
             )
-    
+
+
 class PatientUpdate(APIView):
-    def put(self, request, input, format = None):
+    def put(self, request, input, format=None):
         id = input
-        if Patient.objects.filter(patient_id = id).count() >= 1:
-            doctor = Patient.objects.get(patient_id = id)
-            serializer = PatientSerializer(doctor, data = request.data)
-            serializer.is_valid(raise_exception = True)
+        if Patient.objects.filter(patient_id=id).count() >= 1:
+            doctor = Patient.objects.get(patient_id=id)
+            serializer = PatientSerializer(doctor, data=request.data)
+            serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(
                 {
                     'status': status.HTTP_200_OK,
                     'message': 'Complete Data Updated',
-                }, 
+                },
             )
         else:
             return Response(
                 {
                     'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invalid Patient Id', 
+                    'message': 'Invalid Patient Id',
                 },
             )
-    
-    def patch(self, request, input, format = None):
+
+    def patch(self, request, input, format=None):
         id = input
-        if Patient.objects.filter(patient_id = id).count() >= 1:
-            doctor = Patient.objects.get(patient_id = id)
-            serializer = PatientSerializer(doctor, data = request.data, partial = True)
-            serializer.is_valid(raise_exception = True)
+        if Patient.objects.filter(patient_id=id).count() >= 1:
+            doctor = Patient.objects.get(patient_id=id)
+            serializer = PatientSerializer(
+                doctor, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(
                 {
                     'status': status.HTTP_200_OK,
                     'message': 'Partial Data Updated',
-                }, 
+                },
             )
         else:
             return Response(
@@ -115,11 +120,12 @@ class PatientUpdate(APIView):
                 },
             )
 
+
 class PatientDelete(APIView):
-    def delete(self, request, input, format = None):
+    def delete(self, request, input, format=None):
         id = input
-        if Patient.objects.filter(patient_id = id).count() >= 1:
-            doctor = Patient.objects.get(patient_id = id)
+        if Patient.objects.filter(patient_id=id).count() >= 1:
+            doctor = Patient.objects.get(patient_id=id)
             doctor.delete()
             return Response(
                 {

@@ -17,12 +17,8 @@ function page({ pageProps }) {
 
   return (
     <div>
-      <SessionProvider session={pageProps?.session}>
-      <SteperNav />
-      <FixedContainer />
-      <Auth />
-
-    </SessionProvider>
+     <h1> Welcome Our First page</h1>
+     {/* <Link href='/data'>Go To Fetching data page</Link> */}
     </div>
   );
 }
