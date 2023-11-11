@@ -1,8 +1,11 @@
-'use client'
-import SteperNav from "@/components/SteperNav";
-import FixedContainer from "@/components/container";
-import { SessionProvider } from 'next-auth/react'
-import Auth from '@/components/auth';
+// import React from 'react'
+// import FetchData from '@/app/data/page'
+// import Link from 'next/link'
+// import SwipeableTextMobileStepper from '@/components/Steper'
+// import { NavigateBeforeRounded } from '@mui/icons-material'
+//  import SteperNav from '@/components/SteperNav'
+//  import FixedContainer from '@/components/container'
+import  MiniDrawer from '@/components/sidebar'
 
 // export default function App () {
 //   return (
@@ -17,9 +20,14 @@ function page({ pageProps }) {
 
   return (
     <div>
-     <h1> Welcome Our First page</h1>
-     {/* <Link href='/data'>Go To Fetching data page</Link> */}
-    </div>
-  );
-}
-export default page;
+<MiniDrawer/>
+  {/* <SteperNav/> */}
+{/* <SwipeableTextMobileStepper/>  */}
+{/* <FixedContainer/> */}
+
+ </div> 
+  )
+
+  }
+export default page
+
