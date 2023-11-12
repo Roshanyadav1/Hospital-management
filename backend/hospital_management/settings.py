@@ -31,6 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.0.7',
+    'hospital-management-six-chi.vercel.app',
     # '192.168.46.147',
 ]
 
@@ -194,25 +195,25 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 }
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'json': {
-            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
-            'format': '%(levelname)s %(asctime)s %(name)s %(message)s',
-        },
-    },
-    'handlers': {
-        'json_file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'logs.log',
-            'formatter': 'json',
-        },
-    },
-    'root': {
-        'handlers': ['json_file'],
-        'level': 'INFO',
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'json': {
+#             '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+#             'format': '%(levelname)s %(asctime)s %(name)s %(message)s',
+#         },
+#     },
+#     'handlers': {
+#         'json_file': {
+#             'level': 'INFO',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'filename': 'logs.log',
+#             'formatter': 'json',
+#         },
+#     },
+#     'root': {
+#         'handlers': ['json_file'],
+#         'level': 'INFO',
+#     },
+# }

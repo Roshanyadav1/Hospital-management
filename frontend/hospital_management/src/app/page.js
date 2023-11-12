@@ -1,30 +1,22 @@
 "use client"
 import { useAuth0 } from "@auth0/auth0-react";
-import SteperNav from "@/components/SteperNav";
-import FixedContainer from "@/components/container";
-// import React from 'react'
-// import FetchData from '@/app/data/page'
-// import Link from 'next/link'
-// import SwipeableTextMobileStepper from '@/components/Steper'
-// import { NavigateBeforeRounded } from '@mui/icons-material'
-//  import SteperNav from '@/components/SteperNav'
-//  import FixedContainer from '@/components/container'
 import  MiniDrawer from '@/components/sidebar'
-
+//import disease_form from "@/components/disease_form";
 export default function Home() {
   const { loginWithRedirect } = useAuth0();
 
   return (
     <>
-    <div>
+     <div>
     <MiniDrawer/>
         </div>
-    <main>
+   {/* <main>
       <h1>this is home</h1>
       <header className="App-header">
         <button onClick={() => loginWithRedirect()}>Log In</button>
       </header>
-    </main>
+    </main> */}
+  {/* <disease_form/> */}
     </>
   )
 }
