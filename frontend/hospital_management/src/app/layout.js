@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
 
         <CustomProvider>
           <ThemeProvider theme={theme}>
-            <body className={inter.className}>
+            <body>
               {children}
             </body>
           </ThemeProvider>

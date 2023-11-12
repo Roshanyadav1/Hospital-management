@@ -11,8 +11,8 @@ function page({ pageProps }) {
   return (
     <div>
       <SteperNav />
-      <Grid container item padding={3} >
-      <FixedContainer />
+      <Grid container item p={3}>
+        <FixedContainer />
       </Grid>
       <Footer/>
     </div>
