@@ -14,6 +14,8 @@ import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Image from 'next/image';
+import * as Yup from 'yup';
+
 
 
 
@@ -58,11 +60,11 @@ const StyledFormWrapper = styled('div')({
 });
 
 // for preview image 
-const StyledImageWrapper = styled(Image)(({height , width}) => ({
+const StyledImageWrapper = styled(Image)(({ height, width }) => ({
   height: height || '100px',
   width: width || '100px',
-  borderRadius: 10 ,
-  border : `2px solid ${colors.secondary}`,
+  borderRadius: 10,
+  border: `2px solid ${colors.secondary}`,
 }));
 
 // for the upload box and hover to show the animation of the upload icon
@@ -75,7 +77,7 @@ const StyledBox = styled(Box)(() => ({
   '&:hover': {
     cursor: 'pointer',
     border: `2px solid ${colors.secondary}`,
-    transition: '3s ease-in-out'    
+    transition: '3s ease-in-out'
   },
 }));
 
@@ -123,16 +125,21 @@ const Register = () => {
     fileInput.click();
   };
 
+  // const FORM_VALIDATION = Yup.object().shape({
+  //   hospitalCity: Yup.string().required('City is required'),
+  //   // Add other Yup validations for other fields if needed
+  // });
+
   return (
     <StyledFormWrapper>
       <StyledPaper elevation={3}>
 
 
-        <StyledTypography variant="h4">
+        <StyledTypography variant="h4" >
           Registration Form
         </StyledTypography>
         <Typography variant="h6">
-              General Information
+          General Information
         </Typography>
         <Formik
           initialValues={{
@@ -142,8 +149,10 @@ const Register = () => {
           onSubmit={(values) => {
             console.log(values);
           }}
+
+
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, handleChange, handleBlur, touched }) => (
             <Form>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
@@ -179,6 +188,11 @@ const Register = () => {
                     name="hospitalCity"
                     options={cities}
                     getOptionLabel={(option) => option}
+                    value={values.hospitalCity}
+                    onChange={(event, newValue) => {
+                      handleChange({ target: { name: 'hospitalCity', value: newValue } });
+                    }}
+                    onBlur={handleBlur}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -186,13 +200,16 @@ const Register = () => {
                         InputProps={{
                           ...params.InputProps,
                           style: {
-                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
+                            background: 'white',
+                            border: 'none',
+                            borderRadius: '25px',
+                            padding: '10px',
                           },
                         }}
                       />
                     )}
                   />
-                  <ErrorMessage name="HospitalCity" component="div" style={{ color: colors.error , fontSize: 10 }} />
+                  <ErrorMessage name="category" component="div" style={{ color: colors.error, fontSize: 10 }} />
                 </Grid>
                 {/* provide proper error usding yup validation for this field if the city is not selected from the dropdown */}
                 <Grid item xs={12} sm={6}>
@@ -234,7 +251,7 @@ const Register = () => {
                       />
                     )}
                   />
-                  <ErrorMessage name="category" component="div" style={{ color: colors.error , fontSize: 10 }} />
+                  <ErrorMessage name="category" component="div" style={{ color: colors.error, fontSize: 10 }} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
@@ -248,7 +265,7 @@ const Register = () => {
                 </Grid>
                 <hr />
                 <Grid item xs={12}>
-                                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                  <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital Owner's Information
                   </Typography>
                 </Grid>
@@ -301,18 +318,18 @@ const Register = () => {
                   <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital's logo
                   </Typography>
-                  <Box  onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px' , margin :'1rem 0rem' }}>
-                  {previewImage ? (
-                      <StyledImageWrapper width={150} height={150} onClick={handleChooseLogoClick} src={previewImage} alt="logo"  />
-                    ):(
-                        <StyledBox item display='flex' justifyContent='center' alignItems='center' >
-                          <Grid display='block'>
-                          <CloudUploadIcon sx={{ height: '35px', color: colors.secondary , position:'relative' , left:'1.6rem' }} />
+                  <Box onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px', margin: '1rem 0rem' }}>
+                    {previewImage ? (
+                      <StyledImageWrapper width={150} height={150} onClick={handleChooseLogoClick} src={previewImage} alt="logo" />
+                    ) : (
+                      <StyledBox item display='flex' justifyContent='center' alignItems='center' >
+                        <Grid display='block'>
+                          <CloudUploadIcon sx={{ height: '35px', color: colors.secondary, position: 'relative', left: '1.6rem' }} />
                           <StyledTypography variant='body2' >
                             upload logo
                           </StyledTypography>
-                            </Grid>
-                        </StyledBox>
+                        </Grid>
+                      </StyledBox>
                     )}
                   </Box>
                 </Grid>
