@@ -17,13 +17,21 @@ import ListItemText from "@mui/material/ListItemText";
 import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
 import Footer from './Footer';
-import HomePage from "@/app/pages/home/page";
-import About from "@/app/pages/about/page";
+// import HomePage from "@/app/pages/home/page";
+// import About from "@/app/pages/about/page";
 import Analytics from "@/app/pages/analytics/page";
 import Career from "@/app/pages/career/page";
-import Blog from "@/app/pages/blog/page";
-import Help from "@/app/pages/help/page";
-import History from "@/app/pages/history/page";
+// import Blog from "@/app/pages/blog/page";
+// import Help from "@/app/pages/help/page";
+// import History from "@/app/pages/history/page";
+import AboutHospital from "@/app/pages/abouthospital/page";
+import Appointment from "@/app/pages/appointment/page";
+import Billing from "@/app/pages/billing/page";
+import Dashboardd from "@/app/pages/dashboardd/page";
+import Disease from "@/app/pages/disease/page";
+import DocterDetail from "@/app/pages/docterdetail/page";
+import Prescription from "@/app/pages/prescription/page";
+import Discharge from "@/app/pages/discharge/page";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Home from "@/app/dashboard/page";
@@ -53,7 +61,7 @@ const closedMixin = (theme) => ({
   },
 });
 
-const AppBar = styled (MuiAppBar, {
+const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -103,15 +111,18 @@ function MiniDrawer() {
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
-    <List>
+        <List>
           {[
-            { text: "HomePage", path: "/" },
-            { text: "About", path: "/pages/about" },
-            { text: "Blog", path: "/pages/blog" },
-            { text: "Career", path: "/pages/career" },
+            { text: "Career", path: "/" },
+            { text: "Docter", path: "/pages/docter" },
+            { text: "Disease", path: "/pages/disease" },
+            { text: "AboutHospital", path: "/pages/abouthospital" },
+            { text: "Billing", path: "/pages/billing" },
             { text: "Analytics", path: "/pages/analytics" },
-            { text: "History", path: "/pages/history" },
-            { text: "Help", path: "/pages/help" },
+            { text: "Dashboardd", path: "/pages/dashboardd" },
+            { text: "DocterDetail", path: "/pages/docterdetail" },
+            { text: "Prescription", path: "/pages/prescription" },
+            { text: "Discharge", path: "/pages/discharge" },
           ].map((item, index) => (
             <ListItem
               key={item.text}
@@ -149,77 +160,80 @@ function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-      <Grid container item padding={3} >
+        <Grid container item padding={3} >
 
-<Typography paragraph>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-  eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-  dolor purus non enim praesent elementum facilisis leo vel. Risus at
-  ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-  quisque non tellus. Convallis convallis tellus id interdum velit
-  laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-  adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-  integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-  eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-  quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-  vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-  lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-  faucibus et molestie ac.
-</Typography>
+          <Typography paragraph>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
+            dolor purus non enim praesent elementum facilisis leo vel. Risus at
+            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
+            quisque non tellus. Convallis convallis tellus id interdum velit
+            laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
+            adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
+            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
+            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
+            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
+            vivamus at augue. At augue eget arcu dictum varius duis at consectetur
+            lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
+            faucibus et molestie ac.
+          </Typography>
 
 
-<Typography paragraph>
-  Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-  ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-  elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-  sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-  mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-  risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-  purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-  tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-  morbi tristique senectus et. Adipiscing elit duis tristique
-  sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-  eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-  posuere sollicitudin aliquam ultrices sagittis orci a.
-</Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
 
-<Typography paragraph>
-  Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-  ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-  elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-  sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-  mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-  risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-  purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-  tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-  morbi tristique senectus et. Adipiscing elit duis tristique
-  sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-  eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-  posuere sollicitudin aliquam ultrices sagittis orci a.
-</Typography>
-<Typography paragraph>
-  Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-  ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-  elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-  sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-  mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-  risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-  purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-  tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-  morbi tristique senectus et. Adipiscing elit duis tristique
-  sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-  eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-  posuere sollicitudin aliquam ultrices sagittis orci a.
-</Typography>
-</Grid>
-<Footer/>
-        {router.pathname === "/" && <HomePage />}
-        {router.pathname === "/pages/about" && <About />}
-        {router.pathname === "/pages/blog" && <Blog />}
-        {router.pathname === "/pages/career" && <Career />}
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
+          <Typography paragraph>
+            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
+            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
+            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
+            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
+            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
+            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
+            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
+            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
+            morbi tristique senectus et. Adipiscing elit duis tristique
+            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+            posuere sollicitudin aliquam ultrices sagittis orci a.
+          </Typography>
+        </Grid>
+        <Footer />
+        {router.pathname === "/" && <Career />}
+        {router.pathname==="/pages/docter"&& <Docter/>}
+        {router.pathname==="/pages/disease"&& <Disease/>}
+        {router.pathname === "/pages/abouthospital" && <AboutHospital />}
+        {router.pathname === "/pages/billing" && <Billing />}
         {router.pathname === "/pages/analytics" && <Analytics />}
-        {router.pathname === "/pages/history" && <History />}
-        {router.pathname === "/pages/help" && <Help />}
+        {router.pathname === "/pages/dashboardd" && <Dashboardd />}
+        {router.pathname === "/pages/docterdetail" && <DocterDetail />}
+        {router.pathname === "/pages/prescription" && <Prescription />}
+        {router.pathname === "/pages/discharge" && <Discharge />}
       </Box>
     </Box>
   );
