@@ -1,4 +1,4 @@
-from rest_framework.pagination import PageNumberPagination
+from doctor.doctor_pagination import DoctorPagination
 from doctor.serializers import DoctorSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
