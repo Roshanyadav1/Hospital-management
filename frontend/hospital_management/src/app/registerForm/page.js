@@ -1,4 +1,5 @@
 "use client"
+<<<<<<< HEAD
 
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -85,6 +86,85 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '50%',
     objectFit: 'cover',
     marginTop: '10px',
+=======
+import { useState } from 'react';
+import { Formik, Form, ErrorMessage } from 'formik';
+import Autocomplete from '@mui/material/Autocomplete';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
+import FORM_VALIDATION from './Components/FormValidation/formValidation';
+import { Box, TextField } from '@mui/material';
+import Text from './Components/Textfield/Text'
+import { colors } from '@/styles/theme';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Image from 'next/image';
+
+
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  maxWidth: '650px',
+  boxShadow: theme.shadows[3],
+  backgroundColor: colors.background,
+  borderRadius: '20px',
+  padding: '2rem',
+}));
+
+//for the heading
+const StyledTypography = styled(Typography)(() => ({
+  fontWeight: 'bold',
+  paddingBottom: '1rem',
+  color: colors.primary,
+}));
+
+
+//for hiding the input image button
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
+
+//for the whole form
+const StyledFormWrapper = styled('div')({
+  minHeight: '100vh',
+  display: 'grid',
+  placeItems: 'center',
+  padding: '2rem',
+  '@media (max-width: 450px)': {
+    padding: '0rem',
+  },
+});
+
+// for preview image 
+const StyledImageWrapper = styled(Image)(({height , width}) => ({
+  height: height || '100px',
+  width: width || '100px',
+  borderRadius: 10 ,
+  border : `2px solid ${colors.secondary}`,
+}));
+
+// for the upload box and hover to show the animation of the upload icon
+const StyledBox = styled(Box)(() => ({
+  height: '150px',
+  width: '150px',
+  borderRadius: 10,
+  backgroundColor: colors.lightGrey,
+  border: `2px dashed ${colors.secondary}`,
+  '&:hover': {
+    cursor: 'pointer',
+    border: `2px solid ${colors.secondary}`,
+    transition: '3s ease-in-out'    
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
   },
 }));
 
@@ -101,6 +181,7 @@ const INITIAL_FORM_STATE = {
   HospitalOwnerName: '',
   HospitalOwnerNumber: '',
   HospitalOwnerEmail: '',
+<<<<<<< HEAD
 };
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -174,6 +255,19 @@ const cities = [ 'Mumbai','Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata
 
 const Registerform = () => {
   const classes = useStyles();
+=======
+  UserName: '',
+  Password: '',
+};
+
+
+const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
+const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Surat', 'Indore', 'Bhopal', 'Vadodara', 'Coimbatore', 'Ludhiana', 'Amritsar', 'Patna', 'Ranchi', 'Bhubaneswar',
+  'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
+];
+
+const Register = () => {
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -186,6 +280,7 @@ const Registerform = () => {
     }
   };
 
+<<<<<<< HEAD
   return (
     <div className={classes.formWrapper} >
       <Paper elevation={3} className={classes.paper} style={{backgroundColor:' #F0F2FA',borderRadius:'25px'}}>
@@ -211,6 +306,27 @@ const Registerform = () => {
           )}
         </div>
 
+=======
+  const handleChooseLogoClick = () => {
+    let fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = handleImageChange;
+    fileInput.click();
+  };
+
+  return (
+    <StyledFormWrapper>
+      <StyledPaper elevation={3}>
+
+
+        <StyledTypography variant="h4">
+          Registration Form
+        </StyledTypography>
+        <Typography variant="h6">
+              General Information
+        </Typography>
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
         <Formik
           initialValues={{
             ...INITIAL_FORM_STATE,
@@ -221,6 +337,7 @@ const Registerform = () => {
           }}
         >
           {({ values, setFieldValue }) => (
+<<<<<<< HEAD
             <Form >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
@@ -237,11 +354,21 @@ const Registerform = () => {
                         border: 'none',
                         borderRadius: '20px',
                         // padding: '10px',
+=======
+            <Form>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} >
+                  <Text name="HospitalName" label="Name" autoComplete=""
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
+<<<<<<< HEAD
                   <Textfield
                     name="HospitalNumber"
                     label="Phone"
@@ -253,11 +380,18 @@ const Registerform = () => {
                         border: 'none',
                         borderRadius: '20px',
                         // padding: '10px',
+=======
+                  <Text name="HospitalNumber" label="Phone" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12}>
+<<<<<<< HEAD
                   <Textfield
                     name="HospitalEmail"
                     label="Email"
@@ -269,13 +403,26 @@ const Registerform = () => {
                         border: 'none',
                         borderRadius: '20px',
                         // padding: '10px',
+=======
+                  <Text name="HospitalEmail" label="Email" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                       },
                     }}
                   />
                 </Grid>
+<<<<<<< HEAD
                 <Grid item xs={12} sm={6}>
                   <Autocomplete
                     id="hospitalCity"
+=======
+                {/* // yha per issue he bro  */}
+                <Grid item xs={12} sm={6}>
+                  <Autocomplete
+                    name="hospitalCity"
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                     options={cities}
                     getOptionLabel={(option) => option}
                     renderInput={(params) => (
@@ -285,14 +432,19 @@ const Registerform = () => {
                         InputProps={{
                           ...params.InputProps,
                           style: {
+<<<<<<< HEAD
                             background: 'white',
                             border: 'none',
                             borderRadius: '25px',
                             padding: '10px',
+=======
+                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                           },
                         }}
                       />
                     )}
+<<<<<<< HEAD
                     
                   />
                 </Grid>
@@ -339,12 +491,35 @@ const Registerform = () => {
                         border: 'none',
                         borderRadius: '20px',
                         // padding: '10px',
+=======
+                  />
+                  <ErrorMessage name="HospitalCity" component="div" style={{ color: colors.error , fontSize: 10 }} />
+                </Grid>
+                {/* provide proper error usding yup validation for this field if the city is not selected from the dropdown */}
+                <Grid item xs={12} sm={6}>
+                  <RadioButtonGroup
+                    label="Type"
+                    name="radioOptions"
+                    options={[
+                      { value: 'Public', label: 'Public' },
+                      { value: 'Private', label: 'Private' },
+                      { value: 'General', label: 'General' },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Text name="HospitalAddress" label="Address" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                       },
                     }}
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
+<<<<<<< HEAD
                   <FormControl className={classes.selectField}>
                     <FormLabel >
                         Category
@@ -395,10 +570,45 @@ const Registerform = () => {
                 <hr />
                 <Grid item xs={12}>
                   <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+=======
+                  <Autocomplete
+                    name="category"
+                    options={categories}
+                    getOptionLabel={(option) => option}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Category"
+                        InputProps={{
+                          ...params.InputProps,
+                          style: {
+                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                  <ErrorMessage name="category" component="div" style={{ color: colors.error , fontSize: 10 }} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <RadioButtonGroup
+                    label="Status"
+                    name="statusRadio"
+                    options={[
+                      { value: 'Active', label: 'Active' },
+                      { value: 'Inactive', label: 'Inactive' },
+                    ]}
+                  />
+                </Grid>
+                <hr />
+                <Grid item xs={12}>
+                                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                     Hospital Owner's Information
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
+<<<<<<< HEAD
                   <Textfield
                     name="HospitalOwnerName"
                     label="Name"
@@ -410,11 +620,18 @@ const Registerform = () => {
                         border: 'none',
                         borderRadius: '20px',
                         // padding: '10px',
+=======
+                  <Text name="HospitalOwnerName" label="Name" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
+<<<<<<< HEAD
                   <Textfield
                     name="HospitalOwnerNumber"
                     label="Phone"
@@ -426,11 +643,18 @@ const Registerform = () => {
                         border: 'none',
                         borderRadius: '20px',
                         // padding: '10px',
+=======
+                  <Text name="HospitalOwnerNumber" label="Phone" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                       },
                     }}
                   />
                 </Grid>
                 <Grid item xs={12}>
+<<<<<<< HEAD
                   <Textfield
                     name="HospitalOwnerEmail"
                     label="Email"
@@ -442,24 +666,85 @@ const Registerform = () => {
                         border: 'none',
                         borderRadius: '20px',
                         // padding: '10px',
+=======
+                  <Text name="HospitalOwnerEmail" label="Email" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                       },
                     }}
                   />
                 </Grid>
+<<<<<<< HEAD
                 <Grid item xs={12}>
+=======
+                <Grid item xs={12} sm={6}>
+                  <Text name="UserName" label="Username" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Text name="Password" label="Password" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                    Hospital's logo
+                  </Typography>
+                  <Box  onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px' , margin :'1rem 0rem' }}>
+                  {previewImage ? (
+                      <StyledImageWrapper width={150} height={150} onClick={handleChooseLogoClick} src={previewImage} alt="logo"  />
+                    ):(
+                        <StyledBox item display='flex' justifyContent='center' alignItems='center' >
+                          <Grid display='block'>
+                          <CloudUploadIcon sx={{ height: '35px', color: colors.secondary , position:'relative' , left:'1.6rem' }} />
+                          <StyledTypography variant='body2' >
+                            upload logo
+                          </StyledTypography>
+                            </Grid>
+                        </StyledBox>
+                    )}
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                   <Button
                     variant="contained"
                     color="primary"
                     type="submit"
+<<<<<<< HEAD
                     className={classes.submitButton}
+=======
+
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
                   >
                     Submit
                   </Button>
                 </Grid>
+<<<<<<< HEAD
+=======
+
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
               </Grid>
             </Form>
           )}
         </Formik>
+<<<<<<< HEAD
       </Paper>
     </div>
   );
@@ -467,5 +752,13 @@ const Registerform = () => {
 
 export default Registerform;
 
+=======
+      </StyledPaper>
+    </StyledFormWrapper>
+  );
+};
+
+export default Register;
+>>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
 
 
