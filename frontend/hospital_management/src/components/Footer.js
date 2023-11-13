@@ -28,7 +28,6 @@ const Footer = () => {
             </Box>
             
           </Grid>
-
           <Grid item xs={12} sm={3}>
             <Typography variant="body1" sx={{ padding: 1, fontWeight: "bold" }}>
               Social Media
@@ -165,7 +164,6 @@ const Footer = () => {
            <Box sx={{ marginLeft:15}} >   
            <hr/>
            </Box>
-       
         <Typography variant="body2" sx={{ padding: 2, display: "flex", justifyContent: "center",alignItems: "center",marginLeft:15}}>
           &copy; {new Date().getFullYear()} Your Website Name
         </Typography>
