@@ -1,8 +1,11 @@
 from patient.models import Patient
+from employee.employee_pagination import PatientPagination
 from patient.serializers import PatientSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework import status
+from rest_framework.filters import SearchFilter
 from user.models import User
 from rest_framework.generics import GenericAPIView
 from user.serializers import UserRegisterSerializer
@@ -43,7 +46,27 @@ class PatientRegister(GenericAPIView):
             )
 
 
-class PatientView(APIView):
+class PatientView(ListAPIView):
+    queryset = Patient.objects.all().order_by('created_at')
+    serializer_class = PatientSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['patient_name']
+    pagination_class  = PatientPagination
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        if request.GET.get('pageSize') != None:
+            response.data['page_size'] = int(request.GET.get('pageSize'))
+
+        return Response(
+            {
+                'status': status.HTTP_200_OK, 
+                'message': "Patient Data Retrieved",
+                'data': response.data, 
+            }
+        )
+
+class PatientViewById(APIView):
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -64,18 +87,7 @@ class PatientView(APIView):
                         'message': "Invalid Patient Id",
                     },
                 )
-        else:
-            patient = Patient.objects.all()
-            serializer = PatientSerializer(patient, many=True)
-            return Response(
-                {
-                    'status': status.HTTP_200_OK,
-                    'message': "Patients Data Retrieved Successfully",
-                    'data': serializer.data
-                },
-            )
-
-
+            
 class PatientUpdate(APIView):
     def put(self, request, input, format=None):
         id = input
