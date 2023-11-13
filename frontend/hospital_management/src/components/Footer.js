@@ -1,23 +1,4 @@
-<<<<<<< HEAD
-import { Typography, Button } from '@mui/material'
-import { Container } from '@mui/system'
 
-import React from 'react'
-
-function Footer() {
-  return (
-    <div>
-            <Container>
-               <Typography>Helo megha dhangar you are looking so good yrr bcoze you area very nise girl</Typography>
-               <Button variant="contained">Contained</Button>
-               <Button variant="contained" color="success"> Megha</Button>
-            </Container>
-    </div>
-  )
-}
-
-export default Footer
-=======
 import React from "react";
 import { Box, Typography, Button, Grid, Input } from "@mui/material";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
@@ -193,5 +174,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
->>>>>>> c3dbe502970089d6d4c86c65a7595c915369f74a
+export default Footer
