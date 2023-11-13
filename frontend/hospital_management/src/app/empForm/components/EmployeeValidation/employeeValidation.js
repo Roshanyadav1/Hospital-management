@@ -35,9 +35,10 @@ const Employee_Validation = Yup.object().shape({
     .matches(/[@#$%^&+=_]/, 'Password must contain the special character')
     //   .matches(/_/, 'Password must contain an underscore')
     .required('Password is required'),
-    Empcategories: Yup.string().required('Please select a type'),
-    Role: Yup.string().required('Please select a role'),
-    status: Yup.string().required('Please select status'),
+    Employee_Type: Yup.string().required('Please select a type'),
+    Employee_Role: Yup.string().required('Please select a role'),
+    Employee_Status: Yup.string().required('Please select a status'),
+
 
     Created_By: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')

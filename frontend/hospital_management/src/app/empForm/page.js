@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-//import RadioButtonGroup from './empForm/Components/RadioB/RadioButtonGroup';
-//import Employee_Validation from './components/EmployeeValidation/EmployeeValidation';
+import RadioButtonGroup from './components/RadioB/RadioButtonGroup';
+
 import Employee_Validation from './components/EmployeeValidation/employeeValidation';
 import { TextField } from '@mui/material';
 import Text from './components/Textfield/Text'
@@ -75,7 +75,7 @@ const INITIAL_FORM_STATE = {
 
 const Empcategories = ['Doctor', 'Admin', 'Category 3', 'Category 4'];
 const Role = ['one', 'two', 'three', 'Category 4'];
-const status =['1', '2', '3', 'Category 4'];
+// const status =['1', '2', '3', 'Category 4'];
 
 
 const EmpRegister = () => {
@@ -186,24 +186,14 @@ const EmpRegister = () => {
                 </Grid>
                 
                 <Grid item xs={12} sm={6}>
-                  <Autocomplete
+                  <RadioButtonGroup
+                    label="Status"
                     name="Employee_Status"
-                    options={status}
-                    getOptionLabel={(option) => option}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Status"
-                        InputProps={{
-                          ...params.InputProps,
-                          style: {
-                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
-                          },
-                        }}
-                      />
-                    )}
+                    options={[
+                      { value: 'Active', label: 'Active' },
+                      { value: 'Inactive', label: 'Inactive' },
+                    ]}
                   />
-                  <ErrorMessage name="Employee_Status" component="div" style={{ color: colors.error , fontSize: 10 }} />
                 </Grid>
                 <Divider />
                 <Grid item xs={12} sm={8} >
