@@ -8,7 +8,7 @@ import Image from "next/image";
 // import instaa from '../assest/instaa.png';
 // import FB from '../assest/fb.png';
 // import Twiter from '../assest/twiter.png';
-import Logo from '../assest/whiteSga.png';
+import Logo from '../assest/blueSga.png';
 const Footer = () => {
   return (
     <Grid className="main-body"

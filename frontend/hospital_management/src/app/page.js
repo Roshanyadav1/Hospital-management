@@ -1,25 +1,25 @@
-"use client"
-import React from 'react'
-// import FetchData from '@/app/data/page'
-// import Link from 'next/link'
-// import Footer from '@/components/Footer'
+import Footer from '@/components/Footer'
+import SteperNav from '@/components/SteperNav'
+import FixedContainer from '@/components/container'
+import { Grid } from '@mui/material'
+ 
 
-import { useGetAllPostByIdQuery, useGetAllPostQuery,useCreatePostMutation } from'@/service/user'
 
-function page() {
-  const {data}  = useGetAllPostQuery()
-    console.log(data)
-  //  const {data} = useGetAllPostByIdQuery(5 )
+// for the patient page , the patient page will be the main page for the patient
+function page({ pageProps }) {
 
-  //    const [updatePost, result] = useCreatePostMutation()
-  // console.log("Result",result)
   return (
     <div>
-      <h1>RTK QUERY PRACTICE</h1>
-      {/* <button onClick={()=>updatePost({name:"Megha",id:1301})}>Add Post</button> */}
-      {/* <Footer/> */}
+      <SteperNav />
+      <Grid container item padding={3} >
+      <FixedContainer />
+      </Grid>
+      <Footer/>
     </div>
   )
+  
 }
 export default page
+
+
 
