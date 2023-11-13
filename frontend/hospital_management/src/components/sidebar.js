@@ -1,11 +1,10 @@
 'use client'
-
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
+// import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
@@ -17,13 +16,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
 import Footer from './Footer';
-// import HomePage from "@/app/pages/home/page";
-// import About from "@/app/pages/about/page";
 import Analytics from "@/app/pages/analytics/page";
 import Career from "@/app/pages/career/page";
-// import Blog from "@/app/pages/blog/page";
-// import Help from "@/app/pages/help/page";
-// import History from "@/app/pages/history/page";
 import AboutHospital from "@/app/pages/abouthospital/page";
 import Appointment from "@/app/pages/appointment/page";
 import Billing from "@/app/pages/billing/page";
@@ -44,9 +38,7 @@ const openedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  // overflowX: "hidden",
-  // backgroundColor: "#13293D", 
-  // color:"white",
+  overflowX: "hidden",
 });
 
 const closedMixin = (theme) => ({
@@ -60,6 +52,15 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -96,6 +97,16 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+
+const StyledLink = styled("a")(({ theme }) => ({
+  color: "#fff", // Set the color to white
+  textDecoration: "none", // Remove underline
+  padding: theme.spacing(1), // Add padding
+  "&:hover": {
+    color: "#13293d", // Change color on hover
+  },
+}));
+
 function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -111,6 +122,7 @@ function MiniDrawer() {
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
+        <DrawerHeader></DrawerHeader>
         <List>
           {[
             { text: "Career", path: "/" },
@@ -129,13 +141,18 @@ function MiniDrawer() {
               disablePadding
               sx={{
                 display: "block",
-                color: "white",
+                backgroundColor: "#13293d",
+                color: "#fff",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#13293d",
+                },
               }}
             >
               {/* Wrap the ListItemButton with Link */}
               <Link href={item.path} passHref>
                 <ListItemButton
-                  component="a" // Set ListItemButton as a link
+                  component="a" 
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
@@ -148,6 +165,8 @@ function MiniDrawer() {
                       minWidth: 0,
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
+                      backgroundColor: "inherit",
+                      color: "#fff",
                     }}
                   >
                     <BiRadioCircle />
@@ -161,7 +180,6 @@ function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Grid container item padding={3} >
-
           <Typography paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
@@ -223,10 +241,9 @@ function MiniDrawer() {
             posuere sollicitudin aliquam ultrices sagittis orci a.
           </Typography>
         </Grid>
-        <Footer />
         {router.pathname === "/" && <Career />}
-        {router.pathname==="/pages/docter"&& <Docter/>}
-        {router.pathname==="/pages/disease"&& <Disease/>}
+        {router.pathname === "/pages/docter" && <Docter />}
+        {router.pathname === "/pages/disease" && <Disease />}
         {router.pathname === "/pages/abouthospital" && <AboutHospital />}
         {router.pathname === "/pages/billing" && <Billing />}
         {router.pathname === "/pages/analytics" && <Analytics />}
@@ -234,6 +251,7 @@ function MiniDrawer() {
         {router.pathname === "/pages/docterdetail" && <DocterDetail />}
         {router.pathname === "/pages/prescription" && <Prescription />}
         {router.pathname === "/pages/discharge" && <Discharge />}
+        <Footer />
       </Box>
     </Box>
   );
