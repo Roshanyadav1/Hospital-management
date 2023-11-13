@@ -1,5 +1,5 @@
 from patient.models import Patient
-from employee.employee_pagination import PatientPagination
+from patient.patient_pagination import PatientPagination
 from patient.serializers import PatientSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
