@@ -47,6 +47,8 @@ class EmployeeView(ListAPIView):
     queryset = Employee.objects.all().order_by('created_at')
     serializer_class = EmployeeSerializer
     pagination_class  = EmployeePagination
+    filter_backends = [SearchFilter]
+    search_fields = ['employee_role']
     
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
