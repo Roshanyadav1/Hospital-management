@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 
-class EmployeePagination(PageNumberPagination):
+class DoctorPagination(PageNumberPagination):
     page_size_query_param = 'pageSize'
     page_query_param = 'pageNo'
 

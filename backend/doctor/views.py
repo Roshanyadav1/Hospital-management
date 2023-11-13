@@ -24,12 +24,24 @@ class DoctorRegister(GenericAPIView):
         )
     
 class DoctorView(ListAPIView):
-    queryset = Doctor.objects.all()
+    queryset = Doctor.objects.all().order_by('created_at')
     serializer_class = DoctorSerializer
-    filterset_fields = ['disease_specialist']
-    pagination_class  = PageNumberPagination
+    pagination_class  = DoctorPagination
     filter_backends = [SearchFilter]
     search_fields = ['disease_specialist']
+    
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        if request.GET.get('pageSize') != None:
+            response.data['page_size'] = int(request.GET.get('pageSize'))
+            
+        return Response(
+            {
+            'status': status.HTTP_200_OK, 
+            'message': "Doctor Data Retrieved",
+            'data': response.data, 
+            }
+        )
 
 class DoctorViewById(APIView):
     def get(self, request, input = None, format = None):
