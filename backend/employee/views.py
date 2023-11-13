@@ -1,4 +1,4 @@
-from rest_framework.pagination import PageNumberPagination
+from employee.employee_pagination import EmployeePagination
 from employee.serializers import EmployeeSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
@@ -44,12 +44,19 @@ class EmployeeAdd(GenericAPIView):
             )
     
 class EmployeeView(ListAPIView):
-    queryset = Employee.objects.all()
+    queryset = Employee.objects.all().order_by('created_at')
     serializer_class = EmployeeSerializer
-    filterset_fields = ['employee_role']
-    pagination_class  = PageNumberPagination
-    filter_backends = [SearchFilter]
-    search_fields = ['employee_role']
+    pagination_class  = EmployeePagination
+    
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        return Response(
+            {
+            'status': status.HTTP_200_OK, 
+            'message': "Employee Data Retrieved",
+            'data': response.data, 
+            }
+        )
 
 class EmployeeViewById(ListAPIView):
     def get(self, request, input = None, format = None):
