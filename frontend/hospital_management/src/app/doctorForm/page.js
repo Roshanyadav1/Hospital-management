@@ -7,13 +7,23 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
-import DISEASE_VALIDATION from './Components/D_Validation/d_Validation';
+import DOCTOR_VALIDATION from './Components/Doc_validation/doc_validation';
 import { Box, TextField } from '@mui/material';
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import Divider from '@mui/material/Divider';
 
-
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 const StyledPaper = styled(Paper)(({ theme }) => ({
     maxWidth: '650px',
     boxShadow: theme.shadows[3],
@@ -45,11 +55,11 @@ const StyledFormWrapper = styled('div')({
 });
 
 const INITIAL_FORM_STATE = {
-    d_Id: '',
-    d_Name: '',
-    d_Status: '',
-    created_At: '',
-    updated_At: '',
+    doc_Id: '',
+    disease_Specialist: '',
+    doc_Type: '',
+    Created_At: '',
+    Updated_At: '',
 
 };
 
@@ -61,14 +71,14 @@ const dRegister = () => {
         <StyledFormWrapper>
             <StyledPaper elevation={3}>
                 <StyledTypography variant="h4">
-                    Disease Registration Form
+                    Doctor Registration Form
                 </StyledTypography>
 
                 <Formik
                     initialValues={{
                         ...INITIAL_FORM_STATE,
                     }}
-                    validationSchema={DISEASE_VALIDATION}
+                    validationSchema={DOCTOR_VALIDATION}
                     onSubmit={(values) => {
                         console.log(values);
                     }}
@@ -77,7 +87,7 @@ const dRegister = () => {
                     <Form>
                        <Grid container spacing={2}> 
                             <Grid item xs={12} sm={12} >
-                                <Text name="d_Id" label="Disease Id" autoComplete=""  
+                                <Text name="doc_Id" label="Doctor Id" autoComplete=""  
                                      defaultValue="Id"
                                     InputProps={{
                                         style: {
@@ -87,7 +97,7 @@ const dRegister = () => {
                                     }}
                                 />
                             </Grid><Grid item xs={12} sm={6} >
-                                <Text name="d_Name" label="Disease Name" autoComplete=""
+                                <Text name="disease_Specialist" label="Disease Specialist" autoComplete=""
                                     InputProps={{
                                         style: {
                                             background: 'white', border: 'none', borderRadius: '20px',
@@ -97,8 +107,8 @@ const dRegister = () => {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
-                    label="Disease Status"
-                    name="d_Status"
+                    label="Doctor Type"
+                    name="doc_Type"
                     options={[
                       { value: 'Active', label: 'Active' },
                       { value: 'Inactive', label: 'Inactive' },
@@ -107,7 +117,7 @@ const dRegister = () => {
                 </Grid>
                 <Divider />
                 <Grid item xs={12} sm={6} >
-                  <Text name="created_At" label="Created At" autoComplete=""
+                  <Text name="Created_At" label="Created At" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -116,7 +126,7 @@ const dRegister = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} >
-                  <Text name="updated_At" label="Updated At" autoComplete=""
+                  <Text name="Updated_At" label="Updated At" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -124,7 +134,9 @@ const dRegister = () => {
                     }}
                   />
                 </Grid>
-                
+                <Grid item xs={12} sm={5}>
+                  <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <Button
                     variant="contained"
