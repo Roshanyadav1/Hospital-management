@@ -10,8 +10,8 @@ class Prescription(models.Model):
     medication_name = models.CharField(max_length = 255)
     dosage = models.CharField(max_length = 10)
     frequency = models.CharField(max_length = 50)
-    route = models.CharField(max_length = 50, choices=(('tablet', 'Tablet'),
-                                                     ('oral','oral'),
+    route = models.CharField(max_length = 50, choices=(('Tablet', 'Tablet'),
+                                                     ('Oral','Oral'),
                                                      ('Intravenous', 'Intravenous'),
                                                      ('Intramuscular','Intramuscular'),
                                                      ('Subcutaneous','Subcutaneous'),
