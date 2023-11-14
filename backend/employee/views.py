@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from employee.models import Employee
 from user.models import User
 from rest_framework import status
+from doctor.serializers import DoctorSerializer
 
 
 class EmployeeAdd(GenericAPIView):
@@ -25,10 +26,19 @@ class EmployeeAdd(GenericAPIView):
             serializer = EmployeeSerializer(data = request.data)
             serializer.is_valid(raise_exception = True)
             serializer.save()
+            doctor = None
             employee = Employee.objects.get(
-                employee_email=request.data.get('employee_email'))
-
-            member_id = employee.employee_id
+            employee_email=request.data.get('employee_email'))
+            if employee.employee_role == 'Doctor':
+                doctor_data = {
+                    'employee_id': employee.employee_id,
+                    'doctor_type': employee.employee_type,
+                    'disease_specialist': 'null'
+                }
+                doctor_serializer = DoctorSerializer(data = doctor_data)
+                doctor_serializer.is_valid(raise_exception = True)
+                doctor = doctor_serializer.save()
+            member_id = doctor.doctor_id
             user_name = employee.employee_name
             user_email = request.data.get('employee_email')
             user_password = request.data.get('employee_password')
