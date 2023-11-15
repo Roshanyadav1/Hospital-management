@@ -1,13 +1,11 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { Grid, Typography, Button } from "@mui/material";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
-import container from '@/components/container'
 export default function FixedContainer() {
   return (
     <React.Fragment>
@@ -155,8 +153,7 @@ export default function FixedContainer() {
               Health Checkup Packages{" "}
             </Typography>
             <Typography variant="body2" sx={{ padding: 2 }}>
-              "An executive checkup a year, keeps your future hospital bill in
-              control"
+              "An executive checkup a year, keeps your future hospital bill in control"
             </Typography>
             <Button
               variant="contained"

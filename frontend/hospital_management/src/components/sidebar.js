@@ -15,7 +15,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
+<<<<<<< HEAD
 import Footer from './Footer';
+=======
+import HomePage from "@/app/pages/home/page";
+import About from "@/app/pages/about/page";
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
 import Analytics from "@/app/pages/analytics/page";
 import Career from "@/app/pages/career/page";
 import AboutHospital from "@/app/pages/abouthospital/page";
@@ -38,7 +43,13 @@ const openedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
+<<<<<<< HEAD
   overflowX: "hidden",
+=======
+  // overflowX: "hidden",
+  // backgroundColor: "#13293D", 
+  // color:"white",
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
 });
 
 const closedMixin = (theme) => ({
@@ -122,6 +133,7 @@ function MiniDrawer() {
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
+<<<<<<< HEAD
         <DrawerHeader></DrawerHeader>
         <List>
           {[
@@ -135,24 +147,43 @@ function MiniDrawer() {
             { text: "DocterDetail", path: "/pages/docterdetail" },
             { text: "Prescription", path: "/pages/prescription" },
             { text: "Discharge", path: "/pages/discharge" },
+=======
+    <List>
+          {[
+            { text: "HomePage", path: "/" },
+            { text: "About", path: "/pages/about" },
+            { text: "Blog", path: "/pages/blog" },
+            { text: "Career", path: "/pages/career" },
+            { text: "Analytics", path: "/pages/analytics" },
+            { text: "History", path: "/pages/history" },
+            { text: "Help", path: "/pages/help" },
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
           ].map((item, index) => (
             <ListItem
               key={item.text}
               disablePadding
               sx={{
                 display: "block",
+<<<<<<< HEAD
                 backgroundColor: "#13293d",
                 color: "#fff",
                 "&:hover": {
                   backgroundColor: "#fff",
                   color: "#13293d",
                 },
+=======
+                color: "white",
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
               }}
             >
               {/* Wrap the ListItemButton with Link */}
               <Link href={item.path} passHref>
                 <ListItemButton
+<<<<<<< HEAD
                   component="a" 
+=======
+                  component="a" // Set ListItemButton as a link
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
@@ -179,6 +210,7 @@ function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+<<<<<<< HEAD
         <Grid container item padding={3} >
           <Typography paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -252,6 +284,15 @@ function MiniDrawer() {
         {router.pathname === "/pages/prescription" && <Prescription />}
         {router.pathname === "/pages/discharge" && <Discharge />}
         <Footer />
+=======
+        {router.pathname === "/" && <HomePage />}
+        {router.pathname === "/pages/about" && <About />}
+        {router.pathname === "/pages/blog" && <Blog />}
+        {router.pathname === "/pages/career" && <Career />}
+        {router.pathname === "/pages/analytics" && <Analytics />}
+        {router.pathname === "/pages/history" && <History />}
+        {router.pathname === "/pages/help" && <Help />}
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
       </Box>
     </Box>
   );

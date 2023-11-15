@@ -14,9 +14,14 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.16",
+<<<<<<< HEAD
+=======
+    "@mui/styled-engine-sc": "^6.0.0-alpha.4",
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
     "@mui/joy": "^5.0.0-beta.13",
     "@mui/material": "^5.14.17",
     "@mui/system": "^5.14.15",
+    "@mui/x-data-grid": "^6.18.1",
     "@reduxjs/toolkit": "^1.9.7",
     "auth0": "^4.0.2",
     "axios": "^1.6.0",

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
 import React from "react";
 import { Box, Typography, Button, Grid, Input } from "@mui/material";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
@@ -8,16 +11,26 @@ import Image from "next/image";
 // import instaa from '../assest/instaa.png';
 // import FB from '../assest/fb.png';
 // import Twiter from '../assest/twiter.png';
+<<<<<<< HEAD
 import Logo from '../assest/blueSga.png';
+=======
+import Logo from '../assest/whiteSga.png';
+import { colors } from '../styles/theme';
+
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
 const Footer = () => {
   return (
-    <Grid className="main-body"
-      // component="footer"
+    <Box
       sx={{
-        backgroundColor: "#13293D",
-        color: "#fff",
-        paddingTop: 2,
-        textAlign: "center",
+        background: colors.primary,
+        p: { xs: 4, md: 8, lg: 0 },
+        pt: { lg: 7 },
+        pb: 12,
+        fontSize: { xs: '12px', md: '14px' },
+        position: 'relative',
+        left: 0,
+        bottom: 0,
+        width: '100%',
       }}
     >
       <Container  sx={{ margin: 'auto' }} maxWidth="lg">
@@ -29,7 +42,7 @@ const Footer = () => {
             
           </Grid>
           <Grid item xs={12} sm={3}>
-            <Typography variant="body1" sx={{ padding: 1, fontWeight: "bold" }}>
+          <Typography variant="body1" color="white" sx={{ padding: 1, fontWeight: "bold" }}>
               Social Media
             </Typography>
 
@@ -57,6 +70,13 @@ const Footer = () => {
             }}>
               Department of Orthopedics
             </Typography>
+            <Box
+                sx={{
+                  mb: 2,
+                  mt: 1,
+                  color: colors.info,
+                }}
+              >
             <Link href="https://www.facebook.com" color="inherit">
               <Facebook />
             </Link>
@@ -70,6 +90,7 @@ const Footer = () => {
             <Link href="https://www.twitter.com" color="inherit">
               <Twitter />
             </Link>
+            </Box>
           </Grid>
 
           <Grid item xs={12} sm={3}>
@@ -140,10 +161,9 @@ const Footer = () => {
                   padding: 2,
                   width: "100%",
                   backgroundColor: "white",
-                  borderRadius: 3,
+                  borderRadius: 5,
                   outline: "none",
                   border: "none",
-                  height: 17,
                   margin: 1,
                   borderBottom: " ipx solid transparent",
                   "&:focus": {
@@ -152,7 +172,7 @@ const Footer = () => {
                 }}
               />
               <Button variant="contained" sx={{
-                borderRadius: 3,
+                borderRadius: 5,
                 backgroundColor: "#35CFF4",
                 "&:hover": {
                   backgroundColor: "#35CFF4",
@@ -161,15 +181,19 @@ const Footer = () => {
             </Typography>
           </Grid>
         </Grid>
-           <Box sx={{ marginLeft:15}} >   
+           <Box>   
            <hr/>
            </Box>
         <Typography variant="body2" sx={{ padding: 2, display: "flex", justifyContent: "center",alignItems: "center",marginLeft:15}}>
           &copy; {new Date().getFullYear()} Your Website Name
         </Typography>
       </Container>
-    </Grid >
+    </Box>
   );
 };
 
+<<<<<<< HEAD
 export default Footer
+=======
+export default Footer;
+>>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
