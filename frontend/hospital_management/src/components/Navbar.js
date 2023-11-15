@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-
+import Logo from '../assest/blueSga.png';
 const pages = ["Find a Doctor", "Investors", "About us", "Careers", "Contact us"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -68,7 +68,6 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
           >
             SGA APPLICATION
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
