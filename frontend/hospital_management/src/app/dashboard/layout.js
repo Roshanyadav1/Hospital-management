@@ -4,11 +4,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Layout({ children }) {
   return (
-    // <html lang="en">
-    //   <body className={inter.className}>{children}</body>
-    // </html>
-
-    <>
-    </>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
   )
 }

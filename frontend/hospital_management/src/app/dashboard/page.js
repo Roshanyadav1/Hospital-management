@@ -4,7 +4,7 @@ import MiniDrawer from '@/components/sidebar';
 function FetchData() {
   return (
      <>
-     <MiniDrawer />
+     <MiniDrawer/>
      </>
   );
 }

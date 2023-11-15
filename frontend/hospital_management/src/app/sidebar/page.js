@@ -3,7 +3,7 @@ import Cards from "@/components/Card";
 export default function Home() {
   return (
     <main>
-      <MiniDrawer /> 
+      <MiniDrawer/> 
       {/* <Cards/> */}
     </main>
   )
