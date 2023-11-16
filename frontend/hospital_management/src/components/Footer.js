@@ -4,9 +4,6 @@ import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Image from "next/image";
-// import instaa from '../assest/instaa.png';
-// import FB from '../assest/fb.png';
-// import Twiter from '../assest/twiter.png';
 import Logo from '../assest/whiteSga.png';
 const Footer = () => {
   return (
