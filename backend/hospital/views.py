@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from .models import Hospital
 from user.models import User
 from rest_framework.generics import GenericAPIView
+from hospital_management.responses import ResponseMessage
 
 
 class HospitalRegister(GenericAPIView):
@@ -16,7 +17,7 @@ class HospitalRegister(GenericAPIView):
             return Response(
                {
                   'status': status.HTTP_400_BAD_REQUEST,
-                  'message': 'Hospital Already Exists'
+                  'message': 'Hospital' + ResponseMessage.ALREADY_REGISTERED
                },
             )
       else:
@@ -35,7 +36,7 @@ class HospitalRegister(GenericAPIView):
          return Response(
             {
                'status': status.HTTP_201_CREATED,
-               'message': 'Hospital Successfully Registered'
+               'message': 'Hospital' + ResponseMessage.REGISTRATION_SUCCESS
             },
          )
    
@@ -50,7 +51,7 @@ class HospitalView(APIView):
             return Response(
                {
                   'status': status.HTTP_200_OK,
-                  'message': "Hospital Data Retrieved Successfully",
+                  'message': "Hospital" + ResponseMessage.RETRIEVED_SUCCESS,
                   'data': serializer.data
                },
             )
@@ -58,7 +59,7 @@ class HospitalView(APIView):
             return Response(
                {
                   'status': status.HTTP_400_BAD_REQUEST,
-                  'message': "Invalid Hospital Id",
+                  'message': ResponseMessage.INVALID_ID,
                },
             )  
       else:
@@ -67,7 +68,7 @@ class HospitalView(APIView):
          return Response(
             {
                'status': status.HTTP_200_OK,
-               'message': "Hospital Data Retrieved Successfully",
+               'message': "Hospital" + ResponseMessage.RETRIEVED_SUCCESS,
                'data': serializer.data
             },
          )
@@ -83,14 +84,14 @@ class HospitalUpdate(APIView):
          return Response(
             {
                'status': status.HTTP_200_OK,
-               'message': 'Partial Data Updated',
+               'message': 'Hospital' + ResponseMessage.UPDATE_SUCCESS,
             }, 
          )
       else:  
          return Response(
             {
                'status': status.HTTP_400_BAD_REQUEST,
-               'message': "Invalid Hospital Id",
+               'message': ResponseMessage.INVALID_ID,
             },
          )  
    
@@ -103,13 +104,13 @@ class HospitalDelete(APIView):
          return Response(
             {
                'status': status.HTTP_200_OK,
-               'message': "Hospital Data Deleted",
+               'message': "Hospital" + ResponseMessage.DELETE_SUCCESS,
             },
          )  
       else:  
          return Response(
             {
                'status': status.HTTP_400_BAD_REQUEST,
-               'message': "Invalid Hospital Id",
+               'message': ResponseMessage.INVALID_ID,
             },
          )  
