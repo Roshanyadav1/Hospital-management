@@ -35,6 +35,7 @@ function SteperNav(props) {
       </Typography>
       <Divider />
       <List>
+        <Button href="/api/auth/login" sx={{ color: '#fff' }}>Login</Button>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
@@ -42,6 +43,10 @@ function SteperNav(props) {
             </ListItemButton>
           </ListItem>
         ))}
+
+         
+
+
       </List>
     </Box>
   );

@@ -1,5 +1,7 @@
+"use client"
 import Link from "next/link"
-function AboutPage() {
+function AboutPage({params}) {
+  console.log(params.param)
   return (
     <div>
       <h1>This is about  pagee</h1>
