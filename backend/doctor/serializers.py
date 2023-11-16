@@ -10,4 +10,4 @@ class DoctorSerializer(serializers.ModelSerializer):
 class DoctorUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
-        exclude = ('employee_id', )
+        exclude = ('employee', )

@@ -8,6 +8,7 @@ from appointment.models import Appointment
 from rest_framework.views import APIView
 from rest_framework import status
 from error.models import Error
+from hospital_management.email import send_email_to_client
 
 class AppointmentAdd(GenericAPIView):
     serializer_class = AppointmentAddSerializer
@@ -15,7 +16,9 @@ class AppointmentAdd(GenericAPIView):
     def post(self, request, format = None):
         serializer = AppointmentAddSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
-        serializer.save()
+        appointment = serializer.save()
+        
+        send_email_to_client(appointment)
         error = Error.objects.get(error_title = 'BOOKED_SUCCESS')
         response_message = error.error_message
         response_code = error.error_code

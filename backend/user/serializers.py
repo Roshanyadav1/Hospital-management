@@ -15,9 +15,9 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta: 
         model = User
-        fields = ["member_id", "user_name", "user_email", "user_password", "user_role"]
+        fields = ["member", "user_name", "user_email", "user_password", "user_role"]
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta: 
         model = User
-        exclude = ('user_id', 'password', 'is_verify', 'is_admin', 'is_active', 'last_login',)
+        exclude = ('user', 'password', 'is_verify', 'is_admin', 'is_active', 'last_login',)
