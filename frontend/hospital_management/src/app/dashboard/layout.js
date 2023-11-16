@@ -1,21 +1,20 @@
+"use client"
+
 import { Inter } from 'next/font/google'
 import MiniDrawer from '@/components/sidebar'
-// const inter = Inter({ subsets: ['latin'] })
-// export default function Layout({ children }) {
-//   return (
-//     <html lang="en">
-//       <body className={inter.className}>{children}</body>
-//     </html>
-//   )
-// }
-
-
+import Navbar from "@/components/Navbar"; // Import your navbar component
+import Footer from "@/components/Footer"
+import { Box } from "@mui/material";
 import React from 'react'
 function layout({children}) {
   return (
     <>
-       <MiniDrawer/>
-      <div>{children}</div>
+       <MiniDrawer />
+      {/* <Navbar /> Display your Navbar */}
+      <Box sx={{ paddingLeft: 40 }}> {/* Adjust padding according to your sidebar width */}
+        <div>{children}</div> {/* Display current page content */}
+        {/* <Footer /> Display your Footer */}
+      </Box>
     </>
   )
 }

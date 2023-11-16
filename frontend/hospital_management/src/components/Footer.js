@@ -176,7 +176,7 @@ const Footer = () => {
            <Box>   
            <hr/>
            </Box>
-        <Typography variant="body2" sx={{ padding: 2, display: "flex", justifyContent: "center",alignItems: "center",marginLeft:15}}>
+        <Typography variant="body2" sx={{ padding: 2, display: "flex", justifyContent: "center",alignItems: "center",marginLeft:15,color:"white"}}>
           &copy; {new Date().getFullYear()} Your Website Name
         </Typography>
       </Container>
