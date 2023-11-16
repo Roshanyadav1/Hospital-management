@@ -43,10 +43,6 @@ function SteperNav(props) {
             </ListItemButton>
           </ListItem>
         ))}
-
-         
-
-
       </List>
     </Box>
   );
@@ -80,6 +76,7 @@ function SteperNav(props) {
                 {item}
               </Button>
             ))}
+            <Button href="/api/auth/login" sx={{ color: '#fff' }}>Login</Button>
           </Box>
         </Toolbar>
       </AppBar>

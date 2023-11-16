@@ -15,7 +15,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const pages = ["Find a Doctor", "Investors", "About us", "Careers", "Contact us"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Dashboard"];
 
 function ResponsiveAppBar({ sidebarChanges, open }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -150,6 +150,7 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+                <Button href="/api/auth/logout">Logout</Button>
             </Menu>
           </Box>
         </Toolbar>
