@@ -1,72 +1,116 @@
 from disease.models import Disease
 from disease.serializers import DiseaseSerializer
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework import viewsets
+from rest_framework.generics import GenericAPIView
 
 
-class DiseaseViewSet(viewsets.ModelViewSet):
-    queryset = Disease.objects.all()
+class DiseaseAdd(GenericAPIView):
     serializer_class = DiseaseSerializer
-
-    def list(self, request, *args, **kwargs):
-        data = list(Disease.objects.all().values())
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "Disease Data Retrieved Successfully",
-                'data': data
-            },
-        )
-
-    def retrieve(self, request, *args, **kwargs):
-            data = list(Disease.objects.filter(disease_id = kwargs['pk']).values())
-            return Response(
-                {
-                    'status': status.HTTP_200_OK,
-                    'message': "Disease Data Retrieved Successfully",
-                    'data': data
-                },
-            )
     
-    def create(self, request, *args, **kwargs):
-        product_serializer_data = DiseaseSerializer(data = request.data)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
+    def post(self, request, format = None):
+        serializer = DiseaseSerializer(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()
         return Response(
             {
                 'status': status.HTTP_201_CREATED,
-                'message': 'Disease Added Successfully'
-            },
-        )
-    
-    def destroy(self, request, *args, **kwargs):
-        product_data = Disease.objects.filter(disease_id = kwargs['pk'])
-        if product_data:
-            product_data.delete()
-            return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': 'Disease Deleted Successfully'
-            },
-        )
-        else:
-            return Response(
-            {
-                'status': status.HTTP_400_BAD_REQUEST,
-                'message': 'Disease Not Found'
+                'message': 'Disease Successfully Added'
             },
         )
 
-    def update(self, request, *args, **kwargs):
-        product_details = Disease.objects.get(disease_id = kwargs['pk'])
-        product_serializer_data = DiseaseSerializer(product_details, data=request.data, partial=True)
-        product_serializer_data.is_valid(raise_exception = True)
-        product_serializer_data.save()
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': 'Disease Data Updated Successefully'
-            },
-        )
-        
+class DiseaseUpdate(APIView):
+    def put(self, request, input, format = None):
+        id = input
+        if Disease.objects.filter(disease_id = id).count() >= 1:
+            disease = Disease.objects.get(disease_id = id)
+            serializer = DiseaseSerializer(disease, data = request.data)
+            serializer.is_valid(raise_exception = True)
+            serializer.save()
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': 'Complete Data Updated',
+                }, 
+            )
+        else:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': 'Invalid Disease Id', 
+                },
+            )
+    
+    def patch(self, request, input, format = None):
+        id = input
+        if Disease.objects.filter(disease_id=id).count() >= 1:
+            disease = Disease.objects.get(disease_id=id)
+            serializer = DiseaseSerializer(disease, data = request.data, partial=True)
+            serializer.is_valid(raise_exception = True)
+            serializer.save()
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': 'Partial Data Updated',
+                }, 
+            )
+        else:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': "Invalid Disease Id",
+                },
+            )
+
+class DiseaseDelete(APIView):
+    def delete(self, request, input, format=None):
+        id = input
+        if Disease.objects.filter(disease_id=id).count() >= 1:
+            disease = Disease.objects.get(disease_id=id)
+            disease.delete()
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': "Disease Data Deleted",
+                },
+            )
+        else:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': "Invalid Disease Id",
+                },
+            )
+
+class DiseaseView(APIView):
+    def get(self, request, input = None, format = None):
+        id = input
+        if id is not None:
+            if Disease.objects.filter(disease_id = id).count() >= 1:
+                disease = Disease.objects.get(disease_id = id)
+                serializer = DiseaseSerializer(disease)
+                return Response(
+                    {
+                        'status': status.HTTP_200_OK,
+                        'message': "Diseases Data Retrieved Successfully",
+                        'data': serializer.data
+                    },
+                )
+            else:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': "Invalid Disease Id",
+                    },
+                )
+        else:
+            disease = Disease.objects.all()
+            serializer = DiseaseSerializer(disease, many=True)
+            return Response(
+                {
+                    'status': status.HTTP_200_OK,
+                    'message': "Disese Data Retrieved Successfully",
+                    'data': serializer.data
+                },
+            )

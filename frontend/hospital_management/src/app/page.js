@@ -1,20 +1,24 @@
-'use client'
-import SteperNav from "@/components/SteperNav";
-import FixedContainer from "@/components/container";
-import { SessionProvider } from 'next-auth/react'
-import Auth from '@/components/auth';
+"use client"
 
+import Footer from '@/components/Footer'
+import SteperNav from '@/components/SteperNav'
+import FixedContainer from '@/components/container'
+import { Grid } from '@mui/material'
+// for the patient page , the patient page will be the main page for the patient
 
-function page({ pageProps }) {
-
+function page() {
+ 
+ 
   return (
     <div>
-      <SessionProvider session={pageProps?.session}>
-        <SteperNav />
-        <FixedContainer />
-        <Auth />
-    </SessionProvider>
+      <SteperNav />
+      <Grid container item padding={3} >
+      <FixedContainer />
+      </Grid>
+      <Footer/>
     </div>
-  );
+  )
+
 }
-export default page;
+export default page
+

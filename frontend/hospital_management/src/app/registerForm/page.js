@@ -102,7 +102,7 @@ const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata
   'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
 ];
 
-const App = () => {
+const Register = () => {
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -145,9 +145,6 @@ const App = () => {
         >
           {({ values, setFieldValue }) => (
             <Form>
-              {
-                console.log(values , "the values are ")
-              }
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
                   <Text name="HospitalName" label="Name" autoComplete=""
@@ -344,6 +341,6 @@ const App = () => {
   );
 };
 
-export default App;
+export default Register;
 
 

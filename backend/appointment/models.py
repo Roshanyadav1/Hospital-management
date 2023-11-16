@@ -13,4 +13,3 @@ class Appointment(models.Model):
     disease_id =  models.ForeignKey(Disease, default = uuid.uuid4, on_delete = models.CASCADE)
     appointment_time = models.TimeField()
     appointment_date = models.DateField()
-    status = models.CharField(max_length = 255)

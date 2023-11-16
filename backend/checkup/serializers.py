@@ -3,7 +3,7 @@ from checkup.models import CheckUp
 
 
 # Checkup Serializer Class
-class CheckUpSerializer(serializers.ModelSerializer):
+class CheckupSerializer(serializers.ModelSerializer):
     class Meta:
         model =  CheckUp
         fields = '__all__'
