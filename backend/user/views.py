@@ -7,7 +7,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
-
+from error.models import Error
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -24,10 +24,13 @@ class UserRegister(GenericAPIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
         return Response(
             {
-                'status': status.HTTP_201_CREATED,
-                'message': 'User Successfully Registered'
+                'status': response_code,
+                'message': 'User ' + response_message
             },
         )
 
@@ -38,16 +41,22 @@ class UserDelete(APIView):
         if User.objects.filter(user_id=id).count() >= 1:
             doctor = User.objects.get(user_id=id)
             doctor.delete()
+            error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': "User Data Deleted",
+                    'status': response_code,
+                    'message': "User " + response_message,
                 },
             )
+        error = Error.objects.get(error_title = 'INVALID_ID')
+        response_message = error.error_message
+        response_code = error.error_code
         return Response(
             {
-                'status': status.HTTP_400_BAD_REQUEST,
-                'message': "Invalid User Id",
+                'status': response_code,
+                'message': response_message,
             },
         )
 
@@ -125,17 +134,23 @@ class UserUpdate(APIView):
             serializer = UserSerializer(doctor, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'User ' + response_message,
                 },
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invalid User Id',
+                    'status': response_code,
+                    'message': response_message,
                 },
             )
 
@@ -147,16 +162,22 @@ class UserUpdate(APIView):
                 doctor, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'User ' + response_message,
                 },
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid User Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )

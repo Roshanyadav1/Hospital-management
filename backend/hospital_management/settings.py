@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'checkup',
     'user',
     'employee',
+    'error',
 ]
 
 MIDDLEWARE = [
