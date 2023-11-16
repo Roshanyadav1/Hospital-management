@@ -1,11 +1,22 @@
 import { Inter } from 'next/font/google'
-const inter = Inter({ subsets: ['latin'] })
+import MiniDrawer from '@/components/sidebar'
+// const inter = Inter({ subsets: ['latin'] })
+// export default function Layout({ children }) {
+//   return (
+//     <html lang="en">
+//       <body className={inter.className}>{children}</body>
+//     </html>
+//   )
+// }
 
 
-export default function Layout({ children }) {
+import React from 'react'
+function layout({children}) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <>
+       <MiniDrawer/>
+      <div>{children}</div>
+    </>
   )
 }
+export default layout

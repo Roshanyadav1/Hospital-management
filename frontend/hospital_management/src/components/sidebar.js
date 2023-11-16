@@ -15,25 +15,31 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
-<<<<<<< HEAD
 import Footer from './Footer';
-=======
-import HomePage from "@/app/pages/home/page";
-import About from "@/app/pages/about/page";
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
-import Analytics from "@/app/pages/analytics/page";
-import Career from "@/app/pages/career/page";
-import AboutHospital from "@/app/pages/abouthospital/page";
-import Appointment from "@/app/pages/appointment/page";
-import Billing from "@/app/pages/billing/page";
-import Dashboardd from "@/app/pages/dashboardd/page";
-import Disease from "@/app/pages/disease/page";
-import DocterDetail from "@/app/pages/docterdetail/page";
-import Prescription from "@/app/pages/prescription/page";
-import Discharge from "@/app/pages/discharge/page";
+// import Analytics from "@/app/pages/analytics/page";
+// import Career from "@/app/pages/career/page";
+// import AboutHospital from "@/app/pages/abouthospital/page";
+// import Appointment from "@/app/pages/appointment/page";
+// import Billing from "@/app/pages/billing/page";
+// import Dashboardd from "@/app/pages/dashboardd/page";
+// import Disease from "@/app/pages/disease/page";
+// import DocterDetail from "@/app/pages/docterdetail/page";
+// import Prescription from "@/app/pages/prescription/page";
+// import Discharge from "@/app/pages/discharge/page";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Home from "@/app/dashboard/page";
+import Docter from "@/app/dashboard/docter/page";
+import Career from "@/app/dashboard/career/page";
+import Billing from "@/app/dashboard/billing/page"
+import AboutHospital from "@/app/dashboard/abouthospital/page";
+import Analytics from "@/app/dashboard/analytics/page";
+// import Appointment from "@/app/dashboard/@appointment/page";
+import Dashboardd from "@/app/dashboard/dashboardd/page";
+import Disease from "@/app/dashboard/disease/page";
+import DocterDetail from "@/app/dashboard/docterdetail/page";
+import Prescription from "@/app/dashboard/prescription/page";
+import Discharge from "@/app/dashboard/discharge/page";
 
 const drawerWidth = 240;
 
@@ -43,13 +49,7 @@ const openedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-<<<<<<< HEAD
   overflowX: "hidden",
-=======
-  // overflowX: "hidden",
-  // backgroundColor: "#13293D", 
-  // color:"white",
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
 });
 
 const closedMixin = (theme) => ({
@@ -133,57 +133,37 @@ function MiniDrawer() {
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
-<<<<<<< HEAD
         <DrawerHeader></DrawerHeader>
         <List>
           {[
             { text: "Career", path: "/" },
-            { text: "Docter", path: "/pages/docter" },
-            { text: "Disease", path: "/pages/disease" },
-            { text: "AboutHospital", path: "/pages/abouthospital" },
-            { text: "Billing", path: "/pages/billing" },
-            { text: "Analytics", path: "/pages/analytics" },
-            { text: "Dashboardd", path: "/pages/dashboardd" },
-            { text: "DocterDetail", path: "/pages/docterdetail" },
-            { text: "Prescription", path: "/pages/prescription" },
-            { text: "Discharge", path: "/pages/discharge" },
-=======
-    <List>
-          {[
-            { text: "HomePage", path: "/" },
-            { text: "About", path: "/pages/about" },
-            { text: "Blog", path: "/pages/blog" },
-            { text: "Career", path: "/pages/career" },
-            { text: "Analytics", path: "/pages/analytics" },
-            { text: "History", path: "/pages/history" },
-            { text: "Help", path: "/pages/help" },
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
+            { text: "Docter", path: "/dashboard/docter" },
+            { text: "Disease", path: "/dashboard/disease" },
+            { text: "AboutHospital", path: "/dashboard/abouthospital" },
+            { text: "Billing", path: "/dashboard/billing" },
+            { text: "Analytics", path: "/dashboard/analytics" },
+            { text: "Dashboardd", path: "/dashboard/dashboardd" },
+            { text: "DocterDetail", path: "/dashboard/docterdetail" },
+            { text: "Prescription", path: "/dashboard/prescription" },
+            { text: "Discharge", path: "/dashboard/discharge" },
           ].map((item, index) => (
             <ListItem
               key={item.text}
               disablePadding
               sx={{
                 display: "block",
-<<<<<<< HEAD
                 backgroundColor: "#13293d",
                 color: "#fff",
                 "&:hover": {
                   backgroundColor: "#fff",
                   color: "#13293d",
                 },
-=======
-                color: "white",
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
               }}
             >
               {/* Wrap the ListItemButton with Link */}
               <Link href={item.path} passHref>
                 <ListItemButton
-<<<<<<< HEAD
                   component="a" 
-=======
-                  component="a" // Set ListItemButton as a link
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
@@ -210,7 +190,6 @@ function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-<<<<<<< HEAD
         <Grid container item padding={3} >
           <Typography paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -227,7 +206,6 @@ function MiniDrawer() {
             lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
             faucibus et molestie ac.
           </Typography>
-
 
           <Typography paragraph>
             Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
@@ -273,26 +251,17 @@ function MiniDrawer() {
             posuere sollicitudin aliquam ultrices sagittis orci a.
           </Typography>
         </Grid>
-        {router.pathname === "/" && <Career />}
-        {router.pathname === "/pages/docter" && <Docter />}
-        {router.pathname === "/pages/disease" && <Disease />}
-        {router.pathname === "/pages/abouthospital" && <AboutHospital />}
-        {router.pathname === "/pages/billing" && <Billing />}
-        {router.pathname === "/pages/analytics" && <Analytics />}
-        {router.pathname === "/pages/dashboardd" && <Dashboardd />}
-        {router.pathname === "/pages/docterdetail" && <DocterDetail />}
-        {router.pathname === "/pages/prescription" && <Prescription />}
-        {router.pathname === "/pages/discharge" && <Discharge />}
+        {router.pathname === "/dashboard" && <Career />}
+        {router.pathname === "/dashboard/docter" && <Docter />}
+        {router.pathname === "/dashboard/disease" && <Disease />}
+        {router.pathname === "/dashboard/abouthospital" && <AboutHospital />}
+        {router.pathname === "/dashboard/billing" && <Billing />}
+        {router.pathname === "/dashboard/analytics" && <Analytics />}
+        {router.pathname === "/dashboard/dashboardd" && <Dashboardd />}
+        {router.pathname === "/dashboard/docterdetail" && <DocterDetail />}
+        {router.pathname === "/dashboard/prescription" && <Prescription />}
+        {router.pathname === "/dashboard/discharge" && <Discharge />}
         <Footer />
-=======
-        {router.pathname === "/" && <HomePage />}
-        {router.pathname === "/pages/about" && <About />}
-        {router.pathname === "/pages/blog" && <Blog />}
-        {router.pathname === "/pages/career" && <Career />}
-        {router.pathname === "/pages/analytics" && <Analytics />}
-        {router.pathname === "/pages/history" && <History />}
-        {router.pathname === "/pages/help" && <Help />}
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
       </Box>
     </Box>
   );

@@ -23,7 +23,7 @@ function FetchData() {
 
   return (
     <div>
-    <h1>Fetch Data From API</h1>
+   <h1>Fetch Data From API</h1>
     {dataa?.map((item) => (
       <div key={item.id}> 
         <h1>Employee Name: {item.employee_name}</h1>

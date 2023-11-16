@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
 import React from "react";
 import { Box, Typography, Button, Grid, Input } from "@mui/material";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
@@ -11,13 +8,8 @@ import Image from "next/image";
 // import instaa from '../assest/instaa.png';
 // import FB from '../assest/fb.png';
 // import Twiter from '../assest/twiter.png';
-<<<<<<< HEAD
 import Logo from '../assest/blueSga.png';
-=======
-import Logo from '../assest/whiteSga.png';
 import { colors } from '../styles/theme';
-
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
 const Footer = () => {
   return (
     <Box
@@ -165,7 +157,7 @@ const Footer = () => {
                   outline: "none",
                   border: "none",
                   margin: 1,
-                  borderBottom: " ipx solid transparent",
+                  borderBottom: " 1px solid transparent",
                   "&:focus": {
                     borderBottom: "none",
                   }
@@ -191,9 +183,4 @@ const Footer = () => {
     </Box>
   );
 };
-
-<<<<<<< HEAD
-export default Footer
-=======
 export default Footer;
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc

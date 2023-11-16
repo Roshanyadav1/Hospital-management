@@ -17,16 +17,6 @@ export default function RootLayout({ children }) {
           redirect_uri: 'http://localhost:3000/'
         }}
       >
-<<<<<<< HEAD
-          <CustomProvider>
-            <ThemeProvider theme={theme}>
-              <body className={inter.className}>{children}
-              {/* <Auth /> */}
-              </body>
-            </ThemeProvider>
-          </CustomProvider>
-=======
-
         <CustomProvider>
           <ThemeProvider theme={theme}>
             <body>
@@ -34,8 +24,6 @@ export default function RootLayout({ children }) {
             </body>
           </ThemeProvider>
         </CustomProvider>
-
->>>>>>> 7cf53a447bb1f86ae90357e117e2ccf964f0ffcc
       </Auth0Provider>
     </html >
   )
