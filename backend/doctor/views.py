@@ -1,5 +1,5 @@
 from doctor.doctor_pagination import DoctorPagination
-from doctor.serializers import DoctorSerializer
+from doctor.serializers import *
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from doctor.models import Doctor
 from rest_framework import status
-
+from error.models import Error
 
 class DoctorRegister(GenericAPIView):
     serializer_class = DoctorSerializer
@@ -16,10 +16,13 @@ class DoctorRegister(GenericAPIView):
         serializer = DoctorSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         serializer.save()
+        error = Error.objects.get(error_title = 'REGISTER_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
         return Response(
             {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Doctor Successfully Registered'
+                'status': response_code,
+                'message': 'Doctor ' + response_message
             },
         )
     
@@ -31,15 +34,18 @@ class DoctorView(ListAPIView):
     search_fields = ['disease_specialist']
     
     def list(self, request, *args, **kwargs):
+        error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
         response = super().list(request, *args, **kwargs)
         if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
             
         return Response(
             {
-            'status': status.HTTP_200_OK, 
-            'message': "Doctor Data Retrieved",
-            'data': response.data, 
+                'status': response_code, 
+                'message': "Doctor " + response_message,
+                'data': response.data, 
             }
         )
 
@@ -50,40 +56,54 @@ class DoctorViewById(APIView):
             if Doctor.objects.filter(doctor_id = id).count() >= 1:
                 doctor = Doctor.objects.get(doctor_id = id)
                 serializer = DoctorSerializer(doctor)
+                error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_200_OK,
-                        'message': "Doctor Data Retrieved Successfully",
+                        'status': response_code,
+                        'message': "Doctor " + response_message,
                         'data': serializer.data
                     },
                 )
             else:
+                error = Error.objects.get(error_title = 'INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'message': "Invalid Doctor Id",
+                        'status': response_code,
+                        'message': response_message,
                     },
                 ) 
     
-class DoctorUpdate(APIView):
+class DoctorUpdate(GenericAPIView):
+    serializer_class = DoctorUpdateSerializer
+
     def put(self, request, input, format = None):
         id = input
         if Doctor.objects.filter(doctor_id = id).count() >= 1:
             doctor = Doctor.objects.get(doctor_id = id)
-            serializer = DoctorSerializer(doctor, data = request.data)
+            serializer = DoctorUpdateSerializer(doctor, data = request.data)
             serializer.is_valid(raise_exception = True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'Doctor ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Doctor Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )
     
@@ -94,17 +114,23 @@ class DoctorUpdate(APIView):
             serializer = DoctorSerializer(doctor, data = request.data, partial = True)
             serializer.is_valid(raise_exception = True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'Doctor ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Doctor Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )
         
@@ -114,16 +140,22 @@ class DoctorDelete(APIView):
         if Doctor.objects.filter(doctor_id = id).count() >= 1:
             doctor = Doctor.objects.get(doctor_id = id)
             doctor.delete()
+            error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_201_OK,
-                    'message': "Doctor Data Deleted",
+                    'status': response_code,
+                    'message': "Doctor " + response_message,
                 },
             ) 
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Doctor Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )

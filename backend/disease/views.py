@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-
+from error.models import Error
 
 class DiseaseAdd(GenericAPIView):
     serializer_class = DiseaseSerializer
@@ -13,10 +13,13 @@ class DiseaseAdd(GenericAPIView):
         serializer = DiseaseSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         serializer.save()
+        error = Error.objects.get(error_title = 'ADD_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
         return Response(
             {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Disease Successfully Added'
+                'status': response_code,
+                'message': 'Disease ' + response_message
             },
         )
 
@@ -28,17 +31,23 @@ class DiseaseUpdate(APIView):
             serializer = DiseaseSerializer(disease, data = request.data)
             serializer.is_valid(raise_exception = True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'Disease ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invalid Disease Id', 
+                    'status': response_code,
+                    'message': response_message, 
                 },
             )
     
@@ -49,17 +58,23 @@ class DiseaseUpdate(APIView):
             serializer = DiseaseSerializer(disease, data = request.data, partial=True)
             serializer.is_valid(raise_exception = True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Partial Data Updated',
+                    'status': response_code,
+                    'message': 'Disease ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Disease Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )
 
@@ -69,17 +84,23 @@ class DiseaseDelete(APIView):
         if Disease.objects.filter(disease_id=id).count() >= 1:
             disease = Disease.objects.get(disease_id=id)
             disease.delete()
+            error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': "Disease Data Deleted",
+                    'status': response_code,
+                    'message': "Disease " + response_message,
                 },
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Disease Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )
 
@@ -90,27 +111,36 @@ class DiseaseView(APIView):
             if Disease.objects.filter(disease_id = id).count() >= 1:
                 disease = Disease.objects.get(disease_id = id)
                 serializer = DiseaseSerializer(disease)
+                error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_200_OK,
-                        'message': "Diseases Data Retrieved Successfully",
+                        'status': response_code,
+                        'message': 'Disease ' + response_message,
                         'data': serializer.data
                     },
                 )
             else:
+                error = Error.objects.get(error_title = 'INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'message': "Invalid Disease Id",
+                        'status': response_code,
+                        'message': response_message,
                     },
                 )
         else:
             disease = Disease.objects.all()
             serializer = DiseaseSerializer(disease, many=True)
+            error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': "Disese Data Retrieved Successfully",
+                    'status': response_code,
+                    'message': "Disese " + response_message,
                     'data': serializer.data
                 },
             )

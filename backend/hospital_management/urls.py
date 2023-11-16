@@ -31,5 +31,6 @@ urlpatterns = [
              path('checkup/', include('checkup.urls')),
              path('user/', include('user.urls')),
              path('employee/', include('employee.urls')),
+             path('error/', include('error.urls')),
          ]))
 ]

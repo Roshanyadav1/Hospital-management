@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from checkup.models import CheckUp
 from rest_framework import status
 from checkup.serializers import CheckupSerializer
-
+from error.models import Error
 
 class CheckUpAdd(GenericAPIView):
     serializer_class = CheckupSerializer
@@ -13,10 +13,13 @@ class CheckUpAdd(GenericAPIView):
         serializer =  CheckupSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         serializer.save()
+        error = Error.objects.get(error_title = 'ADD_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
         return Response(
             {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Checkup Successfully Added'
+                'status': response_code,
+                'message': 'Checkup ' + response_message
             },
         )
 
@@ -26,17 +29,23 @@ class CheckUpDelete(APIView):
         if CheckUp.objects.filter(checkup_id = id).count() >= 1:
             checkup = CheckUp.objects.get(checkup_id =  id)
             checkup.delete()
+            error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': "Checkup Data Deleted",
+                    'status': response_code,
+                    'message': "Checkup " + response_message,
                 },
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Checkup Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )    
 
@@ -46,17 +55,23 @@ class CheckUpUpdate(APIView):
         if CheckUp.objects.filter(checkup_id = id).count() >= 1:
             checkup = CheckUp.objects.get(checkup_id = id)
             serializer =  CheckupSerializer.save(checkup, data = request.data)
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'Checkup ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Checkup Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             ) 
         
@@ -65,17 +80,23 @@ class CheckUpUpdate(APIView):
         if CheckUp.objects.filter(checkup_id = id).count() >= 1:
             checkup = CheckUp.objects.get(checkup_id =  id)
             serializer = CheckupSerializer.save(checkup, data = request.data, partial = True)
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Partial Data Updated',
+                    'status': response_code,
+                    'message': 'Checkup ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Checkup Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             ) 
     
@@ -86,27 +107,36 @@ class CheckUpView(APIView):
             if CheckUp.objects.filter(checkup_id = id).count() >= 1:
                 checkup = CheckUp.objects.get(checkup_id =  id) 
                 serializer = CheckupSerializer(checkup)
+                error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_200_OK,
-                        'message': "Checkup Data Retrieved Successfully",
+                        'status': response_code,
+                        'message': "Checkup " + response_message,
                         'data': serializer.data
                     },
                 )
             else:
+                error = Error.objects.get(error_title = 'INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'message': "Invalid Checkup Id",
+                        'status': response_code,
+                        'message': response_message,
                     },
                 ) 
         else:
             checkup = CheckUp.objects.all()
             serializer = CheckupSerializer(checkup, many = True)
+            error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': "Checkups Data Retrieved Successfully",
+                    'status': response_code,
+                    'message': 'Checkup ' + response_message,
                     'data': serializer.data
                 },
             )

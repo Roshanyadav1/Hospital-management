@@ -9,17 +9,20 @@ from rest_framework.filters import SearchFilter
 from user.models import User
 from rest_framework.generics import GenericAPIView
 from user.serializers import UserRegisterSerializer
-
+from error.models import Error
 
 class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
 
     def post(self, request, format=None):
         if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() >= 1:
+            error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Patient Already Exists'
+                    'status': response_code,
+                    'message': 'Patient ' + response_message
                 },
             )
         else:
@@ -37,11 +40,13 @@ class PatientRegister(GenericAPIView):
 
             user = User.objects.create_user(
                 member_id, user_name, user_email, user_role, user_password)
-
+            error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_201_CREATED,
-                    'message': 'Patient Successfully Registered'
+                    'status': response_code,
+                    'message': 'Patient ' + response_message
                 },
             )
 
@@ -55,13 +60,15 @@ class PatientView(ListAPIView):
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
+        error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
         if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
-
         return Response(
             {
-                'status': status.HTTP_200_OK, 
-                'message': "Patient Data Retrieved",
+                'status': response_code, 
+                'message': "Patient " + response_message,
                 'data': response.data, 
             }
         )
@@ -73,18 +80,24 @@ class PatientViewById(APIView):
             if Patient.objects.filter(patient_id=id).count() >= 1:
                 doctor = Patient.objects.get(patient_id=id)
                 serializer = PatientSerializer(doctor)
+                error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_200_OK,
-                        'message': "Patient Data Retrieved Successfully",
+                        'status': response_code,
+                        'message': "Patient " + response_message,
                         'data': serializer.data
                     },
                 )
             else:
+                error = Error.objects.get(error_title = 'INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'message': "Invalid Patient Id",
+                        'status': response_code,
+                        'message': response_message,
                     },
                 )
             
@@ -96,17 +109,23 @@ class PatientUpdate(APIView):
             serializer = PatientSerializer(doctor, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'Patient ' + response_message,
                 },
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invalid Patient Id',
+                    'status': response_code,
+                    'message': response_message,
                 },
             )
 
@@ -118,10 +137,13 @@ class PatientUpdate(APIView):
                 doctor, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Partial Data Updated',
+                    'status': response_code,
+                    'message': 'Patient ' + response_message,
                 },
             )
         else:
@@ -139,16 +161,22 @@ class PatientDelete(APIView):
         if Patient.objects.filter(patient_id=id).count() >= 1:
             doctor = Patient.objects.get(patient_id=id)
             doctor.delete()
+            error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': "Patient Data Deleted",
+                    'status': response_code,
+                    'message': "Patient " + response_message,
                 },
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Patient Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )

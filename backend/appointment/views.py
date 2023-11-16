@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from appointment.models import Appointment
 from rest_framework.views import APIView
 from rest_framework import status
-
+from error.models import Error
 
 class AppointmentAdd(GenericAPIView):
     serializer_class = AppointmentAddSerializer
@@ -16,10 +16,13 @@ class AppointmentAdd(GenericAPIView):
         serializer = AppointmentAddSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         serializer.save()
+        error = Error.objects.get(error_title = 'BOOKED_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
         return Response(
             {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Appointment Booked Successfully'
+                'status': response_code,
+                'message': 'Appointment ' + response_message
             },
         )
 
@@ -38,18 +41,24 @@ class AppointmentViewById(APIView):
             if Appointment.objects.filter(appointment_id = id).count() >= 1:
                 appointment = Appointment.objects.get(appointment_id = id)
                 serializer = AppointmentSerializer(appointment)
+                error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_200_OK,
-                        'message': "Appointment Data Retrieved Successfully",
+                        'status': 'Appointment ' + response_code,
+                        'message': response_message,
                         'data': serializer.data
                     },
                 )
             else:
+                error = Error.objects.get(error_title = 'INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'message': "Appointment Is Not Booked",
+                        'status': response_code,
+                        'message': response_message,
                     },
                 ) 
 
@@ -61,27 +70,36 @@ class AppointmentUpdate(APIView):
             serializer = AppointmentSerializer(appointment, data = request.data)
             serializer.is_valid(raise_exception = True)
             serializer.save()
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'Appointment ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invalid Appointment Id', 
+                    'status': response_code,
+                    'message': response_message, 
                 },
             )
     
     def patch(self, request, input, format = None):
         id = input
         if request.data == {}:
+            error = Error.objects.get(error_title = 'EMPTY_POST')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'No Data Provided', 
+                    'status': response_code,
+                    'message': response_message, 
                 },
             )
         else:
@@ -90,17 +108,23 @@ class AppointmentUpdate(APIView):
                 serializer = AppointmentSerializer(appointment, data = request.data, partial = True)
                 serializer.is_valid(raise_exception = True)
                 serializer.save()
+                error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_200_OK,
-                        'message': 'Complete Data Updated',
+                        'status': response_code,
+                        'message': 'Appointment ' + response_message,
                     }, 
                 )
             else:
+                error = Error.objects.get(error_title = 'INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'message': "Invalid Appointment Id",
+                        'status': response_code,
+                        'message': response_message,
                     },
                 )
 
@@ -110,16 +134,22 @@ class AppointmentDelete(APIView):
         if Appointment.objects.filter(appointment_id = id).count() >= 1:
             appointment = Appointment.objects.get(appointment_id = id)
             appointment.delete()
+            error = Error.objects.get(error_title = 'DELETE_SUCESS')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message':'Appointment Deleted Successfully'
+                    'status': response_code,
+                    'message':'Appointment ' + response_message
                 },
             ) 
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Appointment Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )    
