@@ -14,7 +14,9 @@ import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Image from 'next/image';
-import * as Yup from 'yup';
+import CustomAutocomplete from './Components/Autocomplete';
+import { usePostDataMutation } from '@/RTK/Service';
+// import * as Yup from 'yup'
 
 
 
@@ -82,20 +84,20 @@ const StyledBox = styled(Box)(() => ({
 }));
 
 const INITIAL_FORM_STATE = {
-  HospitalName: '',
-  HospitalNumber: '',
-  HospitalEmail: '',
-  HospitalAddress: '',
-  HospitalCity: '',
-  radioOptions: '',
-  category: '',
-  statusRadio: 'Active',
+  hospital_name: '',
+  hospital_phone: '',
+  hospital_email: '',
+  hospital_address: '',
+  hospital_city: '',
+  hospital_type: '',
+  hospital_category: '',
+  hospital_status: 'Active',
   logo: null,
-  HospitalOwnerName: '',
-  HospitalOwnerNumber: '',
-  HospitalOwnerEmail: '',
-  UserName: '',
-  Password: '',
+  hospital_owner_name: '',
+  hospital_owner_phone: '',
+  hospital_owner_email: '',
+  username: '',
+  password: '',
 };
 
 
@@ -159,7 +161,7 @@ const App = () => {
               }
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
-                  <Text name="HospitalName" label="Name" autoComplete=""
+                  <Text name="hospital_name" label="Name" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -168,7 +170,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="HospitalNumber" label="Phone" autoComplete="off"
+                  <Text name="hospital_phone" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -177,7 +179,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Text name="HospitalEmail" label="Email" autoComplete="off"
+                  <Text name="hospital_email" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -187,38 +189,21 @@ const App = () => {
                 </Grid>
                 {/* // yha per issue he bro  */}
                 <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    name="hospitalCity"
-                    options={cities}
-                    getOptionLabel={(option) => option}
-                    value={values.hospitalCity}
-                    onChange={(event, newValue) => {
-                      handleChange({ target: { name: 'hospitalCity', value: newValue } });
-                    }}
-                    onBlur={handleBlur}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="City"
-                        InputProps={{
-                          ...params.InputProps,
-                          style: {
-                            background: 'white',
-                            border: 'none',
-                            borderRadius: '25px',
-                            padding: '10px',
-                          },
-                        }}
-                      />
-                    )}
-                  />
-                  <ErrorMessage name="category" component="div" style={{ color: colors.error, fontSize: 10 }} />
+                <CustomAutocomplete
+              name="hospital_city"
+              label="City"
+              options={cities}
+              value={values.hospital_city}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              touched={touched.hospital_city}
+            />
                 </Grid>
                 {/* provide proper error usding yup validation for this field if the city is not selected from the dropdown */}
                 <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
                     label="Type"
-                    name="radioOptions"
+                    name="hospital_type"
                     options={[
                       { value: 'Public', label: 'Public' },
                       { value: 'Private', label: 'Private' },
@@ -227,7 +212,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Text name="HospitalAddress" label="Address" autoComplete="off"
+                  <Text name="hospital_address" label="Address" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -237,29 +222,21 @@ const App = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    name="category"
-                    options={categories}
-                    getOptionLabel={(option) => option}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Category"
-                        InputProps={{
-                          ...params.InputProps,
-                          style: {
-                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
-                          },
-                        }}
-                      />
-                    )}
-                  />
-                  <ErrorMessage name="category" component="div" style={{ color: colors.error, fontSize: 10 }} />
+                <CustomAutocomplete
+              name="hospital_category"
+              label="Category"
+              options={categories}
+              value={values.hospital_category}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              touched={touched.hospital_category}
+            />
+                  {/* <ErrorMessage name="category" component="div" style={{ color: colors.error, fontSize: 10 }} /> */}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
                     label="Status"
-                    name="statusRadio"
+                    name="hospital_status"
                     options={[
                       { value: 'Active', label: 'Active' },
                       { value: 'Inactive', label: 'Inactive' },
@@ -273,7 +250,7 @@ const App = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="HospitalOwnerName" label="Name" autoComplete="off"
+                  <Text name="hospital_owner_name" label="Name" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -282,7 +259,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="HospitalOwnerNumber" label="Phone" autoComplete="off"
+                  <Text name="hospital_owner_phone" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -291,7 +268,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Text name="HospitalOwnerEmail" label="Email" autoComplete="off"
+                  <Text name="hospital_owner_email" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -300,7 +277,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="UserName" label="Username" autoComplete="off"
+                  <Text name="username" label="Username" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -309,7 +286,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="Password" label="Password" autoComplete="off"
+                  <Text name="password" label="Password" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
