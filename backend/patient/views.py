@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.filters import SearchFilter
 from user.models import User
 from rest_framework.generics import GenericAPIView
-from hospital_management.custom_orderings import CustomOrderingFilter
+from patient.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
 

@@ -7,12 +7,12 @@ class CustomOrderingFilter(OrderingFilter):
 
         sort_column = request.query_params.get(sort_column_param)
         sort_direction = request.query_params.get(sort_direction_param)
-
-        if sort_direction is None:
-            ordering = []
-            ordering.append(sort_column)
-            return ordering
         
+        if sort_column is None:
+            sort_column = 'disease_specialist'
+        if sort_direction is None:
+            sort_direction = 'ASC'
+
         if sort_column and sort_direction:
             ordering = []
             if sort_direction.lower() == 'desc':

@@ -9,7 +9,7 @@ from user.models import User
 from rest_framework import status
 from doctor.serializers import DoctorSerializer
 from error.models import Error
-from hospital_management.custom_orderings import CustomOrderingFilter
+from employee.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 
 class EmployeeAdd(GenericAPIView):

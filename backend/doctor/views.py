@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from doctor.models import Doctor
 from rest_framework import status
 from error.models import Error
-from hospital_management.custom_orderings import CustomOrderingFilter
+from doctor.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 
 class DoctorRegister(GenericAPIView):
@@ -28,7 +28,7 @@ class DoctorRegister(GenericAPIView):
         )
     
 class DoctorView(ListAPIView):
-    queryset = Doctor.objects.all().order_by('created_at')
+    queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
     pagination_class  = CustomPagination
     filter_backends = [SearchFilter, CustomOrderingFilter]
