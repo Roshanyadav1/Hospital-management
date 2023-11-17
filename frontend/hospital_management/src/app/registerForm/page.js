@@ -15,7 +15,7 @@ import { colors } from '@/styles/theme';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Image from 'next/image';
 import CustomAutocomplete from './Components/Autocomplete';
-import { usePostDataMutation } from '@/RTK/Service';
+import { useRegisterHospitalMutation } from '@/services/Query';
 // import * as Yup from 'yup'
 
 
@@ -107,6 +107,9 @@ const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata
 ];
 
 const App = () => {
+  // here is the registerHospital api  Mutation
+  const [registerHospital] = useRegisterHospitalMutation()
+
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -131,11 +134,10 @@ const App = () => {
   //   hospitalCity: Yup.string().required('City is required'),
   //   // Add other Yup validations for other fields if needed
   // });
-
+ 
   return (
     <StyledFormWrapper>
       <StyledPaper elevation={3}>
-
 
         <StyledTypography variant="h4" >
           Registration Form
