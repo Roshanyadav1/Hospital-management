@@ -5,7 +5,7 @@ import React from 'react'
 function Career() {
   return (
     <div>
-      <h1>career page</h1>
+      <h1>Career page</h1>
     </div>
   )
 }

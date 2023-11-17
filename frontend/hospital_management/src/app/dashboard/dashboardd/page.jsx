@@ -5,7 +5,7 @@ import React from 'react'
 function Dashboardd() {
   return (
     <div>
-      <h1>dashboardd page</h1>
+      <h1>Dashboardd page</h1>
     </div>
   )
 }

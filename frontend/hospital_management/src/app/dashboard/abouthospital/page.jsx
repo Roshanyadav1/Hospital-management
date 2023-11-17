@@ -5,7 +5,7 @@ import React from 'react'
 function AboutHospital() {
   return (
     <div>
-      <h1>abouthospital page</h1>
+      <h1>Abouthospital page</h1>
     </div>
   )
 }

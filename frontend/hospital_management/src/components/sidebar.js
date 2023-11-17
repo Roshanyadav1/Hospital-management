@@ -111,10 +111,10 @@ const Drawer = styled(MuiDrawer, {
 
 const StyledLink = styled("a")(({ theme }) => ({
   color: "#fff", // Set the color to white
-  textDecoration: "none", // Remove underline
-  padding: theme.spacing(1), // Add padding
+  textDecoration: "none",
+  padding: theme.spacing(1),
   "&:hover": {
-    color: "#13293d", // Change color on hover
+    color: "#13293d", 
   },
 }));
 
@@ -168,6 +168,13 @@ function MiniDrawer() {
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
+                    color: "#fff", 
+                    fontWeight: "bold", // Make text bold
+                    textDecorationLine: 'none',
+                    "&:hover": {
+                      backgroundColor: "#fff",
+                      color: "#13293d",
+                    },
                   }}
                   className={router.pathname === item.path ? "active" : ""}
                 >
@@ -206,7 +213,7 @@ function MiniDrawer() {
             lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
             faucibus et molestie ac.
           </Typography>
-
+{/* 
           <Typography paragraph>
             Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
             ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
@@ -249,9 +256,9 @@ function MiniDrawer() {
             sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
             eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
             posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
+          </Typography> */}
         </Grid>
-        {router.pathname === "/dashboard" && <Career />}
+        {router.pathname === "/" && <Career />}
         {router.pathname === "/dashboard/docter" && <Docter />}
         {router.pathname === "/dashboard/disease" && <Disease />}
         {router.pathname === "/dashboard/abouthospital" && <AboutHospital />}
@@ -261,9 +268,12 @@ function MiniDrawer() {
         {router.pathname === "/dashboard/docterdetail" && <DocterDetail />}
         {router.pathname === "/dashboard/prescription" && <Prescription />}
         {router.pathname === "/dashboard/discharge" && <Discharge />}
-        <Footer />
+
+      <Footer />
+
       </Box>
     </Box>
+      
   );
 }
 

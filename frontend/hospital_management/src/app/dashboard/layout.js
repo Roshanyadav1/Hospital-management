@@ -9,12 +9,10 @@ import React from 'react'
 function layout({children}) {
   return (
     <>
-       <MiniDrawer />
-      {/* <Navbar /> Display your Navbar */}
-      <Box sx={{ paddingLeft: 40 }}> {/* Adjust padding according to your sidebar width */}
-        <div>{children}</div> {/* Display current page content */}
-        {/* <Footer /> Display your Footer */}
+      <Box sx={{ paddingLeft: 40, marginTop:10 }}> 
+        <div>{children}</div>
       </Box>
+       <MiniDrawer />
     </>
   )
 }
