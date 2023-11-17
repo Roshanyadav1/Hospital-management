@@ -20,7 +20,7 @@
 // const drawerWidth = 240
 // const navItems = ['Doctor', 'Specialities', 'Call Us', 'Login', 'Contact Us']
 // import { mainNavbarItems } from '../data/NavbarItems'
-// import { NavLink } from 'react-router-dom'
+// import { useRouter } from 'react-router-dom'
 // import { color } from '@mui/system'
 
 // function SteperNav(props) {
@@ -30,6 +30,7 @@
 //    const handleDrawerToggle = () => {
 //       setMobileOpen(prevState => !prevState)
 //    }
+
 //    const drawer = (
 //       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
 //          <Typography variant='h6' sx={{ my: 2 }}>
@@ -45,26 +46,10 @@
 //                </Link>
 //             ))}
 //          </List>
-//   const drawer = (
-//     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-//       <Typography variant="h6" sx={{ my: 2 }}>
-//         MUI
-//       </Typography>
-//       <Divider />
-//       <List>
-//         <Button href="/api/auth/login" sx={{ color: '#fff' }}>Login</Button>
-//         {navItems.map((item) => (
-//           <ListItem key={item} disablePadding>
-//             <ListItemButton sx={{ textAlign: 'center' }}>
-//               <ListItemText primary={item} />
-//             </ListItemButton>
-//           </ListItem>
-//         ))}
-//       </List>
-//     </Box>
-//   );
+//       </Box>
+//    )
 
-//   const container = window !== undefined ? () => window().document.body : undefined;
+//    const container = window !== undefined ? () => window().document.body : undefined
 
 //    return (
 //       <Box sx={{ display: 'flex' }}>
@@ -123,6 +108,15 @@
 //             <Typography></Typography>
 //          </Box>
 //       </Box>
-//    );
-//    }
+//    )
+// }
+
+// SteperNav.propTypes = {
+//    /**
+//     * Injected by the documentation to work in an iframe.
+//     * You won't need it on your project.
+//     */
+//    window: PropTypes.func,
+// }
+
 // export default SteperNav
