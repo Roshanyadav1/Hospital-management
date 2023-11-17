@@ -1,8 +1,7 @@
-from employee.employee_pagination import EmployeePagination
 from employee.serializers import EmployeeSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
-from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from employee.models import Employee
@@ -10,7 +9,8 @@ from user.models import User
 from rest_framework import status
 from doctor.serializers import DoctorSerializer
 from error.models import Error
-from employee.employee_ordering import EmployeeOrderingFilter
+from hospital_management.custom_orderings import CustomOrderingFilter
+from hospital_management.custom_paginations import CustomPagination
 
 class EmployeeAdd(GenericAPIView):
     serializer_class = EmployeeSerializer
@@ -63,8 +63,8 @@ class EmployeeAdd(GenericAPIView):
 class EmployeeView(ListAPIView):
     queryset = Employee.objects.all().order_by('created_at')
     serializer_class = EmployeeSerializer
-    pagination_class  = EmployeePagination
-    filter_backends = [SearchFilter, EmployeeOrderingFilter]
+    pagination_class  = CustomPagination
+    filter_backends = [SearchFilter, CustomOrderingFilter]
     search_fields = ['employee_name', 'employee_role']
     
     def list(self, request, *args, **kwargs):

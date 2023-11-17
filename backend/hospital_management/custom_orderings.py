@@ -1,6 +1,6 @@
 from rest_framework.filters import OrderingFilter
 
-class EmployeeOrderingFilter(OrderingFilter):
+class CustomOrderingFilter(OrderingFilter):
     def get_ordering(self, request, queryset, view):
         sort_column_param = 'sortColumn'
         sort_direction_param = 'sortDirection'

@@ -1,5 +1,4 @@
 from patient.models import Patient
-from patient.patient_pagination import PatientPagination
 from patient.serializers import PatientSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,7 +7,8 @@ from rest_framework import status
 from rest_framework.filters import SearchFilter
 from user.models import User
 from rest_framework.generics import GenericAPIView
-from user.serializers import UserRegisterSerializer
+from hospital_management.custom_orderings import CustomOrderingFilter
+from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
 
 class PatientRegister(GenericAPIView):
@@ -54,9 +54,9 @@ class PatientRegister(GenericAPIView):
 class PatientView(ListAPIView):
     queryset = Patient.objects.all().order_by('created_at')
     serializer_class = PatientSerializer
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, CustomOrderingFilter]
     search_fields = ['patient_name']
-    pagination_class  = PatientPagination
+    pagination_class  = CustomPagination
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
