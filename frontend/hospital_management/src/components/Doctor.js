@@ -11,7 +11,7 @@ import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
 export default function Doctor() {
   return (
     <div>
-      <Container maxWidth="lg">
+      <Container  maxWidth="lg">
         <Typography variant="h4" align="center" style={{ marginTop: "50px" }}>
           Our Doctors
         </Typography>
@@ -29,11 +29,11 @@ export default function Doctor() {
                   <Typography gutterBottom variant="h5" component="div">
                     Dr. Sumit Jain
                     <Typography variant="body2" color="text.secondary">
-                      DNB (Paediatrics), MNAMS,
+                      
                       DrNB (Padiatric Cardiology)
                       <Typography variant="body3" color="text.secondary">
                        paediatric Cardiology
-                       (Interventional)
+                       
                       </Typography>
                     </Typography>
                   </Typography>
@@ -137,7 +137,6 @@ export default function Doctor() {
                   <Typography gutterBottom variant="h5" component="div">
                     Dr. Sushmita Mukherjee
                     <Typography variant="body2" color="text.secondary">
-                      MBBS, DOG, MD, DNB, FICOG
                       <Typography variant="body3" color="text.secondary">
                         Gynaecology & obstetrics, IVF and ,Laparoscopy
                       </Typography>
@@ -163,7 +162,6 @@ export default function Doctor() {
                    Dr. Ak Jinsiwale
                    <Typography variant="body2" color="text.secondary">
                      MBBS, MS (Ortho), Dip M.V.S
-                     (Sweden), F.S.O.S
                      <Typography variant="body3" color="text.secondary">
                        Orthopedics
                      </Typography>

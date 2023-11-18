@@ -16,7 +16,10 @@ function page() {
       <FixedContainer />
       </Grid>
       <Cards/>
+    <div style={{margin:'2rem'}}>
+
       <Doctor/>
+    </div>
       <Footer/>
     </div>
   )
