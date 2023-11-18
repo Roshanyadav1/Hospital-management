@@ -29,13 +29,13 @@ class HospitalRegister(GenericAPIView):
          serializer.save()
          hospital = Hospital.objects.get(hospital_email = request.data.get('hospital_email'))
 
-         member_id = hospital.hospital_id
+         member = hospital.hospital_id
          user_name = hospital.username
          user_email = request.data.get('hospital_owner_email')
          user_password = request.data.get('password')
          user_role = "Admin"
 
-         user = User.objects.create_superuser(member_id, user_name, user_email, user_role, user_password)
+         user = User.objects.create_superuser(member, user_name, user_email, user_role, user_password)
          error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
          response_message = error.error_message
          response_code = error.error_code
