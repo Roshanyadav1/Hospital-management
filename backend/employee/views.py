@@ -1,4 +1,3 @@
-from employee.employee_pagination import EmployeePagination
 from employee.serializers import EmployeeSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
@@ -10,6 +9,8 @@ from user.models import User
 from rest_framework import status
 from doctor.serializers import DoctorSerializer
 from error.models import Error
+from employee.custom_orderings import CustomOrderingFilter
+from hospital_management.custom_paginations import CustomPagination
 
 class EmployeeAdd(GenericAPIView):
     serializer_class = EmployeeSerializer
@@ -41,14 +42,14 @@ class EmployeeAdd(GenericAPIView):
                 doctor_serializer = DoctorSerializer(data = doctor_data)
                 doctor_serializer.is_valid(raise_exception = True)
                 doctor = doctor_serializer.save()
-            member_id = doctor.doctor_id
+            member = doctor.doctor_id
             user_name = employee.employee_name
             user_email = request.data.get('employee_email')
             user_password = request.data.get('employee_password')
             user_role = employee.employee_role
 
             user = User.objects.create_user(
-                member_id, user_name, user_email, user_role, user_password)
+                member, user_name, user_email, user_role, user_password)
             error = Error.objects.get(error_title = 'ADD_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
@@ -62,9 +63,9 @@ class EmployeeAdd(GenericAPIView):
 class EmployeeView(ListAPIView):
     queryset = Employee.objects.all().order_by('created_at')
     serializer_class = EmployeeSerializer
-    pagination_class  = EmployeePagination
-    filter_backends = [SearchFilter]
-    search_fields = ['employee_role']
+    pagination_class  = CustomPagination
+    filter_backends = [SearchFilter, CustomOrderingFilter]
+    search_fields = ['employee_name', 'employee_role']
     
     def list(self, request, *args, **kwargs):
         error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
@@ -82,7 +83,7 @@ class EmployeeView(ListAPIView):
             }
         )
 
-class EmployeeViewById(ListAPIView):
+class EmployeeViewById(APIView):
     def get(self, request, input = None, format = None):
         id = input
         if id is not None:

@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
 
+
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
 
