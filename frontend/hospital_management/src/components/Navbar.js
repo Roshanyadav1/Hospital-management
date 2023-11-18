@@ -14,6 +14,8 @@ import MenuItem from "@mui/material/MenuItem";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Logo from '../assest/blueSga.png';
+import Image from "next/image";
+import { LogoutTwoTone } from "@mui/icons-material";
 const pages = ["Find a Doctor", "Investors", "About us", "Careers", "Contact us"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -51,7 +53,7 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
           <IconButton onClick={sidebarChanges}>
             {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="a"
@@ -67,7 +69,8 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
             }}
           >
             SGA APPLICATION
-          </Typography>
+          </Typography> */}
+          <Image width={160} height={50} src={Logo}/>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -100,7 +103,7 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography   textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>

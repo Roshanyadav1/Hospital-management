@@ -16,16 +16,6 @@ import ListItemText from "@mui/material/ListItemText";
 import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
 import Footer from './Footer';
-// import Analytics from "@/app/pages/analytics/page";
-// import Career from "@/app/pages/career/page";
-// import AboutHospital from "@/app/pages/abouthospital/page";
-// import Appointment from "@/app/pages/appointment/page";
-// import Billing from "@/app/pages/billing/page";
-// import Dashboardd from "@/app/pages/dashboardd/page";
-// import Disease from "@/app/pages/disease/page";
-// import DocterDetail from "@/app/pages/docterdetail/page";
-// import Prescription from "@/app/pages/prescription/page";
-// import Discharge from "@/app/pages/discharge/page";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Home from "@/app/dashboard/page";
@@ -34,7 +24,6 @@ import Career from "@/app/dashboard/career/page";
 import Billing from "@/app/dashboard/billing/page"
 import AboutHospital from "@/app/dashboard/abouthospital/page";
 import Analytics from "@/app/dashboard/analytics/page";
-// import Appointment from "@/app/dashboard/@appointment/page";
 import Dashboardd from "@/app/dashboard/dashboardd/page";
 import Disease from "@/app/dashboard/disease/page";
 import DocterDetail from "@/app/dashboard/docterdetail/page";
@@ -207,7 +196,10 @@ function MiniDrawer() {
         {router.pathname === "/dashboard/docterdetail" && <DocterDetail />}
         {router.pathname === "/dashboard/prescription" && <Prescription />}
         {router.pathname === "/dashboard/discharge" && <Discharge />}
-      <Footer />
+        <Box sx={{marginBottom:0 }}>
+        <Footer/>
+        </Box>
+      
       </Box>
     </Box>
       

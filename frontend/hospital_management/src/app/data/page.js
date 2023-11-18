@@ -2,13 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; 
-
 function FetchData() {
   const[dataa,setDataa]=useState([])
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://dummy.restapiexample.com/api/v1/employees');
+        const response = await axios.get('https://hospital-management-six-chi.vercel.app/api/employee/view');
         const data = response.data ?? [];
         console.log(data)
         setDataa(data?.data || []);
@@ -26,9 +25,13 @@ function FetchData() {
    <h1>Fetch Data From API</h1>
     {dataa?.map((item) => (
       <div key={item.id}> 
-        <h1>Employee Name: {item.employee_name}</h1>
-        <h2>Employee Salary: {item.employee_salary}</h2>
-        <h2>Employee Age: {item.employee_age}</h2>
+        <h2>Employee Name: {item.employee_name}</h2>
+        <h4>Employee Email: {item.employee_email}</h4>
+        <h4>Employee Number: {item.employee_number}</h4>
+        <h4>Employee Password: {item.employee_password}</h4>
+        <h4>Employee Type: {item.employee_type}</h4>
+        <h4>Employee Role: {item.employee_role}</h4>
+        <h4>Employee Status: {item.employee_status}</h4>
       </div>
     ))}
   </div>
