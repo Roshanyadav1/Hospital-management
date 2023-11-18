@@ -83,7 +83,7 @@ class EmployeeView(ListAPIView):
             }
         )
 
-class EmployeeViewById(ListAPIView):
+class EmployeeViewById(APIView):
     def get(self, request, input = None, format = None):
         id = input
         if id is not None:
