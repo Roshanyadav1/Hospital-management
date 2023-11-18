@@ -7,12 +7,7 @@ class Employee(models.Model):
     employee_id =  models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     employee_name=  models.CharField(max_length=100)
     employee_email = models.EmailField(max_length=100)
-    employee_number = models.CharField(max_length=10, validators=[
-            RegexValidator(
-                regex=r'^(?!.*(\d)\1{5})[0-9]+$/',
-                message="Invalid Mobile number "
-            ),
-            ],)
+    employee_number = models.BigIntegerField()
     employee_password = models.CharField(max_length=255)
     employee_type = models.CharField(max_length=50,  choices=(('Part Time', 'Part Time'),
                                                               ('Full Time', 'Full Time')))
