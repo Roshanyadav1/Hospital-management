@@ -150,7 +150,7 @@ const Footer = () => {
                 type="text"
                 placeholder="Enter your email"
                 sx={{
-                  padding: 2,
+                  padding: 1,
                   width: "100%",
                   backgroundColor: "white",
                   borderRadius: 5,
