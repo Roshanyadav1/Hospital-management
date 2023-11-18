@@ -1,3 +1,5 @@
+
+
 from django.contrib import admin
 from django.urls import path, include
 from drf_yasg.views import get_schema_view
@@ -15,6 +17,7 @@ get_schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('^keycloak/', include('django_keycloak.urls')),
     path('api/',
          include([
              path('api_schema', get_schema_view.as_view(), name="api_schema"),
