@@ -8,16 +8,21 @@ from user.models import User
 from rest_framework.generics import GenericAPIView
 from hospital_management.responses import ResponseMessage
 from error.models import Error
+from hospital_management.responses import ResponseMessage
 
 class HospitalRegister(GenericAPIView):
    serializer_class = HospitalSerializer
 
    def post(self, request, format = None):
       if Hospital.objects.filter(hospital_email = request.data.get('hospital_email')).count() >= 1:
-            error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            try:
+             error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
+             response_message = error.error_message
+             response_code = error.error_code
+             Response.status_code = error.error_code
+            except:
+               response_message = ResponseMessage.ALREADY_REGISTERED
+               response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                {
                   'status': response_code,
@@ -37,10 +42,17 @@ class HospitalRegister(GenericAPIView):
          user_role = "Admin"
 
          user = User.objects.create_superuser(member, user_name, user_email, user_role, user_password)
-         error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
+         response_message = ""
+         response_code=""
+         try:
+          error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+          response_message = error.error_message
+          response_code = error.error_code
+          Response.status_code = error.error_code
+         except:
+            response_message = ResponseMessage.REGISTRATION_SUCCESS
+            response_code = status.HTTP_201_CREATED
+
          return Response(
             {
                'status': response_code,
@@ -56,10 +68,16 @@ class HospitalView(APIView):
          if Hospital.objects.filter(hospital_id = id).count() >= 1:
             hospital = Hospital.objects.get(hospital_id = id)
             serializer = HospitalSerializer(hospital)
-            error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code=""
+            try:
+             error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+             response_message = error.error_message
+             response_code = error.error_code
+             Response.status_code = error.error_code
+            except:
+                   response_message = ResponseMessage.RETRIEVED_SUCCESS
+                   response_code = status.HTTP_200_OK
             return Response(
                {
                   'status': response_code,
@@ -68,10 +86,17 @@ class HospitalView(APIView):
                },
             )
          else:  
-            error = Error.objects.get(error_title = 'INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code=""
+            try:
+             error = Error.objects.get(error_title = 'INVALID_ID')
+             response_message = error.error_message
+             response_code = error.error_code
+             Response.status_code = error.error_code
+            except:
+               response_message = ResponseMessage.INVALID_ID
+               response_code = status.HTTP_400_BAD_REQUEST
+            
             return Response(
                {
                   'status': response_code,
@@ -81,10 +106,16 @@ class HospitalView(APIView):
       else:
          hospital = Hospital.objects.all()
          serializer = HospitalSerializer(hospital, many = True)
-         error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
+         response_message = ""
+         response_code=""
+         try:
+          error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+          response_message = error.error_message
+          response_code = error.error_code
+          Response.status_code = error.error_code
+         except:
+            response_message = ResponseMessage.RETRIEVED_SUCCESS
+            response_code = status.HTTP_200_OK
          return Response(
             {
                'status': response_code,
@@ -101,10 +132,16 @@ class HospitalUpdate(APIView):
          serializer = HospitalSerializer(hospital, data = request.data, partial = True)
          serializer.is_valid(raise_exception = True)
          serializer.save() 
-         error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
+         response_message = ""
+         response_code=""
+         try:
+          error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+          response_message = error.error_message
+          response_code = error.error_code
+          Response.status_code = error.error_code
+         except:
+            response_message = ResponseMessage.UPDATE_SUCCESS
+            response_code = status.HTTP_200_OK
          return Response(
             {
                'status': status.HTTP_200_OK,
@@ -112,16 +149,22 @@ class HospitalUpdate(APIView):
             }, 
          )
       else:
-         error = Error.objects.get(error_title = 'INVALID_ID')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
-         return Response(
+          response_message = ""
+          response_code=""
+          try:
+           error = Error.objects.get(error_title = 'INVALID_ID')
+           response_message = error.error_message
+           response_code = error.error_code
+           Response.status_code = error.error_code
+          except:
+            response_message = ResponseMessage.INVALID_ID
+            response_code = status.HTTP_400_BAD_REQUEST
+          return Response(
             {
                'status': response_code,
                'message': response_message,
             },
-         )  
+          )  
    
 class HospitalDelete(APIView):
    def delete(self, request, input, format = None):
@@ -129,10 +172,16 @@ class HospitalDelete(APIView):
       if Hospital.objects.filter(hospital_id = id).count() >= 1:
          hospital=Hospital.objects.get(hospital_id = id)
          hospital.delete()
-         error = Error.objects.get(error_title = 'DELETE_SUCCESS')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
+         response_message = ""
+         response_code=""
+         try:
+          error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+          response_message = error.error_message
+          response_code = error.error_code
+          Response.status_code = error.error_code
+         except: 
+            response_message = ResponseMessage.DELETE_SUCCESS
+            response_code = status.HTTP_200_OK
          return Response(
             {
                'status': response_code,
@@ -140,10 +189,16 @@ class HospitalDelete(APIView):
             },
          )  
       else:  
-         error = Error.objects.get(error_title = 'INVALID_ID')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
+         response_message = ""
+         response_code=""
+         try:
+          error = Error.objects.get(error_title = 'INVALID_ID')
+          response_message = error.error_message
+          response_code = error.error_code
+          Response.status_code = error.error_code
+         except:
+            response_message = ResponseMessage.INVALID_ID
+            response_code = status.HTTP_400_BAD_REQUEST
          return Response(
             {
                'status': response_code,
