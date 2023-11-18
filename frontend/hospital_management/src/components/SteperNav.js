@@ -17,7 +17,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useUser } from '@auth0/nextjs-auth0/client';
-
+import Logo from '../assest/whiteSga.png'
+import Image from 'next/image';
 const drawerWidth = 240;
 const navItems = ['Doctor', 'Specialities', 'Call Us','Contact Us'];
 
@@ -70,13 +71,10 @@ function SteperNav(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          > 
-            SGA
-          </Typography>
+          <div style={{ display:"flex" , flexGrow:1 }} >
+          <Image width={160} height={50}  src={Logo}/>
+          </div>
+          
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
 
             

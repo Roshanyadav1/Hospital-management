@@ -2,7 +2,7 @@
 
 import MiniDrawer from '@/components/sidebar'
 import { Box } from "@mui/material";
-import React from 'react'
+
 function layout({children}) {
   return (
     <>

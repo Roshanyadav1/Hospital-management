@@ -63,17 +63,17 @@ const Footer = () => {
             }}>
               Department of Orthopedics
             </Typography >
-            <Link href="https://www.facebook.com" color="inherit">
+            <Link href="https://www.facebook.com" color="#FFFFFF">
               <Facebook />
             </Link>
             <Link
               href="https://www.instagram.com"
-              color="inherit"
+              color="#FFFFFF"
               sx={{ pl: 1, pr: 1 }}
             >
               <Instagram />
             </Link>
-            <Link href="https://www.twitter.com" color="inherit">
+            <Link href="https://www.twitter.com" color="#FFFFFF">
               <Twitter />
             </Link>
           </Grid>
@@ -159,11 +159,13 @@ const Footer = () => {
               />
               <Button variant="contained" sx={{
                 borderRadius: 3,
+                margin: '5px',
+                maxHeight: '2rem',
                 backgroundColor: "#35CFF4",
                 "&:hover": {
                   backgroundColor: "#35CFF4",
                 }
-              }}>Sigh Up</Button>
+              }}>Sign Up</Button>
             </Typography>
           </Grid>
         </Grid>

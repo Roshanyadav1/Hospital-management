@@ -17,7 +17,6 @@ function page() {
       </Grid>
       <Cards/>
     <div style={{margin:'2rem'}}>
-
       <Doctor/>
     </div>
       <Footer/>
