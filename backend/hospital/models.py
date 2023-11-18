@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.core.validators import RegexValidator
 
 
 # Hospital Model Class
@@ -7,9 +8,19 @@ class Hospital(models.Model):
     hospital_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     hospital_name = models.CharField(max_length = 255)
     hospital_email = models.EmailField(max_length = 255)
-    hospital_phone = models.BigIntegerField()
+    hospital_phone = models.CharField(max_length=10, validators=[
+            RegexValidator(
+                regex=r'^(?!.*(\d)\1{5})[0-9]+$/',
+                message="Invalid Mobile number "
+            ),
+            ],)
     hospital_owner_name = models.CharField(max_length = 255)
-    hospital_owner_phone = models.BigIntegerField()
+    hospital_owner_phone = models.CharField(max_length=10, validators=[
+            RegexValidator(
+                regex=r'^(?!.*(\d)\1{5})[0-9]+$/',
+                message="Invalid Mobile number "
+            ),
+            ],)
     hospital_owner_email = models.EmailField(max_length = 255)
     hospital_address = models.CharField(max_length = 255)
     hospital_city = models.CharField(max_length = 255)
