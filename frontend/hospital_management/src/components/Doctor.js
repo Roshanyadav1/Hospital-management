@@ -10,7 +10,7 @@ import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
 
 export default function Doctor() {
   return (
-    <div>
+    <div >
       <Container maxWidth="lg">
         <Typography variant="h4" align="center" style={{ marginTop: "50px" }}>
           Our Doctors
@@ -30,11 +30,11 @@ export default function Doctor() {
                     Dr. Sumit Jain
                     <Typography variant="body2" color="text.secondary">
                       DNB (Paediatrics), MNAMS,
-                      DrNB (Padiatric Cardiology)
-                      <Typography variant="body3" color="text.secondary">
-                       paediatric Cardiology
-                       (Interventional)
-                      </Typography>
+                      {/* DrNB (Padiatric Cardiology) */}
+                      {/* <Typography variant="body3" color="text.secondary"> */}
+                       {/* paediatric Cardiology */}
+                       {/* (Interventional) */}
+                      {/* </Typography> */}
                     </Typography>
                   </Typography>
                 </CardContent>
@@ -112,9 +112,9 @@ export default function Doctor() {
                     Dr. Surbhi Tiwari verma 
                     <Typography variant="body2" color="text.secondary">
                       BDS (MUHS Nasik University)
-                      <Typography variant="body3" color="text.secondary">
-                     Dental
-                    </Typography>
+                      {/* <Typography variant="body3" color="text.secondary"> */}
+                     {/* Dental */}
+                    {/* </Typography> */}
                     </Typography>
                   </Typography>
                 </CardContent>
@@ -138,9 +138,9 @@ export default function Doctor() {
                     Dr. Sushmita Mukherjee
                     <Typography variant="body2" color="text.secondary">
                       MBBS, DOG, MD, DNB, FICOG
-                      <Typography variant="body3" color="text.secondary">
-                        Gynaecology & obstetrics, IVF and ,Laparoscopy
-                      </Typography>
+                      {/* <Typography variant="body3" color="text.secondary"> */}
+                        {/* Gynaecology & obstetrics, IVF and ,Laparoscopy */}
+                      {/* </Typography> */}
                     </Typography>
                   </Typography>
                 </CardContent>
@@ -163,7 +163,7 @@ export default function Doctor() {
                    Dr. Ak Jinsiwale
                    <Typography variant="body2" color="text.secondary">
                      MBBS, MS (Ortho), Dip M.V.S
-                     (Sweden), F.S.O.S
+  
                      <Typography variant="body3" color="text.secondary">
                        Orthopedics
                      </Typography>
