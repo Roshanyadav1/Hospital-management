@@ -12,11 +12,6 @@ class Patient(models.Model):
     patient_address = models.CharField(max_length = 255)
     patient_email = models.EmailField(max_length = 255)
     password = models.CharField(max_length = 255)
-    patient_mobile = models.CharField(max_length=10, validators=[
-            RegexValidator(
-                regex=r'^(?!.*(\d)\1{5})[0-9]+$/',
-                message="Invalid Mobile number "
-            ),
-            ],)
+    patient_mobile = models.BigIntegerField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
