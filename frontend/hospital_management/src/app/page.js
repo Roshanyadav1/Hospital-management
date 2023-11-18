@@ -9,8 +9,6 @@ import Doctor from '@/components/Doctor'
 // for the patient page , the patient page will be the main page for the patient
 
 function page() {
- 
- 
   return (
     <div>
       <SteperNav />
@@ -18,7 +16,9 @@ function page() {
       <FixedContainer />
       </Grid>
       <Cards/>
+    <div style={{margin:'2rem'}}>
       <Doctor/>
+    </div>
       <Footer/>
     </div>
   )

@@ -1,15 +1,13 @@
 'use client'
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 // import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
-import { Grid } from "@mui/material"
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -18,7 +16,6 @@ import ResponsiveAppBar from "./Navbar";
 import Footer from './Footer';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Home from "@/app/dashboard/page";
 import Docter from "@/app/dashboard/docter/page";
 import Career from "@/app/dashboard/career/page";
 import Billing from "@/app/dashboard/billing/page"
@@ -108,8 +105,7 @@ const StyledLink = styled("a")(({ theme }) => ({
 }));
 
 function MiniDrawer() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const router = useRouter();
   const sidebarChanges = () => {
     setOpen(!open);
@@ -125,15 +121,15 @@ function MiniDrawer() {
         <DrawerHeader></DrawerHeader>
         <List>
           {[
+             { text: "Dashboard", path: "/dashboard" },
             { text: "Career", path: "/" },
-            { text: "Docter", path: "/dashboard/docter" },
+            { text: "Doctor", path: "/dashboard/docter" },
             { text: "Disease", path: "/dashboard/disease" },
-            { text: "AboutHospital", path: "/dashboard/abouthospital" },
+            { text: "Add Hospital", path: "/dashboard/abouthospital" },
             { text: "Billing", path: "/dashboard/billing" },
             { text: "Analytics", path: "/dashboard/analytics" },
-            { text: "Dashboardd", path: "/dashboard/dashboardd" },
             { text: "DocterDetail", path: "/dashboard/docterdetail" },
-            { text: "Prescription", path: "/dashboard/prescription" },
+            { text: "Prescription", path: "/dashboard/registerForm" },
             { text: "Discharge", path: "/dashboard/discharge" },
           ].map((item, index) => (
             <ListItem
@@ -150,7 +146,9 @@ function MiniDrawer() {
               }}
             >
               {/* Wrap the ListItemButton with Link */}
-              <Link href={item.path} passHref>
+              <Link style={{
+                textDecoration:'none'
+              }} href={item.path} passHref>
                 <ListItemButton
                   component="a" 
                   sx={{
@@ -159,10 +157,15 @@ function MiniDrawer() {
                     px: 2.5,
                     color: "#fff", 
                     fontWeight: "bold", // Make text bold
-                    textDecorationLine: 'none',
+                    textDecoration: 'none',
                     "&:hover": {
+                      "& .MuiListItemIcon-root":{
+                      color:"#000",
+                      },
                       backgroundColor: "#fff",
                       color: "#13293d",
+                      outline: "none",
+                      textDecoration: "none",
                     },
                   }}
                   className={router.pathname === item.path ? "active" : ""}
@@ -178,7 +181,11 @@ function MiniDrawer() {
                   >
                     <BiRadioCircle />
                   </ListItemIcon>
-                  <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText primary={item.text}  sx={{ opacity: open ? 1 : 0  , outline:'none' ,
+                  '&:hover':{
+                    outline:'none'
+                  }
+                }} />
                 </ListItemButton>
               </Link>
             </ListItem>

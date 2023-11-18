@@ -69,7 +69,7 @@ const FORM_VALIDATION = Yup.object().shape({
   .matches(/[A-Z]/, 'Password must contain at least one capital letter')
   .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
   .matches(/[0-9]/, 'Password must contain at least one number')
-  .matches(/[@#$%^&+=_]/, 'Password must contain the special character')
+  .matches(/[@#!*~$%^&+=_]/, 'Password must contain the special character')
   //   .matches(/_/, 'Password must contain an underscore')
   .required('Password is required'),
   // logo: Yup.string()

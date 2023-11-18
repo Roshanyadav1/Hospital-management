@@ -5,17 +5,16 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-
+import MenuIcon from '@mui/icons-material/Menu';
+import Logo from '../assest/blueSga.png'
+import Image from "next/image";
 const pages = ["Find a Doctor", "Investors", "About us", "Careers", "Contact us"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Logout"];
 
 function ResponsiveAppBar({ sidebarChanges, open }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -48,10 +47,10 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <IconButton onClick={sidebarChanges}>
-            {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          <IconButton sx={{marginRight : '2rem'}} onClick={sidebarChanges}>
+            <MenuIcon /> 
           </IconButton>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="a"
@@ -67,7 +66,8 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
             }}
           >
             SGA APPLICATION
-          </Typography>
+          </Typography> */}
+          <Image width={160} height={50}  src={Logo}/>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
