@@ -4,6 +4,7 @@ from prescription.serializer import PrescriptionSerializer
 from prescription.models import Prescription
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
+from error.models import Error
 
 
 class PrescriptionAdd(GenericAPIView):
@@ -13,10 +14,14 @@ class PrescriptionAdd(GenericAPIView):
         serializer = PrescriptionSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         serializer.save()
+        error = Error.objects.get(error_title = 'REGISTERED_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
+        Response.status_code = error.error_code
         return Response(
             {
-                'status': status.HTTP_201_CREATED,
-                'message': 'Prescription Successfully Registered'
+                'status': response_code,
+                'message': 'Prescription ' + response_message
             },
         )
     
@@ -27,27 +32,39 @@ class PrescriptionView(APIView):
             if Prescription.objects.filter(prescription_id = id).count() >= 1:
                 prescription = Prescription.objects.get(prescription_id = id)
                 serializer = PrescriptionSerializer(prescription)   
+                error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_200_OK,
-                        'message': "Prescription Data Retrieved Successfully",
+                        'status': response_code,
+                        'message': "Prescription " + response_message,
                         'data': serializer.data
                     },
                 )
             else:
+                error = Error.objects.get(error_title = 'INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
                 return Response(
                     {
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'message': "Invalid Prescription Id",
+                        'status': response_code,
+                        'message': response_message,
                     },
                 ) 
         else:
             prescription = Prescription.objects.all()
-            serializer = PrescriptionSerializer(prescription, many = True)   
+            serializer = PrescriptionSerializer(prescription, many = True)  
+            error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code 
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': "Prescriptions Data Retrieved Successfully",
+                    'status': response_code,
+                    'message': "Prescriptions " + response_message,
                     'data': serializer.data
                 },
             )
@@ -60,17 +77,25 @@ class PrescriptionUpdate(APIView):
             serializer = PrescriptionSerializer(prescription, data = request.data)
             serializer.is_valid(raise_exception = True)
             serializer.save()  
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code 
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
+                    'status': response_code,
+                    'message': 'Prescription ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code 
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Prescription Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             ) 
     
@@ -81,17 +106,25 @@ class PrescriptionUpdate(APIView):
             serializer = PrescriptionSerializer(prescription, data = request.data, partial = True)
             serializer.is_valid(raise_exception = True)
             serializer.save()  
+            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code 
             return Response(
                 {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Partial Data Updated',
+                    'status': response_code,
+                    'message': 'Prescription ' + response_message,
                 }, 
             )
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code 
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Prescription Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             ) 
 
@@ -101,16 +134,24 @@ class PrescriptionDelete(APIView):
         if Prescription.objects.filter(prescription_id = id).count() >= 1:
             prescripton = Prescription.objects.get(prescription_id = id)
             prescripton.delete()
+            error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code 
             return Response(
                 {
-                    'status': status.HTTP_201_CREATED,
-                    'message': "Prescription Data Deleted",
+                    'status': response_code,
+                    'message': "Prescription " + response_message,
                 },
             )   
         else:
+            error = Error.objects.get(error_title = 'INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code 
             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Prescription Id",
+                    'status': response_code,
+                    'message': response_message,
                 },
             )  

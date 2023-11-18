@@ -38,6 +38,7 @@ class DoctorView(ListAPIView):
         error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
         response_message = error.error_message
         response_code = error.error_code
+        Response.status_code = error.error_code
         response = super().list(request, *args, **kwargs)
         if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
@@ -60,6 +61,7 @@ class DoctorViewById(APIView):
                 error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
                 response_message = error.error_message
                 response_code = error.error_code
+                Response.status_code = error.error_code
                 return Response(
                     {
                         'status': response_code,
@@ -71,6 +73,7 @@ class DoctorViewById(APIView):
                 error = Error.objects.get(error_title = 'INVALID_ID')
                 response_message = error.error_message
                 response_code = error.error_code
+                Response.status_code = error.error_code
                 return Response(
                     {
                         'status': response_code,
@@ -91,6 +94,7 @@ class DoctorUpdate(GenericAPIView):
             error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -101,6 +105,7 @@ class DoctorUpdate(GenericAPIView):
             error = Error.objects.get(error_title = 'INVALID_ID')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -118,6 +123,7 @@ class DoctorUpdate(GenericAPIView):
             error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -128,6 +134,7 @@ class DoctorUpdate(GenericAPIView):
             error = Error.objects.get(error_title = 'INVALID_ID')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -144,6 +151,7 @@ class DoctorDelete(APIView):
             error = Error.objects.get(error_title = 'DELETE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -154,6 +162,7 @@ class DoctorDelete(APIView):
             error = Error.objects.get(error_title = 'INVALID_ID')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,

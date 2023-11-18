@@ -19,6 +19,7 @@ class PatientRegister(GenericAPIView):
             error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -43,6 +44,7 @@ class PatientRegister(GenericAPIView):
             error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -65,6 +67,7 @@ class PatientView(ListAPIView):
         response_code = error.error_code
         if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
+        Response.status_code = error.error_code
         return Response(
             {
                 'status': response_code, 
@@ -83,6 +86,7 @@ class PatientViewById(APIView):
                 error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
                 response_message = error.error_message
                 response_code = error.error_code
+                Response.status_code = error.error_code
                 return Response(
                     {
                         'status': response_code,
@@ -94,6 +98,7 @@ class PatientViewById(APIView):
                 error = Error.objects.get(error_title = 'INVALID_ID')
                 response_message = error.error_message
                 response_code = error.error_code
+                Response.status_code = error.error_code
                 return Response(
                     {
                         'status': response_code,
@@ -112,6 +117,7 @@ class PatientUpdate(APIView):
             error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -122,6 +128,7 @@ class PatientUpdate(APIView):
             error = Error.objects.get(error_title = 'INVALID_ID')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -140,6 +147,7 @@ class PatientUpdate(APIView):
             error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -147,6 +155,7 @@ class PatientUpdate(APIView):
                 },
             )
         else:
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': status.HTTP_400_BAD_REQUEST,
@@ -164,6 +173,7 @@ class PatientDelete(APIView):
             error = Error.objects.get(error_title = 'DELETE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
@@ -174,6 +184,7 @@ class PatientDelete(APIView):
             error = Error.objects.get(error_title = 'INVALID_ID')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
