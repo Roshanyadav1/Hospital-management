@@ -22,7 +22,7 @@ import { useRegisterHospitalMutation } from '@/services/Query';
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  maxWidth: '650px',
+  maxWidth: '750px',
   boxShadow: theme.shadows[3],
   backgroundColor: colors.background,
   borderRadius: '20px',
