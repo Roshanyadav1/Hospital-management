@@ -42,14 +42,14 @@ class EmployeeAdd(GenericAPIView):
                 doctor_serializer = DoctorSerializer(data = doctor_data)
                 doctor_serializer.is_valid(raise_exception = True)
                 doctor = doctor_serializer.save()
-            member_id = doctor.doctor_id
+            member = doctor.doctor_id
             user_name = employee.employee_name
             user_email = request.data.get('employee_email')
             user_password = request.data.get('employee_password')
             user_role = employee.employee_role
 
             user = User.objects.create_user(
-                member_id, user_name, user_email, user_role, user_password)
+                member, user_name, user_email, user_role, user_password)
             error = Error.objects.get(error_title = 'ADD_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
