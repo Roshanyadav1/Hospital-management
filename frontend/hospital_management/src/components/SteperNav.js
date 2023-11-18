@@ -71,7 +71,7 @@ function SteperNav(props) {
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
+          > 
             SGA
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
@@ -80,6 +80,11 @@ function SteperNav(props) {
                 {item}
               </Button>
             ))}
+            
+              <Button href="/api/auth/login"   sx={{ color: '#fff' }}>
+                Login
+              </Button>
+              
           </Box>
         </Toolbar>
       </AppBar>
