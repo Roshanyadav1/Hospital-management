@@ -6,6 +6,8 @@ import Container from "@mui/material/Container";
 import { CardActionArea, CardMedia } from "@mui/material";
 import Home from "@/app/dashboard/page";
 import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
+
+
 export default function Doctor() {
   return (
     <div>
@@ -18,14 +20,14 @@ export default function Doctor() {
             <Card sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <CardMedia
-                  sx={{ height: 140 }}
-
-                  //   image="/static/images/cards/contemplative-reptile.jpg"
+                  sx={{ height: 140, width:400, height:400 }}
+                 
+                    image="https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg"
                   //   title="green iguana"
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Dr. Simran Jain
+                    Dr. Sumit Jain
                     <Typography variant="body2" color="text.secondary">
                       DNB (Paediatrics), MNAMS,
                       DrNB (Padiatric Cardiology)
@@ -47,9 +49,10 @@ export default function Doctor() {
             <Card sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <CardMedia
-                  sx={{ height: 140 }}
+                  sx={{ height: 140, width:400, height:400 }}
 
-                  //   image="/static/images/cards/contemplative-reptile.jpg"
+                     image="https://www.pngitem.com/pimgs/m/194-1943739_indian-doctor-hd-png-download.png"
+                     
                   //   title="green iguana"
                 />
                 <CardContent>
@@ -73,9 +76,9 @@ export default function Doctor() {
             <Card sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <CardMedia
-                  sx={{ height: 140 }}
+                  sx={{ height: 140 , width:400, height:400 }}
 
-                  //   image="/static/images/cards/contemplative-reptile.jpg"
+                    image="https://t4.ftcdn.net/jpg/03/20/52/31/360_F_320523164_tx7Rdd7I2XDTvvKfz2oRuRpKOPE5z0ni.jpg"
                   //   title="green iguana"
                 />
                 <CardContent>
@@ -99,9 +102,9 @@ export default function Doctor() {
             <Card sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <CardMedia
-                  sx={{ height: 140 }}
+                  sx={{ height: 140  , width:400, height:400}}
 
-                  //   image="/static/images/cards/contemplative-reptile.jpg"
+                     image="https://medlinkstaffing.com/wp-content/uploads/2019/10/iStock-1093329956.jpg"
                   //   title="green iguana"
                 />
                 <CardContent>
@@ -125,9 +128,9 @@ export default function Doctor() {
             <Card sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <CardMedia
-                  sx={{ height: 140 }}
+                  sx={{ height: 140  , width:400, height:400}}
 
-                  //   image="/static/images/cards/contemplative-reptile.jpg"
+                    image="https://getwallpapers.com/wallpaper/full/a/d/9/302389.jpg"
                   //   title="green iguana"
                 />
                 <CardContent>
@@ -151,8 +154,8 @@ export default function Doctor() {
               <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                <CardMedia
-        sx={{ height: 140 }}
-                 //   image="/static/images/cards/contemplative-reptile.jpg"
+        sx={{ height: 140 , width:400, height:400}}
+                    image="https://www.stockvault.net/data/2015/09/01/177580/preview16.jpg"
             //   title="green iguana"
       />
           <CardContent>
