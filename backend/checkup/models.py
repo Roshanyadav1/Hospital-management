@@ -16,8 +16,8 @@ class CheckUp(models.Model):
     disease_id =  models.ForeignKey(Disease, default = uuid.uuid4, on_delete = models.CASCADE)
     prescription_id =  models.ForeignKey(Prescription, default = uuid.uuid4, on_delete = models.CASCADE )
     check_status =  models.CharField(max_length = 255)
-    next_appointment_date = models.DateField()
-    next_appointment_time = models.TimeField()
+    # next_appointment_date = models.DateField()
+    # next_appointment_time = models.TimeField()
     
     
     

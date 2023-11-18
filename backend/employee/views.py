@@ -94,27 +94,6 @@ class EmployeeDelete(APIView):
             ) 
         
 class EmployeeUpdate(APIView):
-    def put(self, request, input= None, format=None):
-        id = input
-        if Employee.objects.filter(employee_id = id).count() >= 1:
-            doctor = Employee.objects.get(employee_id = id)
-            serializer = EmployeeSerializer(doctor, data = request.data)
-            serializer.is_valid(raise_exception = True)
-            serializer.save()
-            return Response(
-                {
-                    'status': status.HTTP_200_OK,
-                    'message': 'Complete Data Updated',
-                }, 
-            )
-        else:
-            return Response(
-                {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invalid Employee Id', 
-                },
-            )
-  
     def patch(self, request, input= None, format=None):
         id = input
         if Employee.objects.filter(employee_id = id).count() >= 1:
