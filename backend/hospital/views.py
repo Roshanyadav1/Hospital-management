@@ -17,6 +17,7 @@ class HospitalRegister(GenericAPIView):
             error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
             response_message = error.error_message
             response_code = error.error_code
+            Response.status_code = 400
             return Response(
                {
                   'status': response_code,
