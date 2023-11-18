@@ -1,7 +1,7 @@
 "use client"
-import { useState } from 'react';
-import { Formik, Form, ErrorMessage } from 'formik';
-import Autocomplete from '@mui/material/Autocomplete';
+// import { useState } from 'react';
+import { Formik, Form } from 'formik';
+// import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -9,11 +9,11 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
 import FORM_VALIDATION from './Components/FormValidation/formValidation';
-import { Box, TextField } from '@mui/material';
+import { Box,  } from '@mui/material';
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import Image from 'next/image';
+// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// import Image from 'next/image';
 import CustomAutocomplete from './Components/Autocomplete';
 import { useRegisterHospitalMutation } from '@/services/Query';
 // import * as Yup from 'yup'
@@ -62,12 +62,12 @@ const StyledFormWrapper = styled('div')({
 });
 
 // for preview image 
-const StyledImageWrapper = styled(Image)(({ height, width }) => ({
-  height: height || '100px',
-  width: width || '100px',
-  borderRadius: 10,
-  border: `2px solid ${colors.secondary}`,
-}));
+// const StyledImageWrapper = styled(Image)(({ height, width }) => ({
+//   height: height || '100px',
+//   width: width || '100px',
+//   borderRadius: 10,
+//   border: `2px solid ${colors.secondary}`,
+// }));
 
 // for the upload box and hover to show the animation of the upload icon
 const StyledBox = styled(Box)(() => ({
@@ -82,7 +82,7 @@ const StyledBox = styled(Box)(() => ({
     transition: '3s ease-in-out'
   },
 }));
-
+console.log(StyledBox)
 const INITIAL_FORM_STATE = {
   hospital_name: '',
   hospital_phone: '',
@@ -142,17 +142,20 @@ const App = () => {
   //   const result = await registerHospital(values);
   // }}
 
-  const handleRegister = async (values) => {
+  const handleRegister = async (values,{resetForm}) => {
     try {
       const result = await registerHospital(values);
 
       // Log the result to the console
       console.log('Result of registerHospital mutation:', result);
+      
+      resetForm();
 
     } catch (error) {
       // Handle error
-      console.error('Error submitting form:', error);
+      // console.error('Error submitting form:', error);
     }
+
   }
 
   return (
@@ -177,10 +180,10 @@ const App = () => {
           onSubmit={handleRegister}
 
         >
-          {({ values, setFieldValue, handleChange, handleBlur, touched }) => (
+          {({ values, handleChange, handleBlur, touched }) => (
             <Form>
               {
-                console.log(values, "the values are ")
+                // console.log(values, "the values are ")
               }
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
@@ -269,7 +272,7 @@ const App = () => {
                 <hr />
                 <Grid item xs={12}>
                   <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                    Hospital Owner's Information
+                    Hospital Owner Information
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -358,6 +361,8 @@ const App = () => {
         </Formik>
       </StyledPaper>
     </StyledFormWrapper>
+
+// provide the reset function as when the submit button is clicked means when it is submitted then the form should be reset and all fields should be empty if the fields were correctly filled
   );
 };
 

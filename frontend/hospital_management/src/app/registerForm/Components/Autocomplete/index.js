@@ -32,7 +32,7 @@ const CustomAutocomplete = ({ name, label, options, value, onChange, onBlur, tou
           />
         )}
       />
-      {touched && <ErrorMessage name={name} component="div" style={{ color: '#d32f2f', fontSize: 9, fontWeight: '600' }} />}
+      {touched && <ErrorMessage name={name} component="div" style={{ color: '#d32f2f', fontSize: 9, fontWeight: '500' }} />}
     </React.Fragment>
   );
 };
