@@ -33,14 +33,14 @@ class PatientRegister(GenericAPIView):
             patient = Patient.objects.get(
                 patient_email=request.data.get('patient_email'))
 
-            member_id = patient.patient_id
+            member = patient.patient_id
             user_name = patient.patient_name
             user_email = request.data.get('patient_email')
             user_password = request.data.get('password')
             user_role = "Patient"
 
             user = User.objects.create_user(
-                member_id, user_name, user_email, user_role, user_password)
+                member, user_name, user_email, user_role, user_password)
             error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
