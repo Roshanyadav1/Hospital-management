@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { ErrorMessage } from 'formik';
 
-const CustomAutocomplete = ({ name, label, options, value, onChange, onBlur, touched, error }) => {
+const CustomAutocomplete = ({ name, label, options, value, onChange, onBlur, touched, }) => {
   return (
     <React.Fragment>
       <Autocomplete

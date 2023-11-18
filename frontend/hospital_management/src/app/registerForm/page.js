@@ -91,8 +91,8 @@ const INITIAL_FORM_STATE = {
   hospital_city: '',
   hospital_type: '',
   hospital_category: '',
-  hospital_status: 'Active',
-  logo: null,
+  hospital_status: true,
+  // logo: null,
   hospital_owner_name: '',
   hospital_owner_phone: '',
   hospital_owner_email: '',
@@ -101,7 +101,10 @@ const INITIAL_FORM_STATE = {
 };
 
 
-const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
+
+
+
+const categories = ["Pediatrics", "Surgery","Obstetrics","Gynecology (OB/GYN)","Cardiology","Dental Clinic","Radiology","Oncology","Psychiatry"];
 const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Surat', 'Indore', 'Bhopal', 'Vadodara', 'Coimbatore', 'Ludhiana', 'Amritsar', 'Patna', 'Ranchi', 'Bhubaneswar',
   'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
 ];
@@ -110,31 +113,48 @@ const App = () => {
   // here is the registerHospital api  Mutation
   const [registerHospital] = useRegisterHospitalMutation()
 
-  const [previewImage, setPreviewImage] = useState(null);
+  // const [previewImage, setPreviewImage] = useState(null);
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-    } else {
-      setPreviewImage(null);
-    }
-  };
+  // const handleImageChange = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const imageUrl = URL.createObjectURL(file);
+  //     setPreviewImage(imageUrl);
+  //   } else {
+  //     setPreviewImage(null);
+  //   }
+  // };
 
-  const handleChooseLogoClick = () => {
-    let fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.onchange = handleImageChange;
-    fileInput.click();
-  };
+  // const handleChooseLogoClick = () => {
+  //   let fileInput = document.createElement('input');
+  //   fileInput.type = 'file';
+  //   fileInput.accept = 'image/*';
+  //   fileInput.onchange = handleImageChange;
+  //   fileInput.click();
+  // };
 
   // const FORM_VALIDATION = Yup.object().shape({
   //   hospitalCity: Yup.string().required('City is required'),
   //   // Add other Yup validations for other fields if needed
   // });
- 
+
+  // onsubmit={async(initialValues) => {
+  //   const result = await registerHospital(values);
+  // }}
+
+  const handleRegister = async (values) => {
+    try {
+      const result = await registerHospital(values);
+
+      // Log the result to the console
+      console.log('Result of registerHospital mutation:', result);
+
+    } catch (error) {
+      // Handle error
+      console.error('Error submitting form:', error);
+    }
+  }
+
   return (
     <StyledFormWrapper>
       <StyledPaper elevation={3}>
@@ -150,10 +170,11 @@ const App = () => {
             ...INITIAL_FORM_STATE,
           }}
           validationSchema={FORM_VALIDATION}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          // onSubmit={(values) => {
+          //   console.log(values);
+          // }}
 
+          onSubmit={handleRegister}
 
         >
           {({ values, setFieldValue, handleChange, handleBlur, touched }) => (
@@ -191,15 +212,15 @@ const App = () => {
                 </Grid>
                 {/* // yha per issue he bro  */}
                 <Grid item xs={12} sm={6}>
-                <CustomAutocomplete
-              name="hospital_city"
-              label="City"
-              options={cities}
-              value={values.hospital_city}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              touched={touched.hospital_city}
-            />
+                  <CustomAutocomplete
+                    name="hospital_city"
+                    label="City"
+                    options={cities}
+                    value={values.hospital_city}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    touched={touched.hospital_city}
+                  />
                 </Grid>
                 {/* provide proper error usding yup validation for this field if the city is not selected from the dropdown */}
                 <Grid item xs={12} sm={6}>
@@ -224,15 +245,15 @@ const App = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                <CustomAutocomplete
-              name="hospital_category"
-              label="Category"
-              options={categories}
-              value={values.hospital_category}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              touched={touched.hospital_category}
-            />
+                  <CustomAutocomplete
+                    name="hospital_category"
+                    label="Category"
+                    options={categories}
+                    value={values.hospital_category}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    touched={touched.hospital_category}
+                  />
                   {/* <ErrorMessage name="category" component="div" style={{ color: colors.error, fontSize: 10 }} /> */}
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -240,8 +261,8 @@ const App = () => {
                     label="Status"
                     name="hospital_status"
                     options={[
-                      { value: 'Active', label: 'Active' },
-                      { value: 'Inactive', label: 'Inactive' },
+                      { value: true, label: 'Active' },
+                      { value: false, label: 'Inactive' },
                     ]}
                   />
                 </Grid>
@@ -297,7 +318,7 @@ const App = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                  {/* <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital's logo
                   </Typography>
                   <Box onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px', margin: '1rem 0rem' }}>
@@ -313,7 +334,7 @@ const App = () => {
                         </Grid>
                       </StyledBox>
                     )}
-                  </Box>
+                  </Box> */}
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
