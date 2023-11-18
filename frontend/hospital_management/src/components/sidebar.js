@@ -108,8 +108,7 @@ const StyledLink = styled("a")(({ theme }) => ({
 }));
 
 function MiniDrawer() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const router = useRouter();
   const sidebarChanges = () => {
     setOpen(!open);
@@ -128,12 +127,12 @@ function MiniDrawer() {
             { text: "Career", path: "/" },
             { text: "Docter", path: "/dashboard/docter" },
             { text: "Disease", path: "/dashboard/disease" },
-            { text: "AboutHospital", path: "/dashboard/abouthospital" },
+            { text: "Add Hospital", path: "/dashboard/abouthospital" },
             { text: "Billing", path: "/dashboard/billing" },
             { text: "Analytics", path: "/dashboard/analytics" },
             { text: "Dashboardd", path: "/dashboard/dashboardd" },
             { text: "DocterDetail", path: "/dashboard/docterdetail" },
-            { text: "Prescription", path: "/dashboard/prescription" },
+            { text: "Prescription", path: "/dashboard/registerForm" },
             { text: "Discharge", path: "/dashboard/discharge" },
           ].map((item, index) => (
             <ListItem
