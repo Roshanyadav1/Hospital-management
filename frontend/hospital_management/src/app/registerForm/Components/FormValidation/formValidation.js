@@ -2,10 +2,10 @@
 import * as Yup from 'yup';
 
 const FORM_VALIDATION = Yup.object().shape({
-  HospitalName: Yup.string()
+  hospital_name: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
-  HospitalNumber: Yup.string()
+    hospital_phone: Yup.string()
     .matches(/^(?!.*(\d)\1{5})[0-9]+$/, 'Invalid phone number')
     .test('is-ten-digits', 'Invalid phone number', (value) => {
       if (value) {
@@ -14,7 +14,7 @@ const FORM_VALIDATION = Yup.object().shape({
       return false;
     })
     .required('Required!'),
-  HospitalEmail: Yup.string()
+    hospital_email: Yup.string()
     .matches(
       /^(?=.*[a-zA-Z]).*^(?!.*@(email|yahoo)\.com).*[A-Za-z0-9]+@[A-Za-z0.9.-]+\.[A-Za-z]{2,4}$/,
       'Invalid email format'
@@ -26,21 +26,21 @@ const FORM_VALIDATION = Yup.object().shape({
       }
       return true;
     }),
-  HospitalCity: Yup.string().required('City is Required!'),
-  HospitalAddress: Yup.string().required('Required!'),
-  radioOptions: Yup.string().required('Please select an option'),
-  category: Yup.string().required('Please select a category'),
-  statusRadio: Yup.string().required('Please select a status'),
+    hospital_city: Yup.string().required('City is Required!'),
+  hospital_address: Yup.string().required('Required!'),
+  hospital_type: Yup.string().required('Please select an option'),
+  hospital_category: Yup.string().required('Please select a category'),
+  hospital_status: Yup.string().required('Please select a status'),
   logo: Yup.string().test('fileSize', 'File size is too large', (value) => {
     if (!value) {
       return true;
     }
     return value && value.size <= 1024 * 1024;
   }),
-  HospitalOwnerName: Yup.string()
+  hospital_owner_name: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
-  HospitalOwnerNumber: Yup.string()
+    hospital_owner_phone: Yup.string()
     .matches(/^(?!.*(\d)\1{5})[0-9]+$/, 'Invalid phone number')
     .test('is-ten-digits', 'Invalid phone number', (value) => {
       if (value) {
@@ -49,7 +49,7 @@ const FORM_VALIDATION = Yup.object().shape({
       return false;
     })
     .required('Required!'),
-  HospitalOwnerEmail: Yup.string()
+    hospital_owner_email: Yup.string()
     .matches(
       /^(?=.*[a-zA-Z]).*^(?!.*@(email|yahoo)\.com).*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
       'Invalid Email format'
@@ -61,10 +61,10 @@ const FORM_VALIDATION = Yup.object().shape({
       }
       return true;
     }),
-    UserName: Yup.string()
+    username: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
-   Password : Yup.string()
+    password : Yup.string()
   .min(8, 'Password must be at least 8 characters')
   .matches(/[A-Z]/, 'Password must contain at least one capital letter')
   .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
