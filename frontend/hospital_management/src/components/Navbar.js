@@ -47,7 +47,7 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <IconButton sx={{paddingRight : '2rem'}} onClick={sidebarChanges}>
+          <IconButton sx={{marginRight : '2rem'}} onClick={sidebarChanges}>
             <MenuIcon /> 
           </IconButton>
           {/* <Typography
