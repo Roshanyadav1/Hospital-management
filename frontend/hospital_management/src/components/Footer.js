@@ -4,6 +4,7 @@ import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Image from "next/image";
+import {colors}  from '@/styles/theme';
 // import instaa from '../assest/instaa.png';
 // import FB from '../assest/fb.png';
 // import Twiter from '../assest/twiter.png';
@@ -13,10 +14,15 @@ const Footer = () => {
     <Grid className="main-body"
       // component="footer"
       sx={{
-        backgroundColor: "#13293D",
-        color: "#fff",
-        paddingTop: 2,
-        textAlign: "center",
+        background: colors.primary,
+        p: { xs: 4, md: 8, lg: 0 },
+        pt: { lg: 7 },
+        pb: 12,
+        fontSize: { xs: '12px', md: '14px' },
+        position: 'relative',
+        left: 0,
+        bottom: 0,
+        width: '100%',
       }}
     >
       <Container  sx={{ margin: 'auto' }} maxWidth="lg">
@@ -29,7 +35,7 @@ const Footer = () => {
           </Grid>
 
           <Grid item xs={12} sm={3}>
-            <Typography variant="body1" sx={{ padding: 1, fontWeight: "bold" }}>
+            <Typography variant="body1"  color="white" sx={{ padding: 1, fontWeight: "bold", }}>
               Social Media
             </Typography>
 
@@ -56,7 +62,7 @@ const Footer = () => {
 
             }}>
               Department of Orthopedics
-            </Typography>
+            </Typography >
             <Link href="https://www.facebook.com" color="inherit">
               <Facebook />
             </Link>
@@ -161,11 +167,11 @@ const Footer = () => {
             </Typography>
           </Grid>
         </Grid>
-           <Box sx={{ marginLeft:15}} >   
+           <Box sx={{ marginLeft:5}} >   
            <hr/>
            </Box>
        
-        <Typography variant="body2" sx={{ padding: 2, display: "flex", justifyContent: "center",alignItems: "center",marginLeft:15}}>
+        <Typography variant="body2" color="white" sx={{ padding: 2, display: "flex", justifyContent: "center",alignItems: "center",marginLeft:15,}}>
           &copy; {new Date().getFullYear()} Your Website Name
         </Typography>
       </Container>
