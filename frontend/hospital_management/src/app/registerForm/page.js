@@ -109,7 +109,7 @@ const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata
   'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
 ];
 
-const App = () => {
+const Register = () => {
   // here is the registerHospital api  Mutation
   const [registerHospital] = useRegisterHospitalMutation()
 
@@ -366,6 +366,6 @@ const App = () => {
   );
 };
 
-export default App;
+export default Register;
 
 

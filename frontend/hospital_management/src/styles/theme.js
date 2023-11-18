@@ -1,11 +1,17 @@
+import { createTheme } from "@mui/material/styles";
+
 export const colors = {
-    primary: "#13293D",
-    secondary: "#35CFF4",
-    info: "#5e71bd",
-    success: "#00ff00",
-    error : "#d32f2f",
+    primary: '#13293D',
+    secondary: '#35CFF4',
+    info: '#D3E3F7',
+    success: '#826AF9',
+    warning: '#F5A623',
+    danger: '#D0021B',
+    error: "#d32f2f",
+    white: '#fff',
+    black: '#000',
+    gray: '#A7AFB7',
     background: "#F0F2FA",
-    lightGrey : "#f2f2f2"
 }
 
 
@@ -27,28 +33,39 @@ export const themeOptions = {
     },
 
     // Typography overrides
+    components: {
+        MuiDrawer: {
+            styleOverrides: {
+                paper: {
+                    backgroundColor: colors.primary,
+                    color: colors.white,
+                },
+            },
+        },
+    },
+
     typography: {
-        h1 : {
+        h1: {
             fontSize: '3rem',
             fontWeight: 'bold',
         },
-        h2 : {
+        h2: {
             fontSize: '2.5rem',
             fontWeight: 'bold',
         },
-        h3 : {
+        h3: {
             fontSize: '2rem',
             fontWeight: 'bold',
         },
-        h4 : {
+        h4: {
             fontSize: '1.5rem',
             fontWeight: 'bold',
         },
-        h5 : {
+        h5: {
             fontSize: '1.2rem',
             fontWeight: 'bold',
         },
-        h6 : {
+        h6: {
             fontSize: '1rem',
             fontWeight: 'bold',
         },
@@ -76,6 +93,6 @@ export const themeOptions = {
         overline: {
             fontSize: '0.6rem',
         },
+    }
 
-    },
-};
+}
