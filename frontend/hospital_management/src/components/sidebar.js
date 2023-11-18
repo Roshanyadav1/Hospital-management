@@ -1,23 +1,37 @@
-"use client";
+'use client'
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
+// import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
-
 import ListItem from "@mui/material/ListItem";
+import { Grid } from "@mui/material"
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
-import Footer from "./Footer";
-import { Grid } from "@mui/material";
+import Footer from './Footer';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Home from "@/app/dashboard/page";
+import Docter from "@/app/dashboard/docter/page";
+import Career from "@/app/dashboard/career/page";
+import Billing from "@/app/dashboard/billing/page"
+import AboutHospital from "@/app/dashboard/abouthospital/page";
+import Analytics from "@/app/dashboard/analytics/page";
+import Dashboardd from "@/app/dashboard/dashboardd/page";
+import Disease from "@/app/dashboard/disease/page";
+import DocterDetail from "@/app/dashboard/docterdetail/page";
+import Prescription from "@/app/dashboard/prescription/page";
+import Discharge from "@/app/dashboard/discharge/page";
 
-const drawerWidth = 280;
+const drawerWidth = 240;
+
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -63,7 +77,7 @@ const AppBar = styled(MuiAppBar, {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  }),
+  })
 }));
 
 const Drawer = styled(MuiDrawer, {
@@ -83,10 +97,20 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+
+const StyledLink = styled("a")(({ theme }) => ({
+  color: "#fff", // Set the color to white
+  textDecoration: "none",
+  padding: theme.spacing(1),
+  "&:hover": {
+    color: "#13293d", 
+  },
+}));
+
 function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const router = useRouter();
   const sidebarChanges = () => {
     setOpen(!open);
   };
@@ -101,19 +125,19 @@ function MiniDrawer() {
         <DrawerHeader></DrawerHeader>
         <List>
           {[
-            "Dashboard",
-            "Appointment Management",
-            "Billing Management",
-            "Prescription Management",
-            "Discharge Summary",
-            "Lab Notifications",
-            "Pharmacy Management",
-            "Stock Management",
-            "Stock Moment",
-            "Intelligent Reports"
-          ].map((text, index) => (
+            { text: "Career", path: "/" },
+            { text: "Docter", path: "/dashboard/docter" },
+            { text: "Disease", path: "/dashboard/disease" },
+            { text: "AboutHospital", path: "/dashboard/abouthospital" },
+            { text: "Billing", path: "/dashboard/billing" },
+            { text: "Analytics", path: "/dashboard/analytics" },
+            { text: "Dashboardd", path: "/dashboard/dashboardd" },
+            { text: "DocterDetail", path: "/dashboard/docterdetail" },
+            { text: "Prescription", path: "/dashboard/prescription" },
+            { text: "Discharge", path: "/dashboard/discharge" },
+          ].map((item, index) => (
             <ListItem
-              key={text}
+              key={item.text}
               disablePadding
               sx={{
                 display: "block",
@@ -123,162 +147,62 @@ function MiniDrawer() {
                   backgroundColor: "#fff",
                   color: "#13293d",
                 },
-
-
               }}
             >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  // background:'#13293D',color:'#fff',
-                  // '& MuiButtonBase-root-MuiListItemButton-root:hover' :{
-                  // backgroundColor:'red'
-                  // }
-                }}
-              >
-                <ListItemIcon
+              {/* Wrap the ListItemButton with Link */}
+              <Link href={item.path} passHref>
+                <ListItemButton
+                  component="a" 
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    //color:'white'
-                    backgroundColor: "inherit",
-                    color: "#fff",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                    color: "#fff", 
+                    fontWeight: "bold", // Make text bold
+                    textDecorationLine: 'none',
+                    "&:hover": {
+                      backgroundColor: "#fff",
+                      color: "#13293d",
+                    },
                   }}
+                  className={router.pathname === item.path ? "active" : ""}
                 >
-                  <BiRadioCircle />
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                      backgroundColor: "inherit",
+                      color: "#fff",
+                    }}
+                  >
+                    <BiRadioCircle />
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1 }}>
-        <DrawerHeader />
-        <Grid container item padding={3} >
-
-          <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-            dolor purus non enim praesent elementum facilisis leo vel. Risus at
-            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-            quisque non tellus. Convallis convallis tellus id interdum velit
-            laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-            adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-            vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-            lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-            faucibus et molestie ac.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-            sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-            mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-            risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-            purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-            tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-            morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-
-        </Grid>
-
-        <Footer />
+      <Box component="main" sx={{ flexGrow: 1}}>
+        {router.pathname === "/" && <Career />}
+        {router.pathname === "/dashboard/docter" && <Docter />}
+        {router.pathname === "/dashboard/disease" && <Disease />}
+        {router.pathname === "/dashboard/abouthospital" && <AboutHospital />}
+        {router.pathname === "/dashboard/billing" && <Billing />}
+        {router.pathname === "/dashboard/analytics" && <Analytics />}
+        {router.pathname === "/dashboard/dashboardd" && <Dashboardd />}
+        {router.pathname === "/dashboard/docterdetail" && <DocterDetail />}
+        {router.pathname === "/dashboard/prescription" && <Prescription />}
+        {router.pathname === "/dashboard/discharge" && <Discharge />}
+        <Box sx={{marginBottom:0 }}>
+        <Footer/>
+        </Box>
+      
       </Box>
     </Box>
+      
   );
 }
 
