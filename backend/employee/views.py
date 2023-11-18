@@ -35,7 +35,7 @@ class EmployeeAdd(GenericAPIView):
             employee_email=request.data.get('employee_email'))
             if employee.employee_role == 'Doctor':
                 doctor_data = {
-                    'employee_id': employee.employee_id,
+                    'employee': employee.employee_id,
                     'doctor_type': employee.employee_type,
                     'disease_specialist': 'null'
                 }
