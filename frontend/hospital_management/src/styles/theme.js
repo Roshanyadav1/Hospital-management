@@ -60,11 +60,11 @@ export const themeOptions = {
         },
         h4: {
             fontSize: '1.5rem',
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
         },
         h5: {
             fontSize: '1.2rem',
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
         },
         h6: {
             fontSize: '1rem',
@@ -72,11 +72,11 @@ export const themeOptions = {
         },
         subtitle1: {
             fontSize: '1.2rem',
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
         },
         subtitle2: {
             fontSize: '1rem',
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
         },
         body1: {
             fontSize: '1rem',
@@ -89,9 +89,9 @@ export const themeOptions = {
         },
         button: {
             fontSize: '1rem',
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
         },
-        overline: {
+        overline: { 
             fontSize: '0.6rem',
         },
     }
