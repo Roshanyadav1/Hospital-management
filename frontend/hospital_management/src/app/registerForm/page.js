@@ -1,5 +1,5 @@
 "use client"
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Formik, Form } from 'formik';
 // import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
@@ -12,8 +12,8 @@ import FORM_VALIDATION from './Components/FormValidation/formValidation';
 import { Box,  } from '@mui/material';
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
-// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-// import Image from 'next/image';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Image from 'next/image';
 import CustomAutocomplete from './Components/Autocomplete';
 import { useRegisterHospitalMutation } from '@/services/Query';
 // import * as Yup from 'yup'
@@ -22,7 +22,7 @@ import { useRegisterHospitalMutation } from '@/services/Query';
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  maxWidth: '650px',
+  maxWidth: '950px',
   boxShadow: theme.shadows[3],
   backgroundColor: colors.background,
   borderRadius: '20px',
@@ -62,12 +62,12 @@ const StyledFormWrapper = styled('div')({
 });
 
 // for preview image 
-// const StyledImageWrapper = styled(Image)(({ height, width }) => ({
-//   height: height || '100px',
-//   width: width || '100px',
-//   borderRadius: 10,
-//   border: `2px solid ${colors.secondary}`,
-// }));
+const StyledImageWrapper = styled(Image)(({ height, width }) => ({
+  height: height || '100px',
+  width: width || '100px',
+  borderRadius: 10,
+  border: `2px solid ${colors.secondary}`,
+}));
 
 // for the upload box and hover to show the animation of the upload icon
 const StyledBox = styled(Box)(() => ({
@@ -113,25 +113,25 @@ const Register = () => {
   // here is the registerHospital api  Mutation
   const [registerHospital] = useRegisterHospitalMutation()
 
-  // const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setPreviewImage(imageUrl);
-  //   } else {
-  //     setPreviewImage(null);
-  //   }
-  // };
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+    } else {
+      setPreviewImage(null);
+    }
+  };
 
-  // const handleChooseLogoClick = () => {
-  //   let fileInput = document.createElement('input');
-  //   fileInput.type = 'file';
-  //   fileInput.accept = 'image/*';
-  //   fileInput.onchange = handleImageChange;
-  //   fileInput.click();
-  // };
+  const handleChooseLogoClick = () => {
+    let fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = handleImageChange;
+    fileInput.click();
+  };
 
   // const FORM_VALIDATION = Yup.object().shape({
   //   hospitalCity: Yup.string().required('City is required'),
@@ -321,7 +321,7 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  {/* <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                   <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital's logo
                   </Typography>
                   <Box onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px', margin: '1rem 0rem' }}>
@@ -337,7 +337,7 @@ const Register = () => {
                         </Grid>
                       </StyledBox>
                     )}
-                  </Box> */}
+                  </Box> 
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
