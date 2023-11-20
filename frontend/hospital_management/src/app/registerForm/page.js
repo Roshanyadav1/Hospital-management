@@ -1,7 +1,7 @@
 "use client"
 import { useState } from 'react';
-import { Formik, Form, ErrorMessage } from 'formik';
-import Autocomplete from '@mui/material/Autocomplete';
+import { Formik, Form } from 'formik';
+// import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -9,16 +9,20 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
 import FORM_VALIDATION from './Components/FormValidation/formValidation';
-import { Box, TextField } from '@mui/material';
+import { Box,  } from '@mui/material';
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Image from 'next/image';
+import CustomAutocomplete from './Components/Autocomplete';
+import { useRegisterHospitalMutation } from '@/services/Query';
+// import * as Yup from 'yup'
+
 
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  maxWidth: '650px',
+  maxWidth: '950px',
   boxShadow: theme.shadows[3],
   backgroundColor: colors.background,
   borderRadius: '20px',
@@ -58,11 +62,11 @@ const StyledFormWrapper = styled('div')({
 });
 
 // for preview image 
-const StyledImageWrapper = styled(Image)(({height , width}) => ({
+const StyledImageWrapper = styled(Image)(({ height, width }) => ({
   height: height || '100px',
   width: width || '100px',
-  borderRadius: 10 ,
-  border : `2px solid ${colors.secondary}`,
+  borderRadius: 10,
+  border: `2px solid ${colors.secondary}`,
 }));
 
 // for the upload box and hover to show the animation of the upload icon
@@ -75,34 +79,40 @@ const StyledBox = styled(Box)(() => ({
   '&:hover': {
     cursor: 'pointer',
     border: `2px solid ${colors.secondary}`,
-    transition: '3s ease-in-out'    
+    transition: '3s ease-in-out'
   },
 }));
-
+console.log(StyledBox)
 const INITIAL_FORM_STATE = {
-  HospitalName: '',
-  HospitalNumber: '',
-  HospitalEmail: '',
-  HospitalAddress: '',
-  HospitalCity: '',
-  radioOptions: '',
-  category: '',
-  statusRadio: 'Active',
-  logo: null,
-  HospitalOwnerName: '',
-  HospitalOwnerNumber: '',
-  HospitalOwnerEmail: '',
-  UserName: '',
-  Password: '',
+  hospital_name: '',
+  hospital_phone: '',
+  hospital_email: '',
+  hospital_address: '',
+  hospital_city: '',
+  hospital_type: '',
+  hospital_category: '',
+  hospital_status: true,
+  // logo: null,
+  hospital_owner_name: '',
+  hospital_owner_phone: '',
+  hospital_owner_email: '',
+  username: '',
+  password: '',
 };
 
 
-const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
+
+
+
+const categories = ["Pediatrics", "Surgery","Obstetrics","Gynecology (OB/GYN)","Cardiology","Dental Clinic","Radiology","Oncology","Psychiatry"];
 const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Surat', 'Indore', 'Bhopal', 'Vadodara', 'Coimbatore', 'Ludhiana', 'Amritsar', 'Patna', 'Ranchi', 'Bhubaneswar',
   'Thiruvananthapuram', 'Kochi', 'Visakhapatnam', 'Agra', 'Varanasi', 'Mysore', 'Madurai', 'Vijayawada',
 ];
 
 const Register = () => {
+  // here is the registerHospital api  Mutation
+  const [registerHospital] = useRegisterHospitalMutation()
+
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -123,31 +133,61 @@ const Register = () => {
     fileInput.click();
   };
 
+  // const FORM_VALIDATION = Yup.object().shape({
+  //   hospitalCity: Yup.string().required('City is required'),
+  //   // Add other Yup validations for other fields if needed
+  // });
+
+  // onsubmit={async(initialValues) => {
+  //   const result = await registerHospital(values);
+  // }}
+
+  const handleRegister = async (values,{resetForm}) => {
+    try {
+      const result = await registerHospital(values);
+
+      // Log the result to the console
+      console.log('Result of registerHospital mutation:', result);
+      
+      resetForm();
+
+    } catch (error) {
+      // Handle error
+      // console.error('Error submitting form:', error);
+    }
+
+  }
+
   return (
     <StyledFormWrapper>
       <StyledPaper elevation={3}>
 
-
-        <StyledTypography variant="h4">
+        <StyledTypography variant="h5" style={{textAlign:'center'}}>
           Registration Form
         </StyledTypography>
-        <Typography variant="h6">
-              General Information
+        <Typography variant="h6" style={{marginBottom:'1rem'}}>
+          General Information
         </Typography>
         <Formik
           initialValues={{
             ...INITIAL_FORM_STATE,
           }}
           validationSchema={FORM_VALIDATION}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          // onSubmit={(values) => {
+          //   console.log(values);
+          // }}
+
+          onSubmit={handleRegister}
+
         >
-          {({ values, setFieldValue }) => (
+          {({ values, handleChange, handleBlur, touched }) => (
             <Form>
+              {
+                // console.log(values, "the values are ")
+              }
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
-                  <Text name="HospitalName" label="Name" autoComplete=""
+                  <Text name="hospital_name" label="Name" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -156,7 +196,7 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="HospitalNumber" label="Phone" autoComplete="off"
+                  <Text name="hospital_phone" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -165,7 +205,7 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Text name="HospitalEmail" label="Email" autoComplete="off"
+                  <Text name="hospital_email" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -175,30 +215,21 @@ const Register = () => {
                 </Grid>
                 {/* // yha per issue he bro  */}
                 <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    name="hospitalCity"
+                  <CustomAutocomplete
+                    name="hospital_city"
+                    label="City"
                     options={cities}
-                    getOptionLabel={(option) => option}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="City"
-                        InputProps={{
-                          ...params.InputProps,
-                          style: {
-                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
-                          },
-                        }}
-                      />
-                    )}
+                    value={values.hospital_city}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    touched={touched.hospital_city}
                   />
-                  <ErrorMessage name="HospitalCity" component="div" style={{ color: colors.error , fontSize: 10 }} />
                 </Grid>
                 {/* provide proper error usding yup validation for this field if the city is not selected from the dropdown */}
                 <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
                     label="Type"
-                    name="radioOptions"
+                    name="hospital_type"
                     options={[
                       { value: 'Public', label: 'Public' },
                       { value: 'Private', label: 'Private' },
@@ -207,7 +238,7 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Text name="HospitalAddress" label="Address" autoComplete="off"
+                  <Text name="hospital_address" label="Address" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -217,43 +248,35 @@ const Register = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    name="category"
+                  <CustomAutocomplete
+                    name="hospital_category"
+                    label="Category"
                     options={categories}
-                    getOptionLabel={(option) => option}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Category"
-                        InputProps={{
-                          ...params.InputProps,
-                          style: {
-                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
-                          },
-                        }}
-                      />
-                    )}
+                    value={values.hospital_category}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    touched={touched.hospital_category}
                   />
-                  <ErrorMessage name="category" component="div" style={{ color: colors.error , fontSize: 10 }} />
+                  {/* <ErrorMessage name="category" component="div" style={{ color: colors.error, fontSize: 10 }} /> */}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
                     label="Status"
-                    name="statusRadio"
+                    name="hospital_status"
                     options={[
-                      { value: 'Active', label: 'Active' },
-                      { value: 'Inactive', label: 'Inactive' },
+                      { value: true, label: 'Active' },
+                      { value: false, label: 'Inactive' },
                     ]}
                   />
                 </Grid>
                 <hr />
                 <Grid item xs={12}>
-                                      <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                    Hospital Owner's Information
+                  <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                    Hospital Owner Information
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="HospitalOwnerName" label="Name" autoComplete="off"
+                  <Text name="hospital_owner_name" label="Name" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -262,7 +285,7 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="HospitalOwnerNumber" label="Phone" autoComplete="off"
+                  <Text name="hospital_owner_phone" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -271,7 +294,7 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Text name="HospitalOwnerEmail" label="Email" autoComplete="off"
+                  <Text name="hospital_owner_email" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -280,7 +303,7 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="UserName" label="Username" autoComplete="off"
+                  <Text name="username" label="Username" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -289,7 +312,7 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="Password" label="Password" autoComplete="off"
+                  <Text name="password" label="Password" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -298,23 +321,23 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                   <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital's logo
                   </Typography>
-                  <Box  onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px' , margin :'1rem 0rem' }}>
-                  {previewImage ? (
-                      <StyledImageWrapper width={150} height={150} onClick={handleChooseLogoClick} src={previewImage} alt="logo"  />
-                    ):(
-                        <StyledBox item display='flex' justifyContent='center' alignItems='center' >
-                          <Grid display='block'>
-                          <CloudUploadIcon sx={{ height: '35px', color: colors.secondary , position:'relative' , left:'1.6rem' }} />
+                  <Box onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px', margin: '1rem 0rem' }}>
+                    {previewImage ? (
+                      <StyledImageWrapper width={150} height={150} onClick={handleChooseLogoClick} src={previewImage} alt="logo" />
+                    ) : (
+                      <StyledBox item display='flex' justifyContent='center' alignItems='center' >
+                        <Grid display='block'>
+                          <CloudUploadIcon sx={{ height: '35px', color: colors.secondary, position: 'relative', left: '1.6rem' }} />
                           <StyledTypography variant='body2' >
                             upload logo
                           </StyledTypography>
-                            </Grid>
-                        </StyledBox>
+                        </Grid>
+                      </StyledBox>
                     )}
-                  </Box>
+                  </Box> 
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
@@ -323,6 +346,7 @@ const Register = () => {
 
                 <Grid item xs={12} sm={6}>
                   <Button
+                  container justify="center" alignItems="flex-end"
                     variant="contained"
                     color="primary"
                     type="submit"
@@ -331,6 +355,7 @@ const Register = () => {
                     Submit
                   </Button>
                 </Grid>
+                {/* add the style to this button to place the center of the bottom of the form with proper working */}
 
               </Grid>
             </Form>
@@ -338,6 +363,8 @@ const Register = () => {
         </Formik>
       </StyledPaper>
     </StyledFormWrapper>
+
+// provide the reset function as when the submit button is clicked means when it is submitted then the form should be reset and all fields should be empty if the fields were correctly filled
   );
 };
 

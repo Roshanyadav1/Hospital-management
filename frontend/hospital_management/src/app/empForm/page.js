@@ -1,16 +1,15 @@
 "use client"
-//import { useState } from 'react';
+import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
-import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './components/RadioB/RadioButtonGroup';
-
+import CustomAutocomplete from './components/autocomplete';
+import { useRegisterHospitalMutation } from '@/services/Query';
 import Employee_Validation from './components/EmployeeValidation/employeeValidation';
-import { TextField } from '@mui/material';
 import Text from './components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import Divider from '@mui/material/Divider';
@@ -18,7 +17,7 @@ import Divider from '@mui/material/Divider';
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  maxWidth: '650px',
+  maxWidth: '950px',
   boxShadow: theme.shadows[3],
   backgroundColor: colors.background,
   borderRadius: '20px',
@@ -60,15 +59,15 @@ const VisuallyHiddenInput = styled('input')({
 
 
 const INITIAL_FORM_STATE = {
-  Employee_Name: '',
-  Employee_Email: '',
-  Employee_Number: '',
-  Employee_password: '',
-  Employee_Type: '',
-  Employee_Role: '',
-  Employee_Status: '',
-  Created_By: '',
-  Updated_By: '',
+  employee_name: '',
+  employee_email: '',
+  employee_number: '',
+  employee_password: '',
+  employee_type: '',
+  employee_role: '',
+  employee_status: '',
+  created_by: '',
+  updated_by: '',
 };
 
 
@@ -79,9 +78,43 @@ const Role = ['one', 'two', 'three', 'Category 4'];
 
 
 const EmpRegister = () => {
+  const [registerHospital] = useRegisterHospitalMutation()
 
+  const [previewImage, setPreviewImage] = useState(null);
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+    } else {
+      setPreviewImage(null);
+    }
+  };
 
+  const handleChooseLogoClick = () => {
+    let fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = handleImageChange;
+    fileInput.click();
+  };
+
+  const handleRegister = async (values,{resetForm}) => {
+    try {
+      const result = await registerHospital(values);
+
+      // Log the result to the console
+      console.log('Result of employee form mutation:', result);
+      
+      resetForm();
+
+    } catch (error) {
+      // Handle error
+      // console.error('Error submitting form:', error);
+    }
+
+  }
 
   return (
     <StyledFormWrapper>
@@ -100,16 +133,17 @@ const EmpRegister = () => {
             ...INITIAL_FORM_STATE,
           }}
           validationSchema={Employee_Validation}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          // onSubmit={(values) => {
+          //   console.log(values);
+          // }}
+          onSubmit={handleRegister}
         >
 
-          {({ values, setFieldValue }) => (
+          {({ values, handleChange, handleBlur, touched}) => (
             <Form>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} >
-                  <Text name="Employee_Name" label="Name" autoComplete=""
+                  <Text name="employee_name" label="Name" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -117,17 +151,8 @@ const EmpRegister = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={8}>
-                  <Text name="Employee_Email" label="Email" autoComplete="off"
-                    InputProps={{
-                      style: {
-                        background: 'white', border: 'none', borderRadius: '20px',
-                      },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Text name="Employee_Number" label="Phone" autoComplete="off"
+                <Grid item xs={6}>
+                  <Text name="employee_email" label="Email" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -136,7 +161,7 @@ const EmpRegister = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Text name="Employee_password" label="Password" autoComplete="off"
+                  <Text name="employee_number" label="Phone" autoComplete="off"
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -145,50 +170,42 @@ const EmpRegister = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    name="Employee_Type"
+                  <Text name="employee_password" label="Password" autoComplete="off"
+                    InputProps={{
+                      style: {
+                        background: 'white', border: 'none', borderRadius: '20px',
+                      },
+                    }}
+                  />
+                </Grid>
+                
+                <Grid item xs={12} sm={6}>
+                  <CustomAutocomplete
+                    name="employee_type"
+                    label="Employee Type"
                     options={Empcategories}
-                    getOptionLabel={(option) => option}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="type"
-                        InputProps={{
-                          ...params.InputProps,
-                          style: {
-                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
-                          },
-                        }}
-                      />
-                    )}
+                    value={values.employee_type}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    touched={touched.employee_type}
                   />
-                  <ErrorMessage name="Employee_Type" component="div" style={{ color: colors.error, fontSize: 10 }} />
                 </Grid>
+               
                 <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                    name="Employee_Role"
+                  <CustomAutocomplete
+                    name="employee_role"
+                    label="Employee Role"
                     options={Role}
-                    getOptionLabel={(option) => option}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Role"
-                        InputProps={{
-                          ...params.InputProps,
-                          style: {
-                            background: 'white', border: 'none', borderRadius: '25px', padding: '10px',
-                          },
-                        }}
-                      />
-                    )}
+                    value={values.employee_role}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    touched={touched.employee_role}
                   />
-                  <ErrorMessage name="Employee_Role" component="div" style={{ color: colors.error, fontSize: 10 }} />
                 </Grid>
-
                 <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
                     label="Status"
-                    name="Employee_Status"
+                    name="employee_status"
                     options={[
                       { value: 'Active', label: 'Active' },
                       { value: 'Inactive', label: 'Inactive' },
@@ -197,7 +214,7 @@ const EmpRegister = () => {
                 </Grid>
                 <Divider />
                 <Grid item xs={12} sm={8} >
-                  <Text name="Created_By" label="Created By" autoComplete=""
+                  <Text name="created_by" label="Created By" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -211,7 +228,7 @@ const EmpRegister = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={8} >
-                  <Text name="Updated_By" label="Updated By" autoComplete=""
+                  <Text name="updated_by" label="Updated By" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',

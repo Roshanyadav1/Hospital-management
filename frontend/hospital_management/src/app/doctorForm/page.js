@@ -1,6 +1,5 @@
 "use client"
-import { Formik, Form, ErrorMessage } from 'formik';
-import Autocomplete from '@mui/material/Autocomplete';
+import { Formik, Form} from 'formik';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -8,10 +7,11 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
 import DOCTOR_VALIDATION from './Components/Doc_validation/doc_validation';
-import { Box, TextField } from '@mui/material';
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import Divider from '@mui/material/Divider';
+import CustomAutocomplete from './Components/Autocompletedoc';
+import { useRegisterHospitalMutation } from '@/services/Query';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',

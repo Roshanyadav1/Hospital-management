@@ -1,6 +1,5 @@
 "use client"
-import { Formik, Form, ErrorMessage } from 'formik';
-import Autocomplete from '@mui/material/Autocomplete';
+import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -8,10 +7,11 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
 import DISEASE_VALIDATION from './Components/D_Validation/d_Validation';
-import { Box, TextField } from '@mui/material';
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import Divider from '@mui/material/Divider';
+import CustomAutocomplete from './Components/AutocompleteDis';
+import { useRegisterHospitalMutation } from '@/services/Query';
  
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -27,7 +27,7 @@ const VisuallyHiddenInput = styled('input')({
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-    maxWidth: '650px',
+    maxWidth: '950px',
     boxShadow: theme.shadows[3],
     backgroundColor: colors.background,
     borderRadius: '20px',
@@ -57,11 +57,11 @@ const StyledFormWrapper = styled('div')({
 });
 
 const INITIAL_FORM_STATE = {
-    d_Id: '',
-    d_Name: '',
-    d_Status: '',
-    created_At: '',
-    updated_At: '',
+  disease_id: '',
+  disease_name: '',
+  disease_status: '',
+  created_at: '',
+  updated_at: '',
 
 };
 
@@ -89,7 +89,7 @@ const dRegister = () => {
                     <Form>
                        <Grid container spacing={2}> 
                             <Grid item xs={12} sm={12} >
-                                <Text name="d_Id" label="Disease Id" autoComplete=""  
+                                <Text name="disease_id" label="Disease Id" autoComplete=""  
                                      defaultValue="Id"
                                      
                                     InputProps={{
@@ -101,7 +101,7 @@ const dRegister = () => {
                                     
                                 />
                             </Grid><Grid item xs={12} sm={6} >
-                                <Text name="d_Name" label="Disease Name" autoComplete=""
+                                <Text name="disease_name" label="Disease Name" autoComplete=""
                                     InputProps={{
                                         style: {
                                             background: 'white', border: 'none', borderRadius: '20px',
@@ -112,7 +112,7 @@ const dRegister = () => {
                             <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
                     label="Disease Status"
-                    name="d_Status"
+                    name="disease_status"
                     options={[
                       { value: 'Active', label: 'Active' },
                       { value: 'Inactive', label: 'Inactive' },
@@ -121,7 +121,7 @@ const dRegister = () => {
                 </Grid>
                 <Divider />
                 <Grid item xs={12} sm={6} >
-                  <Text name="created_At" label="Created At" autoComplete=""
+                  <Text name="created_at" label="Created At" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',
@@ -131,7 +131,7 @@ const dRegister = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} >
-                  <Text name="updated_At" label="Updated At" autoComplete=""
+                  <Text name="updated_at" label="Updated At" autoComplete=""
                     InputProps={{
                       style: {
                         background: 'white', border: 'none', borderRadius: '20px',

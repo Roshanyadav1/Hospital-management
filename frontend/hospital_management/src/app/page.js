@@ -1,33 +1,29 @@
 "use client"
-import { useAuth0 } from "@auth0/auth0-react";
-import  MiniDrawer from '@/components/sidebar'
-//import disease_form from "@/components/disease_form";
-export default function Home() {
-  const { loginWithRedirect } = useAuth0();
 
+import Footer from '@/components/Footer'
+import SteperNav from '@/components/SteperNav'
+import FixedContainer from '@/components/container'
+import { Grid } from '@mui/material'
+import Cards from '@/components/card'
+import Doctor from '@/components/Doctor'
+// for the patient page , the patient page will be the main page for the patient
+
+function page() {
+ 
+ 
   return (
-    <>
-     <div>
-    <MiniDrawer/>
-        </div>
-   {/* <main>
-      <h1>this is home</h1>
-      <header className="App-header">
-        <button onClick={() => loginWithRedirect()}>Log In</button>
-      </header>
-    </main> */}
-  {/* <disease_form/> */}
-    </>
+    <div>
+      <SteperNav />
+      <Grid container item padding={3} >
+      <FixedContainer />
+      </Grid>
+      <Cards/>
+      <Doctor/>
+      <Footer/>
+    </div>
   )
 }
 
-// function page() {
 
-//   return (
-//     <div>
-//       <SteperNav />
-//       <FixedContainer />
-//     </div>
-//   );
-// }
-// export default page;
+export default page
+

@@ -2,11 +2,11 @@ import * as Yup from 'yup';
 
 
 const Employee_Validation = Yup.object().shape({
-    Employee_Name: Yup.string()
+  employee_name: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
 
-    Employee_Email: Yup.string()
+    employee_email: Yup.string()
     .matches(
       /^(?=.*[a-zA-Z]).*^(?!.*@(email|yahoo)\.com).*[A-Za-z0-9]+@[A-Za-z0.9.-]+\.[A-Za-z]{2,4}$/,
       'Invalid email format'
@@ -18,7 +18,7 @@ const Employee_Validation = Yup.object().shape({
       }
       return true;
     }),
-    Employee_Number: Yup.string()
+    employee_number: Yup.string()
     .matches(/^(?!.*(\d)\1{5})[0-9]+$/, 'Invalid phone number')
     .test('is-ten-digits', 'Invalid phone number', (value) => {
       if (value) {
@@ -27,7 +27,7 @@ const Employee_Validation = Yup.object().shape({
       return false;
     })
     .required('Required!'),
-    Employee_password : Yup.string()
+    employee_password: Yup.string()
     .min(8, 'Password must be at least 8 characters')
     .matches(/[A-Z]/, 'Password must contain at least one capital letter')
     .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
@@ -35,16 +35,17 @@ const Employee_Validation = Yup.object().shape({
     .matches(/[@#$%^&+=_]/, 'Password must contain the special character')
     //   .matches(/_/, 'Password must contain an underscore')
     .required('Password is required'),
-    Employee_Type: Yup.string().required('Please select a type'),
-    Employee_Role: Yup.string().required('Please select a role'),
-    Employee_Status: Yup.string().required('Please select a status'),
+    employee_type: Yup.string().required('Please select a type'),
+    employee_role: Yup.string().required('Please select a role'),
+
+    employee_status: Yup.string().required('Please select a status'),
 
 
-    Created_By: Yup.string()
+    created_by: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
 
-    Updated_By: Yup.string()
+    updated_by: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
 

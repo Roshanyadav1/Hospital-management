@@ -13,7 +13,9 @@ export const colors = {
     gray: '#A7AFB7',
     background: "#F0F2FA",
 }
-const theme = createTheme({
+
+
+export const themeOptions = {
     palette: {
         mode: 'light',
         primary: {
@@ -58,9 +60,10 @@ const theme = createTheme({
         h4: {
             fontSize: '1.5rem',
             fontWeight: 'bold',
+            // marginblockstart:''
         },
         h5: {
-            fontSize: '1.2rem',
+            fontSize: '1.8rem',
             fontWeight: 'bold',
         },
         h6: {
@@ -92,5 +95,5 @@ const theme = createTheme({
             fontSize: '0.6rem',
         },
     }
-});
-export default theme
+
+}

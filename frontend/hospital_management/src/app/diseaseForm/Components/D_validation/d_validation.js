@@ -1,17 +1,17 @@
 import * as Yup from 'yup';
 
 const DISEASE_VALIDATION = Yup.object().shape({
-    d_Id: Yup.string()
+    disease_id: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
-    d_Name: Yup.string()
+    disease_name: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
-    d_Status: Yup.string().required('Please select a status'),
-    created_At: Yup.string()
+    disease_status: Yup.string().required('Please select a status'),
+    created_at: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
-    updated_At: Yup.string()
+    updated_at: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),
 
