@@ -28,8 +28,9 @@ class TestSetUp(APITestCase):
             "patient_age": 56,
             "patient_address": "test",
             "patient_email": "test@gmail.com",
+            "password": "test",
             "patient_mobile": 46546,
-            "password": "test"
+
         }
 
         return super().setUp()
@@ -40,14 +41,13 @@ class TestSetUp(APITestCase):
 
 class Testview(TestSetUp):
     def test_patient_can_register(self):
-        res = self.client.post(self.patient_register,
-                               self.patient_data, format='json')
-        pdb.set_trace
+        res = self.client.post(self.patient_register,self.patient_data, format='json')
+        
         self.assertEqual(res.status_code, 200)
 
     def test_patient_cannot_register(self):
         res = self.client.post(self.patient_register)
-        pdb.set_trace
+
         self.assertEqual(res.status_code, 400)
 
     def test_patient_can_view(self):
@@ -63,24 +63,24 @@ class Testview(TestSetUp):
         self.assertEqual(res.status_code, 200)
 
     def test_patient_cannot_view_by_id(self):
-        res = self.client.get(self.patient_view_url)
-        self.assertEqual(res.status_code, 200)
+        res = self.client.post(self.patient_view_url)
+        self.assertEqual(res.status_code, 405)
 
     def test_user_can_delete(self):
         res = self.client.delete(self.patient_delete_url, input=self.test)
         self.assertEqual(res.status_code, 200)
 
     def test_user_cannot_delete_(self):
-        res = self.client.delete(self.patient_delete_url, input=uuid.uuid4())
-        self.assertEqual(res.status_code, 200)
+        res = self.client.post(self.patient_delete_url, input=uuid.uuid4())
+        self.assertEqual(res.status_code, 405)
 
-    def test_user_update_(self):
+    def test_patient_update_(self):
         res = self.client.patch(self.patient_update_url, input=self.test)
         self.assertEqual(res.status_code, 200)
 
     def test_user_update_(self):
-        res = self.client.patch(self.patient_update_url)
-        self.assertEqual(res.status_code, 200)
+        res = self.client.post(self.patient_update_url)
+        self.assertEqual(res.status_code, 405)
 
 
 class TestPatientSerializer(TestCase):

@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from error.models import Error
+from hospital_management.responses import ResponseMessage
 
 class DiseaseAdd(GenericAPIView):
     serializer_class = DiseaseSerializer
@@ -13,10 +14,15 @@ class DiseaseAdd(GenericAPIView):
         serializer = DiseaseSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         serializer.save()
-        error = Error.objects.get(error_title = 'ADD_SUCCESS')
-        response_message = error.error_message
-        response_code = error.error_code
-        Response.status_code = error.error_code
+        response_message = ""
+        response_code = ""
+        try:
+         error = Error.objects.get(error_title = 'ADD_SUCCESS')
+         response_message = error.error_message
+         response_code = error.error_code
+        except: 
+            response_message = ResponseMessage.ADD_SUCCESS
+            response_code = status.HTTP_200_OK
         return Response(
             {
                 'status': response_code,
@@ -25,35 +31,7 @@ class DiseaseAdd(GenericAPIView):
         )
 
 class DiseaseUpdate(APIView):
-    def put(self, request, input, format = None):
-        id = input
-        if Disease.objects.filter(disease_id = id).count() >= 1:
-            disease = Disease.objects.get(disease_id = id)
-            serializer = DiseaseSerializer(disease, data = request.data)
-            serializer.is_valid(raise_exception = True)
-            serializer.save()
-            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': 'Disease ' + response_message,
-                }, 
-            )
-        else:
-            error = Error.objects.get(error_title = 'INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': response_message, 
-                },
-            )
-    
+  
     def patch(self, request, input, format = None):
         id = input
         if Disease.objects.filter(disease_id=id).count() >= 1:
@@ -61,10 +39,15 @@ class DiseaseUpdate(APIView):
             serializer = DiseaseSerializer(disease, data = request.data, partial=True)
             serializer.is_valid(raise_exception = True)
             serializer.save()
-            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code = ""
+            try:
+              error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+              response_message = error.error_message
+              response_code = error.error_code
+            except:
+                response_message = ResponseMessage.UPDATE_SUCCESS
+                response_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
@@ -72,10 +55,15 @@ class DiseaseUpdate(APIView):
                 }, 
             )
         else:
-            error = Error.objects.get(error_title = 'INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code = ""
+            try:
+               error = Error.objects.get(error_title = 'INVALID_ID')
+               response_message = error.error_message
+               response_code = error.error_code
+            except:
+                response_message = ResponseMessage.INVALID_ID
+                response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
                     'status': response_code,
@@ -89,10 +77,15 @@ class DiseaseDelete(APIView):
         if Disease.objects.filter(disease_id=id).count() >= 1:
             disease = Disease.objects.get(disease_id=id)
             disease.delete()
-            error = Error.objects.get(error_title = 'DELETE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code = ""
+            try:
+              error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+              response_message = error.error_message
+              response_code = error.error_code
+            except:
+                response_message = ResponseMessage.DELETE_SUCCESS
+                response_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
@@ -100,10 +93,15 @@ class DiseaseDelete(APIView):
                 },
             )
         else:
-            error = Error.objects.get(error_title = 'INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code = ""
+            try:
+             error = Error.objects.get(error_title = 'INVALID_ID')
+             response_message = error.error_message
+             response_code = error.error_code
+            except:
+                response_message = ResponseMessage.INVALID_ID
+                response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
                     'status': response_code,
@@ -118,10 +116,15 @@ class DiseaseView(APIView):
             if Disease.objects.filter(disease_id = id).count() >= 1:
                 disease = Disease.objects.get(disease_id = id)
                 serializer = DiseaseSerializer(disease)
-                error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-                response_message = error.error_message
-                response_code = error.error_code
-                Response.status_code = error.error_code
+                response_message = ""
+                response_code = ""
+                try:
+                 error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+                 response_message = error.error_message
+                 response_code = error.error_code
+                except:
+                   response_message = ResponseMessage.RETRIEVED_SUCCESS
+                   response_code = status.HTTP_200_OK
                 return Response(
                     {
                         'status': response_code,
@@ -130,10 +133,15 @@ class DiseaseView(APIView):
                     },
                 )
             else:
-                error = Error.objects.get(error_title = 'INVALID_ID')
-                response_message = error.error_message
-                response_code = error.error_code
-                Response.status_code = error.error_code
+                response_message = ""
+                response_code = ""
+                try:
+                 error = Error.objects.get(error_title = 'INVALID_ID')
+                 response_message = error.error_message
+                 response_code = error.error_code
+                except:
+                   response_message = ResponseMessage.INVALID_ID
+                   response_code = status.HTTP_400_BAD_REQUEST
                 return Response(
                     {
                         'status': response_code,
@@ -143,11 +151,17 @@ class DiseaseView(APIView):
         else:
             disease = Disease.objects.all()
             serializer = DiseaseSerializer(disease, many=True)
-            error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-            return Response(
+            response_message = ""
+            response_code = ""
+            try:
+               
+             error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+             response_message = error.error_message
+             response_code = error.error_code
+            except:
+               response_message = ResponseMessage.RETRIEVED_SUCCESS
+               response_code = status.HTTP_200_OK
+               return Response(
                 {
                     'status': response_code,
                     'message': "Disese " + response_message,

@@ -11,16 +11,22 @@ from doctor.serializers import DoctorSerializer
 from error.models import Error
 from employee.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
+from hospital_management.responses import ResponseMessage
 
 class EmployeeAdd(GenericAPIView):
     serializer_class = EmployeeSerializer
 
     def post(self, request, format = None):
         if Employee.objects.filter(employee_email = request.data.get('employee_email')).count() >= 1:
-            error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code=""
+            try:
+             error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
+             response_message = error.error_message
+             response_code = error.error_code
+            except:
+                response_message = ResponseMessage.ALREADY_REGISTERED
+                response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
                     'status': response_code,
@@ -51,10 +57,15 @@ class EmployeeAdd(GenericAPIView):
 
             user = User.objects.create_user(
                 member, user_name, user_email, user_role, user_password)
-            error = Error.objects.get(error_title = 'ADD_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code=""
+            try:
+             error = Error.objects.get(error_title = 'ADD_SUCCESS')
+             response_message = error.error_message
+             response_code = error.error_code
+            except:
+                response_message = ResponseMessage.ADD_SUCCESS
+                response_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
@@ -70,20 +81,26 @@ class EmployeeView(ListAPIView):
     search_fields = ['employee_name', 'employee_role']
     
     def list(self, request, *args, **kwargs):
-        error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-        response_message = error.error_message
-        response_code = error.error_code    
-        response = super().list(request, *args, **kwargs)
-        if request.GET.get('pageSize') != None:
+         response_message = ""
+         response_code=""
+         response = super().list(request, *args, **kwargs)
+         if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
-        Response.status_code = error.error_code
-        return Response(
+         try:
+          error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+          response_message = error.error_message
+          response_code = error.error_code    
+         except:
+                response_message = ResponseMessage.RETRIEVED_SUCCESS
+                response_code = status.HTTP_200_OK
+            
+         return Response(
             {
                 'status': response_code, 
                 'message': "Employee " + response_message,
                 'data': response.data, 
             }
-        )
+         )
 
 class EmployeeViewById(APIView):
     def get(self, request, input = None, format = None):
@@ -92,10 +109,15 @@ class EmployeeViewById(APIView):
             if Employee.objects.filter(employee_id = id).count() >= 1:
                 employee = Employee.objects.get(employee_id =  id)    
                 serializer = EmployeeSerializer(employee)
-                error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-                response_message = error.error_message
-                response_code = error.error_code   
-                Response.status_code = error.error_code
+                response_message = ""
+                response_code=""
+                try:
+                 error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+                 response_message = error.error_message
+                 response_code = error.error_code    
+                except:
+                    response_message = ResponseMessage.RETRIEVED_SUCCESS
+                    response_code = status.HTTP_200_OK
                 return Response(
                     {
                        'status': response_code,
@@ -104,10 +126,15 @@ class EmployeeViewById(APIView):
                     },
                 )
             else:
-                error = Error.objects.get(error_title = 'INVALID_ID')
-                response_message = error.error_message
-                response_code = error.error_code
-                Response.status_code = error.error_code
+                try:
+                 response_message = ""
+                 response_code=""
+                 error = Error.objects.get(error_title = 'INVALID_ID')
+                 response_message = error.error_message
+                 response_code = error.error_code
+                except:
+                    response_message = ResponseMessage.INVALID_ID
+                    response_code = status.HTTP_400_BAD_REQUEST
                 return Response(
                     {
                         'status': response_code,
@@ -121,64 +148,53 @@ class EmployeeDelete(APIView):
         if Employee.objects.filter(employee_id = id).count() >= 1:
             employee = Employee.objects.get(employee_id = id)
             employee.delete()
-            error = Error.objects.get(error_title = 'INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code=""
+            try:
+             error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+             response_message = error.error_message
+             response_code = error.error_code
+            except: 
+                response_message = ResponseMessage.DELETE_SUCCESS
+                response_code = status.HTTP_200_OK
             return Response(
                 {
-                    'status': status.HTTP_201_OK,
+                    'status': response_code,
                     'message': "Employee " + response_message,
                 },
             )    
         else:
-            Response.status_code = error.error_code
-            return Response(
+             response_message = ""
+             response_code=""
+             try:
+              error = Error.objects.get(error_title = 'INVALID_ID')
+              response_message = error.error_message
+              response_code = error.error_code
+             except: 
+                response_message = ResponseMessage.INVALID_ID
+                response_code = status.HTTP_400_BAD_REQUEST
+             return Response(
                 {
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'message': "Invalid Employee Id",
+                    'status': response_code,
+                    'message': "Employee " + response_message,
                 },
-            ) 
-        
+             )    
 class EmployeeUpdate(APIView):
-    def put(self, request, input= None, format=None):
-        id = input
-        if Employee.objects.filter(employee_id = id).count() >= 1:
-            doctor = Employee.objects.get(employee_id = id)
-            serializer = EmployeeSerializer(doctor, data = request.data)
-            serializer.is_valid(raise_exception = True)
-            serializer.save()
-            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code 
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': 'Employee ' + response_message,
-                }, 
-            )
-        else:
-            error = Error.objects.get(error_title = 'INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code 
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': response_message, 
-                },
-            )
-  
+    
     def patch(self, request, input= None, format=None):
         id = input
         if Employee.objects.filter(employee_id = id).count() >= 1:
             employee = Employee.objects.get(employee_id =  id)
             serializer = EmployeeSerializer.save(employee,data = request.data, partial= True)
-            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code  
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code=""
+            try:
+             error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+             response_message = error.error_message
+             response_code = error.error_code   
+            except:
+               response_message = ResponseMessage.UPDATE_SUCCESS
+               response_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
@@ -186,10 +202,15 @@ class EmployeeUpdate(APIView):
                 }, 
             )
         else:
-            error = Error.objects.get(error_title = 'INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code   
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code=""
+            try:
+             error = Error.objects.get(error_title = 'INVALID_ID')
+             response_message = error.error_message
+             response_code = error.error_code   
+            except:
+               response_message = ResponseMessage.INVALID_ID
+               response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
                     'status': response_code,
