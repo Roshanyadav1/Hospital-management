@@ -12,6 +12,7 @@ from error.models import Error
 from employee.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
+from doctor.models import Doctor
 import json
 
 class EmployeeAdd(GenericAPIView):
@@ -152,6 +153,9 @@ class EmployeeDelete(APIView):
         id = input
         if Employee.objects.filter(employee_id = id).count() >= 1:
             employee = Employee.objects.get(employee_id = id)
+            doctor = Doctor.objects.get(employee_id = id)
+            user = User.objects.get(member_id = doctor.doctor_id)
+            user.delete()
             employee.delete()
             response_message = ""
             response_code=""
