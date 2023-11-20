@@ -32,5 +32,6 @@ urlpatterns = [
              path('user/', include('user.urls')),
              path('employee/', include('employee.urls')),
              path('error/', include('error.urls')),
+             path('leave/', include('leave.urls')),
          ]))
 ]
