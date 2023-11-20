@@ -20,8 +20,8 @@ export default function Cards() {
                 <CardMedia
                 sx={{ height: 140 }}
             
-                //   image="/static/images/cards/contemplative-reptile.jpg"
-                //   title="green iguana"
+                    image="../assest/r-abhijeet-pandit.png"
+                  // title="green iguana"
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">

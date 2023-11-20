@@ -21,7 +21,7 @@ const RadioButtonGroup = ({ label, name, options }) => {
           </RadioGroup>
         )}
       </Field>
-      <ErrorMessage name={name} component="div" style={{ color: colors.error , fontSize: 10 }} />
+      <ErrorMessage name={name} component="div" style={{ color: '#d32f2f', fontSize: 9, fontWeight: '500'  }} />
     </FormControl>
   );
 };
