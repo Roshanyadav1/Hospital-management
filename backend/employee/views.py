@@ -12,6 +12,7 @@ from error.models import Error
 from employee.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
+import json
 
 class EmployeeAdd(GenericAPIView):
     serializer_class = EmployeeSerializer
@@ -44,7 +45,11 @@ class EmployeeAdd(GenericAPIView):
                 doctor_data = {
                     'employee': employee.employee_id,
                     'doctor_type': employee.employee_type,
-                    'disease_specialist': 'null'
+                    'disease_specialist': 'null',
+                    'per_patient_time': '00:00:00',
+                    'status': 'null',
+                    'day': 'Monday',
+                    "times": json.dumps([['09:00:00', '13:30:00'], ['17:45:00', '13:30:00']])
                 }
                 doctor_serializer = DoctorSerializer(data = doctor_data)
                 doctor_serializer.is_valid(raise_exception = True)
