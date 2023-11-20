@@ -1,8 +1,6 @@
-from django.contrib.postgres.fields import ArrayField
 from employee.models import Employee
 from django.db import models
 import uuid
-
 
 class Doctor(models.Model):
     doctor_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
@@ -10,18 +8,7 @@ class Doctor(models.Model):
     # doctor_profile_picture = models.ImageField(upload_to='doctor_profile_picture/')
     disease_specialist = models.CharField(max_length = 255)
     doctor_type = models.CharField(max_length = 255)
-    # start_time = models.TimeField()
-    # end_time = models.TimeField()
-    # times = ArrayField(
-    # ArrayField(
-    #     models.TimeField(null=True),
-    #     size=2,
-    #     null=True,
-    # ),
-    # size=3,
-    # null=True,
-    # blank=True,
-    # )
+    times = models.TextField(blank=True, null=True)
     day = models.CharField(max_length=255, choices=(('Monday', 'Monday'),
                                                     ('Tuesday', 'Tuesday'),
                                                     ('Wednesday', 'Wednesday'),
