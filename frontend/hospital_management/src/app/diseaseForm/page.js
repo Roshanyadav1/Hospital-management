@@ -1,4 +1,6 @@
 "use client"
+import { useState } from 'react';
+
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -67,7 +69,44 @@ const INITIAL_FORM_STATE = {
 
 
 
-const dRegister = () => {
+const DRegister = () => {
+  const [registerDisease] = useRegisterHospitalMutation()
+
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+    } else {
+      setPreviewImage(null);
+    }
+  };
+
+  const handleChooseLogoClick = () => {
+    let fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = handleImageChange;
+    fileInput.click();
+  };
+
+  const handleRegister = async (values,{resetForm}) => {
+    try {
+      const result = await registerDisease(values);
+
+      // Log the result to the console
+      console.log('Result of registerHospital mutation:', result);
+      
+      resetForm();
+
+    } catch (error) {
+      // Handle error
+      // console.error('Error submitting form:', error);
+    }
+
+  }
 
     return (
         <StyledFormWrapper>
@@ -81,11 +120,13 @@ const dRegister = () => {
                         ...INITIAL_FORM_STATE,
                     }}
                     validationSchema={DISEASE_VALIDATION}
-                    onSubmit={(values) => {
-                        console.log(values);
-                    }}
+                    // onSubmit={(values) => {
+                    //     console.log(values);
+                    // }}
+                    onSubmit={handleRegister}
+
                 >
-                    {({ values, setFieldValue }) => (
+                    {({ values, handleChange, handleBlur, touched }) => (
                     <Form>
                        <Grid container spacing={2}> 
                             <Grid item xs={12} sm={12} >
@@ -165,4 +206,4 @@ const dRegister = () => {
     );
 };
 
-export default dRegister;
+export default DRegister;
