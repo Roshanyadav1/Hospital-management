@@ -188,37 +188,37 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 }
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
-            'format': '%(service)s %(ipAddress)s %(correlationId)s %(user)s %(url)s %(requestType)s %(traceparent)s %(asctime)s %(levelname)s %(name)s %(message)s %(method)s %(entryTypeEnum)s',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': 'django.log',
-            'formatter': 'verbose',
-        },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'console'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+#             'format': '%(service)s %(ipAddress)s %(correlationId)s %(user)s %(url)s %(requestType)s %(traceparent)s %(asctime)s %(levelname)s %(name)s %(message)s %(method)s %(entryTypeEnum)s',
+#         },
+#         'simple': {
+#             'format': '{levelname} {message}',
+#             'style': '{',
+#         },
+#     },
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': 'django.log',
+#             'formatter': 'verbose',
+#         },
+#         'console': {
+#             'level': 'INFO',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file', 'console'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
