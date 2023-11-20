@@ -162,10 +162,10 @@ const Register = () => {
     <StyledFormWrapper>
       <StyledPaper elevation={3}>
 
-        <StyledTypography variant="h4" >
+        <StyledTypography variant="h5" style={{textAlign:'center'}}>
           Registration Form
         </StyledTypography>
-        <Typography variant="h6">
+        <Typography variant="h6" style={{marginBottom:'1rem'}}>
           General Information
         </Typography>
         <Formik
@@ -346,6 +346,7 @@ const Register = () => {
 
                 <Grid item xs={12} sm={6}>
                   <Button
+                  container justify="center" alignItems="flex-end"
                     variant="contained"
                     color="primary"
                     type="submit"
@@ -354,6 +355,7 @@ const Register = () => {
                     Submit
                   </Button>
                 </Grid>
+                {/* add the style to this button to place the center of the bottom of the form with proper working */}
 
               </Grid>
             </Form>
