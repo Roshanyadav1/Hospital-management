@@ -26,7 +26,7 @@ class DoctorRegister(GenericAPIView):
          response_code = error.error_code
         except:
             response_message = ResponseMessage.REGISTRATION_SUCCESS
-            response_code = status.HTTP_200_OK
+            response_code = status.HTTP_201_CREATED
         return Response(
             {
                 'status': response_code,

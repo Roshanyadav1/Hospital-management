@@ -65,7 +65,7 @@ class EmployeeAdd(GenericAPIView):
              response_code = error.error_code
             except:
                 response_message = ResponseMessage.ADD_SUCCESS
-                response_code = status.HTTP_200_OK
+                response_code = status.HTTP_201_CREATED
             return Response(
                 {
                     'status': response_code,

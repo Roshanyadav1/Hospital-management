@@ -6,7 +6,11 @@ import pdb
 import uuid
 from checkup.serializers import CheckupSerializer
 from checkup.models import CheckUp
+from datetime import date , datetime
 
+ddate = date.today()
+now = datetime.now() 
+time  = now.strftime("%H:%M:%S")
 class TestSetUp(APITestCase):
     def setUp(self):
         self.checkup_add = reverse('checkup add')
@@ -20,8 +24,9 @@ class TestSetUp(APITestCase):
         self.checkup_update_url = reverse(
             'checkup update', kwargs={'input': self.test})
         self.checkup_data = {
-              "check_status":"test",
-             
+            "check_status":"test",
+            "next_appointment_date":ddate,
+            "next_appointment_time":time
         }
         return super().setUp()
 
@@ -72,8 +77,9 @@ class Testview(TestSetUp):
 class CheckupSerializerTest(TestCase):
      def test_serializer(self):
       self.checkup_data = {
-              "check_status":"test",
-             
+            "check_status":"test",
+            "next_appointment_date":ddate,
+            "next_appointment_time":time
         }
       serializer = CheckupSerializer(data=self.checkup_data)
       self.assertTrue(serializer.is_valid())

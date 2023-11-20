@@ -23,8 +23,8 @@ class PatientRegister(GenericAPIView):
                 response_message = error.error_message
                 response_code = error.error_code
             except:
-                response_message = ResponseMessage.REGISTRATION_SUCCESS
-                response_code = status.HTTP_201_CREATED
+                response_message = ResponseMessage.ALREADY_REGISTERED
+                response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
                 'status': response_code,
@@ -45,7 +45,7 @@ class PatientRegister(GenericAPIView):
             user_role = "Patient"
 
             user = User.objects.create_user(
-                member_id, user_name, user_email, user_role, user_password)
+                member, user_name, user_email, user_role, user_password)
             response_message = ''
             response_code = ''
             try : 

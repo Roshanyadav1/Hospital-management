@@ -27,8 +27,8 @@ class AppointmentAdd(GenericAPIView):
          response_message = error.error_message
          response_code = error.error_code
         except:
-            response_message  = ResponseMessage.ADD_SUCCESS
-            response_code = status.HTTP_200_OK
+            response_message  = ResponseMessage.BOOKED_SUCCESS
+            response_code = status.HTTP_201_CREATED
         return Response(
             {
                 'status': response_code,
@@ -94,11 +94,11 @@ class AppointmentUpdate(APIView):
             response_code = ""
             try:
 
-             error = Error.objects.get(error_title = 'EMPTY_POST')
+             error = Error.objects.get(error_title = 'EMPTY_REQUEST')
              response_message = error.error_message
              response_code = error.error_code
             except:
-                response_message = 'EMPTY_POST'
+                response_message = ResponseMessage.EMPTY_REQUEST
                 response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
