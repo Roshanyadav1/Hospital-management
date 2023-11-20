@@ -3,12 +3,10 @@ import DataTable from "@/components/DataTable";
 // when admin login then the dashboard will be shown
 function FetchData() {
   return (
-    <div style={{
-      margin: '5rem',
-    }}>
+    <div>
       
       <h1>Employee Table</h1>
-      <DataTable />
+       <DataTable /> 
     </div>
   )
 

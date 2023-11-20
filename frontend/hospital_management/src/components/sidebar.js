@@ -15,7 +15,6 @@ import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
 import Footer from './Footer';
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Docter from "@/app/dashboard/docter/page";
 import Career from "@/app/dashboard/career/page";
 import Billing from "@/app/dashboard/billing/page"
@@ -26,7 +25,7 @@ import Disease from "@/app/dashboard/disease/page";
 import DocterDetail from "@/app/dashboard/docterdetail/page";
 import Prescription from "@/app/dashboard/prescription/page";
 import Discharge from "@/app/dashboard/discharge/page";
-
+import { useRouter } from "next/navigation";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -193,7 +192,7 @@ function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1}}>
-        {router.pathname === "/" && <Career />}
+      {router.pathname === "/" && <Career />}
         {router.pathname === "/dashboard/docter" && <Docter />}
         {router.pathname === "/dashboard/disease" && <Disease />}
         {router.pathname === "/dashboard/abouthospital" && <AboutHospital />}
@@ -203,10 +202,7 @@ function MiniDrawer() {
         {router.pathname === "/dashboard/docterdetail" && <DocterDetail />}
         {router.pathname === "/dashboard/prescription" && <Prescription />}
         {router.pathname === "/dashboard/discharge" && <Discharge />}
-        <Box sx={{marginBottom:0 }}>
         <Footer/>
-        </Box>
-      
       </Box>
     </Box>
       
