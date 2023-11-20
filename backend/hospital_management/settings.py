@@ -188,144 +188,17 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 }
 
-# settings.py
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#         },
-#         'file': {
-#             'class': 'logging.FileHandler',
-#             'filename': 'django.log',
-#         },
-#     },
-#     'root': {
-#         'handlers': ['console', 'file'],
-#         'level': 'INFO',
-#     },
-#     'loggers': {
-#         'com.capsicum': {
-#             'handlers': ['console', 'file'],
-#             'level': 'INFO',
-#             'propagate': True,
-#             'format': '{ "service": "%(service)s", "ipAddress": "%(ipAddress)s", "correlationId": "%(correlationId)s", "user": "%(user)s", "url": "%(url)s", "requestType": "%(requestType)s", "traceparent": "%(traceparent)s", "timestamp": "%(asctime)s", "severity": "%(levelname)s", "logger": "%(name)s", "message": "%(message)s", "method": "%(method)s", "entryTypeEnum": "%(entryTypeEnum)s" }',
-#         },
-#     },
-#     'formatters': {
-#         'verbose': {
-#             'format': '{levelname} {asctime} {module} {message}',
-#             'style': '{',
-#         },
-#         'simple': {
-#             'format': '{levelname} {message}',
-#             'style': '{',
-#         },
-#     },
-# }
-
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': True,
-#     'formatters': {
-#         'json': {
-#             '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
-#             'format': '%(levelname)s %(asctime)s %(name)s %(message)s',
-#         },
-#     },
-#     'handlers': {
-#         'json_file': {
-#             'level': 'INFO',
-#             'class': 'logging.handlers.RotatingFileHandler',
-#             'filename': 'logs.log',
-#             'formatter': 'json',
-#         },
-#         'console': {
-#             'level': 'INFO',
-#             'class': 'logging.StreamHandler'
-#         },
-#     },
-#     'root': {
-#         'handlers': ['json_file', 'console'],
-#         'level': 'INFO',
-#     },
-# }
-
-# settings.py
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'verbose': {
-#             '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
-#             # 'format': '%(levelname)s %(asctime)s %(name)s %(message)s',
-#             'format': '%(service)s %(ipAddress)s %(correlationId)s %(user)s %(url)s %(requestType)s %(traceparent)s %(asctime)s %(levelname)s %(name)s %(message)s %(method)s %(entryTypeEnum)s',
-#         },
-#         'simple': {
-#             'format': '{levelname} {message}',
-#             'style': '{',
-#         },
-#     },
-#     'handlers': {
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.FileHandler',
-#             'filename': 'django.log',
-#             'formatter': 'verbose',
-#         },
-#         'console': {
-#             'level': 'INFO',
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'simple',
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['file', 'console'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#     },
-# }
-
-
-
-
-
-
-# New Config
-import logging
-import json
-
-class CustomJSONFormatter(logging.Formatter):
-    def format(self, record):
-        log_data = {
-            "service": record.service,
-            "ipAddress": record.ipAddress,
-            "correlationId": record.correlationId,
-            "user": record.user,
-            "url": record.url,
-            "requestType": record.requestType,
-            "traceparent": record.traceparent,
-            "timestamp": self.formatTime(record, self.datefmt),
-            "severity": record.levelname,
-            "logger": record.name,
-            "message": record.getMessage(),
-            "method": record.method,
-            "entryTypeEnum": record.entryTypeEnum,
-        }
-        return json.dumps(log_data)
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'custom': {
-            '()': 'yourapp.module.CustomJSONFormatter',
+        'verbose': {
+            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            'format': '%(service)s %(ipAddress)s %(correlationId)s %(user)s %(url)s %(requestType)s %(traceparent)s %(asctime)s %(levelname)s %(name)s %(message)s %(method)s %(entryTypeEnum)s',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
         },
     },
     'handlers': {
@@ -333,12 +206,17 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'django.log',
-            'formatter': 'custom',  # Using the custom formatter
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file', 'console'],
             'level': 'INFO',
             'propagate': True,
         },
