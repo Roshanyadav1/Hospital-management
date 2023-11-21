@@ -4,5 +4,5 @@ from disease.models import Disease
 class DiseaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Disease
-        fields = '__all__'
+        exclude = ('created_by', 'updated_by', )
         
