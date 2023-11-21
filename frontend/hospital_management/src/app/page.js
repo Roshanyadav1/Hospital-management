@@ -13,12 +13,12 @@ function page() {
     <div>
       <SteperNav />
       <Grid container item padding={3} >
-      <FixedContainer />
+        <FixedContainer />
       </Grid>
-      <Cards/>
-    <div style={{margin:'2rem'}}>
-      <Doctor/>
-    </div>
+      <Cards />
+      <div style={{ margin: '2rem' }}>
+        <Doctor/>
+      </div>
       <Footer/>
     </div>
   )
