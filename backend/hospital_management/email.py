@@ -71,8 +71,7 @@ def send_verification_email(url, user_email):
 
     url_element = soup.find(id='url')
     if url_element:
-        new_text = new_url
-        url_element.string = new_text
+        url_element['href'] = new_url
     html_content = str(soup)
 
     img_element = soup.find(id='logo-img')
