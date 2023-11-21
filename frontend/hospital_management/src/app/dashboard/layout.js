@@ -113,15 +113,15 @@ function Layout({children}) {
         <List>
           {[
              { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
-            { text: "Career", path: "/dashboard/career" , icon : <TrackChangesIcon/>},
-            { text: "Doctor", path: "/dashboard/docter" , icon : <SettingsAccessibilityIcon/>},
-            { text: "Disease", path: "/dashboard/disease" , icon : <CoronavirusIcon/>},
-            { text: "Add Hospital", path: "/dashboard/abouthospital" , icon : <AddBoxIcon/>},
-            { text: "Billing", path: "/dashboard/billing" , icon : <AccountBalanceWalletIcon/>},
-            { text: "Analytics", path: "/dashboard/analytics" , icon : <AnalyticsIcon/>},
-            { text: "DocterDetail", path: "/dashboard/docterdetail" , icon : <AddReactionIcon/>},
-            { text: "Prescription", path: "/dashboard/registerForm" , icon : <MedicationIcon/>},
-            { text: "Discharge", path: "/dashboard/discharge" , icon : <PersonRemoveIcon/> },
+            { text: "Career", path: "/dashboard" , icon : <TrackChangesIcon/>},
+            { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},
+            { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
+            { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},
+            { text: "Billing", path: "/dashboard" , icon : <AccountBalanceWalletIcon/>},
+            { text: "Analytics", path: "/dashboard" , icon : <AnalyticsIcon/>},
+            { text: "DocterDetail", path: "/dashboard" , icon : <AddReactionIcon/>},
+            { text: "Prescription", path: "/dashboard" , icon : <MedicationIcon/>},
+            { text: "Discharge", path: "/dashboard" , icon : <PersonRemoveIcon/> },
           ].map((item) => (
             <ListItem
               key={item.text}

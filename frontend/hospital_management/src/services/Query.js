@@ -26,6 +26,20 @@ export const queries = createApi({
             body:value
          }),
       }),
+      addEmployee: build.mutation({
+         query:(payload)=>({
+            url:'employee/add/',
+            method:'POST',
+            body:payload
+         })
+      }),
+      addDiseases: build.mutation({
+         query:(payload)=>({
+            url:'disease/add/',
+            method:'POST',
+            body:payload
+         })
+      }),
       getEmployee: build.query({
          query: () => ({
             url: 'employee/view/',
@@ -37,5 +51,7 @@ export const queries = createApi({
 
 export const {
    useRegisterHospitalMutation,
+   useAddEmployeeMutation,
+   useAddDiseasesMutation,
    useGetEmployeeQuery
 } = queries
