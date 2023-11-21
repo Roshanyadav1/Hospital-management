@@ -86,6 +86,7 @@ const EmpRegister = () => {
 
       // Log the result to the console
       console.log('Result of Employee form mutation:', result);
+      alert("Employee Added Successfully")
       
       resetForm();
 
