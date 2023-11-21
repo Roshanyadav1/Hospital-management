@@ -4,28 +4,28 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
+// import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import ResponsiveAppBar from "@/components/Navbar";
-// import Footer from '@/components/Footer';
+import { BiRadioCircle } from "react-icons/bi";
+import ResponsiveAppBar from "./Navbar";
+import Footer from './Footer';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Toolbar } from "@mui/material";
-
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import TrackChangesIcon from '@mui/icons-material/TrackChanges';
-import MedicationIcon from '@mui/icons-material/Medication';
-import CoronavirusIcon from '@mui/icons-material/Coronavirus';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
-import AddReactionIcon from '@mui/icons-material/AddReaction';
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import Docter from "@/app/dashboard/docter/page";
+import Career from "@/app/dashboard/career/page";
+import Billing from "@/app/dashboard/billing/page"
+import AboutHospital from "@/app/dashboard/abouthospital/page";
+import Analytics from "@/app/dashboard/analytics/page";
+import Dashboardd from "@/app/dashboard/dashboardd/page";
+import Disease from "@/app/dashboard/disease/page";
+import DocterDetail from "@/app/dashboard/docterdetail/page";
+import Prescription from "@/app/dashboard/prescription/page";
+import Discharge from "@/app/dashboard/discharge/page";
 
 const drawerWidth = 240;
 
@@ -94,8 +94,17 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
- 
-function Layout({children}) {
+
+const StyledLink = styled("a")(({ theme }) => ({
+  color: "#fff", // Set the color to white
+  textDecoration: "none",
+  padding: theme.spacing(1),
+  "&:hover": {
+    color: "#13293d", 
+  },
+}));
+
+function MiniDrawer() {
   const [open, setOpen] = React.useState(true);
   const router = useRouter();
   const sidebarChanges = () => {
@@ -105,36 +114,34 @@ function Layout({children}) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={false} elevation={0.1}>
+      <AppBar position="fixed" open={false} elevation={8}>
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader></DrawerHeader>
         <List>
           {[
-             { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
-            { text: "Career", path: "/dashboard/career" , icon : <TrackChangesIcon/>},
-            { text: "Doctor", path: "/dashboard/docter" , icon : <SettingsAccessibilityIcon/>},
-            { text: "Disease", path: "/dashboard/disease" , icon : <CoronavirusIcon/>},
-            { text: "Add Hospital", path: "/dashboard/abouthospital" , icon : <AddBoxIcon/>},
-            { text: "Billing", path: "/dashboard/billing" , icon : <AccountBalanceWalletIcon/>},
-            { text: "Analytics", path: "/dashboard/analytics" , icon : <AnalyticsIcon/>},
-            { text: "DocterDetail", path: "/dashboard/docterdetail" , icon : <AddReactionIcon/>},
-            { text: "Prescription", path: "/dashboard/registerForm" , icon : <MedicationIcon/>},
-            { text: "Discharge", path: "/dashboard/discharge" , icon : <PersonRemoveIcon/> },
-          ].map((item) => (
+             { text: "Dashboard", path: "/dashboard" },
+            { text: "Career", path: "/" },
+            { text: "Doctor", path: "/dashboard/docter" },
+            { text: "Disease", path: "/dashboard/disease" },
+            { text: "Add Hospital", path: "/dashboard/abouthospital" },
+            { text: "Billing", path: "/dashboard/billing" },
+            { text: "Analytics", path: "/dashboard/analytics" },
+            { text: "DocterDetail", path: "/dashboard/docterdetail" },
+            { text: "Prescription", path: "/dashboard/registerForm" },
+            { text: "Discharge", path: "/dashboard/discharge" },
+          ].map((item, index) => (
             <ListItem
               key={item.text}
               disablePadding
               sx={{
                 display: "block",
                 backgroundColor: "#13293d",
+                color: "#fff",
                 "&:hover": {
                   backgroundColor: "#fff",
                   color: "#13293d",
-                  // add border radius on hover on right top and bottom right: 5px solid #13293d;  
-                  borderRight: "5px solid #effe",
-                  outline: "none",
                 },
               }}
             >
@@ -145,9 +152,12 @@ function Layout({children}) {
                 <ListItemButton
                   component="a" 
                   sx={{
+                    minHeight: 48,
                     justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                     color: "#fff", 
                     fontWeight: "bold", // Make text bold
+                    textDecoration: 'none',
                     "&:hover": {
                       "& .MuiListItemIcon-root":{
                       color:"#000",
@@ -155,6 +165,7 @@ function Layout({children}) {
                       backgroundColor: "#fff",
                       color: "#13293d",
                       outline: "none",
+                      textDecoration: "none",
                     },
                   }}
                   className={router.pathname === item.path ? "active" : ""}
@@ -164,10 +175,11 @@ function Layout({children}) {
                       minWidth: 0,
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
+                      backgroundColor: "inherit",
                       color: "#fff",
                     }}
                   >
-                    {item.icon}
+                    <BiRadioCircle />
                   </ListItemIcon>
                   <ListItemText primary={item.text}  sx={{ opacity: open ? 1 : 0  , outline:'none' ,
                   '&:hover':{
@@ -180,13 +192,25 @@ function Layout({children}) {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1 , padding:1}}>
-       <Toolbar /> 
-          {children}
-        {/* <Footer/> */}
+      <Box component="main" sx={{ flexGrow: 1}}>
+        {router.pathname === "/" && <Career />}
+        {router.pathname === "/dashboard/docter" && <Docter />}
+        {router.pathname === "/dashboard/disease" && <Disease />}
+        {router.pathname === "/dashboard/abouthospital" && <AboutHospital />}
+        {router.pathname === "/dashboard/billing" && <Billing />}
+        {router.pathname === "/dashboard/analytics" && <Analytics />}
+        {router.pathname === "/dashboard/dashboardd" && <Dashboardd />}
+        {router.pathname === "/dashboard/docterdetail" && <DocterDetail />}
+        {router.pathname === "/dashboard/prescription" && <Prescription />}
+        {router.pathname === "/dashboard/discharge" && <Discharge />} 
+        <Box sx={{marginBottom:0 }}>
+        <Footer/>
+        </Box>
+      
        </Box> 
     </Box>
+      
   );
 }
 
-export default Layout;
+export default MiniDrawer;
