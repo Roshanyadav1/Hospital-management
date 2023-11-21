@@ -5,7 +5,7 @@ function Billing() {
   return (
     <div>
       <h1>Billing pagee</h1>
-      <DataTable/>
+ 
     </div>
   )
 }

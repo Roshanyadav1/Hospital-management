@@ -6,7 +6,6 @@ function Prescription() {
   return (
     <div>
       <h1>Prescription page</h1>
-      <DataTable/>
     </div>
   )
 }

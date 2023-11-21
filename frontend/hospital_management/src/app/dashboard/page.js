@@ -4,12 +4,11 @@ import DataTable from "@/components/DataTable";
 function FetchData() {
   return (
     <div>
-      
       <h1>Employee Table</h1>
-       <DataTable /> 
+       {/* <DataTable />  */}
     </div>
   )
-
 }
 
 export default FetchData;
+

@@ -6,7 +6,7 @@ function Analytics() {
   return (
     <div>
       <h1>Analytics page</h1>
-      <DataTable /> 
+     
     </div>
   )
 }

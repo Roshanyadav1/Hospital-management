@@ -12,17 +12,31 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from '../assest/blueSga.png'
+import Link from "next/link";
 import Image from "next/image";
-const pages = ["Find a Doctor", "Investors", "About us", "Careers", "Contact us"];
+import FindDoctor from '@/app/dashboard/finddocter/page';
+import Investor from '@/app/dashboard/investor/page'
+import AboutUs from '@/app/dashboard/aboutus/page'
+import  ContactUs from '@/app/dashboard/contactus/page'
+import Blog from '@/app/dashboard/blog/page'
+import { useRouter } from "next/navigation";
+const pages = [
+  { name: "Find a Doctor", path: "/dashboard/finddocter" },
+  { name: "Investors", path: "/dashboard/investor" },
+  { name: "About us", path: "/dashboard/aboutus" },
+  { name: "Blogs", path: "/dashboard/blog" },
+  { name: "Contact us", path: "/dashboard/contactus" }
+];
 const settings = ["Profile", "Account", "Logout"];
 
 function ResponsiveAppBar({ sidebarChanges, open }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const router=useRouter()
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -50,24 +64,10 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
           <IconButton sx={{marginRight : '2rem'}} onClick={sidebarChanges}>
             <MenuIcon /> 
           </IconButton>
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".1rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            SGA APPLICATION
-          </Typography> */}
-          <Image width={160} height={50}  src={Logo}/>
+          
+          {/* <Link href="/" passHref> */}
+            <Image width={160} height={50}  src={Logo} />
+          {/* </Link> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -100,25 +100,38 @@ function ResponsiveAppBar({ sidebarChanges, open }) {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+                <Link  style={{
+                  textDecoration:'none'
+                }}
+                href={page.path} key={page.path} passHref>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" },}}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.path}
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
                   color: "inherit",
                   display: "block",
+      
                 }}
               >
-                {page}
+                <Link  style={{
+                textDecoration:'none'
+              }}
+                 href={page.path} passHref>
+                  <Typography component="a" sx={{ textDecoration: 'none', color: "#13293d" ,outline:"none",fontWeight: "bold",}}>
+                    {page.name}
+                  </Typography>
+                </Link>
               </Button>
             ))}
           </Box>
