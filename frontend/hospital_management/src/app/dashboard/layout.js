@@ -1,48 +1,4 @@
-<<<<<<< HEAD
- "use client"
-// import MiniDrawer from '@/components/sidebar'
-// import AppBar from '@/components/Navbar'
-// import { Box } from "@mui/material"
-// function layout({children}) {
-  
-//   return (
-//     <div>
-//       <Box sx={{ paddingLeft: '11rem', marginTop:10 }}> 
-//         <div>{children}</div>
-//       </Box>
-//        <MiniDrawer />
-//     </div>
-//   )
-// }
 
-
-// export default layout
-
-
-import MiniDrawer from '@/components/sidebar'
-import AppBar from '@/components/Navbar'
-import { Box } from "@mui/material"
-
-function Layout({ children }) {
-  return (
-    <div>
-      <Box
-        sx={{
-          paddingLeft: '11rem',
-          marginTop: 10,
-          transition: 'padding-left 0.3s ease',
-        }}
-      >
-        <div>{children}</div>
-      </Box>
-      <MiniDrawer />
-    </div>
-  )
-}
-
-export default Layout;
-
-=======
 'use client'
 import * as React from "react";
 import { styled } from "@mui/material/styles";
@@ -164,11 +120,11 @@ function Layout({children}) {
             { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
             { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},
             { text: "Add Employee", path: "/dashboard/addEmployee" , icon : <GroupAddIcon /> },
-            { text: "Billing", path: "/dashboard" , icon : <AccountBalanceWalletIcon/>},
-            { text: "Analytics", path: "/dashboard" , icon : <AnalyticsIcon/>},
-            { text: "DocterDetail", path: "/dashboard" , icon : <AddReactionIcon/>},
-            { text: "Prescription", path: "/dashboard" , icon : <MedicationIcon/>},
-            { text: "Discharge", path: "/dashboard" , icon : <PersonRemoveIcon/> },
+            { text: "Billing", path: "/dashboard/billing" , icon : <AccountBalanceWalletIcon/>},
+            { text: "Analytics", path: "/dashboard/analytics" , icon : <AnalyticsIcon/>},
+            { text: "DocterDetail", path: "/dashboard/docterdetail" , icon : <AddReactionIcon/>},
+            { text: "Prescription", path: "/dashboard/precription" , icon : <MedicationIcon/>},
+            { text: "Discharge", path: "/dashboard/discharge" , icon : <PersonRemoveIcon/> },
           ].map((item) => (
             <ListItem
               key={item.text}
@@ -237,4 +193,4 @@ function Layout({children}) {
 }
 
 export default Layout;
->>>>>>> cbab882103664dd27363b5a169897c67dc5c035e
+

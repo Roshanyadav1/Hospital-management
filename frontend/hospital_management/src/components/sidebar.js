@@ -202,19 +202,15 @@ function MiniDrawer() {
         {router.pathname === "/dashboard/dashboardd" && <Dashboardd />}
         {router.pathname === "/dashboard/docterdetail" && <DocterDetail />}
         {router.pathname === "/dashboard/prescription" && <Prescription />}
-<<<<<<< HEAD
         {router.pathname === "/dashboard/discharge" && <Discharge />} */}
-        <Footer/>
+
+        {/* <Footer/> */}
       </Box>
-=======
         {router.pathname === "/dashboard/discharge" && <Discharge />} 
         <Box sx={{marginBottom:0 }}>
         <Footer/>
         </Box>
-      
        </Box> 
->>>>>>> cbab882103664dd27363b5a169897c67dc5c035e
-    </Box>
       
   );
 }

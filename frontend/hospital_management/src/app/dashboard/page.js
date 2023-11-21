@@ -8,19 +8,10 @@ function FetchData() {
 
   return (
     <div>
-<<<<<<< HEAD
-      <h1>Employee Table</h1>
-       {/* <DataTable />  */}
-=======
       <DataGridTable data={isSuccess ? empData?.data : []} col={columns} />
->>>>>>> cbab882103664dd27363b5a169897c67dc5c035e
     </div>
   )
 }
 
 export default FetchData;
-<<<<<<< HEAD
-
-=======
  
->>>>>>> cbab882103664dd27363b5a169897c67dc5c035e
