@@ -162,7 +162,7 @@ import Link from 'next/link';
 
 const drawerWidth = 240;
 const navItems = [
-  { label: 'Doctor', route: '/Doctor' },
+  { label: 'Doctor', route: '/docter' },
   { label: 'Specialities', route: '/Specilist' },
   { label: 'Contact Us', route: '/ContactUs' }
 ];
