@@ -26,6 +26,7 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 const drawerWidth = 240;
 
@@ -117,6 +118,7 @@ function Layout({children}) {
             { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},
             { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
             { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},
+            { text: "Add Employee", path: "/dashboard/addEmployee" , icon : <GroupAddIcon /> },
             { text: "Billing", path: "/dashboard" , icon : <AccountBalanceWalletIcon/>},
             { text: "Analytics", path: "/dashboard" , icon : <AnalyticsIcon/>},
             { text: "DocterDetail", path: "/dashboard" , icon : <AddReactionIcon/>},
