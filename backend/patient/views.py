@@ -7,10 +7,28 @@ from rest_framework import status
 from rest_framework.filters import SearchFilter
 from user.models import User
 from rest_framework.generics import GenericAPIView
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import authenticate
 from patient.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'access': str(refresh.access_token),
+    }
+
+class UserRegister(GenericAPIView):
+    serializer_class = PatientSerializer
+    permission_classes = [IsAuthenticated]
+
+    def user_verification(user):
+        verification_token = get_tokens_for_user(user)
+        print(f'http://localhost:8080/api/user/verification?user_id={user.user_id}&token={verification_token['access']}')
+
 class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
 
@@ -46,6 +64,8 @@ class PatientRegister(GenericAPIView):
 
             user = User.objects.create_user(
                 member, user_name, user_email, user_role, user_password)
+            
+            UserRegister.user_verification(user)
             response_message = ''
             response_code = ''
             try : 
@@ -62,9 +82,6 @@ class PatientRegister(GenericAPIView):
                 },
               )
           
-
-
-
 class PatientView(ListAPIView):
     queryset = Patient.objects.all().order_by('created_at')
     serializer_class = PatientSerializer

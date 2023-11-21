@@ -9,9 +9,9 @@ from patient.models import Patient
 
 smtp_server = "smtp.gmail.com"
 smtp_port = 587  
-smtp_username = "agrkeshav04@gmail.com"
-smtp_password = "tynwieqbytissxtg"
-from_email = "agrkeshav04@gmail.com"
+smtp_username = "achieversgrand@gmail.com"
+smtp_password = "bpfhbemqsenjkqud"
+from_email = "achieversgrand@gmail.com"
 
 def send_appointment_email(appointment):
     # print(appointment.patient_id)

@@ -19,7 +19,7 @@ class AppointmentAdd(GenericAPIView):
         serializer.is_valid(raise_exception = True)
         appointment = serializer.save()
         
-        # send_email_to_client(appointment)
+        send_appointment_email(appointment)
         response_message = ""
         response_code = ""
         try:

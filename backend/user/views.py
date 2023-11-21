@@ -91,9 +91,6 @@ class UserLoginView(GenericAPIView):
             else:
                 user = authenticate(user_email=email, password=password)
                 if user is not None:
-                    if(user.user_role == 'Patient'):
-                        verification_token = get_tokens_for_user(user)
-                        print('api/user/verification?token=%s' % verification_token['access'])
                     token = get_tokens_for_user(user)
                     return Response(
                         {
