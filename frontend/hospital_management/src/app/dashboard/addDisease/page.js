@@ -93,14 +93,8 @@ const DRegister = () => {
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-      const result = await addDisease(values);
-
-      // Log the result to the console
-      console.log('Result of Addemployee mutation:', result);
-      alert("Disease added Successfully")
-      
+       await addDisease(values);
       resetForm();
-
     } catch (error) {
       // Handle error
       // console.error('Error submitting form:', error);

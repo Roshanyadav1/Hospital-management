@@ -113,7 +113,7 @@ function Layout({children}) {
         <List>
           {[
              { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
-            { text: "Career", path: "/dashboard" , icon : <TrackChangesIcon/>},
+            { text: "Career", path: "/dashboard/career" , icon : <TrackChangesIcon/>},
             { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},
             { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
             { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},

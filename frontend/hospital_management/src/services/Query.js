@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { toast } from 'react-toastify'
 
 export const queries = createApi({
    reducerpath: 'queries',
@@ -25,20 +26,44 @@ export const queries = createApi({
             method: 'POST',
             body:value
          }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               await queryFulfilled
+               toast.success('Hospital Registered Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         }
       }),
       addEmployee: build.mutation({
          query:(payload)=>({
             url:'employee/add/',
             method:'POST',
             body:payload
-         })
+         }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               await queryFulfilled
+               toast.success('Employee Added Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         }
       }),
       addDiseases: build.mutation({
          query:(payload)=>({
             url:'disease/add/',
             method:'POST',
             body:payload
-         })
+         }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               await queryFulfilled
+               toast.success('Disease Added Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         }
       }),
       getEmployee: build.query({
          query: () => ({

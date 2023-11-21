@@ -82,14 +82,8 @@ const EmpRegister = () => {
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-      const result = await addemployee(values);
-
-      // Log the result to the console
-      console.log('Result of Employee form mutation:', result);
-      alert("Employee Added Successfully")
-      
+      await addemployee(values);
       resetForm();
-
     } catch (error) {
       // Handle error
       // console.error('Error submitting form:', error);
