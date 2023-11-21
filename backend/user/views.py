@@ -119,9 +119,10 @@ class UserLoginView(GenericAPIView):
 
 class UserVerificationView(APIView):
     serializer_class = UserProfileSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
+        request.GET.headers.setdefault('Content-Type', 'application/json')
         token = request.GET.get('token')
         user_id = request.GET.get('user_id')
         print(token, user_id)

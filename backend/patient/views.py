@@ -14,6 +14,7 @@ from patient.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+from hospital_management.email import send_verification_email
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -27,8 +28,10 @@ class UserRegister(GenericAPIView):
 
     def user_verification(user):
         verification_token = get_tokens_for_user(user)
-        url = 'http://127.0.0.1:8000/api/user/verification?user_id=' + user.user_id + '&token=' + verification_token['access']
-        print(url)
+        user_id = str(user.user_id)
+        user_email = user.user_email
+        url = 'http://localhost:3000/api/user/verification?user_id=' + user_id + '&token=' + verification_token['access']
+        send_verification_email(url, user_email)
 
 class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
