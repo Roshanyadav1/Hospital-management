@@ -1,24 +1,25 @@
 "use client"
-// import { Transcribe, Translate } from '@mui/icons-material';
-import { DataGrid } from '@mui/x-data-grid';
-
-export default function Datagrid(props) {
-const {data,columns} = props
-
+import { DataGrid} from '@mui/x-data-grid';
+ 
+ function DataGridTable({data , col}) {
   return (
-    <div  >
+    <div>
       <DataGrid
-        rows={data?.length > 0 ? data : []}
-        columns={columns}
-        // initialState={{
-        //   pagination: {
-        //     paginationModel: { page: 0, pageSize: 5 },
-        //   },
-        // }}
+       rows={data} 
+        columns={col}
         getRowId={(row) => row?.employee_id}
-        // pageSizeOptions={[5, 10]}
+        disableColumnFilter={true}
+        disableColumnMenu={true}
         checkboxSelection={false}
-      />
+        hideFooterSelectedRowCount={true}
+        hideFooterRowCount={true}
+        hideFooterPagination={true}
+        hideFooter={true}
+        maxRows={10}
+        />
     </div>
   );
 }
+
+
+export default DataGridTable
