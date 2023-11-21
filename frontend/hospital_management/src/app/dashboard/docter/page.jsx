@@ -1,11 +1,11 @@
 
 
 import React from 'react'
-import DataTable from "@/components/DataTable";
+import Doctor from "@/components/Doctor";
 function Docter() {
   return (
     <div>
-      <h1>Docter page</h1>
+      <Doctor/>
     </div>
   )
 }

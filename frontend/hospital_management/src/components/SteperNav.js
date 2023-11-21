@@ -20,7 +20,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Logo from '../assest/whiteSga.png'
 import Image from 'next/image';
 const drawerWidth = 240;
-const navItems = ['Doctor', 'Specialities', 'Call Us','Contact Us'];
+const navItems = ['Doctor', 'Specialities', 'Call Us', 'Contact Us'];
 
 function SteperNav(props) {
   const { window } = props;
@@ -33,7 +33,7 @@ function SteperNav(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' ,color:"#fff" }}>
       <Typography variant="body2" sx={{ my: 2 }}>
         MUI
       </Typography>
@@ -47,14 +47,9 @@ function SteperNav(props) {
             </ListItemButton>
           </ListItem>
         ))}
-
-         
-
-
       </List>
     </Box>
   );
-
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
@@ -71,22 +66,18 @@ function SteperNav(props) {
           >
             <MenuIcon />
           </IconButton>
-          <div style={{ display:"flex" , flexGrow:1 }} >
-          <Image width={160} height={50}  src={Logo}/>
+          <div style={{ display: "flex", flexGrow: 1 }} >
+            <Image width={160} height={50} src={Logo} />
           </div>
-          
+
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-
-            
-            {/* // if user available give link to go to dashboard  */}
-
-    {
-      user && (
-        <Button href="/dashboard" sx={{ color: '#fff' }}>
-          Dashboard
-        </Button>
-      )
-    }
+            {
+              user && (
+                <Button href="/dashboard" sx={{ color: '#fff' }}>
+                  Dashboard
+                </Button>
+              )
+            }
 
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>
@@ -94,22 +85,22 @@ function SteperNav(props) {
               </Button>
             ))}
             {
-            user && (<>
-            <Button sx={{ color: '#fff' }}>
-                {user.name}
-              </Button>
+              user && (<>
+                <Button sx={{ color: '#fff' }}>
+                  {user.name}
+                </Button>
               </>)
-          }
-          {
-            !user && (
-              <Button href="/api/auth/login" sx={{ color: '#fff' }}>
-                    Login
-              </Button>
-            
-            ) 
-          }
-              
+            }
+            {
+              !user && (
+                <Button href="/api/auth/login" sx={{ color: '#fff' }}>
+                  Login
+                </Button>
+
+              )
+            }
           </Box>
+
         </Toolbar>
       </AppBar>
       <nav>
@@ -128,12 +119,13 @@ function SteperNav(props) {
         >
           {drawer}
         </Drawer>
+
       </nav>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
         <Typography>
-         
-        
+
+
         </Typography>
       </Box>
     </Box>
@@ -141,10 +133,7 @@ function SteperNav(props) {
 }
 
 SteperNav.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+
   window: PropTypes.func,
 };
 
