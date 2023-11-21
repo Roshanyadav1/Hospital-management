@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { showToastMessage } from './ResponseHandler'
 
 export const queries = createApi({
    reducerpath: 'queries',
@@ -25,6 +26,21 @@ export const queries = createApi({
             method: 'POST',
             body:value
          }),
+         async onQueryStarted(
+            arg,
+            {
+              dispatch,
+              getState,
+              extra,
+              requestId,
+              queryFulfilled,
+              getCacheEntry,
+              updateCachedData,
+            }
+          ) {
+            showToastMessage('success' , "hospital added successfully")
+
+          },
       }),
    }),
 })
