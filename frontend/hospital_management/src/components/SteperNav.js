@@ -47,10 +47,6 @@ function SteperNav(props) {
             </ListItemButton>
           </ListItem>
         ))}
-
-         
-
-
       </List>
     </Box>
   );
