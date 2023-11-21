@@ -1,6 +1,8 @@
 from django.db import models
 import uuid
 from django.core.validators import RegexValidator
+from django.contrib.auth.hashers import make_password
+
 
 
 class Employee(models.Model):
@@ -19,3 +21,10 @@ class Employee(models.Model):
     created_by = models.CharField(max_length=100, default="Default_value")
     updated_at = models.DateTimeField(auto_now=True,)
     updated_by =  models.CharField(max_length=100, default="default_value")
+
+
+
+    def save(self, *args, **kwargs):
+        # Hash the password before saving
+        self.employee_password = make_password(self.employee_password)
+        super(Employee, self).save(*args, **kwargs)

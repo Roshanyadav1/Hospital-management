@@ -27,9 +27,9 @@ class HospitalRegister(GenericAPIView):
       else:
          serializer = HospitalSerializer(data = request.data)
          serializer.is_valid(raise_exception = True)
+         
          serializer.save()
          hospital = Hospital.objects.get(hospital_email = request.data.get('hospital_email'))
-
          member = hospital.hospital_id
          user_name = hospital.username
          user_email = request.data.get('hospital_owner_email')
