@@ -98,6 +98,7 @@ const DRegister = () => {
 
       // Log the result to the console
       console.log('Result of Addemployee mutation:', result);
+      alert("Disease added Successfully")
       
       resetForm();
 
