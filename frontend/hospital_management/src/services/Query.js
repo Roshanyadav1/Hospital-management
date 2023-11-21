@@ -26,6 +26,13 @@ export const queries = createApi({
             body:value
          }),
       }),
+      addemployee: build.mutation({
+         query:(payload)=>({
+            url:'employee/add/',
+            method:'POST',
+            body:payload
+         })
+      }),
       getEmployee: build.query({
          query: () => ({
             url: 'employee/view/',
