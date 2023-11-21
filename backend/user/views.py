@@ -12,7 +12,6 @@ from error.models import Error
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
-
     return {
         'access': str(refresh.access_token),
     }
@@ -92,6 +91,9 @@ class UserLoginView(GenericAPIView):
             else:
                 user = authenticate(user_email=email, password=password)
                 if user is not None:
+                    if(user.user_role == 'Patient'):
+                        verification_token = get_tokens_for_user(user)
+                        print('api/user/verification?token=%s' % verification_token['access'])
                     token = get_tokens_for_user(user)
                     return Response(
                         {
@@ -118,8 +120,18 @@ class UserLoginView(GenericAPIView):
                 },
             )
 
-# User Profile View
+class UserVerificationView(APIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request, format=None):
+        serializer = UserProfileSerializer(request.user)
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'message': "User Verified",
+            },
+        )
 
 class UserView(APIView):
     serializer_class = UserProfileSerializer

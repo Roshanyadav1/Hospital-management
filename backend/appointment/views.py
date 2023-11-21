@@ -8,7 +8,7 @@ from appointment.models import Appointment
 from rest_framework.views import APIView
 from rest_framework import status
 from error.models import Error
-from hospital_management.email import send_email_to_client
+from hospital_management.email import send_appointment_email
 from hospital_management.responses import ResponseMessage
 
 class AppointmentAdd(GenericAPIView):
@@ -19,7 +19,7 @@ class AppointmentAdd(GenericAPIView):
         serializer.is_valid(raise_exception = True)
         appointment = serializer.save()
         
-        send_email_to_client(appointment)
+        # send_email_to_client(appointment)
         response_message = ""
         response_code = ""
         try:

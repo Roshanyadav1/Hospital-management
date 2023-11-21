@@ -11,8 +11,9 @@ smtp_server = "smtp.gmail.com"
 smtp_port = 587  
 smtp_username = "agrkeshav04@gmail.com"
 smtp_password = "tynwieqbytissxtg"
+from_email = "agrkeshav04@gmail.com"
 
-def send_email_to_client(appointment):
+def send_appointment_email(appointment):
     # print(appointment.patient_id)
     # patient = Patient.objects.filter(patient_id = appointment.patient_id)
     # print(patient)
@@ -28,7 +29,6 @@ def send_email_to_client(appointment):
 
     ics_content = cal.to_ical().decode('utf-8')
 
-    from_email = "agrkeshav04@gmail.com"
     to_email = "keshava.bca2022@ssism.org"
     subject = "Appointment Booked Successfully"
 
@@ -47,3 +47,6 @@ def send_email_to_client(appointment):
     server.login(smtp_username, smtp_password)
     server.sendmail(from_email, to_email, msg.as_string())
     server.quit()
+
+def send_verification_email():
+    pass
