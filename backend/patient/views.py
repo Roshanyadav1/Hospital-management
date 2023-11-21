@@ -27,7 +27,8 @@ class UserRegister(GenericAPIView):
 
     def user_verification(user):
         verification_token = get_tokens_for_user(user)
-        print(f'http://localhost:8080/api/user/verification?user_id={user.user_id}&token={verification_token['access']}')
+        url = 'http://127.0.0.1:8000/api/user/verification?user_id=' + user.user_id + '&token=' + verification_token['access']
+        print(url)
 
 class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
