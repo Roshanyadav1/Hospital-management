@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
-      baseUrl: 'https://hospital-management-six-chi.vercel.app/api/hospital',
+      baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
       // prepareHeaders: (headers, { getState }) => {
       //    const token = getState().rootReducer.companyDetails.token
       //    // If we have a token set in state, let's assume that we should be passing it.
@@ -21,14 +21,37 @@ export const queries = createApi({
    endpoints: build => ({
       registerHospital: build.mutation({
          query: (value) => ({
-            url: '/register/',
+            url: 'hospital/register/',
             method: 'POST',
             body:value
+         }),
+      }),
+      addEmployee: build.mutation({
+         query:(payload)=>({
+            url:'employee/add/',
+            method:'POST',
+            body:payload
+         })
+      }),
+      addDiseases: build.mutation({
+         query:(payload)=>({
+            url:'disease/add/',
+            method:'POST',
+            body:payload
+         })
+      }),
+      getEmployee: build.query({
+         query: () => ({
+            url: 'employee/view/',
+            method: 'GET',
          }),
       }),
    }),
 })
 
 export const {
-   useRegisterHospitalMutation
+   useRegisterHospitalMutation,
+   useAddEmployeeMutation,
+   useAddDiseasesMutation,
+   useGetEmployeeQuery
 } = queries

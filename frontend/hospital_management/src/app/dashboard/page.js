@@ -1,17 +1,18 @@
-import DataTable from "@/components/DataTable";
+"use client"
+import DataGridTable from "@/components/DataGridTable";
+import { columns } from "@/helpers/columns";
+import { useGetEmployeeQuery } from '@/services/Query';
 
-// when admin login then the dashboard will be shown
 function FetchData() {
+  const {data : empData, isSuccess} = useGetEmployeeQuery()
+
   return (
-    <div style={{
-      margin: '5rem',
-    }}>
-      
-      <h1>Employee Table</h1>
-      <DataTable />
+    <div>
+      <DataGridTable data={isSuccess ? empData?.data : []} col={columns} />
     </div>
   )
 
 }
 
 export default FetchData;
+ 

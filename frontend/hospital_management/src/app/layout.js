@@ -13,7 +13,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
          <UserProvider>
-
         <CustomProvider>
           <ThemeProvider theme={theme}>
             <body className={inter.className}>
@@ -21,9 +20,7 @@ export default function RootLayout({ children }) {
             </body>
           </ThemeProvider>
         </CustomProvider>
- 
          </UserProvider>
-        
      </html>
   );
 }
