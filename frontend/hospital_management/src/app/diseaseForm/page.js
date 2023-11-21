@@ -12,8 +12,8 @@ import DISEASE_VALIDATION from './Components/D_Validation/d_Validation';
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import Divider from '@mui/material/Divider';
-import CustomAutocomplete from './Components/AutocompleteDis';
-import { useRegisterHospitalMutation } from '@/services/Query';
+// import CustomAutocomplete from './Components/AutocompleteDis';
+import {useAddDiseasesMutation } from '@/services/Query';
  
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -59,45 +59,45 @@ const StyledFormWrapper = styled('div')({
 });
 
 const INITIAL_FORM_STATE = {
-  disease_id: '',
+  // disease_id: '',
   disease_name: '',
   disease_status: '',
-  created_at: '',
-  updated_at: '',
-
+  created_by: 'admin',
+  
 };
 
 
 
 const DRegister = () => {
-  const [registerDisease] = useRegisterHospitalMutation()
 
-  const [previewImage, setPreviewImage] = useState(null);
+  const [addDisease] =  useAddDiseasesMutation()
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-    } else {
-      setPreviewImage(null);
-    }
-  };
+  // const [previewImage, setPreviewImage] = useState(null);
 
-  const handleChooseLogoClick = () => {
-    let fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.onchange = handleImageChange;
-    fileInput.click();
-  };
+  // const handleImageChange = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const imageUrl = URL.createObjectURL(file);
+  //     setPreviewImage(imageUrl);
+  //   } else {
+  //     setPreviewImage(null);
+  //   }
+  // };
+
+  // const handleChooseLogoClick = () => {
+  //   let fileInput = document.createElement('input');
+  //   fileInput.type = 'file';
+  //   fileInput.accept = 'image/*';
+  //   fileInput.onchange = handleImageChange;
+  //   fileInput.click();
+  // };
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-      const result = await registerDisease(values);
+      const result = await addDisease(values);
 
       // Log the result to the console
-      console.log('Result of registerHospital mutation:', result);
+      console.log('Result of Addemployee mutation:', result);
       
       resetForm();
 
@@ -126,13 +126,16 @@ const DRegister = () => {
                     onSubmit={handleRegister}
 
                 >
-                    {({ values  }) => (
+                    {({   errors }) => (
                     <Form>
+                      {
+                        console.log(errors , "here")
+                      }
                        <Grid container spacing={2}> 
-                            <Grid item xs={12} sm={12} >
+                            {/* <Grid item xs={12} sm={12} >
                                 <Text name="disease_id" label="Disease Id" autoComplete=""  
                                      defaultValue="Id"
-                                     
+        
                                     InputProps={{
                                         style: {
                                             background: 'white', border: 'none', borderRadius: '20px',
@@ -141,7 +144,8 @@ const DRegister = () => {
                                     }}
                                     
                                 />
-                            </Grid><Grid item xs={12} sm={6} >
+                            </Grid> */}
+                            <Grid item xs={12}  >
                                 <Text name="disease_name" label="Disease Name" autoComplete=""
                                     InputProps={{
                                         style: {
@@ -150,7 +154,7 @@ const DRegister = () => {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                   <RadioButtonGroup
                     label="Disease Status"
                     name="disease_status"
@@ -161,7 +165,7 @@ const DRegister = () => {
                   />
                 </Grid>
                 <Divider />
-                <Grid item xs={12} sm={6} >
+                {/* <Grid item xs={12} sm={6} >
                   <Text name="created_at" label="Created At" autoComplete=""
                     InputProps={{
                       style: {
@@ -170,8 +174,8 @@ const DRegister = () => {
                        readOnly:true
                     }}
                   />
-                </Grid>
-                <Grid item xs={12} sm={6} >
+                </Grid> */}
+                {/* <Grid item xs={12} sm={6} >
                   <Text name="updated_at" label="Updated At" autoComplete=""
                     InputProps={{
                       style: {
@@ -180,7 +184,7 @@ const DRegister = () => {
                        readOnly:true
                     }}
                   />
-                </Grid>
+                </Grid> */}
                 
                 <Grid item xs={12} sm={5}>
                   <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />

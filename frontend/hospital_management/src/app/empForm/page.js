@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './components/RadioB/RadioButtonGroup';
 import CustomAutocomplete from './components/autocomplete';
-import { useRegisterHospitalMutation } from '@/services/Query';
+import { useAddEmployeeMutation, useRegisterHospitalMutation } from '@/services/Query';
 import Employee_Validation from './components/EmployeeValidation/employeeValidation';
 import Text from './components/Textfield/Text'
 import { colors } from '@/styles/theme';
@@ -66,46 +66,26 @@ const INITIAL_FORM_STATE = {
   employee_type: '',
   employee_role: '',
   employee_status: '',
-  created_by: '',
-  updated_by: '',
+  created_by: 'admin',
+  updated_by: 'admin',
 };
 
 
 
-const Empcategories = ['Doctor', 'Admin', 'Category 3', 'Category 4'];
-const Role = ['one', 'two', 'three', 'Category 4'];
+const Empcategories = ['Part Time','Full Time'];
+const Role = ['Doctor','Manager'];
 // const status =['1', '2', '3', 'Category 4'];
 
 
 const EmpRegister = () => {
-  const [registerHospital] = useRegisterHospitalMutation()
-
-  const [previewImage, setPreviewImage] = useState(null);
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-    } else {
-      setPreviewImage(null);
-    }
-  };
-
-  const handleChooseLogoClick = () => {
-    let fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.onchange = handleImageChange;
-    fileInput.click();
-  };
+  const [addemployee] = useAddEmployeeMutation()
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-      const result = await registerHospital(values);
+      const result = await addemployee(values);
 
       // Log the result to the console
-      console.log('Result of employee form mutation:', result);
+      console.log('Result of Employee form mutation:', result);
       
       resetForm();
 
@@ -207,13 +187,13 @@ const EmpRegister = () => {
                     label="Status"
                     name="employee_status"
                     options={[
-                      { value: 'Active', label: 'Active' },
-                      { value: 'Inactive', label: 'Inactive' },
+                      { value: 'Available', label: 'Active' },
+                      { value: 'Unavailable', label: 'Inactive' },
                     ]}
                   />
                 </Grid>
                 <Divider />
-                <Grid item xs={12} sm={8} >
+                {/* <Grid item xs={12} sm={8} >
                   <Text name="created_by" label="Created By" autoComplete=""
                     InputProps={{
                       style: {
@@ -221,9 +201,9 @@ const EmpRegister = () => {
                       },
                     }}
                   />
-                </Grid>
+                </Grid> */}
 
-                <Grid item xs={12} sm={6}>
+                {/* <Grid item xs={12} sm={6}>
                   <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />
                 </Grid>
 
@@ -235,7 +215,7 @@ const EmpRegister = () => {
                       },
                     }}
                   />
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12} sm={5}>
                   <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />
