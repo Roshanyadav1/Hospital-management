@@ -6,9 +6,15 @@ import Container from "@mui/material/Container";
 import { CardActionArea, CardMedia } from "@mui/material";
 import Home from "@/app/dashboard/page";
 import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 
 export default function Doctor() {
+
+  const showWarningToast = () =>{
+    toast.warning("Warning Example", {autoClose:false} );
+   }; 
+
   return (
     <div>
       <Container  maxWidth="lg">
@@ -39,7 +45,8 @@ export default function Doctor() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="large"> Learn More</Button>  
+                  <Button onClick={showWarningToast} size="large"> Learn More</Button>  
+                  
                 </CardActions>
               </CardActionArea>
             </Card>
