@@ -26,6 +26,7 @@ class AppointmentAdd(GenericAPIView):
          error = Error.objects.get(error_title = 'BOOKED_SUCCESS')
          response_message = error.error_message
          response_code = error.error_code
+         Response.status_code = error.error_code
         except:
             response_message  = ResponseMessage.BOOKED_SUCCESS
             response_code = status.HTTP_201_CREATED
@@ -57,6 +58,7 @@ class AppointmentViewById(APIView):
                  error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
                  response_message = error.error_message
                  response_code = error.error_code
+                 Response.status_code = error.error_code
                 except: 
                     response_message = ResponseMessage.RETRIEVED_SUCCESS
                     response_code = status.HTTP_200_OK
@@ -74,6 +76,7 @@ class AppointmentViewById(APIView):
                  error = Error.objects.get(error_title = 'INVALID_ID')
                  response_message = error.error_message
                  response_code = error.error_code
+                 Response.status_code = error.error_code
                 except:
                     response_message = ResponseMessage.INVALID_ID
                     response_code = status.HTTP_400_BAD_REQUEST
@@ -97,6 +100,7 @@ class AppointmentUpdate(APIView):
              error = Error.objects.get(error_title = 'EMPTY_REQUEST')
              response_message = error.error_message
              response_code = error.error_code
+             Response.status_code = error.error_code
             except:
                 response_message = ResponseMessage.EMPTY_REQUEST
                 response_code = status.HTTP_400_BAD_REQUEST
@@ -118,6 +122,7 @@ class AppointmentUpdate(APIView):
                   error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
                   response_message = error.error_message
                   response_code = error.error_code
+                  Response.status_code = error.error_code
                 except:
                    response_message = ResponseMessage.UPDATE_SUCCESS
                    response_code = status.HTTP_200_OK
@@ -134,6 +139,7 @@ class AppointmentUpdate(APIView):
                   error = Error.objects.get(error_title = 'INVALID_ID')
                   response_message = error.error_message
                   response_code = error.error_code
+                  Response.status_code = error.error_code
                 except:
                    response_message = ResponseMessage.INVALID_ID
                    response_code = status.HTTP_400_BAD_REQUEST
@@ -156,6 +162,7 @@ class AppointmentDelete(APIView):
              error = Error.objects.get(error_title = 'DELETE_SUCESS')
              response_message = error.error_message
              response_code = error.error_code
+             Response.status_code = error.error_code
             except:
                response_message = ResponseMessage.DELETE_SUCCESS
                response_code = status.HTTP_200_OK
@@ -172,6 +179,7 @@ class AppointmentDelete(APIView):
              error = Error.objects.get(error_title = 'INVALID_ID')
              response_message = error.error_message
              response_code = error.error_code
+             Response.status_code = error.error_code
             except:
                response_message = ResponseMessage.INVALID_ID
                response_code = status.HTTP_400_BAD_REQUEST

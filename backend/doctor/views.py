@@ -24,6 +24,7 @@ class DoctorRegister(GenericAPIView):
          error = Error.objects.get(error_title = 'REGISTER_SUCCESS')
          response_message = error.error_message
          response_code = error.error_code
+         Response.status_code = error.error_code
         except:
             response_message = ResponseMessage.REGISTRATION_SUCCESS
             response_code = status.HTTP_201_CREATED
@@ -52,6 +53,7 @@ class DoctorView(ListAPIView):
           error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
           response_message = error.error_message
           response_code = error.error_code
+          Response.status_code = error.error_code
          except:
              response_message = ResponseMessage.RETRIEVED_SUCCESS
              response_code = status.HTTP_200_OK
@@ -77,6 +79,7 @@ class DoctorViewById(APIView):
                  error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
                  response_message = error.error_message
                  response_code = error.error_code
+                 Response.status_code = error.error_code
                 except:
                     response_message = ResponseMessage.RETRIEVED_SUCCESS
                     response_code = status.HTTP_200_OK
@@ -94,6 +97,7 @@ class DoctorViewById(APIView):
                   error = Error.objects.get(error_title = 'INVALID_ID')
                   response_message = error.error_message
                   response_code = error.error_code
+                  Response.status_code = error.error_code
                 except:
                     response_message = ResponseMessage.INVALID_ID
                     response_code = status.HTTP_400_BAD_REQUEST
@@ -121,6 +125,7 @@ class DoctorUpdate(GenericAPIView):
              error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
              response_message = error.error_message
              response_code = error.error_code
+             Response.status_code = error.error_code
             except:
                response_message = ResponseMessage.UPDATE_SUCCESS
                response_code = status.HTTP_200_OK
@@ -137,6 +142,7 @@ class DoctorUpdate(GenericAPIView):
              error = Error.objects.get(error_title = 'INVALID_ID')
              response_message = error.error_message
              response_code = error.error_code
+             Response.status_code = error.error_code
             except:
                response_message = ResponseMessage.INVALID_ID
                response_code = status.HTTP_400_BAD_REQUEST
@@ -159,6 +165,7 @@ class DoctorDelete(APIView):
               error = Error.objects.get(error_title = 'DELETE_SUCCESS')
               response_message = error.error_message
               response_code = error.error_code
+              Response.status_code = error.error_code
             except:
                response_message = ResponseMessage.DELETE_SUCCESS
                response_code = status.HTTP_200_OK
@@ -175,6 +182,7 @@ class DoctorDelete(APIView):
               error = Error.objects.get(error_title = 'INVALID_ID')
               response_message = error.error_message
               response_code = error.error_code
+              Response.status_code = error.error_code
             except:
                response_message = ResponseMessage.INVALID_ID
                response_code = status.HTTP_400_BAD_REQUEST

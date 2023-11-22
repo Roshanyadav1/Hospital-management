@@ -51,7 +51,7 @@ class EmployeeAdd(GenericAPIView):
                     'per_patient_time': '00:00:00',
                     'status': 'null',
                     'day': 'Monday',
-                    "times": json.dumps([['09:00:00', '13:30:00'], ['17:45:00', '13:30:00']])
+                    # "times": json.dumps([['09:00:00', '13:30:00'], ['17:45:00', '13:30:00']])
                 }
                 doctor_serializer = DoctorSerializer(data = doctor_data)
                 doctor_serializer.is_valid(raise_exception = True)
