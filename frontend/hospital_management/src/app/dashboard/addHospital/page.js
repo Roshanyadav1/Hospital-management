@@ -16,6 +16,7 @@ import { colors } from '@/styles/theme';
 // import Image from 'next/image';
 import CustomAutocomplete from './Components/Autocomplete';
 import { useRegisterHospitalMutation } from '@/services/Query';
+import { toast } from 'react-toastify';
 // import * as Yup from 'yup'
 
 
@@ -144,10 +145,12 @@ const Register = () => {
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-       await registerHospital(values);
+        let res= await registerHospital(values);
+        toast.success(res?.data?.message || 'regestation  successfully')
       resetForm();
 
     } catch (error) {
+      toast.error(JSON.stringify(error))
       // Handle error
       // console.error('Error submitting form:', error);
     }

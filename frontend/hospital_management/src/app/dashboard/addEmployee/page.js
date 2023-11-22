@@ -82,9 +82,11 @@ const EmpRegister = () => {
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-      await addemployee(values);
+      let res= await addemployee(values);
+      toast.success(res?.data?.message || "Employee added successfully")
       resetForm();
     } catch (error) {
+      toast.error(JSON.stringify(error))
       // Handle error
       // console.error('Error submitting form:', error);
     }
