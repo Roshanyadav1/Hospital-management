@@ -16,13 +16,14 @@ import { colors } from '@/styles/theme';
 // import Image from 'next/image';
 import CustomAutocomplete from './Components/Autocomplete';
 import { useRegisterHospitalMutation } from '@/services/Query';
+import { toast } from 'react-toastify';
 // import * as Yup from 'yup'
 
 
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  maxWidth: '650px',
+  maxWidth: '750px',
   boxShadow: theme.shadows[3],
   backgroundColor: colors.background,
   borderRadius: '20px',
@@ -144,15 +145,12 @@ const Register = () => {
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-      const result = await registerHospital(values);
-      alert("Hospital Registered Successfully")
-
-      // Log the result to the console
-      console.log('Result of registerHospital mutation:', result);
-      
+        let res= await registerHospital(values);
+        toast.success(res?.data?.message || 'regestation  successfully')
       resetForm();
 
     } catch (error) {
+      toast.error(JSON.stringify(error))
       // Handle error
       // console.error('Error submitting form:', error);
     }

@@ -26,6 +26,7 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 const drawerWidth = 240;
 
@@ -114,14 +115,15 @@ function Layout({children}) {
           {[
              { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
             { text: "Career", path: "/dashboard/career" , icon : <TrackChangesIcon/>},
-            { text: "Doctor", path: "/dashboard/docter" , icon : <SettingsAccessibilityIcon/>},
-            { text: "Disease", path: "/dashboard/disease" , icon : <CoronavirusIcon/>},
-            { text: "Add Hospital", path: "/dashboard/abouthospital" , icon : <AddBoxIcon/>},
-            { text: "Billing", path: "/dashboard/billing" , icon : <AccountBalanceWalletIcon/>},
-            { text: "Analytics", path: "/dashboard/analytics" , icon : <AnalyticsIcon/>},
-            { text: "DocterDetail", path: "/dashboard/docterdetail" , icon : <AddReactionIcon/>},
-            { text: "Prescription", path: "/dashboard/registerForm" , icon : <MedicationIcon/>},
-            { text: "Discharge", path: "/dashboard/discharge" , icon : <PersonRemoveIcon/> },
+            { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},
+            { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
+            { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},
+            { text: "Add Employee", path: "/dashboard/addEmployee" , icon : <GroupAddIcon /> },
+            { text: "Billing", path: "/dashboard" , icon : <AccountBalanceWalletIcon/>},
+            { text: "Analytics", path: "/dashboard" , icon : <AnalyticsIcon/>},
+            { text: "DocterDetail", path: "/dashboard" , icon : <AddReactionIcon/>},
+            { text: "Prescription", path: "/dashboard" , icon : <MedicationIcon/>},
+            { text: "Discharge", path: "/dashboard" , icon : <PersonRemoveIcon/> },
           ].map((item) => (
             <ListItem
               key={item.text}
