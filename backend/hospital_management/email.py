@@ -19,11 +19,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def send_appointment_email(appointment):
     # print(appointment.patient_id)
     # patient = Patient.objects.filter(patient_id = appointment.patient_id)
-    # print(patient)
+    # print(patient.name)
     cal = Calendar()
     event = Event()
+    dstart = str(appointment.appointment_date) + ' ' + str(appointment.appointment_time);
+    date = datetime.strptime(dstart, '%Y-%m-%d %H:%M:%S')
     event.add('summary', 'Appointment')
-    event.add('dtstart', datetime(2023, 10, 31, 8, 0, 0))
+    event.add('dtstart', date)
     event.add('dtend', datetime(2023, 10, 31, 10, 0, 0))
     event.add('location', 'Event Location')
     event.add('description', 'Event Description')
@@ -39,6 +41,15 @@ def send_appointment_email(appointment):
     msg['From'] = from_email
     msg['To'] = to_email
     msg['Subject'] = subject
+
+    body = """Dear [Patient's Name],
+
+I hope this email finds you in good health. I am writing to inform you that your appointment has been successfully booked with our clinic. We are delighted to confirm the details of your upcoming appointment:
+
+Date: [Appointment Date] Time: [Appointment Time] Location: [Clinic Address]
+
+We understand the importance of your time and are committed to providing you with the best possible care. To ensure a smooth and efficient visit, we kindly request that you arrive at least 10 minutes before your scheduled appointment. This will allow us to complete any necessary paperwork and make sure you receive the full attention and care you deserve"""
+    msg.attach(MIMEText(body, 'plain'))
 
     attachment = MIMEBase('text', 'calendar')
     attachment.set_payload(ics_content)
