@@ -86,7 +86,7 @@ def send_verification_email(url, user_email):
     html_content = str(soup)
 
     img_element = soup.find(id='logo-img')
-    new_src = "https://hoapitalmanagement.s3.ap-south-1.amazonaws.com/SGA+logo+(1).png"
+    new_src = "https://hospital0000.s3.ap-south-1.amazonaws.com/SGA+logo+(1).png"
     if img_element:
         img_element['src'] = new_src
     html_content = str(soup)
