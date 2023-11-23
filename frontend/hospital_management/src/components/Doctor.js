@@ -173,9 +173,7 @@ export default function Doctor() {
                   </CardActions>
        </CardActionArea>
      </Card>
-   </Grid>
-         
-         
+        </Grid>
         </Grid>
       </Container>
     </div>
