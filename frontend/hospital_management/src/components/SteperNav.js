@@ -42,8 +42,10 @@ function SteperNav(props) {
         <Button href="/api/auth/login" sx={{ color: '#fff' }}>Login</Button>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+           
+            <ListItemButton sx={{ textAlign: 'center'}}>
+              <ListItemText primary={<Typography variant = "h5" >item</Typography>}/>
+          
             </ListItemButton>
           </ListItem>
         ))}

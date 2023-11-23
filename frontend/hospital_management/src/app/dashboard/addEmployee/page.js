@@ -86,7 +86,7 @@ const EmpRegister = () => {
       toast.success(res?.data?.message || "Employee added successfully")
       resetForm();
     } catch (error) {
-      toast.error(JSON.stringify(error))
+      toast.error(error)
       // Handle error
       // console.error('Error submitting form:', error);
     }
@@ -99,7 +99,7 @@ const EmpRegister = () => {
 
 
         <StyledTypography variant="h4">
-          Employee Registration Form
+          Employee Registration Form 
         </StyledTypography>
         <Typography variant="h6">
           General Information
