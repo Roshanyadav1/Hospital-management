@@ -14,10 +14,10 @@ export const queries = createApi({
       // },
    }),
 
-   keepUnusedDataFor: 30000000,
+   // keepUnusedDataFor: 30000000,
    // refetchOnReconnect: true,
    // refetchOnFocus: true,
-   tagTypes: ["LOGIN"],
+   tagTypes: ["EMP"],
    endpoints: build => ({
       registerHospital: build.mutation({
          query: (value) => ({
@@ -32,6 +32,7 @@ export const queries = createApi({
             method: 'DELETE',
             // body:value
          }),
+         invalidatesTags :['EMP']
       }),
 
       getEmployee: build.query({
@@ -39,6 +40,8 @@ export const queries = createApi({
             url: 'employee/view/',
             method: 'GET',
          }),
+         providesTags: ['EMP'],
+
       }),
    }),
 })

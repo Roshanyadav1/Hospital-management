@@ -39,6 +39,30 @@ const customstyles=`
   .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
     display: none;
   }
+  .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation24.MuiDialog-paper.MuiDialog-paperScrollPaper.MuiDialog-paperWidthSm.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    height: auto;
+    border: 1px solid white;
+    border-radius: 12px;
+    box-shadow: box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .css-1yosu3z-MuiTypography-root-MuiDialogTitle-root{
+    font-size : 1.5rem !important
+  }
+  .Data{
+    color:red;
+    font-weight:bold
+  }
+  .No{
+    background-color: rgba(19, 41, 61, 0.04) !important;
+  }
+  .css-1kyp2zt-MuiButtonBase-root-MuiButton-root:hover {
+    background-color:red;
+    color:white
+  }
+  .No:hover{
+   color: black !important
+  
+  }
   
 `
 

@@ -63,15 +63,15 @@ const GetActionButton =(row)=>{
     <div style={{ display: 'flex', justifyContent: 'center',alignItems:'center' }}>
 
         <Dialog open={openModal} onClose={handleCloseModal}>
-       <DialogTitle>Delete Confirmation</DialogTitle>
+       <DialogTitle style={{border:'1px solid white',borderRadius:'10px',boxShadow:'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',fontWeight:'bolder',fontSize:'1rem'}}>Delete Confirmation</DialogTitle>
        <DialogContent>
-       <p>Do you want to delete the data for {selectedRow?.employee_name}?</p>
+       <p>Do you want to delete the data for <span className='Data'>{selectedRow?.employee_name}</span></p>
      </DialogContent>
      <DialogActions>
-        <Button onClick={handleCloseModal} color="primary">
+        <Button onClick={handleCloseModal} color="primary" className='No'>
           No
         </Button>
-        <Button onClick={handleConfirmDelete} color="primary">
+        <Button onClick={handleConfirmDelete} color="primary" className='Yes'>
           Yes
         </Button>
        </DialogActions>
