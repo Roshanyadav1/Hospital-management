@@ -3,13 +3,20 @@ import { useRouter } from 'next/navigation'
 import AddIcon from '@mui/icons-material/Add';
 import './container.css'
 import { Fab, Tooltip } from '@mui/material';
+import DataGridTable from './DataGridTable';
+import { useGetEmployeeQuery } from '@/services/Query';
+import { columns } from '@/data/ColumnData';
+ 
  
 function Dashboard() {
   const router = useRouter()
+  const {data : empData } = useGetEmployeeQuery()
  
   return (
     <div className="img_container" >
-      table here 
+       <div>
+        <DataGridTable data={empData?.data || []} columns={columns} />
+       </div>
       <Tooltip title="Create Empoloyee" arrow placement="right">
       <Fab color="red" aria-label="add"  sx={{ 
         position: 'fixed',
