@@ -1,14 +1,14 @@
 "use client"
-import DataGridTable from "@/components/DataGridTable";
-import { columns } from "@/helpers/columns";
-import { useGetEmployeeQuery } from '@/services/Query';
+import Dashboard from "@/components/Dashboard";
+import { Container } from "@mui/system";
 
 function FetchData() {
-  const {data : empData, isSuccess} = useGetEmployeeQuery()
 
   return (
     <div>
-      <DataGridTable data={isSuccess ? empData?.data : []} col={columns} />
+      <Container maxWidth="lg">
+        <Dashboard />
+      </Container>
     </div>
   )
 
