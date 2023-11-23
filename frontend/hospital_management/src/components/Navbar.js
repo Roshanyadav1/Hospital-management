@@ -30,10 +30,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
       sx={{
         backgroundColor: "#FFFFFF",
         color: "#13293D",
-        margin: "0",
       }}
-      position="static"
-      className="appbar"
     >
       <Container maxWidth="xxl">
         <Toolbar disableGutters>
