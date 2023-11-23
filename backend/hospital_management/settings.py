@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
+    # 'Auth0',
     'drf_yasg',
     'django_filters',
     'corsheaders',
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     'user',
     'employee',
     'error',
+ 
 ]
 
 MIDDLEWARE = [

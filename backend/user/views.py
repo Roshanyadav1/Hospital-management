@@ -7,6 +7,34 @@ from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
+import jwt
+from requests import request
+
+
+
+#  Auth 0 code
+
+class YourClassName:
+    def get_user_details(self, response):
+        # Obtain JWT and the keys to validate the signature
+        id_token = response.get('id_token')
+        audience = self.setting('SOCIAL_AUTH_AUTH0_KEY')  # CLIENT_ID
+        jwks = request.urlopen(
+            'https://' + self.setting('SOCIAL_AUTH_AUTH0_DOMAIN') + '/.well-known/jwks.json')
+        issuer = 'https://' + self.setting('SOCIAL_AUTH_AUTH0_DOMAIN') + '/'
+
+        # Decode the JWT using the obtained keys
+        payload = jwt.decode(id_token, jwks.read(), algorithms=['RS256'], audience=audience, issuer=issuer)
+
+        # Extract user details from the decoded JWT payload
+        return {
+            'username': payload['nickname'],
+            'first_name': payload['name'],
+            'picture': payload['picture'],
+            'user_id': payload['sub'],
+            'role': payload['https://dev-o0hx8kbg.us.auth0.com/roles']
+        }
+
 
 
 def get_tokens_for_user(user):

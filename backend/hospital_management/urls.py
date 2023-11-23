@@ -22,6 +22,7 @@ urlpatterns = [
                  template_name='docs.html',
                  extra_context={'schema_url': 'api_schema'}
              ), name='docs'),
+             path('auth/', include('Auth0.urls'), name='auth'),
              path('patient/', include('patient.urls'), name='Patient'),
              path('doctor/', include('doctor.urls'), name='Doctor'),
              path('disease/', include('disease.urls')),
