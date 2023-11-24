@@ -8,6 +8,7 @@ import uuid
 # Appointment Model Class
 class Appointment(models.Model):
     appointment_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    appointment_number = models.IntegerField()
     patient = models.ForeignKey(Patient, default = uuid.uuid4, on_delete = models.CASCADE)
     doctor = models.ForeignKey(Doctor, default = uuid.uuid4, on_delete = models.CASCADE)
     disease =  models.ForeignKey(Disease, default = uuid.uuid4, on_delete = models.CASCADE)
