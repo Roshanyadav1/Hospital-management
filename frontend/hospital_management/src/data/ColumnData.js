@@ -5,7 +5,6 @@ import { useDeleteEmployeeMutation } from '@/services/Query';
 
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 
-
 const GetActionButton =(row)=>{
   const [deleteEmployee] = useDeleteEmployeeMutation()
 
@@ -93,15 +92,15 @@ const GetActionButton =(row)=>{
 
 export const columns = [
     { field: 'employee_name', headerName: 'Name',  width: 170, headerClassName:'header',headerAlign: 'center', align:'left', cellClassName: 'column-line',  sortable: false },
-    { field: 'employee_email', headerName: 'Email', width: 240, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'employee_number', headerName: 'Phone', width: 170, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'employee_role', headerName: 'Role', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'employee_type', headerName: 'Type', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'employee_email', headerName: 'Email', width: 280, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'employee_number', headerName: 'Phone', width: 210, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'employee_role', headerName: 'Role', width: 160, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'employee_status', headerName: 'Status', width: 180, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'employee_type', headerName: 'Type', width: 180, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
     {
       field: 'Actions',
       headerName: 'Actions',
-      width: 120,
+      width: 180,
       headerClassName: 'headerlast',
       cellClassName: 'column-linelast',
       headerAlign: 'center',

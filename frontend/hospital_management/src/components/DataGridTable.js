@@ -26,7 +26,6 @@ const customstyles=`
     border-bottom: 3px solid #89949E !important;
     font-size: .8rem;
     font-family: Verdana;
-    font-weight: bolder
   }
   .column-line {
     border-right: 1px solid #89949E !important; // Adjust the color as needed
@@ -48,14 +47,12 @@ const customstyles=`
     font-size : 1.5rem !important
   }
   .Data{
-    color:red;
     font-weight:bold
   }
   .No{
     background-color: rgba(19, 41, 61, 0.04) !important;
   }
   .css-1kyp2zt-MuiButtonBase-root-MuiButton-root:hover {
-    background-color:red;
     color:white
   }
   .No:hover{
