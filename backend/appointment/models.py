@@ -1,4 +1,4 @@
-from django.db import models
+from djongo import models
 from patient.models import Patient
 from doctor.models import Doctor
 from disease.models import Disease

@@ -12,4 +12,9 @@ class PatientLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
         fields = ['patient_email', 'password']
+
+class PatientRelation(serializers.ModelSerializer):
+    class Meta:
+        model = Patient
+        exclude = ('password', 'created_at', 'updated_at',)
         

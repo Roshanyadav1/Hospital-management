@@ -11,3 +11,8 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         exclude = ('employee', )
+
+class DoctorRelation(serializers.ModelSerializer):
+    class Meta:
+        model = Doctor
+        exclude = ('created_at', 'updated_at', )
