@@ -87,15 +87,7 @@ const dRegister = () => {
                     <Form>
                        <Grid container spacing={2}> 
                             <Grid item xs={12} sm={12} >
-                                <Text name="doc_Id" label="Doctor Id" autoComplete=""  
-                                     defaultValue="Id"
-                                    InputProps={{
-                                        style: {
-                                            background: 'white', border: 'none', borderRadius: '20px',
-                                        },
-                                        readOnly:true,
-                                    }}
-                                />
+                        
                             </Grid><Grid item xs={12} sm={6} >
                                 <Text name="disease_Specialist" label="Disease Specialist" autoComplete=""
                                     InputProps={{

@@ -17,7 +17,6 @@ import Footer from './Footer';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Docter from "@/app/dashboard/docter/page";
-import Career from "@/app/dashboard/career/page";
 import Billing from "@/app/dashboard/billing/page"
 import AboutHospital from "@/app/dashboard/abouthospital/page";
 import Analytics from "@/app/dashboard/analytics/page";
@@ -122,7 +121,6 @@ function MiniDrawer() {
         <List>
           {[
              { text: "Dashboard", path: "/dashboard" },
-            { text: "Career", path: "/" },
             { text: "Doctor", path: "/dashboard/docter" },
             { text: "Disease", path: "/dashboard/disease" },
             { text: "Add Hospital", path: "/dashboard/abouthospital" },
@@ -193,7 +191,6 @@ function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1}}>
-        {router.pathname === "/" && <Career />}
         {router.pathname === "/dashboard/docter" && <Docter />}
         {router.pathname === "/dashboard/disease" && <Disease />}
         {router.pathname === "/dashboard/abouthospital" && <AboutHospital />}

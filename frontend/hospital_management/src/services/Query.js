@@ -88,7 +88,7 @@ export const queries = createApi({
       }),
       viewAppointment: build.query({
          query: () => ({
-            url: 'appointment/view',
+            url: 'appointment/view/',
             method: 'GET'
          })
       })

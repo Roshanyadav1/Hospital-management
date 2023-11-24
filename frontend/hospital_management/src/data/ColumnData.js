@@ -5,6 +5,17 @@ import { useDeleteEmployeeMutation } from '@/services/Query';
 
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 
+const Addprescription =(row)=>{
+
+  const prescription = () => {
+   console.log("Add prescription")
+};
+return(
+<IconButton onClick={prescription} color="primary" size="small">
+<Create />
+</IconButton>
+);
+}
 
 const GetActionButton =(row)=>{
   const [deleteEmployee] = useDeleteEmployeeMutation()
@@ -115,11 +126,21 @@ export const columns = [
 
 
   export const columns1 = [
-    { field: 'Patient_name', headerName: 'Name',  width: 170, headerClassName:'header',headerAlign: 'center', align:'left', cellClassName: 'column-line',  sortable: false },
-    { field: 'Patient_email', headerName: 'Email', width: 240, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'Patient_number', headerName: 'Phone', width: 170, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'Patient_Address', headerName: 'Address', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'Patient_age', headerName: 'Age', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'doctor.day', 
+    valueGetter: (params) => params.row?.patient?.patient_name, 
+    headerName: 'Name',  width: 170, headerClassName:'header',headerAlign: 'center', align:'left', cellClassName: 'column-line',  sortable: false },
+    { field: 'appointment_number', 
+    valueGetter: (params) => params.row?.patient?.patient_email, 
+    headerName: 'Email', width: 240, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'appointment_time',
+    valueGetter: (params) => params.row?.patient?.patient_mobile, 
+    headerName: 'Phone', width: 170, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'appointment_date', 
+    valueGetter: (params) => params.row?.patient?.patient_address, 
+    headerName: 'Address', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'patient',
+    valueGetter: (params) => params.row?.patient?.patient_age, 
+    headerName: 'Age', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
     {
       field: 'Actions',
       headerName: 'Actions',
@@ -129,7 +150,7 @@ export const columns = [
       headerAlign: 'center',
       sortable: false,
       renderCell: (params) => (
-       <GetActionButton params={params}/>
+       <Addprescription params={params}/>
       ),
     },
   

@@ -66,15 +66,18 @@ const customstyles=`
 
 export default function DataGridTable(props) {
     const {data,columns} = props
-    
+    const datalength = data.length
+     
   return (
     <>
+       
         <style>{customstyles}</style>
+        
         <DataGrid
           rows={data?.length > 0 ? data : []}
           columns={columns}
           loading={data?.length > 0 ? false : true}
-          getRowId={(row) => row?.employee_id}
+          getRowId={(row) => row?.employee_id || row?.appointment_id}
           getRowHeight={() => 'auto'}
 
           //only table scroll not the scrreen

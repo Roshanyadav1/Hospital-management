@@ -2,15 +2,16 @@
 import { useRouter } from 'next/navigation'
 import AddIcon from '@mui/icons-material/Add';
 import './container.css'
+import BgImage from '../assest/background-image.jpg'
 import { Fab, Tooltip } from '@mui/material';
-
 import DataGridTable from './DataGridTable';
 import { useViewAppointmentQuery } from '@/services/Query';
-import { columns } from '@/data/ColumnData';
+import { columns1 } from '@/data/ColumnData';
 import { Grid, Card, CardContent, Typography, Button } from '@mui/material';
 import CardActions from "@mui/material/CardActions";
 import { CardActionArea, CardMedia } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import Image from 'next/image';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,25 +21,42 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
+const customStyles = `
+  .MuiDataGrid-root .MuiDataGrid-row:nth-child(even) {
+    background-color: #E6E8F0;
+  }
+  .MuiDataGrid-root .MuiDataGrid-row:nth-child(odd) {
+    background-color: #f0f2fa;
+  }
+
+  .header1 {
+    background-color: #aee3f0 !important;
+  }
+
+  .header2 {
+    background-color: #35cff4 !important;
+  }
+
+  .header34 {
+    background-color: #006494 !important;
+    color: white;
+  }
+
+  .header5 {
+    background-color: #13293d !important;
+    color: white;
+  }
+
+  .column-line {
+    border-right: 2px solid #13293D !important; // Adjust the color as needed
+    padding-right: 8px; // Add padding to separate the text from the line
+  }
+  .MuiDataGrid-root .MuiDataGrid-colCell:not(.MuiDataGrid-colCellCheckbox):not(.MuiDataGrid-colCellSorted):not(.MuiDataGrid-colCellMoving) .MuiDataGrid-columnSeparator,
+  .MuiDataGrid-root .MuiDataGrid-colCell:not(.MuiDataGrid-colCellCheckbox):not(.MuiDataGrid-colCellSorted):not(.MuiDataGrid-colCellMoving) .MuiDataGrid-sortIcon {
+    display: none !important;
+  }
+`;
 
 
 
@@ -46,6 +64,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function Dashboard() {
   const router = useRouter()
   const { data: Appointments } = useViewAppointmentQuery()
+
 
   return (
     <div className="img_container" >
@@ -63,24 +82,21 @@ function Dashboard() {
       </Fab>
     </Tooltip> */}
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item>
           <Grid container spacing={2}>
             <Grid item xs={12}  >
-              <Card sx={{ maxWidth: 1000 }}>
+              <Card sx={{ maxWidth: 1500 }}>
                 <CardActionArea>
-                  <CardMedia
-                    sx={{ height: 50, width: 1000, height: 250 }}
-                    image="../../public/background-image.jpg"
-
-                  //  image="https://img.freepik.com/free-vector/medical-technology-science-background-vector-blue-with-blank-space_53876-117739.jpg?w=1060&t=st=1700733301~exp=1700733901~hmac=4e146c4e7c60889a8056f8bd338b7dd9f99a7751c0909f14f8da3ef88b869210"
-                  //   title="green iguana"
-                  />
+                  <Image src={BgImage} alt="dashboard-Image" height= {250} width = {1200} />
 
                 </CardActionArea>
+                <CardContent>
+                  Hello Its working
+                </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12}>
-              <Card sx={{ maxWidth: 1000 , height:150 }}>
+              <Card sx={{ maxWidth: 1500 , height:150 }}>
                 <Grid container>
                   <Grid item xs={4} >
                     <Grid container sx = {{mx:3, py: 5}}>
@@ -88,6 +104,7 @@ function Dashboard() {
                         <CalendarMonthIcon sx = {{fontSize: 40, mx: 4} }/>
                       </Grid>
                       <Grid item xs={6} sx= {{mx: -2}} >
+                     
                         Appointments
 
                       </Grid>
@@ -101,6 +118,7 @@ function Dashboard() {
                         <CalendarMonthIcon sx = {{fontSize: 40} }/>
                       </Grid>
                       <Grid item xs={6}  sx= {{mx: -2}}>
+             
                         Appointments
 
                       </Grid>
@@ -124,21 +142,12 @@ function Dashboard() {
 <Grid item xs = {12}>
 </Grid>
           </Grid>
-
+          <style>{customStyles}</style>
+          
+          <DataGridTable data={Appointments ||[]} columns={columns1} />
         </Grid>
-        <Grid item xs={4}>
-            <Card sx={{ maxWidth: 700 }}>
-              <CardActionArea>
-                <CardMedia
-                  sx={{ height: 140, width: 400, height: 700}}
-
-                  image="https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg"
-                //   title="green iguana"
-                />
-
-              </CardActionArea>
-            </Card>
-          </Grid>
+       
+          
 </Grid>
 
 
