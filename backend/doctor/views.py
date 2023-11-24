@@ -38,9 +38,10 @@ class DoctorRegister(GenericAPIView):
 class DoctorView(ListAPIView):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
+    filterset_fields = ['disease_specialist','day']
     pagination_class  = CustomPagination
     filter_backends = [SearchFilter, CustomOrderingFilter]
-    search_fields = ['disease_specialist']
+    search_fields = ['disease_specialist', 'day']
     
     def list(self, request, *args, **kwargs):
          
