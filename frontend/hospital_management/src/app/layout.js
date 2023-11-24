@@ -9,7 +9,10 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const inter = Inter({ subsets: ["latin"] });
 const theme = createTheme(themeOptions);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1e0500cb69beacdbbfb9f63444c2076348e3e937
 export default function RootLayout({ children }) {
    return (
       <html lang='en'>

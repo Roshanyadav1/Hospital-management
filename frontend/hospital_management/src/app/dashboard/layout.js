@@ -1,3 +1,4 @@
+
 'use client'
 import * as React from "react";
 import { styled } from "@mui/material/styles";
@@ -184,7 +185,11 @@ function Layout({children}) {
             { text: "Billing", path: "/dashboard/billing" , icon : <AccountBalanceWalletIcon/>},
             { text: "Analytics", path: "/dashboard/analytics" , icon : <AnalyticsIcon/>},
             { text: "DocterDetail", path: "/dashboard/docterdetail" , icon : <AddReactionIcon/>},
+<<<<<<< HEAD
             { text: "Prescription", path: "/dashboard/prescription" , icon : <MedicationIcon/>},
+=======
+            { text: "Prescription", path: "/dashboard/precription" , icon : <MedicationIcon/>},
+>>>>>>> 1e0500cb69beacdbbfb9f63444c2076348e3e937
             { text: "Discharge", path: "/dashboard/discharge" , icon : <PersonRemoveIcon/> },
           ].map((item) => (
             <ListItem
@@ -237,3 +242,4 @@ function Layout({children}) {
 }
 
 export default Layout;
+

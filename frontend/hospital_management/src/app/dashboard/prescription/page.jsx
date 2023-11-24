@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-
+import DataTable from "@/components/DataTable";
 function Prescription() {
   return (
     <div>

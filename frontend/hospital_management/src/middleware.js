@@ -2,7 +2,8 @@ import { withMiddlewareAuthRequired } from '@auth0/nextjs-auth0/edge';
 
 export const config = {
   matcher: [],
-  // matcher: ['/((?!api|about|any|_next/static|_next/image|favicon.ico|$).*)',  ],
 };
 
 export default withMiddlewareAuthRequired();
+
+// '/((?!api|about|any|_next/static|_next/image|favicon.ico|$).*)',
