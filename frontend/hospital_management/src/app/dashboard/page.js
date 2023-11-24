@@ -4,10 +4,7 @@ import Dashboard from "@/components/Dashboard";
 function FetchData() {
 
   return (
-    <div style={{
-      backgroundColor: 'red',
-      borderRadius: 25,
-    }}>
+    <div >
       <Dashboard />
     </div>
   )
