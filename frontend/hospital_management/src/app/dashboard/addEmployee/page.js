@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import RadioButtonGroup from './components/RadioB/RadioButtonGroup';
 import CustomAutocomplete from './components/autocomplete';
-import { useAddEmployeeMutation, useRegisterHospitalMutation } from '@/services/Query';
+import { useAddEmployeeMutation } from '@/services/Query';
 import Employee_Validation from './components/EmployeeValidation/employeeValidation';
 import Text from './components/Textfield/Text'
 import { colors } from '@/styles/theme';

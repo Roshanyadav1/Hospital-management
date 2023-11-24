@@ -1,18 +1,17 @@
 "use client"
 import Dashboard from "@/components/Dashboard";
-import { Container } from "@mui/system";
 
 function FetchData() {
 
   return (
-    <div>
-      <Container maxWidth="lg">
-        <Dashboard />
-      </Container>
+    <div style={{
+      backgroundColor: 'red',
+      borderRadius: 25,
+    }}>
+      <Dashboard />
     </div>
   )
 
 }
 
 export default FetchData;
- 
