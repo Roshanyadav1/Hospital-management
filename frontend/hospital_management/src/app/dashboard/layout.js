@@ -13,7 +13,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ResponsiveAppBar from "@/components/Navbar";
 // import Footer from '@/components/Footer';
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Toolbar } from "@mui/material";
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -27,6 +27,7 @@ import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import { Container } from "@mui/system";
 
 const drawerWidth = 240;
 
@@ -97,11 +98,70 @@ const Drawer = styled(MuiDrawer, {
 
  
 function Layout({children}) {
+  const pathname = usePathname()
+
   const [open, setOpen] = React.useState(true);
-  const router = useRouter();
   const sidebarChanges = () => {
     setOpen(!open);
   };
+
+// for disable and active style
+  let disableStyle = {
+    display: "block",
+    backgroundColor: "#13293d",
+    "& .MuiListItemIcon-root":{
+      color:"#FFFFFF",
+    },
+    "& .MuiListItemText-root":{
+      color:"#FFFFFF",
+    },
+    "&:hover": {
+      backgroundColor: "#FFFFFF",
+      borderRadius: "15px",
+      color: "#13293d",
+      outline: "none",
+      "& .MuiListItemText-root":{
+        color:"#000",
+      },
+      "& .MuiListItemIcon-root":{
+        color:"#000",
+      },
+    },
+  }
+
+  let activeStyle = {
+    display: "block",
+    borderRadius: "15px",
+    // backgroundColor: "#fff",
+    border: "1px solid #FFFFFF",
+    color: "#FFFFFF",
+    "& .MuiListItemIcon-root":{
+      color:"#fff",
+    },
+    "& .MuiListItemText-root":{
+      color:"#fff",
+    },
+    "&:hover": {
+      backgroundColor: "#ffffff",
+      color: "#000",
+      borderRadius: "15px",
+      outline: "none",
+      "& .MuiListItemIcon-root":{
+        color:"#000",
+      },
+      "& .MuiListItemText-root":{
+        color:"#000",
+      },
+    },
+  }
+
+  const getStyle =(path)=>{
+    if(path === pathname.toLowerCase()){
+      return activeStyle
+    }else{
+      return disableStyle
+    }
+}
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -110,34 +170,28 @@ function Layout({children}) {
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
+        <div style={{padding : '0.5rem'}}>
+
         <DrawerHeader></DrawerHeader>
         <List>
           {[
-             { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
+            { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
             { text: "Career", path: "/dashboard/career" , icon : <TrackChangesIcon/>},
             { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},
             { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
             { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},
             { text: "Add Employee", path: "/dashboard/addEmployee" , icon : <GroupAddIcon /> },
-            { text: "Billing", path: "/dashboard" , icon : <AccountBalanceWalletIcon/>},
-            { text: "Analytics", path: "/dashboard" , icon : <AnalyticsIcon/>},
-            { text: "DocterDetail", path: "/dashboard" , icon : <AddReactionIcon/>},
-            { text: "Prescription", path: "/dashboard" , icon : <MedicationIcon/>},
-            { text: "Discharge", path: "/dashboard" , icon : <PersonRemoveIcon/> },
+            { text: "Billing", path: "/dashboard/billing" , icon : <AccountBalanceWalletIcon/>},
+            { text: "Analytics", path: "/dashboard/analytics" , icon : <AnalyticsIcon/>},
+            { text: "DocterDetail", path: "/dashboard/docterdetail" , icon : <AddReactionIcon/>},
+            { text: "Prescription", path: "/dashboard/prescription" , icon : <MedicationIcon/>},
+            { text: "Discharge", path: "/dashboard/discharge" , icon : <PersonRemoveIcon/> },
           ].map((item) => (
             <ListItem
               key={item.text}
               disablePadding
               sx={{
-                display: "block",
-                backgroundColor: "#13293d",
-                "&:hover": {
-                  backgroundColor: "#fff",
-                  color: "#13293d",
-                  // add border radius on hover on right top and bottom right: 5px solid #13293d;  
-                  borderRight: "5px solid #effe",
-                  outline: "none",
-                },
+               ...getStyle(item.path)
               }}
             >
               {/* Wrap the ListItemButton with Link */}
@@ -148,44 +202,35 @@ function Layout({children}) {
                   component="a" 
                   sx={{
                     justifyContent: open ? "initial" : "center",
-                    color: "#fff", 
-                    fontWeight: "bold", // Make text bold
-                    "&:hover": {
-                      "& .MuiListItemIcon-root":{
-                      color:"#000",
-                      },
-                      backgroundColor: "#fff",
-                      color: "#13293d",
-                      outline: "none",
-                    },
                   }}
-                  className={router.pathname === item.path ? "active" : ""}
                 >
                   <ListItemIcon
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
                       justifyContent: "center",
-                      color: "#fff",
                     }}
                   >
                     {item.icon}
                   </ListItemIcon>
-                  <ListItemText primary={item.text}  sx={{ opacity: open ? 1 : 0  , outline:'none' ,
-                  '&:hover':{
-                    outline:'none'
-                  }
-                }} />
+                  <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0  }} />
                 </ListItemButton>
               </Link>
             </ListItem>
           ))}
         </List>
+        </div>
+
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1 , padding:1}}>
+      <Box component="main" sx={{ 
+        width: { sm: `calc(100% - ${drawerWidth}px)` } , 
+          height:{ 
+           sm: `calc(100vh - 64px)` },
+           flexGrow: 1 ,
+           padding:1
+           }}>
        <Toolbar /> 
+       <Container maxWidth="100%">
           {children}
-        {/* <Footer/> */}
+       </Container>
        </Box> 
     </Box>
   );

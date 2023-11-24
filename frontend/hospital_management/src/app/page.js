@@ -11,6 +11,11 @@ import 'react-toastify/dist/ReactToastify.css';
 // for the patient page , the patient page will be the main page for the patient
 
 function page() {
+
+
+  // make a funcation that render the galaxy grafix in svg 
+
+  
   return (
     <div>
        

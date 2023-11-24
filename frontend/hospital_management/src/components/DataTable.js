@@ -85,16 +85,7 @@ const customStyles = `
 export default function DataTable() {
   return (
     <div
-      style={{
-        width: '802px',
-        margin: '0 auto', // Center horizontally
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center', // Center vertically
-        border: '3px solid #13293D', // Table border
-        borderRadius: '8px', // Optional: Add border-radius for a rounded appearance
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)', // Optional: Add box shadow for a blurred effect
-      }}
+      
     >
       {/* Include the custom styles using a style tag */}
       <style>{customStyles}</style>
