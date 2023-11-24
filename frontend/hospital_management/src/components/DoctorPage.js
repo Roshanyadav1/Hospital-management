@@ -1,4 +1,6 @@
+"use client"
 import * as React from 'react';
+
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { DemoItem } from '@mui/x-date-pickers/internals/demo';

@@ -1,19 +1,19 @@
 
   export  const welcome= [
       {
-        title: "Centre of Neurosiences",
+        title: " Neurosiences",
         image: "https://www.carehospitals.com/indore/assets/images/speciality/neurosciences-04.png",
         description: "The Department of Neurology at Care",
         category: "Neurosiences"
       },
       {
-        title: "Centre for Transplant",
+        title: " Transplant",
         image: "https://www.carehospitals.com/indore/assets/images/speciality/transplants-12.png",
         description: "The centre of transparant offers",
         category: "Transplant"
       },
       {
-        title: "Centre Care Unit",
+        title: " Care Unit",
         image: "https://www.carehospitals.com/indore/assets/images/speciality/icons_critical%20care%20medicine.png",
         description: "The centre caters to critical patients..",
         category: "Care Unit"

@@ -1,377 +1,149 @@
-// "use client";
-
-// import * as React from 'react';
-// import PropTypes from 'prop-types';
-// import AppBar from '@mui/material/AppBar';
-// import Box from '@mui/material/Box';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import Divider from '@mui/material/Divider';
-// import Drawer from '@mui/material/Drawer';
-// import IconButton from '@mui/material/IconButton';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemText from '@mui/material/ListItemText';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
-// import Button from '@mui/material/Button';
-// import { useUser } from '@auth0/nextjs-auth0/client';
-// import Logo from '../assest/whiteSga.png'
-// import Image from 'next/image';
-// const drawerWidth = 240;
-// const navItems = ['Doctor', 'Specialities','Contact Us'];
-
-// function SteperNav(props) {
-//   const { window } = props;
-//   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-//   const { user } = useUser();
-
-//   const handleDrawerToggle = () => {
-//     setMobileOpen((prevState) => !prevState);
-//   };
-
-//   const drawer = (
-//     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' ,color:"#fff" }}>
-//       <Typography variant="body2" sx={{ my: 2 }}>
-//         MUI
-//       </Typography>
-//       <Divider />
-//       <List>
-//         <Button href="/api/auth/login" sx={{ color: '#fff' }}>Login</Button>
-//         {navItems.map((item) => (
-//           <ListItem key={item} disablePadding>
-//             <ListItemButton sx={{ textAlign: 'center' }}>
-//               <ListItemText primary={item} />
-//             </ListItemButton>
-//           </ListItem>
-//         ))}
-//       </List>
-//     </Box>
-//   );
-//   const container = window !== undefined ? () => window().document.body : undefined;
-
-//   return (
-//     <Box sx={{ display: 'flex' }}>
-//       <CssBaseline />
-//       <AppBar component="nav">
-//         <Toolbar>
-//           <IconButton
-//             color="#fff"
-//             aria-label="open drawer"
-//             edge="start"
-//             onClick={handleDrawerToggle}
-//             sx={{ mr: 2, display: { sm: 'none' } }}
-//           >
-//             <MenuIcon />
-//           </IconButton>
-//           <div style={{ display: "flex", flexGrow: 1 }} >
-//             <Image width={160} height={50} src={Logo} />
-//           </div>
-
-//           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-//             {/* {
-//               user && (
-//                 <Button href="/dashboard" sx={{ color: '#fff' }}>
-//                   Dashboard
-//                 </Button>
-//               )
-//             } */}
-
-//             {navItems.map((item) => (
-//               <Button key={item} sx={{ color: '#fff' }}>
-//                 {item}
-//               </Button>
-//             ))}
-//             {
-//               user && (<>
-//                 <Button sx={{ color: '#fff' }}>
-//                   {user.name}
-//                 </Button>
-//               </>)
-//             }
-//             {/* {
-//               !user && (
-//                 <Button href="/api/auth/login" sx={{ color: '#fff' }}>
-//                   Login
-//                 </Button>
-
-//               )
-//             } */}
-//           </Box>
-
-//         </Toolbar>
-//       </AppBar>
-//       <nav>
-//         <Drawer
-//           container={container}
-//           variant="temporary"
-//           open={mobileOpen}
-//           onClose={handleDrawerToggle}
-//           ModalProps={{
-//             keepMounted: true, // Better open performance on mobile.
-//           }}
-//           sx={{
-//             display: { xs: 'block', sm: 'none' },
-//             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-//           }}
-//         >
-//           {drawer}
-//         </Drawer>
-
-//       </nav>
-//       <Box component="main" sx={{ p: 3 }}>
-//         <Toolbar />
-//         <Typography>
-
-
-//         </Typography>
-//       </Box>
-//     </Box>
-//   );
-// }
-
-// SteperNav.propTypes = {
-
-//   window: PropTypes.func,
-// };
-
-// export default SteperNav;
-
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { useUser } from '@auth0/nextjs-auth0/client';
-<<<<<<< HEAD
+"use client"
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
+import Divider from '@mui/material/Divider'
+import Drawer from '@mui/material/Drawer'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import MenuIcon from '@mui/icons-material/Menu'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import { useUser } from '@auth0/nextjs-auth0/client'
 import Logo from '../assest/whiteSga.png'
-import { styled } from '@mui/material/styles';
-import Image from 'next/image';
-import Link from 'next/link';
-=======
-import Logo from '../assest/whiteSga.png';
-import Image from 'next/image';
-import Link from 'next/link'; 
+import { styled } from '@mui/material/styles'
+import Image from 'next/image'
+import Link from 'next/link'
+const drawerWidth = 240
 
->>>>>>> 1e0500cb69beacdbbfb9f63444c2076348e3e937
-const drawerWidth = 240;
-const navItems = [
-  { label: 'Doctor', route: '/docter' },
-  { label: 'Specialities', route: '/Specilist' },
-  { label: 'Contact Us', route: '/ContactUs' }
-];
+const navItems = ["Doctor" , "Specialities" , "Book Appointment" , "View Appointment"]
 
 const StyledLink = styled(Link)(() => ({
-  color:'white',
-  padding: '0.6rem',
-  textDecoration:'none'
-}));
-
+   color: 'white',
+   padding: '0.6rem',
+   textDecoration: 'none',
+}))
 
 function SteperNav(props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+   const { window } = props
+   const [mobileOpen, setMobileOpen] = React.useState(false)
 
-  const { user } = useUser();
+   const { user } = useUser()
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
-  };
+   const handleDrawerToggle = () => {
+      setMobileOpen(prevState => !prevState)
+   }
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
-      {/* <Typography variant="body2" sx={{ my: 2 }}>
+   const drawer = (
+      <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
+         {/* <Typography variant="body2" sx={{ my: 2 }}>
         MUI
       </Typography> */}
-      <Divider />
-      <List>
-        <Button href="/api/auth/login" sx={{ color: '#fff' }}>Login</Button>
-        {navItems.map((item) => (
-<<<<<<< HEAD
-          <ListItem key={item} disablePadding>
-           
-            <ListItemButton sx={{ textAlign: 'center'}}>
-              <ListItemText primary={<Typography variant = "h5" >item</Typography>}/>
-          
-=======
-          <ListItem key={item.label} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <Link href={item.route} passHref>
-                <ListItemText primary={item.label} />
-              </Link>
->>>>>>> 1e0500cb69beacdbbfb9f63444c2076348e3e937
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
-  const container = window !== undefined ? () => window().document.body : undefined;
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar component="nav">
-        <Toolbar>
-          <IconButton
-            color="#fff"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <div style={{ display: 'flex', flexGrow: 1 }}>
-            <Image width={120} height={40} src={Logo} />
-          </div>
-<<<<<<< HEAD
-          
-          <Box sx={{ display: { xs: 'none', sm: 'block' } , outline:'none' , textDecoration:'none'}}>
-
-            
-            {/* // if user available give link to go to dashboard  */}
-
-    {
-     !user && (
-        <StyledLink href="/dashboard" sx={{ color: '#fff' }}>
-          Dashboard
-        </StyledLink>
-      )
-    }
-
-            {navItems.map((item) => (
-              <StyledLink  href={''} key={item} sx={{ color: '#fff' }}>
-                {item}
-              </StyledLink>
+         <Divider />
+         <List>
+            <Button href='/api/auth/login' sx={{ color: '#fff' }}>
+               Login
+            </Button>
+            {navItems.map(item => (
+               <ListItem key={item.label} disablePadding>
+                  <ListItemButton sx={{ textAlign: 'center' }}>
+                     <ListItemText
+                        primary={<Typography variant='h5'>{item.label}</Typography>}
+                     />
+                  </ListItemButton>
+               </ListItem>
             ))}
-            {
-            user && (<>
-            <Button sx={{ color: '#fff' }}>
-                {user.name}
-              </Button>
-              </>)
-          }
-          {
-            !user && (
-              <StyledLink href="/api/auth/login" sx={{ color: '#fff' }}>
-                    Login
-              </StyledLink>
-            
-            ) 
-          }
-              
-=======
-
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-             {
-               user && (
-                 <Button href="/dashboard" sx={{ color: '#fff' }}>
-                  Dashboard
-                </Button>
-              )
-            }
-
-            {navItems.map((item) => (
-              <Link key={item.label} href={item.route} passHref>
-                <Button sx={{ color: '#fff' }}>{item.label}</Button>
-              </Link>
-            ))}
-            {user && (
-              <Button sx={{ color: '#fff' }}>{user.name}</Button>
-            )}
-
-             {
-              !user && (
-                <Button href="/api/auth/login" sx={{ color: '#fff' }}>
-                  Login
-                </Button>
-
-              )
-             }
->>>>>>> 1e0500cb69beacdbbfb9f63444c2076348e3e937
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <nav>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-        <Typography></Typography>
+         </List>
       </Box>
-    </Box>
-  );
+   )
+
+   const container = window !== undefined ? () => window().document.body : undefined
+   return (
+      <Box sx={{ display: 'flex' }}>
+         <CssBaseline />
+         <AppBar component='nav'>
+            <Toolbar>
+               <IconButton
+                  color='#fff'
+                  aria-label='open drawer'
+                  edge='start'
+                  onClick={handleDrawerToggle}
+                  sx={{ mr: 2, display: { sm: 'none' } }}
+               >
+                  <MenuIcon />
+               </IconButton>
+               <div style={{ display: 'flex', flexGrow: 1 }}>
+                  <Image width={120} height={40} src={Logo} />
+               </div>
+
+               <Box
+                  sx={{
+                     display: { xs: 'none', sm: 'block' },
+                     outline: 'none',
+                     textDecoration: 'none',
+                  }}
+               >
+                  {/* // if user available give link to go to dashboard  */}
+
+                  {!user && (
+                     <StyledLink href='/dashboard' sx={{ color: '#fff' }}>
+                        Dashboard
+                     </StyledLink>
+                  )}
+
+                  {navItems.map(item => (
+                     <StyledLink href={''} key={item} sx={{ color: '#fff' }}>
+                        {item}
+                     </StyledLink>
+                  ))}
+                  {user && (
+                     <>
+                        <Button sx={{ color: '#fff' }}>{user.name}</Button>
+                     </>
+                  )}
+                  {!user && (
+                     <StyledLink href='/api/auth/login' sx={{ color: '#fff' }}>
+                        Login
+                     </StyledLink>
+                  )}
+               </Box>
+            </Toolbar>
+         </AppBar>
+         <nav>
+            <Drawer
+               container={container}
+               variant='temporary'
+               open={mobileOpen}
+               onClose={handleDrawerToggle}
+               ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+               }}
+               sx={{
+                  display: { xs: 'block', sm: 'none' },
+                  '& .MuiDrawer-paper': {
+                     boxSizing: 'border-box',
+                     width: drawerWidth,
+                  },
+               }}
+            >
+               {drawer}
+            </Drawer>
+         </nav>
+         <Box component='main' sx={{ p: 3 }}>
+            <Toolbar />
+            <Typography></Typography>
+         </Box>
+      </Box>
+   )
 }
 
-SteperNav.propTypes = {
-  window: PropTypes.func
-};
 
-export default SteperNav;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default SteperNav
 
 // import * as React from "react";
 // import AppBar from "@mui/material/AppBar";
@@ -437,9 +209,9 @@ export default SteperNav;
 //       <Container maxWidth="xl">
 //         <Toolbar disableGutters>
 //           <IconButton sx={{marginRight : '2rem'}} onClick={sidebarChanges}>
-//             <MenuIcon /> 
+//             <MenuIcon />
 //           </IconButton>
-          
+
 //           {/* <Link href="/" passHref> */}
 //             <Image width={160} height={50}  src={Logo} />
 //           {/* </Link> */}
@@ -496,7 +268,7 @@ export default SteperNav;
 //                   my: 2,
 //                   color: "inherit",
 //                   display: "block",
-      
+
 //                 }}
 //               >
 //                 <Link  style={{

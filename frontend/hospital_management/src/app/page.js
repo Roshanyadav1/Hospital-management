@@ -19,15 +19,17 @@ function page() {
   
   return (
     <div>
-      {/* <SteperNav />
-      <Grid container item padding={3} >
-        <FixedContainer />
-      </Grid>
+     <SteperNav /> 
+       <Grid container item padding={3} >
+         <FixedContainer />
+       </Grid>
+       <Cards/>
+       <PatientPage />
+       <Doctor/>
+       
+       <Footer/> 
       
-      <Doctor/>
-      <Footer/> */}
-      {/* <PatientPage /> */}
-      <DoctorPage />
+      {/* <DoctorPage /> */}
     </div>
   )
 }
