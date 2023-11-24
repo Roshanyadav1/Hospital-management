@@ -11,5 +11,5 @@ class AppointmentSerializer(serializers.ModelSerializer):
 class AppointmentAddSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
-        exclude = ('patient', 'doctor', 'disease', )
+        exclude = ('patient', 'disease' )
         

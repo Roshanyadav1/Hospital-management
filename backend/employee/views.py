@@ -84,6 +84,7 @@ class EmployeeAdd(GenericAPIView):
 class EmployeeView(ListAPIView):
     queryset = Employee.objects.all().order_by('created_at')
     serializer_class = EmployeeSerializer
+    filterset_fields = ['employee_role',]
     pagination_class  = CustomPagination
     filter_backends = [SearchFilter, CustomOrderingFilter]
     search_fields = ['employee_name', 'employee_role']
