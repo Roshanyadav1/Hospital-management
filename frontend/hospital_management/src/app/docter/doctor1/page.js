@@ -13,7 +13,7 @@ function DoctorCard() {
     <Container maxWidth="lg" p={2}>
       <Grid container direction='column' Spacing={4} >
       <Grid container 
-        boxShadow={3} bgcolor="red" p={3} borderRadius={2}  >
+        boxShadow={3} bgcolor="white" p={3} borderRadius={2}  >
 
         <Grid item >
           <Image priority={true} src="https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg" height={300} width={300} />
