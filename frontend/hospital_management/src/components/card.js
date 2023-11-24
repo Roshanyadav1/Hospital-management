@@ -12,12 +12,12 @@ import Image from 'next/image';
 
 export default function Cards() {
   const glass={
-    position: 'relative',
-  overflow: 'hidden',
-  borderRadius: '16px',
-  background: 'rgba( 245, 231, 231, 0.25)', // Adjust the transparency as needed
-  backdropFilter: 'blur(10px)',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+    background: 'rgba( 19, 41, 61, 0.05 )',
+    boxShadow: '-1px 4px 19px -8px rgba(66, 68, 90, 1)',
+    backdropFilter: 'blur( 3.5px )',
+    webkitBackdropFilter: 'blur( 3.5px )',
+    borderRadius: '10px',
+    border:' 1px solid rgba( 255, 255, 255, 0.18 )',
   }
   return (
     <div>

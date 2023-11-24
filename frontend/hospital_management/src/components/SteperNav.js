@@ -18,9 +18,18 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Logo from '../assest/whiteSga.png'
+import { styled } from '@mui/material/styles';
 import Image from 'next/image';
+import Link from 'next/link';
 const drawerWidth = 240;
 const navItems = ['Doctor', 'Specialities', 'Call Us','Contact Us'];
+
+const StyledLink = styled(Link)(() => ({
+  color:'white',
+  padding: '0.6rem',
+  textDecoration:'none'
+}));
+
 
 function SteperNav(props) {
   const { window } = props;
@@ -73,23 +82,23 @@ function SteperNav(props) {
           <Image width={160} height={50}  src={Logo}/>
           </div>
           
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } , outline:'none' , textDecoration:'none'}}>
 
             
             {/* // if user available give link to go to dashboard  */}
 
     {
-      user && (
-        <Button href="/dashboard" sx={{ color: '#fff' }}>
+     !user && (
+        <StyledLink href="/dashboard" sx={{ color: '#fff' }}>
           Dashboard
-        </Button>
+        </StyledLink>
       )
     }
 
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
+              <StyledLink  href={''} key={item} sx={{ color: '#fff' }}>
                 {item}
-              </Button>
+              </StyledLink>
             ))}
             {
             user && (<>
@@ -100,9 +109,9 @@ function SteperNav(props) {
           }
           {
             !user && (
-              <Button href="/api/auth/login" sx={{ color: '#fff' }}>
+              <StyledLink href="/api/auth/login" sx={{ color: '#fff' }}>
                     Login
-              </Button>
+              </StyledLink>
             
             ) 
           }

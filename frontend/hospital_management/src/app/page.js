@@ -11,12 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 // for the patient page , the patient page will be the main page for the patient
 
 function page() {
-const one={
-  backgroundColor:"#2CD9C51A"
-}
   return (
-    
-    <div style={one}>
+    <div>
        
       <SteperNav />
       <Grid container item padding={3} >
