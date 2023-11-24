@@ -10,8 +10,8 @@ import 'react-toastify/dist/ReactToastify.css'
 const inter = Inter({ subsets: ["latin"] });
 const theme = createTheme(themeOptions);
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
+   return (
+      <html lang='en'>
          <UserProvider>
          <ToastContainer
                position={'top-right'}
@@ -32,6 +32,6 @@ export default function RootLayout({ children }) {
           </ThemeProvider>
         </CustomProvider>
          </UserProvider>
-     </html>
-  );
+      </html>
+   )
 }

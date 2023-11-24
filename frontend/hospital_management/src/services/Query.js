@@ -14,7 +14,6 @@ export const queries = createApi({
       //    return headers
       // },
    }),
-
    keepUnusedDataFor: 30,
    refetchOnReconnect: true,
    refetchOnFocus: true,
@@ -41,14 +40,6 @@ export const queries = createApi({
             method:'POST',
             body:payload
          }),
-         async onQueryStarted({ queryFulfilled }) {
-            try {
-               await queryFulfilled
-               toast.success('Employee Added Successfully')
-            } catch (e) {
-               toast.error(JSON.stringify(e))
-            }
-         }
       }),
       addDiseases: build.mutation({
          query:(payload)=>({
@@ -56,14 +47,6 @@ export const queries = createApi({
             method:'POST',
             body:payload
          }),
-         async onQueryStarted({ queryFulfilled }) {
-            try {
-               await queryFulfilled
-               toast.success('Disease Added Successfully')
-            } catch (e) {
-               toast.error(JSON.stringify(e))
-            }
-         }
       }),
       getEmployee: build.query({
          query: () => ({
@@ -73,10 +56,10 @@ export const queries = createApi({
       }),
    }),
 })
-
 export const {
    useRegisterHospitalMutation,
    useAddEmployeeMutation,
    useAddDiseasesMutation,
    useGetEmployeeQuery
 } = queries
+

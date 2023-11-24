@@ -64,7 +64,7 @@ export const themeOptions = {
         },
         h5: {
             fontSize: '1.2rem',
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
         },
         h6: {
             fontSize: '1rem',
