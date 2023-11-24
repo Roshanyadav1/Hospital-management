@@ -1,5 +1,3 @@
-import { createTheme } from "@mui/material/styles";
-
 export const colors = {
     primary: '#13293D',
     secondary: '#35CFF4',
@@ -42,6 +40,7 @@ export const themeOptions = {
                 },
             },
         },
+        
     },
 
     typography: {

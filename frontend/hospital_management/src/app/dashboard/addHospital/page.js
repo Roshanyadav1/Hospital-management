@@ -144,11 +144,7 @@ const Register = () => {
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-      const result = await registerHospital(values);
-
-      // Log the result to the console
-      console.log('Result of registerHospital mutation:', result);
-      
+       await registerHospital(values);
       resetForm();
 
     } catch (error) {

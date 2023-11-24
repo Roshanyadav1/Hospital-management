@@ -55,7 +55,7 @@ export default function FixedContainer() {
             <Button
               variant="contained"
               sx={{
-                margin: 6,
+                marginTop: 6,
                 backgroundColor: "white",
                 color: "#13293d",
                 padding:'10px',
@@ -67,6 +67,7 @@ export default function FixedContainer() {
             >
               Reach Us
             </Button>
+
           </Grid>
           <Grid
             item
@@ -89,7 +90,7 @@ export default function FixedContainer() {
             <Button
               variant="contained"
               sx={{
-                margin: 7,
+                marginTop: 15 ,
                 backgroundColor: "white",
                 color: "#13293d",
                 padding:'10px',
@@ -125,7 +126,7 @@ export default function FixedContainer() {
             <Button
               variant="contained"
               sx={{
-                margin: 7,
+                marginTop: 9 ,
                 backgroundColor: "white",
                 color: "#13293d",
                 padding:'10px',
@@ -161,7 +162,7 @@ export default function FixedContainer() {
             <Button
               variant="contained"
               sx={{
-                margin: 7,
+                marginTop: 15,
                 backgroundColor: "white",
                 color: "#13293d",
                 padding:'10px',

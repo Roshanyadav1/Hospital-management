@@ -1,11 +1,12 @@
-// import MiniDrawer from '@/components/sidebar';
+"use client"
+import Dashboard from "@/components/Dashboard";
 
-// when admin login then the dashboard will be shown
 function FetchData() {
+
   return (
-    <main>
-      {/* <MiniDrawer/> */}
-    </main>
+    <div >
+      <Dashboard />
+    </div>
   )
 
 }

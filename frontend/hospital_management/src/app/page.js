@@ -12,13 +12,16 @@ import DoctorPage from '@/components/DoctorPage.js'
 
 
 function page() {
- 
- 
+
+
+  // make a funcation that render the galaxy grafix in svg 
+
+  
   return (
     <div>
       {/* <SteperNav />
       <Grid container item padding={3} >
-      <FixedContainer />
+        <FixedContainer />
       </Grid>
       
       <Doctor/>
