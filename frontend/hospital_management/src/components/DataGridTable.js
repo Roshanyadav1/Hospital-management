@@ -1,5 +1,4 @@
 "use client"
-// import { Transcribe, Translate } from '@mui/icons-material';
 import { DataGrid } from '@mui/x-data-grid';
 
 
@@ -61,7 +60,6 @@ const customstyles=`
   }
   .No:hover{
    color: black !important
-  
   }
   
 `
@@ -77,6 +75,7 @@ export default function DataGridTable(props) {
           columns={columns}
           loading={data?.length > 0 ? false : true}
           getRowId={(row) => row?.employee_id}
+          getRowHeight={() => 'auto'}
 
           //only table scroll not the scrreen
           autoHeight={true}
@@ -84,9 +83,9 @@ export default function DataGridTable(props) {
           checkboxSelection={false}
           rowHeight={35}
           sx={{
-             height: 392, 
-            width: '100%',
-            flexGrow: 1,
+            height: 392, 
+            display:'flex',
+            width:'100%',
           }}
           columnHeaderHeight={40}
           disableColumnMenu 

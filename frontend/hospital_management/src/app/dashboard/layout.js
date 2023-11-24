@@ -27,6 +27,7 @@ import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import { Container } from "@mui/system";
 
 const drawerWidth = 240;
 
@@ -219,10 +220,17 @@ function Layout({children}) {
         </div>
 
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1 , padding:1}}>
+      <Box component="main" sx={{ 
+        width: { sm: `calc(100% - ${drawerWidth}px)` } , 
+          height:{ 
+           sm: `calc(100vh - 64px)` },
+           flexGrow: 1 ,
+           padding:1
+           }}>
        <Toolbar /> 
+       <Container maxWidth="100%">
           {children}
-        {/* <Footer/> */}
+       </Container>
        </Box> 
     </Box>
   );
