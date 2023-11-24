@@ -9,9 +9,9 @@ function DoctorPage() {
   return (
     <div>
       {/* <Doctor/> */}
-      <SteperNav/>
+      {/* <SteperNav/> */}
       <DoctorCard/>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   )
 }
