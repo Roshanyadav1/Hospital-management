@@ -86,6 +86,12 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      viewAppointment: build.query({
+         query: () => ({
+            url: 'appointment/view',
+            method: 'GET'
+         })
+      })
    }),
 })
 
@@ -95,5 +101,6 @@ export const {
    useAddDiseasesMutation,
    useDeleteEmployeeMutation,
    useGetEmployeeQuery,
-   useGetAllHospitalQuery
+   useGetAllHospitalQuery,
+   useViewAppointmentQuery
 } = queries

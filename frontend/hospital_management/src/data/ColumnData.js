@@ -113,5 +113,27 @@ export const columns = [
   
   ];
 
+
+  export const columns1 = [
+    { field: 'Patient_name', headerName: 'Name',  width: 170, headerClassName:'header',headerAlign: 'center', align:'left', cellClassName: 'column-line',  sortable: false },
+    { field: 'Patient_email', headerName: 'Email', width: 240, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'Patient_number', headerName: 'Phone', width: 170, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'Patient_Address', headerName: 'Address', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    { field: 'Patient_age', headerName: 'Age', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    {
+      field: 'Actions',
+      headerName: 'Actions',
+      width: 120,
+      headerClassName: 'headerlast',
+      cellClassName: 'column-linelast',
+      headerAlign: 'center',
+      sortable: false,
+      renderCell: (params) => (
+       <GetActionButton params={params}/>
+      ),
+    },
+  
+  ];
+
 // how can I find out the particular row's data from this table when i click on the delete button
 
