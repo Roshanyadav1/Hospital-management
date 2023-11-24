@@ -161,7 +161,6 @@ class DiseaseView(APIView):
             response_message = ""
             response_code = ""
             try:
-               
              error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
              response_message = error.error_message
              response_code = error.error_code
@@ -169,7 +168,7 @@ class DiseaseView(APIView):
             except:
                response_message = ResponseMessage.RETRIEVED_SUCCESS
                response_code = status.HTTP_200_OK
-               return Response(
+            return Response(
                 {
                     'status': response_code,
                     'message': "Disese " + response_message,
