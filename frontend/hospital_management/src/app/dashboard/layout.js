@@ -97,6 +97,18 @@ const Drawer = styled(MuiDrawer, {
 }));
 
  
+const INITIAL_FORM_STATE = {
+  employee_name: '',
+  employee_email: '',
+  employee_number: '',
+  employee_password: '',// not available
+  employee_type: '',
+  employee_role: '',
+  employee_status: '',
+  created_by: 'admin',
+  updated_by: 'admin',
+};
+
 function Layout({children}) {
   const pathname = usePathname()
 
@@ -197,7 +209,14 @@ function Layout({children}) {
               {/* Wrap the ListItemButton with Link */}
               <Link style={{
                 textDecoration:'none'
-              }} href={item.path} passHref>
+              }} 
+              prefetch={true}
+              href={{
+                pathname: item.path,
+                
+                query: { ...INITIAL_FORM_STATE },
+              }}
+               >
                 <ListItemButton
                   component="a" 
                   sx={{

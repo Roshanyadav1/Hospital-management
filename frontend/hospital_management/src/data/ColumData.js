@@ -1,14 +1,17 @@
+"use client"
 import { useState } from 'react';
 import { Button,  Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Delete, Create, Visibility } from '@mui/icons-material';
 import { useDeleteEmployeeMutation } from '@/services/Query';
+import { useRouter } from 'next/navigation';
+
 
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 
 
 const GetActionButton =(row)=>{
   const [deleteEmployee] = useDeleteEmployeeMutation()
-
+  const router = useRouter()
   const [selectedRow, setSelectedRow] = useState(null);
   const [openModal, setOpenModal] = useState(false);
    
@@ -21,6 +24,13 @@ const GetActionButton =(row)=>{
 
 
   const handleEdit = () => {
+    setSelectedRow(row.params.row);
+    // router.push({
+    //   pathname: '/dashboard/addEmployee/'+row.params.row.employee_id,
+    //   query: { id: row.params.row  .employee_id },
+    // });
+    router.push(`/dashboard/addEmployee/${row.params.row.employee_id}`)
+    
     // Handle edit logic here
     console.log('Edit:', row);
   };

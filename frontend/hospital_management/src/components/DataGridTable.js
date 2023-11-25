@@ -15,24 +15,20 @@ const customstyles=`
     color: white;
     border-right: 3px solid #89949E !important; 
     border-bottom: 3px solid #89949E !important;
-    font-size: .8rem;
+    font-size: 0.8rem;
     font-family: Verdana
-
   }
   .headerlast{
     background-color: #006494 !important;
     color: white;
     border-radius:'10px !important';
     border-bottom: 3px solid #89949E !important;
-    font-size: .8rem;
+    font-size: 0.8rem;
     font-family: Verdana;
   }
   .column-line {
     border-right: 1px solid #89949E !important; // Adjust the color as needed
     padding-right: 8px; // Add padding to separate the text from the line
-  }
-  .css-jv5jpm-MuiDataGrid-root .MuiDataGrid-columnSeparator{
-    display: none;
   }
   .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
     display: none;
@@ -58,7 +54,12 @@ const customstyles=`
   .No:hover{
    color: black !important
   }
-  
+  .css-jv5jpm-MuiDataGrid-root .MuiDataGrid-columnSeparator{
+    display: none !important;
+  }
+  .css-tdqsw7-MuiDataGrid-root .MuiDataGrid-iconSeparator{
+    display: none !important;
+  }
 `
 
 export default function DataGridTable(props) {
