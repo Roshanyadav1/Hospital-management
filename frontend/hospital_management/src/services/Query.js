@@ -73,6 +73,15 @@ export const queries = createApi({
          }),
          invalidatesTags :['EMP']
       }),
+      deleteEmployee: build.mutation({
+         query: (value) => ({
+            url: 'employee/delete/'+value+"/",
+            method: 'DELETE',
+            // body:value
+         }),
+         invalidatesTags :['EMP']
+      }),
+
       getEmployee: build.query({
          query: () => ({
             url: 'employee/view/',

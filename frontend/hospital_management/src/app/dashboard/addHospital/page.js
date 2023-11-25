@@ -1,5 +1,5 @@
 "use client"
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Formik, Form } from 'formik';
 // import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
@@ -12,17 +12,14 @@ import FORM_VALIDATION from './Components/FormValidation/formValidation';
 import { Box,  } from '@mui/material';
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme';
-// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-// import Image from 'next/image';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Image from 'next/image';
 import CustomAutocomplete from './Components/Autocomplete';
 import { useRegisterHospitalMutation } from '@/services/Query';
-// import * as Yup from 'yup'
-
-
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  maxWidth: '750px',
+  maxWidth: '950px',
   boxShadow: theme.shadows[3],
   backgroundColor: colors.background,
   borderRadius: '20px',
@@ -62,12 +59,12 @@ const StyledFormWrapper = styled('div')({
 });
 
 // for preview image 
-// const StyledImageWrapper = styled(Image)(({ height, width }) => ({
-//   height: height || '100px',
-//   width: width || '100px',
-//   borderRadius: 10,
-//   border: `2px solid ${colors.secondary}`,
-// }));
+const StyledImageWrapper = styled(Image)(({ height, width }) => ({
+  height: height || '100px',
+  width: width || '100px',
+  borderRadius: 10,
+  border: `2px solid ${colors.secondary}`,
+}));
 
 // for the upload box and hover to show the animation of the upload icon
 const StyledBox = styled(Box)(() => ({
@@ -92,7 +89,7 @@ const INITIAL_FORM_STATE = {
   hospital_type: '',
   hospital_category: '',
   hospital_status: true,
-  // logo: null,
+  hospital_logo: "",
   hospital_owner_name: '',
   hospital_owner_phone: '',
   hospital_owner_email: '',
@@ -112,41 +109,38 @@ const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata
 const Register = () => {
   // here is the registerHospital api  Mutation
   const [registerHospital] = useRegisterHospitalMutation()
+  // const [file, setfile] = useState(null);
+ 
 
-  // const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);// actual image
+  const [viewimage, setImage] = useState(null);// viewable image
 
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setPreviewImage(imageUrl);
-  //   } else {
-  //     setPreviewImage(null);
-  //   }
-  // };
+  const handleImageChange = (event) => {
+    const prev = event.target.files[0];
+    if (prev) {
+      const imageUrl = URL.createObjectURL(prev);
+      setImage(imageUrl);
+      setPreviewImage(prev);
+    } else {
+      setPreviewImage(null);
+    }
+  };
 
-  // const handleChooseLogoClick = () => {
-  //   let fileInput = document.createElement('input');
-  //   fileInput.type = 'file';
-  //   fileInput.accept = 'image/*';
-  //   fileInput.onchange = handleImageChange;
-  //   fileInput.click();
-  // };
+  const handleChooseLogoClick = () => {
+    let fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = handleImageChange;
+    fileInput.click();
 
-  // const FORM_VALIDATION = Yup.object().shape({
-  //   hospitalCity: Yup.string().required('City is required'),
-  //   // Add other Yup validations for other fields if needed
-  // });
-
-  // onsubmit={async(initialValues) => {
-  //   const result = await registerHospital(values);
-  // }}
-
-  const handleRegister = async (values,{resetForm}) => {
+  };
+const handleRegister = async (values,{resetForm}) => {
     try {
-       await registerHospital(values);
-      resetForm();
-
+        let res = await handleSubmit()
+        await registerHospital({...values , hospital_logo:res.imageUrl});
+        setPreviewImage('')
+        setImage('');
+        resetForm();
     } catch (error) {
       // Handle error
       // console.error('Error submitting form:', error);
@@ -154,14 +148,33 @@ const Register = () => {
 
   }
 
+ const handleSubmit = async () =>{
+    console.log('here ' , previewImage)
+    if(!previewImage) return;
+    const formdata = new FormData();
+    formdata.append('file',previewImage)
+
+    try{
+      const response = await fetch('/api/s3-upload', {
+        method: 'POST',
+        body: formdata,
+      });
+      const data = await response.json();
+      return data;
+    }
+    catch(error){
+      console.log(error);
+    }
+ }
+
   return (
     <StyledFormWrapper>
       <StyledPaper elevation={3}>
 
-        <StyledTypography variant="h4" >
+        <StyledTypography variant="h5" style={{textAlign:'center'}}>
           Registration Form
         </StyledTypography>
-        <Typography variant="h6">
+        <Typography variant="h6" style={{marginBottom:'1rem'}}>
           General Information
         </Typography>
         <Formik
@@ -317,12 +330,12 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  {/* <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                   <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital's logo
                   </Typography>
                   <Box onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px', margin: '1rem 0rem' }}>
                     {previewImage ? (
-                      <StyledImageWrapper width={150} height={150} onClick={handleChooseLogoClick} src={previewImage} alt="logo" />
+                      <StyledImageWrapper width={150} height={150} onClick={handleChooseLogoClick} src={viewimage} alt="logo" />
                     ) : (
                       <StyledBox item display='flex' justifyContent='center' alignItems='center' >
                         <Grid display='block'>
@@ -333,7 +346,7 @@ const Register = () => {
                         </Grid>
                       </StyledBox>
                     )}
-                  </Box> */}
+                  </Box> 
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
@@ -342,10 +355,10 @@ const Register = () => {
 
                 <Grid item xs={12} sm={6}>
                   <Button
+                  container justify="center" alignItems="flex-end"
                     variant="contained"
                     color="primary"
                     type="submit"
-
                   >
                     Submit
                   </Button>
@@ -358,10 +371,10 @@ const Register = () => {
       </StyledPaper>
     </StyledFormWrapper>
 
-// provide the reset function as when the submit button is clicked means when it is submitted then the form should be reset and all fields should be empty if the fields were correctly filled
+
   );
 };
 
 export default Register;
 
-
+// how to send the url of the selected image to the backend as it is store in the s3 bucket with the help of the above code, provide the particular part of the code that sendds the url of the selected logo image to backend
