@@ -97,6 +97,12 @@ function DoctorCard() {
         </Grid>
                            {/* 2ND COLUMN */}
         <Grid bgcolor={"#fff"}  item xs={6}>
+            
+        <Typography display={"flex"} gutterBottom variant="h4" margin={2}  component="div">
+              Schedule Appointment
+            </Typography>
+
+
           <Grid bgcolor={"#fff"} borderRadius={3} boxShadow={3} margin={2} p={0.1} >
             <Typography display={"flex"} gutterBottom variant="h6" margin={2}   component="div">
               <LightModeIcon sx={{ marginRight: 1 }} />
