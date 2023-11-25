@@ -82,10 +82,17 @@ export const queries = createApi({
       }),
       getAllHospital : build.query({
          query: () => ({
-            url: 'hospital/view/',
+            url: ' ',
             method: 'GET',
          }),
       }),
+     getSpecialistDoctor : build.query({
+      query : (prop)=> ({
+         url:`doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
+         method:'GET',
+      }),
+     }),
+
    }),
 })
 
@@ -95,5 +102,6 @@ export const {
    useAddDiseasesMutation,
    useDeleteEmployeeMutation,
    useGetEmployeeQuery,
-   useGetAllHospitalQuery
+   useGetAllHospitalQuery,
+   useGetSpecialistDoctorQuery,
 } = queries

@@ -23,10 +23,10 @@ function page() {
       <Grid container item padding={3} >
         <FixedContainer />
       </Grid>
-      
+      <Cards />
+       <PatientPage />
       <Doctor/>
-      <Footer/> */}
-      {/* <PatientPage /> */}
+      <Footer/>  */}
       <DoctorPage />
     </div>
   )
