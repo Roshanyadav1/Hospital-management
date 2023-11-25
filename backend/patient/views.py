@@ -36,6 +36,14 @@ class UserRegister(GenericAPIView):
 class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
 
+    def options(self, request, *args, **kwargs):
+        allowed_methods = ['GET', 'POST', 'PUT', 'DELETE']
+        response = Response({
+            'message': 'This endpoint supports:',
+            'allowed_methods': allowed_methods
+        })
+        return response
+
     def post(self, request, format=None):
         if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() >= 1:
             response_message = ''

@@ -12,6 +12,7 @@ from error.models import Error
 from employee.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
+from django_filters.rest_framework import DjangoFilterBackend
 from doctor.models import Doctor
 import json
 
@@ -83,10 +84,10 @@ class EmployeeAdd(GenericAPIView):
     
 class EmployeeView(ListAPIView):
     queryset = Employee.objects.all().order_by('created_at')
+    filter_backends = [SearchFilter, CustomOrderingFilter, DjangoFilterBackend]
     serializer_class = EmployeeSerializer
     filterset_fields = ['employee_role',]
     pagination_class  = CustomPagination
-    filter_backends = [SearchFilter, CustomOrderingFilter]
     search_fields = ['employee_name', 'employee_role']
     
     def list(self, request, *args, **kwargs):

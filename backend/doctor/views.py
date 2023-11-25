@@ -10,6 +10,7 @@ from error.models import Error
 from doctor.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
+from django_filters.rest_framework import DjangoFilterBackend
 
 class DoctorRegister(GenericAPIView):
     serializer_class = DoctorSerializer
@@ -38,9 +39,9 @@ class DoctorRegister(GenericAPIView):
 class DoctorView(ListAPIView):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
+    filter_backends = [SearchFilter, CustomOrderingFilter, DjangoFilterBackend]
     filterset_fields = ['disease_specialist','day']
     pagination_class  = CustomPagination
-    filter_backends = [SearchFilter, CustomOrderingFilter]
     search_fields = ['disease_specialist', 'day']
     
     def list(self, request, *args, **kwargs):
