@@ -48,15 +48,25 @@ const INITIAL_FORM_STATE = {
 
 
 const EmpRegister = () => {
-  const searchParam = useSearchParams()
+  const searchParam = useSearchParams()         
   
- let formatedInitialState = {}
-  for(const [name, value] of searchParam.entries()) {
-    console.log(name, value , "ppppppppppppppppp")
-    if(INITIAL_FORM_STATE.hasOwnProperty(name)) {
-      formatedInitialState[name] = value
+  let formatedInitialState = {}
+    for(const [name] of searchParam.entries()) {
+        formatedInitialState = name
+       break;
     }
+
+    console.log('formatedInitialState',formatedInitialState)
+
+  let originalFormate = {}
+  let parsed = JSON.parse(formatedInitialState)
+  for(const [name , value] of Object.entries(parsed)) {
+    originalFormate[name] = value
   }
+
+
+  console.log(originalFormate ,"originalFormate")
+
 
   const [addemployee] = useAddEmployeeMutation()
 
@@ -77,7 +87,7 @@ const EmpRegister = () => {
         </Typography>
 
         <AddEmployee 
-          initialState={formatedInitialState}
+          initialState={originalFormate}
           validationSchema={Employee_Validation}
           handleRegister={handleRegister}
         />

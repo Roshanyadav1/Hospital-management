@@ -178,7 +178,7 @@ function Layout({children}) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={false} elevation={0.1}>
+      <AppBar position="fixed" open={false} elevation={1}>
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
