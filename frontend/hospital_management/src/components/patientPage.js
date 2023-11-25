@@ -16,14 +16,14 @@ export default function PatientPage() {
         <Typography variant='h3' align='center' style={{ marginTop: "50px" }}>
         Diseases
         </Typography>
-        <Grid container spacing={6} style={{ marginTop: "20px" }}>
+        <Grid container spacing={4} style={{ marginTop: "20px" }}>
           {patient.map((result,index) =>(
              <Grid item xs={6} md={3} sm={4} key={index}>
               {/* here the redirection url is not defined when the page is complete than it work */}
               <Link style={{textDecoration:'none'}} href="/ShowDisease">
-             <Card sx={{ maxWidth: 300 , borderRadius:3}}>
+             <Card sx={{ maxWidth: 300, borderRadius:3}}>
              <CardActionArea sx={{textAlign:"center"}}>
-             <Image height={200} width={250} src={result.image} alt="image" />
+             <Image height={200} width={300} src={result.image} alt="image" />
                  {/* <CardMedia */}
                   {/* //  sx={{ height: 140 }} */}
                   {/* //  component="img" */}

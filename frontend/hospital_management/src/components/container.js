@@ -15,8 +15,8 @@ export default function FixedContainer() {
 
       <Container
         sx={{
-          width: "100%",
-          height:'20%',
+          width: "150%",
+          height:'12%',
           marginTop:'2rem',
          textAlign: "center",
         }}
@@ -41,16 +41,16 @@ export default function FixedContainer() {
             <Typography variant="h6" sx={{ padding: 3 }}>
               Book an Appoinment{" "}
             </Typography>
-            <Typography variant="body" sx={{ padding: 3}}>
-              +9876543467 <br></br><br></br>{" "}
-            </Typography>
+             <Typography variant="body" sx={{ padding: 3}}>
+             +9876543467 <br></br><br></br>
+             </Typography>
             <Typography variant="body" sx={{ padding: 1 }}>
               OPD TIMING <br></br>{" "}
             </Typography>
             <Typography variant="body2" sx={{ padding: 1 }}>
               10:00AM to 12:30PM
             </Typography>
-            <Typography variant="body2">10:00AM to 12:30PM</Typography>
+            <Typography variant="body2">05:00PM to 07:00PM</Typography>
 
             <Button
               variant="contained"

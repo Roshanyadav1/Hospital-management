@@ -30,12 +30,12 @@ export default function Doctor() {
             <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
                Our Doctors
             </Typography>
-            <Grid container spacing={5} style={{ marginTop: '20px' }}>
+            <Grid container spacing={5} style={{ marginTop: '20px',padding:"1rem" }}>
                {doctorwelcome.map((result, index) => (
                   <Grid item key={index} xs={12} md={4} sm={4}>
                      <Card sx={{ maxWidth: 345 }} style={glass}>
                         <CardActionArea  sx={{textAlign:"center"}}>
-                        <Image height={200} width={200} src={result.image} alt="image" />
+                        <Image height={200} width={250} src={result.image} alt="image" />
                            {/* <CardMedia */}
                               {/* // sx={{  width: "15rem", height: "15rem",display:"flex",justifyContent:"center" }} */}
                               {/* // image={result.image} */}
