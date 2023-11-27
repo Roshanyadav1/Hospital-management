@@ -15,6 +15,26 @@ from hospital_management.responses import ResponseMessage
 from django_filters.rest_framework import DjangoFilterBackend
 from doctor.models import Doctor
 import json
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
+from hospital_management.email import send_verification_email
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'access': str(refresh.access_token),
+    }
+
+class UserRegister(GenericAPIView):
+    serializer_class = EmployeeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def user_verification(user):
+        verification_token = get_tokens_for_user(user)
+        user_id = str(user.user_id)
+        user_email = user.user_email
+        url = 'http://localhost:3000/api/user/verification?user_id=' + user_id + '&token=' + verification_token['access']
+        send_verification_email(url, user_email)
 
 class EmployeeAdd(GenericAPIView):
     serializer_class = EmployeeSerializer
@@ -65,6 +85,7 @@ class EmployeeAdd(GenericAPIView):
 
             user = User.objects.create_user(
                 member, user_name, user_email, user_role, user_password)
+            UserRegister.user_verification(user)
             response_message = ""
             response_code=""
             try:
