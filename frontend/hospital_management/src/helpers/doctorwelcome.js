@@ -1,37 +1,37 @@
 export const doctorwelcome = [
     {
       name: "Dr. Sumit Jain",
-      image: "https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg",
+      image: "https://img.freepik.com/premium-photo/covid-19-coronavirus-outbreak-healthcare-workers-pandemic-concept-middle-aged-doctor-white-coat-cross-arms-chest-ready-help-patients-prescribe-medication-smiling-cheerful_1258-61179.jpg?w=1060",
       specialization: "DrNB (Padiatric Cardiology)",
       category: "Paediatric Cardiology",
     },
     {
       name: "Dr. SK Bhandari",
-      image: "https://www.pngitem.com/pimgs/m/194-1943739_indian-doctor-hd-png-download.png",
+      image: "https://img.freepik.com/free-photo/attractive-young-male-nutriologist-lab-coat-smiling-against-white-background_662251-2960.jpg",
       specialization: "MBBS , MD , DHC (London 1980 )",
       category: "Paediatrics",
     },
     {
       name: "Dr. Sunil Athale",
-      image: "https://t4.ftcdn.net/jpg/03/20/52/31/360_F_320523164_tx7Rdd7I2XDTvvKfz2oRuRpKOPE5z0ni.jpg",
+      image: "https://img.freepik.com/premium-photo/covid-19-coronavirus-outbreak-healthcare-workers-pandemic-concept_1258-19738.jpg",
       specialization: "MD (Medicine), DM (Neurology)",
       category: "Neurology",
     },
     {
       name: "Dr. Surbhi Tiwari verma",
-      image: "https://media.istockphoto.com/id/1473337705/photo/cheerful-female-doctor-in-white-uniform-holding-clipboard-stock-photo.jpg?s=612x612&w=0&k=20&c=VV0Jw6ipf7sNaTMdwlFtlAGqgU1OFBWe1IaxCsaGtBo=",
+      image: "https://img.freepik.com/free-photo/female-doctor-lab-coat-white-isolated-confident-smile_343596-6556.jpg?w=1060&t=st=1701070784~exp=1701071384~hmac=8e808f4891e134c4205642be39ce51b9b2d7d41681e4bda3b17c68eee075c54f",
       specialization: "BDS (MUHS Nasik University)",
       category: "Dental",
     },
     {
       name: "Dr. Sushmita Mukherjee",
-      image: "https://getwallpapers.com/wallpaper/full/a/d/9/302389.jpg",
+      image:"https://img.freepik.com/free-photo/portrait-smiling-young-woman-doctor-healthcare-medical-worker-pointing-fingers-left-showing-clini_1258-88108.jpg?w=1060&t=st=1701071063~exp=1701071663~hmac=f6840ed2f1123c13ef494b560488ec34607407dc355805faa7edd8c6cf6edb7b",
       specialization: "Gynaecology & obstetrics, IVF and ,Laparoscopy",
       category: null,
     },
     {
       name: "Dr. Ak Jinsiwale",
-      image: "https://www.stockvault.net/data/2015/09/01/177580/preview16.jpg",
+      image: "https://img.freepik.com/free-photo/portrait-successful-mid-adult-doctor-with-crossed-arms_1262-12865.jpg?w=1060&t=st=1701071995~exp=1701072595~hmac=9f401465a1c4c147c7a84c92dd5ce86c914afec935dfdd8f276128026b9ef504",
       specialization: "MBBS, MS (Ortho), Dip M.V.S",
       category: "Orthopedics",
     },

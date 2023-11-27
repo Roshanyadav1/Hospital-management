@@ -26,16 +26,17 @@ export default function Doctor() {
 
    return (
       <div>
+         
          <Container maxWidth='lg'>
             <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
                Our Doctors
             </Typography>
-            <Grid container spacing={5} style={{ marginTop: '20px',padding:"1rem" }}>
+            <Grid container spacing={4} marginY={4} >
                {doctorwelcome.map((result, index) => (
-                  <Grid item key={index} xs={12} md={4} sm={4}>
+                  <Grid item key={index} sx={{minWidth:260}} xs={12} md={4} sm={6}>
                      <Card sx={{ maxWidth: 345 }} style={glass}>
-                        <CardActionArea  sx={{textAlign:"center"}}>
-                        <Image height={200} width={250} src={result.image} alt="image" />
+                        <CardActionArea>
+                        <Image height={250} width={350}  src={result.image} alt="image" />
                            {/* <CardMedia */}
                               {/* // sx={{  width: "15rem", height: "15rem",display:"flex",justifyContent:"center" }} */}
                               {/* // image={result.image} */}
@@ -57,8 +58,8 @@ export default function Doctor() {
                            </CardContent>
                            </CardActionArea>
                            <CardActions>
-                              <Button onClick={showWarningToast} size='large'>
-                                 Learn More
+                              <Button onClick={showWarningToast} size='small'>
+                                 Book Appointment
                               </Button>
                            </CardActions>
                         
