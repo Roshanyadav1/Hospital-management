@@ -121,12 +121,12 @@ class UserVerificationView(APIView):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, format=None):
-        request.GET.headers.setdefault('Content-Type', 'application/json')
-        token = request.GET.get('token')
-        user_id = request.GET.get('user_id')
-        print(token, user_id)
-        serializer = UserProfileSerializer(request.user)
+    def post(self, request, format=None):
+        # request.GET.headers.setdefault('Content-Type', 'application/json')
+        # token = request.GET.get('token')
+        # user_id = request.GET.get('user_id')
+        # print(token, user_id)
+        # serializer = UserProfileSerializer(request.user)
         return Response(
             {
                 'status': status.HTTP_200_OK,
