@@ -9,13 +9,7 @@ class Doctor(models.Model):
     disease_specialist = models.CharField(max_length = 255)
     doctor_type = models.CharField(max_length = 255)
     times = models.TextField(blank=True, null=True)
-    day = models.CharField(max_length=255, choices=(('Monday', 'Monday'),
-                                                    ('Tuesday', 'Tuesday'),
-                                                    ('Wednesday', 'Wednesday'),
-                                                    ('Thursday', 'Thursday'),
-                                                    ('Friday', 'Friday'),
-                                                    ('Saturday', 'Saturday'),
-                                                    ('Sunday', 'Sunday'),))
+    day = models.TextField(blank=True, null=True)
     per_patient_time = models.TimeField()
     status = models.CharField(max_length=255)
     # doctor_time_schedule = models.DateTimeField()

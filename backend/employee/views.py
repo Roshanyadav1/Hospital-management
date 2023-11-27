@@ -71,13 +71,14 @@ class EmployeeAdd(GenericAPIView):
                     'disease_specialist': 'null',
                     'per_patient_time': '00:00:00',
                     'status': 'null',
-                    'day': 'Monday',
-                    # "times": json.dumps([['09:00:00', '13:30:00'], ['17:45:00', '13:30:00']])
+                    'day': json.dumps(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
+                    "times": json.dumps([['09:00:00', '12:00:00'], ['02:00:00', '05:00:00'], ['07:00:00', '10:00:00']])
                 }
                 doctor_serializer = DoctorSerializer(data = doctor_data)
                 doctor_serializer.is_valid(raise_exception = True)
                 doctor = doctor_serializer.save()
-            member = doctor.doctor_id
+                member = doctor.doctor_id
+            member = employee.employee_id
             user_name = employee.employee_name
             user_email = request.data.get('employee_email')
             user_password = request.data.get('employee_password')
