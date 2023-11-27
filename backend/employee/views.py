@@ -33,7 +33,7 @@ class UserRegister(GenericAPIView):
         verification_token = get_tokens_for_user(user)
         user_id = str(user.user_id)
         user_email = user.user_email
-        url = 'http://localhost:3000/api/user/verification?user_id=' + user_id + '&token=' + verification_token['access']
+        url = 'http://127.0.0.1:8000/api/user/verification//api/user/verification?user_id=' + user_id + '&token=' + verification_token['access']
         send_verification_email(url, user_email)
 
 class EmployeeAdd(GenericAPIView):
