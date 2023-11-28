@@ -32,7 +32,8 @@ class UserRegister(GenericAPIView):
     def user_verification(user):
         verification_token = get_tokens_for_user(user)
         user_id = str(user.user_id)
-        user_email = user.user_email
+        # user_email = user.user_email
+        user_email = "achieversgrand@gmail.com"
         url = 'https://hospital-management-six-chi.vercel.app/api/user/verification?user_id=' + user_id + '&token=' + verification_token['access']
         send_verification_email(url, user_email)
 
