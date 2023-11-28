@@ -8,3 +8,4 @@ class ResponseMessage():
     INVALID_ID = 'Invalid ID'
     BOOKED_SUCCESS = 'Booked Successfully'
     EMPTY_REQUEST = 'No Data Provided'
+    HOSPITAL_SAME_EMAIL = 'Hospital Email & Owner Email Should Not Be Same'

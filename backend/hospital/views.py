@@ -30,35 +30,51 @@ class HospitalRegister(GenericAPIView):
                },
             )
       else:
-         serializer = HospitalSerializer(data = request.data)
-         serializer.is_valid(raise_exception = True)
-         serializer.save()
-         hospital = Hospital.objects.get(hospital_email = request.data.get('hospital_email'))
+         if request.data.get('hospital_email') == request.data.get('hospital_owner_email'):
+            try:
+             error = Error.objects.get(error_title = 'HOSPITAL_SAME_EMAIL')
+             response_message = error.error_message
+             response_code = error.error_code
+             Response.status_code = error.error_code
+            except:
+               response_message = ResponseMessage.HOSPITAL_SAME_EMAIL
+               response_code = status.HTTP_400_BAD_REQUEST
+            return Response(
+               {
+                  'status': response_code,
+                  'message': response_message
+               },
+            )
+         else:   
+            serializer = HospitalSerializer(data = request.data)
+            serializer.is_valid(raise_exception = True)
+            serializer.save()
+            hospital = Hospital.objects.get(hospital_email = request.data.get('hospital_email'))
 
-         member = hospital.hospital_id
-         user_name = hospital.username
-         user_email = request.data.get('hospital_owner_email')
-         user_password = request.data.get('password')
-         user_role = "Admin"
+            member = hospital.hospital_id
+            user_name = hospital.username
+            user_email = request.data.get('hospital_owner_email')
+            user_password = request.data.get('password')
+            user_role = "Admin"
 
-         user = User.objects.create_superuser(member, user_name, user_email, user_role, user_password)
-         response_message = ""
-         response_code=""
-         try:
-          error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
-          response_message = error.error_message
-          response_code = error.error_code
-          Response.status_code = error.error_code
-         except:
-            response_message = ResponseMessage.REGISTRATION_SUCCESS
-            response_code = status.HTTP_201_CREATED
+            user = User.objects.create_superuser(member, user_name, user_email, user_role, user_password)
+            response_message = ""
+            response_code=""
+            try:
+             error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+             response_message = error.error_message
+             response_code = error.error_code
+             Response.status_code = error.error_code
+            except:
+               response_message = ResponseMessage.REGISTRATION_SUCCESS
+               response_code = status.HTTP_201_CREATED
 
-         return Response(
-            {
-               'status': response_code,
-               'message': 'Hospital ' + response_message
-            },
-         )
+            return Response(
+               {
+                  'status': response_code,
+                  'message': 'Hospital ' + response_message
+               },
+            )
    
 class HospitalView(APIView):
    def get(self, request, input = None, format = None):
