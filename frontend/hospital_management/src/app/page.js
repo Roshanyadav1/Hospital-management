@@ -3,9 +3,10 @@
 import Footer from '@/components/Footer'
 import SteperNav from '@/components/SteperNav'
 import FixedContainer from '@/components/container'
-import { Grid } from '@mui/material'
-import Cards from '@/components/card'
+import { Grid } from '@mui/material' 
 import Doctor from '@/components/Doctor'
+import Cards from '@/components/Card'
+import SwipeableTextMobileStepper from '@/components/Steper'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // for the patient page , the patient page will be the main page for the patient
@@ -19,6 +20,7 @@ const one={
     <div style={one}>
        
       <SteperNav />
+      <SwipeableTextMobileStepper/>
       <Grid container item padding={3} >
         <FixedContainer />
       </Grid>
