@@ -11,6 +11,7 @@ from doctor.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
 from django_filters.rest_framework import DjangoFilterBackend
+from leave.models import Leave
 
 class DoctorRegister(GenericAPIView):
     serializer_class = DoctorSerializer
@@ -45,7 +46,6 @@ class DoctorView(ListAPIView):
     search_fields = ['disease_specialist', 'day']
     
     def list(self, request, *args, **kwargs):
-         
          response = super().list(request, *args, **kwargs)
          if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
@@ -74,6 +74,16 @@ class DoctorViewById(APIView):
         if id is not None:
             if Doctor.objects.filter(doctor_id = id).count() >= 1:
                 doctor = Doctor.objects.get(doctor_id = id)
+                inputDate = request.GET.get('date')
+                leave = Leave.objects.get(doctor = id)
+                
+                if inputDate is not None:
+                    if str(leave.date) == str(inputDate):
+                       doctor.status = "Unvailable"
+                       print(doctor.status)
+                    else:
+                       doctor.status = "Available"
+                
                 serializer = DoctorSerializer(doctor)
                 response_message = ""
                 response_code = ""

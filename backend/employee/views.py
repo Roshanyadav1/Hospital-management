@@ -65,12 +65,13 @@ class EmployeeAdd(GenericAPIView):
             doctor = None
             employee = Employee.objects.get(
             employee_email=request.data.get('employee_email'))
+            
             if employee.employee_role == 'Doctor':
                 doctor_data = {
                     'employee': employee.employee_id,
                     'doctor_type': employee.employee_type,
                     'disease_specialist': 'null',
-                    'per_patient_time': '00:00:00',
+                    'per_patient_time': '00:30:00',
                     'status': 'null',
                     'day': json.dumps(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
                     "times": json.dumps([['09:00:00', '12:00:00'], ['02:00:00', '05:00:00'], ['07:00:00', '10:00:00']])

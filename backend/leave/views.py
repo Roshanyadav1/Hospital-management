@@ -40,7 +40,7 @@ class LeaveView(ListAPIView):
     pagination_class  = CustomPagination
     
     def list(self, request, *args, **kwargs):
-         
+
          response = super().list(request, *args, **kwargs)
          if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
