@@ -1,207 +1,225 @@
-"use client"
-import { useState } from 'react';
-
-import { Formik, Form } from 'formik';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
-import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
-import DISEASE_VALIDATION from './Components/D_Validation/d_Validation';
+'use client'
+import { useState } from 'react'
+import * as React from 'react'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import Modal from '@mui/material/Modal'
+import { Card } from '@mui/material'
+import { CardActionArea, CardMedia } from '@mui/material'
+import CardActions from "@mui/material/CardActions"
+import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
+import {CardContent} from '@mui/material'
+import { Formik, Form } from 'formik'
+import Paper from '@mui/material/Paper'
+import Grid from '@mui/material/Grid'
+import { styled } from '@mui/material/styles'
+import RadioButtonGroup from './Components/RadioB/RadioButtonGroup'
+import DISEASE_VALIDATION from './Components/D_Validation/d_Validation'
 import Text from './Components/Textfield/Text'
-import { colors } from '@/styles/theme';
-import Divider from '@mui/material/Divider';
+import { colors } from '@/styles/theme'
+import Divider from '@mui/material/Divider'
 // import CustomAutocomplete from './Components/AutocompleteDis';
-import {useAddDiseasesMutation } from '@/services/Query';
- 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
+import { useAddDiseasesMutation } from '@/services/Query'
 
+const VisuallyHiddenInput = styled('input')({
+   clip: 'rect(0 0 0 0)',
+   clipPath: 'inset(50%)',
+   height: 1,
+   overflow: 'hidden',
+   position: 'absolute',
+   bottom: 0,
+   left: 0,
+   whiteSpace: 'nowrap',
+   width: 1,
+})
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-    maxWidth: '950px',
-    boxShadow: theme.shadows[3],
-    backgroundColor: colors.background,
-    borderRadius: '20px',
-    padding: '2rem',
-}));
+  //  maxWidth: '950px',
+   boxShadow: theme.shadows[3],
+   backgroundColor: colors.background,
+   borderRadius: '20px',
+   padding: '2rem',
+   width:"600",
+}))
 
 //for the heading
 const StyledTypography = styled(Typography)(() => ({
-    fontWeight: 'bold',
-    paddingBottom: '1rem',
-    color: colors.primary,
-}));
-
+   fontWeight: 'bold',
+  //  paddingBottom: '1rem',
+   color: colors.primary,
+}))
 
 //for hiding the input image button
 
-
 //for the whole form
 const StyledFormWrapper = styled('div')({
-    minHeight: '100vh',
-    display: 'grid',
-    placeItems: 'center',
-    padding: '2rem',
-    '@media (max-width: 450px)': {
-        padding: '0rem',
-    },
-});
+  marginTop:"-12.5px",
+   display: 'grid',
+   placeItems: 'center',
+   // padding: '2rem',
+   '@media (max-width: 450px)': {
+      padding: '0rem',
+   },
+})
 
 const INITIAL_FORM_STATE = {
-  // disease_id: '',
-  disease_name: '',
-  disease_status: '',
-  created_by: 'admin',
-};
+   // disease_id: '',
+   disease_name: '',
+   disease_status: '',
+   created_by: 'admin',
+}
 
+const page = () => {
+   const [open, setOpen] = React.useState(false)
+   const handleOpen = () => setOpen(true)
+   const handleClose = () => setOpen(false)
 
+   const [addDisease] = useAddDiseasesMutation()
 
-const DRegister = () => {
+   // const [previewImage, setPreviewImage] = useState(null);
 
-  const [addDisease] =  useAddDiseasesMutation()
+  
 
-  // const [previewImage, setPreviewImage] = useState(null);
+   const style = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      padding:0,
+      transform: 'translate(-50%, -50%)',
+      width: 600,
+      height: 325,
+      bgcolor: 'background.paper',
+      boxShadow: 24,
+      borderRadius: '20px',
 
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setPreviewImage(imageUrl);
-  //   } else {
-  //     setPreviewImage(null);
-  //   }
-  // };
+      p: 4,
+   }
 
-  // const handleChooseLogoClick = () => {
-  //   let fileInput = document.createElement('input');
-  //   fileInput.type = 'file';
-  //   fileInput.accept = 'image/*';
-  //   fileInput.onchange = handleImageChange;
-  //   fileInput.click();
-  // };
+   const handleRegister = async (values, { resetForm }) => {
+      try {
+         await addDisease(values)
+         resetForm()
+      } catch (error) {
+         // Handle error
+         // console.error('Error submitting form:', error);
+      }
+   }
 
-  const handleRegister = async (values,{resetForm}) => {
-    try {
-       await addDisease(values);
-      resetForm();
-    } catch (error) {
-      // Handle error
-      // console.error('Error submitting form:', error);
-    }
+   return (
+      <div>
+         <Button onClick={handleOpen}>Add Disease +</Button>
 
-  }
+         <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby='modal-modal-title'
+            aria-describedby='modal-modal-description'
+         >
+            <Box sx={style}>
+               <StyledFormWrapper>
+                  <StyledPaper elevation={3}>
+                     
 
-    return (
-        <StyledFormWrapper>
-            <StyledPaper elevation={3}>
-                <StyledTypography variant="h4">
-                    Disease Registration Form
-                </StyledTypography>
+                     <Formik
+                        initialValues={{
+                           ...INITIAL_FORM_STATE,
+                        }}
+                        validationSchema={DISEASE_VALIDATION}
+                       
+                        onSubmit={handleRegister}
+                     >
+                        {({ errors }) => (
+                           <Form>
+                              {console.log(errors, 'here')}
+                              <Grid container spacing={2}>
+                                 
+                                 <Grid item xs={12}>
+                                    <Text
+                                       name='disease_name'
+                                       label='Disease Name'
+                                       autoComplete=''
+                                       InputProps={{
+                                          style: {
+                                             background: 'white',
+                                             border: 'none',
+                                             borderRadius: '20px',
+                                          },
+                                       }}
+                                    />
+                                 </Grid>
+                                 <Grid item xs={12}>
+                                    <RadioButtonGroup
+                                       label='Disease Status'
+                                       name='disease_status'
+                                       options={[
+                                          { value: 'Active', label: 'Active' },
+                                          { value: 'Inactive', label: 'Inactive' },
+                                       ]}
+                                    />
+                                 </Grid>
+                                 <Divider />
+                                
 
-                <Formik
-                    initialValues={{
-                        ...INITIAL_FORM_STATE,
-                    }}
-                    validationSchema={DISEASE_VALIDATION}
-                    // onSubmit={(values) => {
-                    //     console.log(values);
-                    // }}
-                    onSubmit={handleRegister}
+                                 <Grid item xs={12} sm={5}>
+                                    <VisuallyHiddenInput
+                                       id='logoInput'
+                                       type='file'
+                                       accept='image/*'
+                                    />
+                                 </Grid>
+                                 <Grid item xs={12} sm={6}>
+                                    <Button
+                                       variant='contained'
+                                       color='primary'
+                                       type='submit'
+                                       size='large'
+                                    >
+                                       Submit
+                                    </Button>
+                                 </Grid>
+                              </Grid>
+                           </Form>
+                        )}
+                     </Formik>
+                  </StyledPaper>
+               </StyledFormWrapper>
+            </Box>
+         </Modal>
 
-                >
-                    {({   errors }) => (
-                    <Form>
-                      {
-                        console.log(errors , "here")
-                      }
-                       <Grid container spacing={2}> 
-                            {/* <Grid item xs={12} sm={12} >
-                                <Text name="disease_id" label="Disease Id" autoComplete=""  
-                                     defaultValue="Id"
-        
-                                    InputProps={{
-                                        style: {
-                                            background: 'white', border: 'none', borderRadius: '20px',
-                                        },
-                                        readOnly:true
-                                    }}
-                                    
-                                />
-                            </Grid> */}
-                            <Grid item xs={12}  >
-                                <Text name="disease_name" label="Disease Name" autoComplete=""
-                                    InputProps={{
-                                        style: {
-                                            background: 'white', border: 'none', borderRadius: '20px',
-                                        },
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                  <RadioButtonGroup
-                    label="Disease Status"
-                    name="disease_status"
-                    options={[
-                      { value: 'Active', label: 'Active' },
-                      { value: 'Inactive', label: 'Inactive' },
-                    ]}
-                  />
-                </Grid>
-                <Divider />
-                {/* <Grid item xs={12} sm={6} >
-                  <Text name="created_at" label="Created At" autoComplete=""
-                    InputProps={{
-                      style: {
-                        background: 'white', border: 'none', borderRadius: '20px',
-                      },
-                       readOnly:true
-                    }}
-                  />
-                </Grid> */}
-                {/* <Grid item xs={12} sm={6} >
-                  <Text name="updated_at" label="Updated At" autoComplete=""
-                    InputProps={{
-                      style: {
-                        background: 'white', border: 'none', borderRadius: '20px',
-                      },
-                       readOnly:true
-                    }}
-                  />
-                </Grid> */}
-                
-                <Grid item xs={12} sm={5}>
-                  <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    size='large'
-                  >
-                    Submit
-                  </Button>
-                </Grid>
-                        </Grid>
-                    </Form>
-                     )}
-                </Formik>
+         <Grid container spacing={5} style={{ marginTop: "20px" }}>
+          <Grid item xs={12} md={4} sm={3}>
+            <Card sx={{ maxWidth: 200 }}>
+              <CardActionArea>
+                <CardMedia
+                sx={{ height: 130 }}
+            
+                    image="https://previews.123rf.com/images/shopplaywood/shopplaywood1605/shopplaywood160500154/55927084-human-brain-logo-vector-logo-of-human-brain-view-brain-outline-logo-for-medical-design-or-education.jpg"
+                  // title="green iguana"
+               
+               />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="div">
+                     Neurosiences
+                  </Typography>
+                  <div style={{display:"flex",}}>
+                  <Typography variant="body1" color="text.secondary"> 
+                       <CenterFocusStrongIcon/> 
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                    Active
+                    </Typography>
+                    </div>
+                </CardContent>
+                    
+                    
+               
+              </CardActionArea>
+            </Card>
+          </Grid>
+          </Grid>
+      </div>
+   )
+}
 
-            </StyledPaper>
-        </StyledFormWrapper>
-
-    );
-};
-
-export default DRegister;
+export default page
