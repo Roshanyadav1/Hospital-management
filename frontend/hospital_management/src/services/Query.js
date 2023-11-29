@@ -86,7 +86,7 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-     getSpecialistDoctor : build.query({
+     getSpecialistDoctor : build.mutation({
       query : (prop)=> ({
          url:`doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
          method:'GET',
@@ -103,5 +103,5 @@ export const {
    useDeleteEmployeeMutation,
    useGetEmployeeQuery,
    useGetAllHospitalQuery,
-   useGetSpecialistDoctorQuery,
+   useGetSpecialistDoctorMutation,
 } = queries
