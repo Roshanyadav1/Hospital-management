@@ -88,6 +88,7 @@ class DoctorView(ListAPIView):
             {
                 'status': response_code, 
                 'message': "Doctor " + response_message,
+                'count' : len(response_data),
                 'data': response.data, 
             }
          )
