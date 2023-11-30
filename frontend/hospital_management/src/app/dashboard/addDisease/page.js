@@ -79,8 +79,8 @@ const page = () => {
    const handleClose = () => setOpen(false)
 
    const [addDisease] = useAddDiseasesMutation()
-   const getDisease = useGetAllDiseasesQuery()
-   // const [previewImage, setPreviewImage] = useState(null);
+   const {data : getDisease} = useGetAllDiseasesQuery()
+
   if(getDisease.isLoading) return (
     <Box sx={{ display: 'flex' }}>
       <CircularProgress />
@@ -193,7 +193,7 @@ const page = () => {
                </StyledFormWrapper>
             </Box>
          </Modal>
-
+       
          <Grid container spacing={5} style={{ marginTop: "20px" }}>
           <Grid item xs={12} md={4} sm={3}>
             <Card sx={{ maxWidth: 200 }}>
