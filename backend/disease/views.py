@@ -11,25 +11,43 @@ class DiseaseAdd(GenericAPIView):
     serializer_class = DiseaseSerializer
     
     def post(self, request, format = None):
-        serializer = DiseaseSerializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
-        serializer.save()
-        response_message = ""
-        response_code = ""
-        try:
-         error = Error.objects.get(error_title = 'ADD_SUCCESS')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
-        except: 
-            response_message = ResponseMessage.ADD_SUCCESS
-            response_code = status.HTTP_201_CREATED
-        return Response(
-            {
-                'status': response_code,
-                'message': 'Disease ' + response_message
-            },
-        )
+        disease_name = request.data.get('disease_name')
+        if Disease.objects.filter(disease_name=disease_name).count() >= 1:
+            try:
+                error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
+            except: 
+                response_message = ResponseMessage.ALREADY_REGISTERED
+                response_code = status.HTTP_400_BAD_REQUEST
+            return Response(
+                {
+                    'status': response_code,
+                    'message': 'Disease ' + response_message
+                },
+            )
+        else:
+           serializer = DiseaseSerializer(data = request.data)
+           serializer.is_valid(raise_exception = True)
+           serializer.save()
+           response_message = ""
+           response_code = ""
+           try:
+            error = Error.objects.get(error_title = 'ADD_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
+           except: 
+               response_message = ResponseMessage.ADD_SUCCESS
+               response_code = status.HTTP_201_CREATED
+           return Response(
+               {
+                   'status': response_code,
+                   'message': 'Disease ' + response_message
+               },
+           )
+            
 
 class DiseaseUpdate(APIView):
   
