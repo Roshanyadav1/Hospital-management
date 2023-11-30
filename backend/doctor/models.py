@@ -7,7 +7,7 @@ class Doctor(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     # doctor_profile_picture = models.ImageField(upload_to='doctor_profile_picture/')
     disease_specialist = models.CharField(max_length = 255)
-    doctor_type = models.CharField(max_length = 255)
+    # doctor_type = models.CharField(max_length = 255)
     times = models.TextField(blank=True, null=True)
     day = models.TextField(blank=True, null=True)
     per_patient_time = models.TimeField()

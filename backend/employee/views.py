@@ -69,8 +69,7 @@ class EmployeeAdd(GenericAPIView):
             if employee.employee_role == 'Doctor':
                 doctor_data = {
                     'employee': employee.employee_id,
-                    'doctor_type': employee.employee_type,
-                    'disease_specialist': 'null',
+                    'disease_specialist': json.dumps(['Dengue', 'Diabetes', 'Asthma']),
                     'per_patient_time': '00:30:00',
                     'status': 'null',
                     'day': json.dumps(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),

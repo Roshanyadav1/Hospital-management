@@ -17,7 +17,7 @@ class DoctorViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Doctor
-        fields = ['doctor_id', 'disease_specialist', 'doctor_type', 'times', 'day', 'per_patient_time', 'status', 'created_at', 'updated_at', 'employee']
+        fields = ['doctor_id', 'disease_specialist', 'times', 'day', 'per_patient_time', 'status', 'created_at', 'updated_at', 'employee']
 
 class DoctorRelation(serializers.ModelSerializer):
     class Meta:

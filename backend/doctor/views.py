@@ -12,6 +12,7 @@ from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
 from django_filters.rest_framework import DjangoFilterBackend
 from leave.models import Leave
+import json
 
 class DoctorRegister(GenericAPIView):
     serializer_class = DoctorSerializer
@@ -40,17 +41,38 @@ class DoctorRegister(GenericAPIView):
 class DoctorView(ListAPIView):
     queryset = Doctor.objects.all()
     serializer_class = DoctorViewSerializer
-    filter_backends = [SearchFilter, CustomOrderingFilter, DjangoFilterBackend]
-    filterset_fields = ['disease_specialist','day']
+    filter_backends = [SearchFilter, CustomOrderingFilter]
     pagination_class  = CustomPagination
-    search_fields = ['disease_specialist', 'day']
+    # filterset_fields = ['disease_specialist','day']
+    # search_fields = ['disease_specialist', 'day']
     
     def list(self, request, *args, **kwargs):
          response = super().list(request, *args, **kwargs)
+         response_data = ""
          if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
+            response_data = response.data['results']
+         else:
+            response_data = response.data
+         disease_specialist = request.GET.get('disease_specialist')
+         print(disease_specialist)
+
+         for data in response_data:
+            times_data = json.loads(data.get('times'))
+            times_tuple_data = tuple(map(tuple, times_data))
+
+            disease_data = json.loads(data.get('disease_specialist'))
+            disease_tuple_data = tuple(disease_data)
+
+            if disease_specialist is not None:
+               if disease_specialist in disease_tuple_data:
+                    pass
+               else:
+                    response_data.remove(data)
+
          response_message = ""
          response_code = ""
+
          try:
           error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
           response_message = error.error_message
@@ -59,7 +81,6 @@ class DoctorView(ListAPIView):
          except:
              response_message = ResponseMessage.RETRIEVED_SUCCESS
              response_code = status.HTTP_200_OK
-            
          return Response(
             {
                 'status': response_code, 
