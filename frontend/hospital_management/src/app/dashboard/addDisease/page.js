@@ -21,6 +21,9 @@ import { colors } from '@/styles/theme'
 import Divider from '@mui/material/Divider'
 // import CustomAutocomplete from './Components/AutocompleteDis';
 import { useAddDiseasesMutation } from '@/services/Query'
+import { useGetAllDiseasesQuery } from '@/services/Query'
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const VisuallyHiddenInput = styled('input')({
    clip: 'rect(0 0 0 0)',
@@ -76,10 +79,14 @@ const page = () => {
    const handleClose = () => setOpen(false)
 
    const [addDisease] = useAddDiseasesMutation()
-
+   const getDisease = useGetAllDiseasesQuery()
    // const [previewImage, setPreviewImage] = useState(null);
-
-  
+  if(getDisease.isLoading) return (
+    <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
+  );
+  console.log("getting diseases",getDisease.data)
 
    const style = {
       position: 'absolute',
@@ -89,7 +96,7 @@ const page = () => {
       transform: 'translate(-50%, -50%)',
       width: 600,
       height: 325,
-      bgcolor: 'background.paper',
+      bgcolor: 'background.paper', 
       boxShadow: 24,
       borderRadius: '20px',
 
@@ -198,6 +205,7 @@ const page = () => {
                   // title="green iguana"
                
                />
+               
                 <CardContent>
                   <Typography gutterBottom variant="h6" component="div">
                      Neurosiences
@@ -218,6 +226,8 @@ const page = () => {
             </Card>
           </Grid>
           </Grid>
+
+          
       </div>
    )
 }
