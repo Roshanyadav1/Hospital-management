@@ -40,7 +40,7 @@ class AppointmentAdd(GenericAPIView):
 class AppointmentView(ListAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentViewSerializer
-    filterset_fields = ['doctor_id', 'appointment_time',]
+    filterset_fields = ['doctor_id', 'appointment_time', 'patient_id',]
     pagination_class  = PageNumberPagination
     # filter_backends = [SearchFilter]
     # search_fields = ['appointment_date', 'appointment_time', 'patient_id', 'doctor_id',]
