@@ -55,9 +55,10 @@ class DoctorView(ListAPIView):
          else:
             response_data = response.data
          disease_specialist = request.GET.get('disease_specialist')
-         print(disease_specialist)
-
+        #  print(disease_specialist)
+         remove_data = []
          for data in response_data:
+            print('Loop')
             times_data = json.loads(data.get('times'))
             times_tuple_data = tuple(map(tuple, times_data))
 
@@ -66,10 +67,12 @@ class DoctorView(ListAPIView):
 
             if disease_specialist is not None:
                if disease_specialist in disease_tuple_data:
-                    pass
+                    print(disease_specialist)
                else:
-                    response_data.remove(data)
-
+                    remove_data.append(data)
+                    print("Else")
+         for remove_d in remove_data:
+            response_data.remove(remove_d)
          response_message = ""
          response_code = ""
 
