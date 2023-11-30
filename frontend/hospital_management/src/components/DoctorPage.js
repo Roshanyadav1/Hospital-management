@@ -11,6 +11,7 @@ import Container from '@mui/material/Container'
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import { useGetSpecialistDoctorMutation } from '@/services/Query'
+import { useGetAllDiseasesQuery } from '@/services/Query'
 import Doctor from './Doctor'
 
 function DoctorPage() {
@@ -65,13 +66,17 @@ function DoctorPage() {
       day: selectedDiseases,
    }
    const [filterDoctor , { data: docData }] = useGetSpecialistDoctorMutation(fill)
+  const {data : getDisease,isLoading} = useGetAllDiseasesQuery()
+   
+
 
    const Typo = {
       fontWeight: 800,
       fontSize: '2.5rem',
    }
+   console.log("getting diseases",getDisease?.data)
 
-   console.log(docData, 'asd')
+   // console.log(docData, 'asd')
    return (
       <div>
          <div style={styles.container}>
@@ -81,38 +86,13 @@ function DoctorPage() {
                </Typography>
                <form onSubmit={handleSubmit}>
                   <Grid container spacing={5} style={{ marginTop: '1rem' }}>
-                     <Grid item xs={12} sm={3} md={3.5}>
-                        <Typography variant='body2' sx={{ marginBottom: '6px' }}>
-                           Select Disease
-                        </Typography>
+                     {getDisease?.data?.map((e,i)=>{
 
-                        <Autocomplete
-                           freeSolo
-                           id='tags-outlined'
-                           options={diseases}
-                           value={selectedDiseases}
-                           onChange={handleDiseasesChange}
-                           sx={{
-                              background: 'white',
-                              outline: 'none',
-                              borderRadius: '5px',
-                           }}
-                           placeholder='diseases'
-                           disableClearable
-                           renderInput={params => (
-                              <TextField
-                                 {...params}
-                                 //  label="Search input"
-                                 InputProps={{
-                                    ...params.InputProps,
-                                    placeholder: 'diseases',
-                                    type: 'search',
-                                 }}
-                              />
-                           )}
-                        />
-                     </Grid>
 
+
+
+                     })}
+                     
                      <Grid item xs={12} sm={3} md={3.5}>
                         <Typography variant='body2' sx={{ marginBottom: '6px' }}>
                            Select Doctor
