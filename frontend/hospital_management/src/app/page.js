@@ -18,7 +18,6 @@ const one={
   return (
     
     <div style={one}>
-       
       <SteperNav />
       <SwipeableTextMobileStepper/>
       <Grid container item padding={3} >
