@@ -10,7 +10,7 @@ import Grid from '@mui/system/Unstable_Grid/Grid'
 import Container from '@mui/material/Container'
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
-import { useGetSpecialistDoctorQuery } from '@/services/Query'
+import { useGetSpecialistDoctorMutation } from '@/services/Query'
 import Doctor from './Doctor'
 
 function DoctorPage() {
@@ -25,6 +25,7 @@ function DoctorPage() {
          display: 'flex',
          alignItems: 'center',
          justifyContent: 'center',
+        
       },
    }
 
@@ -63,7 +64,7 @@ function DoctorPage() {
       disease: selectedDate,
       day: selectedDiseases,
    }
-   const { data: docData } = useGetSpecialistDoctorQuery(fill)
+   const [filterDoctor , { data: docData }] = useGetSpecialistDoctorMutation(fill)
 
    const Typo = {
       fontWeight: 800,
