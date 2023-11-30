@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Your Email is sucessfully verified
+</body>
+<script>
+var gettokenapi = "https://dev-wk502078emf2n02u.us.auth0.com/oauth/token"
+var verifyemail = `https://dev-wk502078emf2n02u.us.auth0.com/api/v2/users/${userid}`
+const accesstoken = ""
+fetch(gettokenapi, {
+    method:"POST",
+    headers: {
+              "Accept": "application/json",
+              // Add any additional headers as needed
+            },
+body : JSON.stringify({
+    "client_id":"9VbpMil1NNULp5pk2EvnWuduyAKgA2dL",
+"client_secret":"IPJ6TyRPIyr3iOK5lG9i25F73bzd-UGanviCA7GKjuhkwkcRwnmKHfT1Vg_2sM1w",
+"audience":"https://dev-wk502078emf2n02u.us.auth0.com/api/v2/",
+"grant_type":"client_credentials"
+})
+.then((Response) => Response.JSON())
+.then((data)=>{
+    accesstoken = data.access_token
+
+    return fetch(verifyemail, {
+        method: "PATCH",
+        headers: {
+              "Accept": "application/json",
+              "Content-Type":   "application/json"
+            },
+            body: {
+               email_verified:true 
+            }
+
+
+    })
+})
+})
+</script>
+</html>
