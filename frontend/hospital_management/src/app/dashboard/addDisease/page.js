@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import { Card } from '@mui/material'
 import { CardActionArea, CardMedia } from '@mui/material'
-import CardActions from "@mui/material/CardActions"
-import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
-import {CardContent} from '@mui/material'
+import CardActions from '@mui/material/CardActions'
+import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong'
+import { CardContent } from '@mui/material'
 import { Formik, Form } from 'formik'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
@@ -19,11 +19,12 @@ import DISEASE_VALIDATION from './Components/D_Validation/d_Validation'
 import Text from './Components/Textfield/Text'
 import { colors } from '@/styles/theme'
 import Divider from '@mui/material/Divider'
+import Image from 'next/image'
 // import CustomAutocomplete from './Components/AutocompleteDis';
 import { useAddDiseasesMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
-import CircularProgress from '@mui/material/CircularProgress';
-
+import CircularProgress from '@mui/material/CircularProgress'
+import CoronavirusTwoToneIcon from '@mui/icons-material/CoronavirusTwoTone';
 
 const VisuallyHiddenInput = styled('input')({
    clip: 'rect(0 0 0 0)',
@@ -38,18 +39,19 @@ const VisuallyHiddenInput = styled('input')({
 })
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  //  maxWidth: '950px',
+   //  maxWidth: '950px',
    boxShadow: theme.shadows[3],
    backgroundColor: colors.background,
    borderRadius: '20px',
    padding: '2rem',
-   width:"600",
+   width: '600',
+   minWidth:240 ,
 }))
 
 //for the heading
 const StyledTypography = styled(Typography)(() => ({
    fontWeight: 'bold',
-  //  paddingBottom: '1rem',
+   //  paddingBottom: '1rem',
    color: colors.primary,
 }))
 
@@ -57,12 +59,13 @@ const StyledTypography = styled(Typography)(() => ({
 
 //for the whole form
 const StyledFormWrapper = styled('div')({
-  marginTop:"-12.5px",
+   marginTop: '-12.5px',
    display: 'grid',
    placeItems: 'center',
    // padding: '2rem',
    '@media (max-width: 450px)': {
       padding: '0rem',
+      
    },
 })
 
@@ -79,28 +82,31 @@ const page = () => {
    const handleClose = () => setOpen(false)
 
    const [addDisease] = useAddDiseasesMutation()
-   const {data : getDisease} = useGetAllDiseasesQuery()
+   const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
 
-  if(getDisease.isLoading) return (
-    <Box sx={{ display: 'flex' }}>
-      <CircularProgress />
-    </Box>
-  );
-  console.log("getting diseases",getDisease.data)
+   if (isLoading)
+      return (
+        <div style={{height:"100vh"  , display:"flex",alignItems:"center",justifyContent:"center"}}>
+         <Box sx={{ display: 'flex' }}>
+            <CircularProgress />
+         </Box>
+         </div>
+      )
+   console.log('getting diseases', getDisease?.data)
 
    const style = {
       position: 'absolute',
       top: '50%',
       left: '50%',
-      padding:0,
+      padding: 0,
       transform: 'translate(-50%, -50%)',
-      width: 600,
-      height: 325,
-      bgcolor: 'background.paper', 
+      // width: 600,
+      // height: 325,
+      bgcolor: 'background.paper',
       boxShadow: 24,
       borderRadius: '20px',
 
-      p: 4,
+      
    }
 
    const handleRegister = async (values, { resetForm }) => {
@@ -115,7 +121,7 @@ const page = () => {
 
    return (
       <div>
-         <Button onClick={handleOpen}>Add Disease +</Button>
+         <Button onClick={handleOpen} variant="outlined">Add Disease +</Button>
 
          <Modal
             open={open}
@@ -126,21 +132,17 @@ const page = () => {
             <Box sx={style}>
                <StyledFormWrapper>
                   <StyledPaper elevation={3}>
-                     
-
                      <Formik
                         initialValues={{
                            ...INITIAL_FORM_STATE,
                         }}
                         validationSchema={DISEASE_VALIDATION}
-                       
                         onSubmit={handleRegister}
                      >
                         {({ errors }) => (
                            <Form>
                               {console.log(errors, 'here')}
                               <Grid container spacing={2}>
-                                 
                                  <Grid item xs={12}>
                                     <Text
                                        name='disease_name'
@@ -166,7 +168,6 @@ const page = () => {
                                     />
                                  </Grid>
                                  <Divider />
-                                
 
                                  <Grid item xs={12} sm={5}>
                                     <VisuallyHiddenInput
@@ -193,41 +194,42 @@ const page = () => {
                </StyledFormWrapper>
             </Box>
          </Modal>
-       
-         <Grid container spacing={5} style={{ marginTop: "20px" }}>
-          <Grid item xs={12} md={4} sm={3}>
-            <Card sx={{ maxWidth: 200 }}>
-              <CardActionArea>
-                <CardMedia
-                sx={{ height: 130 }}
-            
-                    image="https://previews.123rf.com/images/shopplaywood/shopplaywood1605/shopplaywood160500154/55927084-human-brain-logo-vector-logo-of-human-brain-view-brain-outline-logo-for-medical-design-or-education.jpg"
-                  // title="green iguana"
-               
-               />
-               
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
-                     Neurosiences
-                  </Typography>
-                  <div style={{display:"flex",}}>
-                  <Typography variant="body1" color="text.secondary"> 
-                       <CenterFocusStrongIcon/> 
-                    </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                    Active
-                    </Typography>
-                    </div>
-                </CardContent>
-                    
-                    
-               
-              </CardActionArea>
-            </Card>
-          </Grid>
-          </Grid>
 
-          
+         <Grid container spacing={5} style={{ marginTop: '20px'}}>
+           
+            {getDisease?.data?.map((e, i) => {
+               return (
+                  <Grid item key={i} xs={12} sm={6} md={4}  lg={3}  >
+                     <Card sx={{ maxWidth: 250 }}>
+                        <CardActionArea>
+                           <CardContent>
+                           <div style={{ display: 'flex' }}>
+                             
+                              <Typography >
+                                 <CoronavirusTwoToneIcon/>
+                              </Typography>
+                              <div>
+                              <Typography gutterBottom variant='h6' component='div'>
+                                 {e.disease_name}
+                              </Typography>
+                              <div style={{ display: 'flex',paddingTop:5 }}>
+                                 <Typography variant='body1' color='#2a9c2e'>
+                                    <CenterFocusStrongIcon />
+                                 </Typography>
+                                 <Typography variant='body1' color='#2a9c2e'>
+                                    {e.disease_status}
+                                    <Button variant="contained" size='small' sx={{width:75,height:20,marginLeft:3}}>Deactive</Button>
+                                 </Typography>
+                              </div>
+                              </div>
+                              </div>
+                           </CardContent>
+                        </CardActionArea>
+                     </Card>
+                  </Grid>
+               )
+            })}
+         </Grid>
       </div>
    )
 }
