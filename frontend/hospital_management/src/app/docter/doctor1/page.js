@@ -27,22 +27,53 @@ function DoctorCard() {
   };
 
   const timeSlots = [
-    { id: '09:00 AM' },
-    { id: '09:20 AM' },
+    { id: '09:00 AM ' },
+    { id: '09:20 AM ' },
     { id: '9:40 AM' },
     { id: '10:00 AM' },
     { id: '10:20 AM' },
-    { id: '01:40 AM' },
+    { id: '01:40 PM ' },
     { id: '11:00 AM' },
-    { id: '03:20 AM' },
-    { id: '05:40 AM' },
+    { id: '03:20  PM' },
+    { id: '05:40  PM' },
   ];
   const bookAppointment = (slot) => {
-    if (!isSlotDisabled(slot)) {
-      setAppointments([...appointments, { slot: slot.slot }]);
-      setSelectedSlot('');
+    const bookAppointment = (slot) => {
+      if (!isSlotDisabled(slot)) {
+        const appointmentData = {
+          time: slot.id, // Use the selected time slot
+          appointment_number: 1,
+          date: '2023-12-01', // Use the current date in YYYY-MM-DD format
+          diseaseId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+          doctorId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+          patientId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+        };
+  
+  
+        fetch('https://hospital-management-six-chi.vercel.app/api/appointment/add/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(appointmentData),
+        })
+        .then((response) => {
+          // Handle response status
+          if (response.ok) {
+            // Update local state or UI to reflect the booked appointment
+            setAppointments([...appointments, { slot: slot.id }]);
+            setSelectedSlot('');
+          } else {
+            // Handle error response
+            console.error('Appointment booking failed');
+          }
+        })
+        .catch((error) => {
+          console.error('Error occurred while booking appointment:', error);
+        });
     }
   };
+}
   const remainingSlots = timeSlots.filter((slot) => !isSlotDisabled(slot));
   return (
     <Container maxWidth="lg" p={2}>

@@ -81,6 +81,7 @@ export const queries = createApi({
          method: 'GET',
       }),
    }),
+
    }),
 })
 export const {
