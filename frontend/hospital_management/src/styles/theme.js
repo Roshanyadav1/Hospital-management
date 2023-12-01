@@ -80,7 +80,7 @@ export const themeOptions = {
             fontSize: '1rem',
         },
         body2: {
-            fontSize: '0.8rem',
+            // fontSize: '0.8rem',
         },
         caption: {
             fontSize: '0.6rem',

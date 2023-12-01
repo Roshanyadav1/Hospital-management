@@ -82,10 +82,22 @@ export const queries = createApi({
       }),
       getAllHospital : build.query({
          query: () => ({
-            url: 'hospital/view/',
+            url: ' ',
             method: 'GET',
          }),
       }),
+     getSpecialistDoctor : build.mutation({
+      mutation : (prop)=> ({
+         url:`doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
+         method:'GET',
+      }),
+     }),
+     getAllDiseases : build.query({
+      query: () => ({
+         url: 'disease/view/',
+         method: 'GET',
+      }),
+   }),
    }),
 })
 
@@ -95,5 +107,7 @@ export const {
    useAddDiseasesMutation,
    useDeleteEmployeeMutation,
    useGetEmployeeQuery,
-   useGetAllHospitalQuery
+   useGetAllHospitalQuery,
+   useGetSpecialistDoctorMutation,
+   useGetAllDiseasesQuery,
 } = queries

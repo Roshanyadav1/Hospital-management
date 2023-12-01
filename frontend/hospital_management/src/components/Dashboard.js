@@ -7,11 +7,11 @@ import DataTable from './DataTable';
 
 
 function Dashboard() {
-  const router = useRouter()
+  // const router = useRouter()
   const { data: empData } = useGetEmployeeQuery()
 
   return (
-    < >
+    <>
           <DataGridTable        
             data={empData?.data || []}
             columns={columns} />

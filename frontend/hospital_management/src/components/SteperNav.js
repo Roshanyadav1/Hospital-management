@@ -1,4 +1,4 @@
-"use client";
+
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -17,10 +17,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import Logo from '../assest/whiteSga.png'
+import Logo from '../assest/whiteSga.png';
 import Image from 'next/image';
+import Link from 'next/link'; 
+
 const drawerWidth = 240;
-const navItems = ['Doctor', 'Specialities', 'Call Us','Contact Us'];
+const navItems = [
+  { label: 'Doctor', route: '/docter' },
+  { label: 'Specialities', route: '/Specilist' },
+  { label: 'Contact Us', route: '/contactus' },
+  { label: 'Book Appoinment', route: '/Doctor' },
+  { label: 'View Appoinment', route: '/viewappoinment' },
+];
 
 function SteperNav(props) {
   const { window } = props;
@@ -33,17 +41,20 @@ function SteperNav(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
-      </Typography>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
+      
       <Divider />
       <List>
         <Button href="/api/auth/login" sx={{ color: '#fff' }}>Login</Button>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+
+          <ListItem key={item.label} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <Link href={item.route} passHref>
+                <ListItemText primary={item.label}
+                primaryTypographyProps={{ variant: 'body2', fontSize: '14px' }}
+                 />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
@@ -52,7 +63,6 @@ function SteperNav(props) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -67,44 +77,36 @@ function SteperNav(props) {
           >
             <MenuIcon />
           </IconButton>
-          <div style={{ display:"flex" , flexGrow:1 }} >
-          <Image width={160} height={50}  src={Logo}/>
+          <div style={{ display: 'flex', flexGrow: 1 }}>
+            <Image width={120} height={40} src={Logo} />
           </div>
-          
+
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-
-            
-            {/* // if user available give link to go to dashboard  */}
-
-    {
-      user && (
-        <Button href="/dashboard" sx={{ color: '#fff' }}>
-          Dashboard
-        </Button>
-      )
-    }
+             {
+               user && (
+                 <Button href="/dashboard" sx={{ color: '#fff' }}>
+                  Dashboard
+                </Button>
+              )
+            }
 
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
+              <Link key={item.label} href={item.route} passHref>
+                <Button sx={{ color: '#fff' }}>{item.label}</Button>
+              </Link>
             ))}
-            {
-            user && (<>
-            <Button sx={{ color: '#fff' }}>
-                {user.name}
-              </Button>
-              </>)
-          }
-          {
-            !user && (
-              <Button href="/api/auth/login" sx={{ color: '#fff' }}>
-                    Login
-              </Button>
-            
-            ) 
-          }
-              
+            {user && (
+              <Button sx={{ color: '#fff' }}>{user.name}</Button>
+            )}
+
+             {
+              !user && (
+                <Button href="/api/auth/login" sx={{ color: '#fff' }}>
+                  Login
+                </Button>
+
+              )
+             }
           </Box>
         </Toolbar>
       </AppBar>
@@ -115,11 +117,11 @@ function SteperNav(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true // Better open performance on mobile.
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
           }}
         >
           {drawer}
@@ -127,21 +129,14 @@ function SteperNav(props) {
       </nav>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-        <Typography>
-         
-        
-        </Typography>
+        <Typography></Typography>
       </Box>
     </Box>
   );
 }
 
 SteperNav.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
+  window: PropTypes.func
 };
 
 export default SteperNav;

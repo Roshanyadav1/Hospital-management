@@ -1,11 +1,11 @@
 
 
 import React from 'react'
-
+import Doctor from "@/components/Doctor";
 function Docter() {
   return (
     <div>
-      <h1>Docter page</h1>
+      <Doctor/>
     </div>
   )
 }
