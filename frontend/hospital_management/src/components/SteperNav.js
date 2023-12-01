@@ -25,7 +25,9 @@ const drawerWidth = 240;
 const navItems = [
   { label: 'Doctor', route: '/docter' },
   { label: 'Specialities', route: '/Specilist' },
-  { label: 'Contact Us', route: '/ContactUs' }
+  { label: 'Contact Us', route: '/contactus' },
+  { label: 'Book Appoinment', route: '/Doctor' },
+  { label: 'View Appoinment', route: '/viewappoinment' },
 ];
 
 function SteperNav(props) {
@@ -40,17 +42,18 @@ function SteperNav(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
-      {/* <Typography variant="body2" sx={{ my: 2 }}>
-        MUI
-      </Typography> */}
+      
       <Divider />
       <List>
         <Button href="/api/auth/login" sx={{ color: '#fff' }}>Login</Button>
         {navItems.map((item) => (
+
           <ListItem key={item.label} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <Link href={item.route} passHref>
-                <ListItemText primary={item.label} />
+                <ListItemText primary={item.label}
+                primaryTypographyProps={{ variant: 'body2', fontSize: '14px' }}
+                 />
               </Link>
             </ListItemButton>
           </ListItem>
@@ -137,33 +140,3 @@ SteperNav.propTypes = {
 };
 
 export default SteperNav;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

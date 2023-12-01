@@ -17,7 +17,7 @@ export const queries = createApi({
    keepUnusedDataFor: 30,
    refetchOnReconnect: true,
    refetchOnFocus: true,
-   tagTypes: ["LOGIN"],
+   tagTypes: ["EMP" , "LOGIN"],
    endpoints: build => ({
       registerHospital: build.mutation({
          query: (value) => ({
@@ -48,18 +48,49 @@ export const queries = createApi({
             body:payload
          }),
       }),
+      deleteEmployee: build.mutation({
+         query: (value) => ({
+            url: 'employee/delete/'+value+"/",
+            method: 'DELETE',
+            // body:value
+         }),
+         invalidatesTags :['EMP']
+      }),
       getEmployee: build.query({
          query: () => ({
             url: 'employee/view/',
             method: 'GET',
          }),
+         providesTags: ['EMP'],
       }),
+      getAllHospital : build.query({
+         query: () => ({
+            url: ' ',
+            method: 'GET',
+         }),
+      }),
+     getSpecialistDoctor : build.mutation({
+      mutation : (prop)=> ({
+         url:`doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
+         method:'GET',
+      }),
+     }),
+     getAllDiseases : build.query({
+      query: () => ({
+         url: 'disease/view/',
+         method: 'GET',
+      }),
+   }),
    }),
 })
 export const {
    useRegisterHospitalMutation,
    useAddEmployeeMutation,
    useAddDiseasesMutation,
-   useGetEmployeeQuery
+   useDeleteEmployeeMutation,
+   useGetEmployeeQuery,
+   useGetAllHospitalQuery,
+   useGetSpecialistDoctorMutation,
+   useGetAllDiseasesQuery,
 } = queries
 
