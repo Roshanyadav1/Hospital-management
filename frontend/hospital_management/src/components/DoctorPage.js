@@ -8,10 +8,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import Grid from '@mui/system/Unstable_Grid/Grid'
 import Container from '@mui/material/Container'
+import {  Card, CardContent } from '@mui/material';
+import { CardActionArea, CardMedia } from '@mui/material';
+
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import { useGetSpecialistDoctorMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
+import { useGetAllDoctorsQuery } from '@/services/Query'
 import Doctor from './Doctor'
 
 function DoctorPage() {
@@ -22,16 +26,14 @@ function DoctorPage() {
          backgroundRepeat: 'no-repeat',
          backgroundPosition: 'center',
          color: 'white', // Adjust text color based on your background
-         padding : '2rem' ,
+         padding: '2rem',
          display: 'flex',
          alignItems: 'center',
          justifyContent: 'center',
-        
       },
    }
 
-   const diseases = ['diabetes', 'thyroid', 'dengue', 'malaria']
-   const doctor = ['haris', 'tuba', 'shahbaaz', 'arshi']
+   // const doctor = ['haris', 'tuba', 'shahbaaz', 'arshi']
 
    //const [stringArray, setStringArray] = useState(['diabetes', 'thyroid', 'malaria']);
 
@@ -64,19 +66,24 @@ function DoctorPage() {
    let fill = {
       disease: selectedDate,
       day: selectedDiseases,
+      doctor : selectedDoctor
    }
-   const [filterDoctor , { data: docData }] = useGetSpecialistDoctorMutation(fill)
-  const {data : getDisease,isLoading} = useGetAllDiseasesQuery()
-   
-
+   const [filterDoctor, { data: docData }] = useGetSpecialistDoctorMutation(fill)
+   const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
+   const { data: getDoctors, isLoading:isDoctorsLoading } = useGetAllDoctorsQuery()
 
    const Typo = {
       fontWeight: 800,
       fontSize: '2.5rem',
    }
-   console.log("getting diseases",getDisease?.data)
 
-   // console.log(docData, 'asd')
+   console.log('getting diseases', getDisease?.data)
+   console.log('getting doctors', getDoctors)
+
+
+   const diseases = getDisease?.data?.map(disease => disease.disease_name) || []
+   const doctors = getDoctors?.data?.map(doctor => doctor.employee.employee_name) || []
+
    return (
       <div>
          <div style={styles.container}>
@@ -86,13 +93,36 @@ function DoctorPage() {
                </Typography>
                <form onSubmit={handleSubmit}>
                   <Grid container spacing={5} style={{ marginTop: '1rem' }}>
-                     {getDisease?.data?.map((e,i)=>{
+                     <Grid item xs={12} sm={3} md={3.5}>
+                        <Typography variant='body2' sx={{ marginBottom: '6px' }}>
+                           Select Disease
+                        </Typography>
+                        <Autocomplete
+                           freeSolo
+                           id='tags-outlined'
+                           options={diseases}
+                           value={selectedDiseases}
+                           onChange={handleDiseasesChange}
+                           sx={{
+                              background: 'white',
+                              outline: 'none',
+                              borderRadius: '5px',
+                           }}
+                           disableClearable
+                           renderInput={params => (
+                              <TextField
+                                 {...params}
+                                 //  label="Search input"
+                                 InputProps={{
+                                    ...params.InputProps,
+                                    placeholder: 'disease',
+                                    type: 'search',
+                                 }}
+                              />
+                           )}
+                        />
+                     </Grid>
 
-
-
-
-                     })}
-                     
                      <Grid item xs={12} sm={3} md={3.5}>
                         <Typography variant='body2' sx={{ marginBottom: '6px' }}>
                            Select Doctor
@@ -100,7 +130,7 @@ function DoctorPage() {
                         <Autocomplete
                            freeSolo
                            id='tags-outlined'
-                           options={doctor}
+                           options={doctors}
                            value={selectedDoctor}
                            onChange={handleDoctorChange}
                            sx={{
@@ -108,7 +138,6 @@ function DoctorPage() {
                               outline: 'none',
                               borderRadius: '5px',
                            }}
-                          
                            disableClearable
                            renderInput={params => (
                               <TextField
@@ -122,7 +151,6 @@ function DoctorPage() {
                               />
                            )}
                         />
-                        
                      </Grid>
                      <Grid item xs={12} sm={3} md={3.5}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -150,7 +178,44 @@ function DoctorPage() {
                </form>
             </Container>
          </div>
-         <div>
+         <Container maxWidth="xl">
+        <Typography variant='h3' align='center' style={{ marginTop: "50px" }}>
+        Doctors
+        </Typography>
+        <Grid container spacing={6} style={{ marginTop: "20px" }}>
+          {getDoctors?.data?.map((result,index) =>(
+             <Grid item xs={6} md={3} sm={4} key={index} >
+              {/* here the redirection url is not defined when the page is complete than it work */}
+              {/* <Link style={{textDecoration:'none'}} href=""> */}
+             <Card sx={{ maxWidth: 300 , borderRadius:3}}>
+               <CardActionArea>
+                 {/* <CardMedia
+                   sx={{ height: 140 }}
+                   component="img"
+                   image={result.image}
+                 /> */}
+                 <CardContent>
+                   <Typography gutterBottom variant="h6" component="div" >
+                     {result.employee.employee_name}
+                   </Typography>
+                     <Typography  variant="body2" color="text.secondary">
+                       {/* {result.description} */}  desc
+                     </Typography>
+                 </CardContent>
+               </CardActionArea>
+             </Card>
+             {/* </Link> */}
+           </Grid>
+          ))} 
+       </Grid>
+     </Container>
+      </div>
+   )
+}
+export default DoctorPage
+
+
+{/* <div>
             {docData?.data?.map((info, i) => (
                <div key={i}>
                   <h2>
@@ -161,8 +226,4 @@ function DoctorPage() {
                   <hr></hr>
                </div>
             ))}
-         </div>
-      </div>
-   )
-}
-export default DoctorPage
+         </div> */}
