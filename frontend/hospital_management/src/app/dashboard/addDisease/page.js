@@ -25,6 +25,23 @@ import { useAddDiseasesMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import CircularProgress from '@mui/material/CircularProgress'
 import CoronavirusTwoToneIcon from '@mui/icons-material/CoronavirusTwoTone';
+import { alpha } from '@mui/material/styles';
+import { green, pink } from '@mui/material/colors';
+import Switch from '@mui/material/Switch';
+
+const GreenSwitch = styled(Switch)(({ theme }) => ({
+   '& .MuiSwitch-switchBase.Mui-checked': {
+     color: green[600],
+     '&:hover': {
+       backgroundColor: alpha(green[600], theme.palette.action.hoverOpacity),
+     },
+   },
+   '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+     backgroundColor: green[600],
+   },
+ }));
+ 
+ const label = { inputProps: { 'aria-label': 'Color switch demo' } };
 
 const VisuallyHiddenInput = styled('input')({
    clip: 'rect(0 0 0 0)',
@@ -213,13 +230,15 @@ const page = () => {
                                  {e.disease_name}
                               </Typography>
                               <div style={{ display: 'flex',paddingTop:5 }}>
-                                 <Typography variant='body1' color='#2a9c2e'>
-                                    <CenterFocusStrongIcon />
-                                 </Typography>
-                                 <Typography variant='body1' color='#2a9c2e'>
-                                    {e.disease_status}
-                                    <Button variant="contained" size='small' sx={{width:75,height:20,marginLeft:3}}>Deactive</Button>
-                                 </Typography>
+                                 
+                                 <div style={{ display: 'flex'}}>
+                                    {/* {e.disease_status} */}
+                                    <Typography  sx={{paddingTop:1 , color:"#8f9194"}}>Deactive</Typography>
+                                    <GreenSwitch {...label} defaultChecked />
+                                    
+                                    <Typography sx={{paddingTop:1 , color:"green"}}>Active</Typography>
+                                 </div>
+                                 
                               </div>
                               </div>
                               </div>
