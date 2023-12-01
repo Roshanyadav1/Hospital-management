@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import DoctorCard from '@/components/DoctorsCard'
 import ShowDidease from '@/components/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css';
+import card from '@/components/card'
 
 // for the patient page , the patient page will be the main page for the patient
 
@@ -24,6 +25,7 @@ function page() {
       <Grid container item padding={3} >
         <FixedContainer />
       </Grid>
+      <card/>
       <ShowDidease/>
       <DoctorCard/>
       <Footer/>
