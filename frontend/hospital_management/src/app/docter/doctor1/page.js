@@ -13,7 +13,7 @@ import Image from 'next/image';
 import Link from "@mui/material/Link";
 import { Container } from '@mui/system';
 import { useState } from 'react';
-function DoctorCard() {
+function DoctorCard() { 
   const [selectedSlot, setSelectedSlot] = useState('');
   const [appointments, setAppointments] = useState([]);
 
@@ -73,7 +73,7 @@ function DoctorCard() {
         });
     }
   };
-}
+  
   const remainingSlots = timeSlots.filter((slot) => !isSlotDisabled(slot));
   return (
     <Container maxWidth="lg" p={2}>
@@ -181,8 +181,9 @@ function DoctorCard() {
       </Grid>
     </Container>
 
-  )
+  );
 }
+} 
 export default DoctorCard
 
 
