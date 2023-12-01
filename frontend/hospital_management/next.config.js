@@ -5,6 +5,7 @@ const nextConfig = {
     },
     images: {
         domains: ['fastly.picsum.photos' , 'img.freepik.com' , 'thumbs.dreamstime.com'],
+        domains:["t4.ftcdn.net","img.freepik.com","i.pinimg.com","media.istockphoto.com","cdn.create.vista.com", "thumbs.dreamstime.com"]
     },
 }
 

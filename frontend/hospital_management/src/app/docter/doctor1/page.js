@@ -1,214 +1,160 @@
+"use client"
+
+
 import React from 'react';
-import { Grid, Typography, Button } from '@mui/material';
+import { Grid, Typography, Button, Box } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
 import Image from 'next/image';
 import Link from "@mui/material/Link";
 import { Container } from '@mui/system';
-
+import { useState } from 'react';
 function DoctorCard() {
+  const [selectedSlot, setSelectedSlot] = useState('');
+  const [appointments, setAppointments] = useState([]);
+
+  const handleSlotSelection = (slot) => {
+    setSelectedSlot(slot);
+  };
+
+  const isSlotDisabled = (slot) => {
+    const bookedAppointments = appointments.filter((apt) => apt.slot === slot.slot);
+    return bookedAppointments.length >= slot.maxAppointments || slot.slot === selectedSlot;
+  };
+
+  const timeSlots = [
+    { id: '09:00 AM' },
+    { id: '09:20 AM' },
+    { id: '9:40 AM' },
+    { id: '10:00 AM' },
+    { id: '10:20 AM' },
+    { id: '01:40 AM' },
+    { id: '11:00 AM' },
+    { id: '03:20 AM' },
+    { id: '05:40 AM' },
+  ];
+  const bookAppointment = (slot) => {
+    if (!isSlotDisabled(slot)) {
+      setAppointments([...appointments, { slot: slot.slot }]);
+      setSelectedSlot('');
+    }
+  };
+  const remainingSlots = timeSlots.filter((slot) => !isSlotDisabled(slot));
   return (
-    <Container maxWidth={'lg'}>
-      <Grid  container spacing={4} boxShadow={3} bgcolor="white" p={3} borderRadius={2}>
+    <Container maxWidth="lg" p={2}>
+      <Grid container maxWidth="lg" boxShadow={1} spacing={5} display="flex" Direction="column">
 
-        <Grid item >
-          <Image priority={true} src="https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg" height={300} width={300} />
+        <Grid item bgcolor={"fff"} display={"flex"} Direction="column" >
+          <Image priority={true} src="https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg" height={150} width={150} style={{ borderRadius: "50%" }} />
+          <Grid
+            item
+            xl={8}
+            // sm={8} 
+            // bgcolor={"rebeccapurple"}
+            display="flex"
+            Direction="column"
+            justifyContent="center"
+            margin={0}
+            p={{ xs: 2, sm: 5 }}
+            gap={10}
+          >
+            <>
+              <Typography gutterBottom variant="h4" component="div" >
+                Dr. Anoop Misra
+                <Typography variant="body1" color="text.secondary">
+                  EXECUTIVE CHAIRMAN FORTIS C DOC | Fortis C-Doc
+                </Typography>
+              </Typography>
+            </>
+          </Grid>
+
+
         </Grid>
+      </Grid>
+      <br /> <br />
 
-        <Grid item display="flex" flexDirection="column" justifyContent="center" p={5} padding={5} >
-          <>
-            <Typography   gutterBottom variant="h4" component="div">
-              Dr. Sumit Jain
-              <Typography variant="body1" color="text.secondary">
-                Pediatric Cardiology
-              </Typography>
+
+      <Grid container Direction='column' display={"flex"} rowSpacing={4}>
+        {/* 1ST COLUMN */}
+        <Grid item xs={12} sm={6}>
+          <Grid bgcolor={"#fff"} borderRadius={2} boxShadow={3} margin={2} p={0.1} >
+            <Typography display={"flex"} gutterBottom variant="h6" margin={2} component="div">
+              <PersonIcon sx={{ marginRight: 1 }} />
+              About
             </Typography>
-
-            <Typography display={"flex"} gutterBottom variant="h6" component="div"  >
-              <AccessTimeFilledIcon  sx={{ marginRight: 1 }}/>
-              Speciality
-              </Typography>
-              <Typography variant="body1"color="text.secondary" sx={{marginLeft:4}} >
-                Laparoscopic and General Surgery
+            <hr />
+            <Typography variant='body2' p={1}>
+              Dr G.R.Vijay Kumar is a renowned Neurosurgeon with over 20 years of experience. Dr Kumar is an adept in all disciplines of Brain and Spine Surgery including Brain tumor surgery among adults, as well as pediatric and Neonatal, endoscopic surgery, microvascular decompression surger...
             </Typography>
+          </Grid>
 
-            <Typography display={"flex"} gutterBottom variant="h6" component="div">
+          <Grid bgcolor={"#fff"} borderRadius={2} boxShadow={3} margin={2} p={0.1} >
+            <Typography display={"flex"} gutterBottom variant="h6" margin={2} component="div">
               <SchoolIcon sx={{ marginRight: 1 }} />
-              Qualification
-              </Typography>
-              <Typography variant="body1" color="text.secondary"sx={{marginLeft:4}} >
-                MBBS, MS (General Surgery)
-              </Typography>
-            
-
-            <Typography display={"flex"} gutterBottom variant="h6" component="div">
-              <AccessTimeFilledIcon sx={{ marginRight: 1 }} />
-              Experience
-              </Typography>
-              <Typography variant="body1" color="text.secondary"sx={{marginLeft:4}} >
-                16 years
-              </Typography>
-            
-
-            <Typography display={"flex"} gutterBottom variant="h6" component="div">
-              <LocationOnIcon sx={{ marginRight: 1 }} />
-              Location
-              </Typography>
-              <Typography variant="body1" color="text.secondary"sx={{marginLeft:4}} >
-                CARE CHL Hospitals, Indore
-              </Typography>
-          </>
+              Education
+            </Typography>
+            <hr />
+            <Typography variant='body2' p={1}>
+              F.R.C.S.(London), F.R.C.S. (Neurosurgery), CCST (UK), Spine Fellowship (USA), Skull Base& Vascular Fellowship (USA)...
+            </Typography>
+          </Grid>
         </Grid>
 
-        <Grid item display="flex" flexDirection="" justifyContent="start" alignItems='end' >
-          <Button variant="contained" style={{ padding: 20 }} >0731-47744111/4774116</Button>
-        </Grid>
-      </Grid>
+        {/* 2ND COLUMN */}
+        <Grid item sm={5} xs={12}>
+          <Grid bgcolor={"#fff"} borderRadius={2} boxShadow={3} margin={2} p={0.1}>
 
-          {/* <Grid sx={{ margin: 4 ,display:"flex" ,flexDirection:"row"}}>
-          <Link style={{textDecoration:'none'}} href="/docter/doctor1"  >
-            <Typography variant="body1" color="#13293D" sx={{ padding: 1}}>
-            <HomeIcon sx={{ marginRight: 1 }} />
-             Doctors
-            </Typography>
-            </Link>
-
-          <Typography variant="body1" color="text.secondary">
-             | Sumit Jain
+            <Box display={"flex"} alignItems="center" justifyContent="space-between" sx={{ paddingBottom: 1 }}>
+              <Typography gutterBottom variant="h5" margin={2}>
+                Appointment Time
               </Typography>
-          </Grid> */}
-
-      <Grid sx={{ margin: 5 }} >
-        <Typography variant="h5" color="text.secondary">
-          General Surgeon In Indore
-        </Typography>
-               <br/>
-        <Typography gutterBottom variant="h6" component="div" fontSize={25}>
-          Bio
-          </Typography>
-      
-          <Typography variant="body1" color="text.secondary" >
-            Dr. Aalok Somani is currently practising at CARE CHL Hospitals, Indore with experience of 16 years as a General Surgeon. He completed his MBBS from MGM Medical College, Indore in 2001 and completed his MS (General Surgery) from NSCB Medical College, Jabalpur from 2004 to 2005. As a surgeon, he ensures that his patients get timely correct and quality treatment.
-        </Typography>
-      </Grid>
-  
-          
-      <Grid sx={{ margin: 5 }} >
-        <Typography gutterBottom variant="h6" component="div" fontSize={25}>
-        Fields of Experience
-          </Typography>
-      
-          <Link style={{
-                textDecoration:'none'
-              }} href="/docter/doctor1" passHref>
-            <Typography variant="body1" color="#13293D" sx={{ padding: 1,outline:"none" }}>
-              Centre for Neurosciences
-            </Typography>
-          </Link>
-
-              <Link style={{
-                textDecoration:'none'
-              }} href="/docter/doctor1" > 
-            <Typography variant="body1" color="#13293D" sx={{
-              padding: 1
-            }}>
-              Centre for Transplant
-            </Typography>
-            </Link>
-
-              <Link style={{
-                textDecoration:'none'
-              }} href="/docter/doctor1" >
-            <Typography variant="body1" color="#13293D" sx={{
-              padding: 1
-            }}>
-              Critical Care Unit
-            </Typography>
-            </Link>
-
-             <Link style={{
-                textDecoration:'none'
-              }} href="/docter/doctor1"  >
-            <Typography variant="body1" color="#13293D" sx={{
-              padding: 1
-            }}>
-              Department of Cardiology
-            </Typography>
-            </Link>
-
-              <Link style={{
-                textDecoration:'none'
-              }} href="/docter/doctor1">
-            <Typography variant="body1" color="#13293D" sx={{
-              padding: 1
-            }}>
-              Department of Orthopedics
-            </Typography>
-            </Link>
-      </Grid>
-
-      <Grid sx={{ margin: 5 }} >
-        <Typography gutterBottom variant="h6" component="div" fontSize={26}>
-        Education
-          </Typography>
-            <Typography variant="body1" color="#13293D" sx={{ padding: 1,outline:"none" }}>
-            MBBS 1995-2000 (MGM, Indore)
-            </Typography>
-
-            <Typography variant="body1" color="#13293D" sx={{
-              padding: 1
-            }}>
-             Internship 2002-2001 (MYH, Indore)
-            </Typography>
-          
-            <Typography variant="body1" color="#13293D" sx={{
-              padding: 1
-            }}>
-              MS (Surgery) 2002-2005 (NSCB Medical College, Jabalpur)
-            </Typography>
-            
-      </Grid>
-      <Grid sx={{ margin: 5 }} >
-        <Typography gutterBottom variant="h6" component="div" fontSize={26}>
-        Languages Known
-          </Typography>
-            <Typography variant="body1" color="#13293D" sx={{ padding: 1,outline:"none" }} >
-            Hindi & English
-            </Typography>
-      </Grid>
-      <Grid sx={{ margin: 5 }} >
-        <Typography gutterBottom variant="h6" component="div" fontSize={26}>
-        Past Positions
-          </Typography>
-            <Typography variant="body1" color="#13293D" sx={{ padding: 1,outline:"none" }} >
-            Sr. Registrar Bombay Hospital, Indore
-            </Typography>
-            <Typography variant="body1" color="#13293D" sx={{ padding: 1,outline:"none" }} >
-            Assistant Professor SAIMS, Indore
-            </Typography>
-      </Grid>
-         
-         <Grid  item display="flex" justifyContent="center" alignItems='center'>
-         <Typography gutterBottom variant="body1" component="div" fontSize={26}>
-         Still Have a Question?
-          </Typography>
-         </Grid>
-
-         <Typography variant="body1" color="#13293D" sx={{ padding: 1,alignItems:"center",textAlign:"center"}} >
-          If you cannot find answers to your queries, please fill out the enquiry form or call the number below. We will contact you shortly.
-          If you cannot find answers to your queries, please fill out the enquiry form or call the number below. We will contact you shortly.
-          If you cannot find answers to your queries, please fill out the enquiry form or call the number below. We will contact you shortly.
-            </Typography>
-
-         <Grid item display="flex" flexDirection="" justifyContent="center" alignItems='center' margin={3} >
-          <Button variant="contained" style={{ padding: 10 }} >0731-47744111/4774116</Button>
+              <Typography gutterBottom variant="body2" margin={2} sx={{ border: "1px solid #13293D", borderRadius: "10px", padding: "1px" }}>
+                {remainingSlots.length} Slots
+              </Typography>
+            </Box>
+            <hr />
+            <Grid container spacing={0} justifyContent={"center"}>
+              {remainingSlots.map((slot) => (
+                <Grid item p={1} display="flex" key={slot.id} xs={6} sm={6} md={4} >
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      width: "100%",
+                      height: "40px",
+                      borderColor: "#2CD9C5",
+                      borderRadius: "10px",
+                      '&:hover': {
+                        borderColor: "#2CD9C5",
+                        backgroundColor: "#2CD9C5",
+                      },
+                      backgroundColor: isSlotDisabled(slot) ? "#EDF2F7" : null,
+                      cursor: isSlotDisabled(slot) ? "not-allowed" : "pointer",
+                    }}
+                    onClick={() => bookAppointment(slot)}
+                    disabled={isSlotDisabled(slot)}
+                  >
+                    {slot.id}
+                  </Button>
+                </Grid>
+              ))}
+              <Grid item display="flex" justifyItems="center" marginBottom={2} justifyContent="center"  >
+                <Button variant="contained" sx={{ padding: 1, width: 200, backgroundColor: "#2CD9C5", borderRadius: "10px" }} >Book Appoinment</Button>
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
+      </Grid>
     </Container>
+
   )
 }
 export default DoctorCard
+
+
 
 
 

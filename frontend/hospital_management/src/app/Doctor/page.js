@@ -11,7 +11,7 @@ function DoctorPage() {
       {/* <Doctor/> */}
       <SteperNav/>
       <DoctorCard/>
-      <Footer/>
+       <Footer/>
     </div>
   )
 }
