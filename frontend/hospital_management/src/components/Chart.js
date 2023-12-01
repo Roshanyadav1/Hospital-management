@@ -239,7 +239,7 @@ function Chart() {
             <Grid item xs={4} p={1} pl={3}  >
                 {/* <div style={{ backgroundColor: '#13293D' }}> */}
 
-                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px', overflowY: 'scroll', height: 'calc(100vh - 90px)', backgroundColor: '#13293D' }} className='Colo' sx={{ width: '100%', maxWidth: 360 }}>
+                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px', overflowY: 'scroll', height: 'calc(100vh - 90px)', backgroundColor: '#244C73' }} className='Colo' sx={{ width: '100%', maxWidth: 360 }}>
 
                     <h2 className='Colo' style={{ textAlign: 'center' }}>Appointments</h2>
                     {Data.map((item, index) => (
