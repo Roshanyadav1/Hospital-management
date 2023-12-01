@@ -5,13 +5,13 @@ import SteperNav from '@/components/SteperNav'
 import FixedContainer from '@/components/container'
 import { Grid } from '@mui/material' 
 import Doctor from '@/components/Doctor'
-// import Cards from '@/components/Card'
+import Cards from '@/components/card'
 import SwipeableTextMobileStepper from '@/components/Steper'
 import { toast } from 'react-toastify';
 import DoctorCard from '@/components/DoctorsCard'
 import ShowDidease from '@/components/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css';
-import card from '@/components/card'
+
 
 // for the patient page , the patient page will be the main page for the patient
 
@@ -25,7 +25,7 @@ function page() {
       <Grid container item padding={3} >
         <FixedContainer />
       </Grid>
-      <card/>
+      <Cards/>
       <ShowDidease/>
       <DoctorCard/>
       <Footer/>

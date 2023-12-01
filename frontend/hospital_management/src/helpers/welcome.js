@@ -8,7 +8,7 @@ export  const welcome= [
     {
       title: " Transplant",
       image: "https://www.carehospitals.com/indore/assets/images/speciality/transplants-12.png",
-      description: "The centre of transparant offers",
+      description: "The centre of transparant offers in hispital",
       category: "Transplant"
     },
     {
@@ -20,7 +20,7 @@ export  const welcome= [
     {
       title: "Cardiology",
       image: "https://www.carehospitals.com/indore/assets/images/speciality/coe-1.png",
-      description: "Our department of Cardiology",
+      description: "Our department of Cardiology in hospital",
       category: "Cardiology"
     },
     {
