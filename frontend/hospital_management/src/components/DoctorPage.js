@@ -178,7 +178,7 @@ function DoctorPage() {
                </form>
             </Container>
          </div>
-         <Container maxWidth="xl">
+         <Container maxWidth="lg">
         <Typography variant='h3' align='center' style={{ marginTop: "50px" }}>
         Doctors
         </Typography>
