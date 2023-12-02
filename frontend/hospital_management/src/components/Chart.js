@@ -4,7 +4,7 @@ import { Grid } from "@mui/material"
 import List from '@mui/material/List';
 import { useGetAllDoctorsQuery } from '@/services/Query';
 import { useGetAllPatientsQuery } from '@/services/Query';
-import { useGetGraphAppointInfoQuery } from '@/services/Query';
+// import { useGetGraphAppointInfoQuery } from '@/services/Query';
 import {
     ComposedChart,
     Line,
@@ -16,7 +16,6 @@ import {
     Legend,
     Area
 } from "recharts";
-import '@/components/container.css'
 import CommonListItem from './CommonListItem';
 import Image from 'next/image'
 import Doc from './Doc.png'

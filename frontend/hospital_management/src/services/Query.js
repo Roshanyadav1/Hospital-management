@@ -92,18 +92,21 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+       
+ 
+      getGraphAppointInfo : build.query({
+         query: () => ({
+            url: '/view/',
+            method: 'GET',
+         }),
+      }),
       getAllPatients: build.query({
          query: () => ({
             url: 'patient/view/',
             method: 'GET',
          }),
       }),
-      getGraphAppointInfo: build.query({
-         query: () => ({
-            url: '/view/',
-            method: 'GET',
-         }),
-      }),
+    
       getSpecialistDoctor: build.mutation({
          mutation: prop => ({
             url: `doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,

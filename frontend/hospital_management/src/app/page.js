@@ -1,13 +1,9 @@
 "use client"
 
-import Footer from '@/components/Footer'
-import SteperNav from '@/components/SteperNav'
 import FixedContainer from '@/components/container'
 import { Grid } from '@mui/material' 
-import Doctor from '@/components/Doctor'
 import Cards from '@/components/card'
 import SwipeableTextMobileStepper from '@/components/Steper'
-import { toast } from 'react-toastify';
 import DoctorCard from '@/components/DoctorsCard'
 import ShowDidease from '@/components/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,7 +16,6 @@ function page() {
   return (
     
     <div>
-      <SteperNav />
       <SwipeableTextMobileStepper/>
       <Grid container item padding={3} >
         <FixedContainer />
@@ -28,7 +23,6 @@ function page() {
       <Cards/>
       <ShowDidease/>
       <DoctorCard/>
-      <Footer/>
     </div>
   )
 
