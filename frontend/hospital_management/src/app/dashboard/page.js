@@ -4,7 +4,6 @@ import { columns } from "@/helpers/columns";
 import { useGetEmployeeQuery } from '@/services/Query';
 import Chart from '@/components/Chart'
 function FetchData() {
-  const {data : empData, isSuccess} = useGetEmployeeQuery()
 
   return (
     <div>
