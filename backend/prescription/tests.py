@@ -26,7 +26,7 @@ class TestSetUp(APITestCase):
             "medication_name": "test",
             "dosage": "test",
             "frequency": "test",
-            "route": "tablet",
+            "route": "Tablet",
             "duration": "test",
            
         }
@@ -81,7 +81,7 @@ class PrecriptionSerializerTest(TestCase):
             "medication_name": "Asprin",
             "dosage": "4",
             "frequency": "10mg",
-            "route": "tablet",
+            "route": "Tablet",
             "duration": "5",
           
         }
