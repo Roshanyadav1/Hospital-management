@@ -223,7 +223,7 @@ const page = () => {
                            <div style={{ display: 'flex' }}>
                               <div>
                              
-                              <Typography >
+                              <Typography sx={{paddingTop:0.3}}>
                                  <CoronavirusTwoToneIcon/>
                               </Typography>
                               </div>
