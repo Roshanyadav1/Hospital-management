@@ -24,10 +24,10 @@ class UserRegister(GenericAPIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+        error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
         response_message = error.error_message
         response_code = error.error_code
-        Response.status_code = error.error_code 
+        Response.status_code = error.error_code
         return Response(
             {
                 'status': response_code,
@@ -42,7 +42,7 @@ class UserDelete(APIView):
         if User.objects.filter(user_id=id).count() >= 1:
             doctor = User.objects.get(user_id=id)
             doctor.delete()
-            error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+            error = Error.objects.get(error_title='DELETE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
             Response.status_code = error.error_code
@@ -52,7 +52,7 @@ class UserDelete(APIView):
                     'message': "User " + response_message,
                 },
             )
-        error = Error.objects.get(error_title = 'INVALID_ID')
+        error = Error.objects.get(error_title='INVALID_ID')
         response_message = error.error_message
         response_code = error.error_code
         Response.status_code = error.error_code
@@ -117,6 +117,7 @@ class UserLoginView(GenericAPIView):
                 },
             )
 
+
 class UserVerificationView(APIView):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
@@ -133,6 +134,7 @@ class UserVerificationView(APIView):
                 'message': "User Verified",
             },
         )
+
 
 class UserView(APIView):
     serializer_class = UserProfileSerializer
@@ -151,7 +153,7 @@ class UserUpdate(APIView):
             serializer = UserSerializer(doctor, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            error = Error.objects.get(error_title='UPDATE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
             Response.status_code = error.error_code
@@ -162,7 +164,7 @@ class UserUpdate(APIView):
                 },
             )
         else:
-            error = Error.objects.get(error_title = 'INVALID_ID')
+            error = Error.objects.get(error_title='INVALID_ID')
             response_message = error.error_message
             response_code = error.error_code
             Response.status_code = error.error_code
@@ -181,7 +183,7 @@ class UserUpdate(APIView):
                 doctor, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+            error = Error.objects.get(error_title='UPDATE_SUCCESS')
             response_message = error.error_message
             response_code = error.error_code
             Response.status_code = error.error_code
@@ -192,7 +194,7 @@ class UserUpdate(APIView):
                 },
             )
         else:
-            error = Error.objects.get(error_title = 'INVALID_ID')
+            error = Error.objects.get(error_title='INVALID_ID')
             response_message = error.error_message
             response_code = error.error_code
             Response.status_code = error.error_code

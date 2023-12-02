@@ -1,5 +1,6 @@
 from rest_framework.filters import OrderingFilter
 
+
 class CustomOrderingFilter(OrderingFilter):
     def get_ordering(self, request, queryset, view):
         sort_column_param = 'sortColumn'
@@ -12,7 +13,7 @@ class CustomOrderingFilter(OrderingFilter):
             ordering = []
             ordering.append(sort_column)
             return ordering
-        
+
         if sort_column and sort_direction:
             ordering = []
             if sort_direction.lower() == 'desc':

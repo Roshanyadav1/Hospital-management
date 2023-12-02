@@ -41,8 +41,9 @@ class TestSetUp(APITestCase):
 
 class Testview(TestSetUp):
     def test_patient_can_register(self):
-        res = self.client.post(self.patient_register,self.patient_data, format='json')
-        
+        res = self.client.post(self.patient_register,
+                               self.patient_data, format='json')
+
         self.assertEqual(res.status_code, 200)
 
     def test_patient_cannot_register(self):

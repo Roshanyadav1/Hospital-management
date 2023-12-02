@@ -112,7 +112,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'Hospital_Management',
-        'CLIENT' : {
+        'CLIENT': {
             'host': 'mongodb+srv://grandachievers:grandachievers@grandachievers.fomfuoj.mongodb.net/',
         },
     }

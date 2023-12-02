@@ -8,7 +8,8 @@ from prescription.serializer import PrescriptionSerializer
 from prescription.models import Prescription
 from datetime import datetime
 
-now = datetime.now() 
+now = datetime.now()
+
 
 class TestSetUp(APITestCase):
     def setUp(self):
@@ -28,7 +29,7 @@ class TestSetUp(APITestCase):
             "frequency": "test",
             "route": "tablet",
             "duration": "test",
-           
+
         }
         return super().setUp()
 
@@ -83,7 +84,7 @@ class PrecriptionSerializerTest(TestCase):
             "frequency": "10mg",
             "route": "tablet",
             "duration": "5",
-          
+
         }
 
         serializer = PrescriptionSerializer(data=self.prescription_data)
@@ -98,7 +99,6 @@ class TestPrescriptionModel(TestCase):
         frequency = "10mg",
         route = "tablet",
         duration = '5'
-     
 
         prescription = Prescription.objects.create(
             medication_name=medication_name, dosage=dosage, frequency=frequency, route=route, duration=duration)
@@ -107,4 +107,3 @@ class TestPrescriptionModel(TestCase):
         self.assertEqual(frequency, prescription.frequency)
         self.assertEqual(route, prescription.route)
         self.assertEqual(duration, prescription.duration)
-       
