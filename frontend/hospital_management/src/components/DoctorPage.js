@@ -189,11 +189,7 @@ function DoctorPage() {
               {/* <Link style={{textDecoration:'none'}} href=""> */}
              <Card sx={{ maxWidth: 300 , borderRadius:3}}>
                <CardActionArea>
-                 {/* <CardMedia
-                   sx={{ height: 140 }}
-                   component="img"
-                   image={result.image}
-                 /> */}
+                 
                  <CardContent>
                    <Typography gutterBottom variant="h6" component="div" >
                      {result.employee.employee_name}
