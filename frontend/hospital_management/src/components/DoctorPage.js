@@ -8,11 +8,18 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import Grid from '@mui/system/Unstable_Grid/Grid'
 import Container from '@mui/material/Container'
+import { Card, CardContent } from '@mui/material'
+import { CardActionArea, CardMedia } from '@mui/material'
+import Chip from '@mui/material/Chip'
+import Stack from '@mui/material/Stack'
+
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import { useGetSpecialistDoctorMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
+import { useGetAllDoctorsQuery } from '@/services/Query'
 import Doctor from './Doctor'
+import Image from 'next/image'
 
 function DoctorPage() {
    const styles = {
@@ -22,20 +29,14 @@ function DoctorPage() {
          backgroundRepeat: 'no-repeat',
          backgroundPosition: 'center',
          color: 'white', // Adjust text color based on your background
-         padding : '2rem' ,
+         padding: '2rem',
          display: 'flex',
          alignItems: 'center',
          justifyContent: 'center',
-        
       },
    }
 
-   const diseases = ['diabetes', 'thyroid', 'dengue', 'malaria']
-   const doctor = ['haris', 'tuba', 'shahbaaz', 'arshi']
-
-   //const [stringArray, setStringArray] = useState(['diabetes', 'thyroid', 'malaria']);
-
-   const [selectedDate, setSelectedDate] = useState(dayjs('2023-11-17')) // Initial date value
+   const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
    const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
    const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
 
@@ -64,19 +65,24 @@ function DoctorPage() {
    let fill = {
       disease: selectedDate,
       day: selectedDiseases,
+      doctor: selectedDoctor,
    }
-   const [filterDoctor , { data: docData }] = useGetSpecialistDoctorMutation(fill)
-  const {data : getDisease,isLoading} = useGetAllDiseasesQuery()
-   
+   const [filterDoctor, { data: docData }] = useGetSpecialistDoctorMutation(fill)
 
+   // filter use
+   const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
+   const { data: getDoctors, isLoading: isDoctorsLoading } = useGetAllDoctorsQuery()
 
    const Typo = {
       fontWeight: 800,
       fontSize: '2.5rem',
    }
-   console.log("getting diseases",getDisease?.data)
 
-   // console.log(docData, 'asd')
+   // for filter use
+   const diseases = getDisease?.data?.map(disease => disease.disease_name) || []
+   const doctors =
+      getDoctors?.data?.map(doctor => doctor.employee.employee_name) || []
+
    return (
       <div>
          <div style={styles.container}>
@@ -86,13 +92,36 @@ function DoctorPage() {
                </Typography>
                <form onSubmit={handleSubmit}>
                   <Grid container spacing={5} style={{ marginTop: '1rem' }}>
-                     {getDisease?.data?.map((e,i)=>{
+                     <Grid item xs={12} sm={3} md={3.5}>
+                        <Typography variant='body2' sx={{ marginBottom: '6px' }}>
+                           Select Disease
+                        </Typography>
+                        <Autocomplete
+                           freeSolo
+                           id='tags-outlined'
+                           options={diseases}
+                           value={selectedDiseases}
+                           onChange={handleDiseasesChange}
+                           sx={{
+                              background: 'white',
+                              outline: 'none',
+                              borderRadius: '5px',
+                           }}
+                           disableClearable
+                           renderInput={params => (
+                              <TextField
+                                 {...params}
+                                 //  label="Search input"
+                                 InputProps={{
+                                    ...params.InputProps,
+                                    placeholder: 'disease',
+                                    type: 'search',
+                                 }}
+                              />
+                           )}
+                        />
+                     </Grid>
 
-
-
-
-                     })}
-                     
                      <Grid item xs={12} sm={3} md={3.5}>
                         <Typography variant='body2' sx={{ marginBottom: '6px' }}>
                            Select Doctor
@@ -100,7 +129,7 @@ function DoctorPage() {
                         <Autocomplete
                            freeSolo
                            id='tags-outlined'
-                           options={doctor}
+                           options={doctors}
                            value={selectedDoctor}
                            onChange={handleDoctorChange}
                            sx={{
@@ -108,7 +137,6 @@ function DoctorPage() {
                               outline: 'none',
                               borderRadius: '5px',
                            }}
-                          
                            disableClearable
                            renderInput={params => (
                               <TextField
@@ -122,13 +150,14 @@ function DoctorPage() {
                               />
                            )}
                         />
-                        
                      </Grid>
                      <Grid item xs={12} sm={3} md={3.5}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                            <DemoItem label='Select Date'>
                               <MobileDatePicker
-                                 defaultValue={dayjs('2023-11-17')}
+                                 defaultValue={dayjs(new Date())}
+                                 format='DD-MM-YYYY'
+                                 views={['year', 'month', 'day']}
                                  value={selectedDate}
                                  onChange={handleDateChange}
                                  sx={{ background: 'white', borderRadius: '5px' }}
@@ -143,25 +172,116 @@ function DoctorPage() {
                            type='submit'
                            sx={{ marginTop: '25px', height: '50px' }}
                         >
-                           submit
+                           Search
                         </Button>
                      </Grid>
                   </Grid>
                </form>
             </Container>
          </div>
-         <div>
-            {docData?.data?.map((info, i) => (
-               <div key={i}>
-                  <h2>
-                     {info.doctor_id} {info.disease_specialist}
-                  </h2>
-                  <p>{info.day}</p>
-                  <p>{info.disease_specialist}</p>
-                  <hr></hr>
-               </div>
-            ))}
-         </div>
+         {/* // all doctor view  */}
+         <Container maxWidth='xl'>
+            <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
+               Doctors
+            </Typography>
+            <Grid container spacing={6} style={{ marginTop: '20px' }}>
+               {getDoctors?.data?.map((result, index) => {
+                  let diseases = JSON.parse(result?.disease_specialist || []) || []
+                  let days = JSON.parse(result?.day || []) || [] // available days
+
+                  return (
+                     <Grid item xs={12} md={3} sm={6} key={index}>
+                        {/* here the redirection url is not defined when the page is complete than it work */}
+                        {/* <Link style={{textDecoration:'none'}} href=""> */}
+                        <Card sx={{ borderRadius: '5px' }}>
+                           <CardActionArea sx={{minHeight: 280}}>
+                              <CardContent>
+                                 <Grid container>
+                                    <Grid item>
+                                       <Image
+                                          height={50}
+                                          width={50}
+                                          src='https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg'
+                                       />
+                                    </Grid>
+                                    <Grid item sx={{ paddingLeft: 2 }}>
+                                       <Typography
+                                          variant='body2'
+                                          color={'#2CD9C5'}
+                                          sx={{ fontWeight: 700 }}
+                                       >
+                                          Name
+                                       </Typography>
+                                       <Typography
+                                          gutterBottom
+                                          variant='h6'
+                                          component='div'
+                                       >
+                                          Dr. {result.employee.employee_name}
+                                       </Typography>
+                                    </Grid>
+                                 </Grid>
+
+                                 <Typography
+                                    variant='body2'
+                                    color='#2CD9C5'
+                                    sx={{ fontWeight: 700 }}
+                                 >
+                                    Disease Specialist
+                                 </Typography>
+                                 <div
+                                    display='flex'
+                                    justifyContent='center'
+                                    style={{ marginBottom: 10 }}
+                                 >
+                                    {diseases?.map(item => {
+                                       return (
+                                          <Chip
+                                             key={item}
+                                             size='small'
+                                             label={item}
+                                             sx={{
+                                                marginRight: 1,
+                                                marginTop: 1,
+                                                backgroundColor: '#2CD9C51A',
+                                             }}
+                                          />
+                                       )
+                                    })}
+                                 </div>
+                                 <Typography
+                                    variant='body2'
+                                    color='#2CD9C5'
+                                    sx={{ fontWeight: 700 }}
+                                 >
+                                    Available Days
+                                 </Typography>
+                                 <Grid container>
+                                    {days?.map(item => {
+                                       return (
+                                          <Grid item key={item}>
+                                             <Chip
+                                                size='small'
+                                                label={item}
+                                                sx={{
+                                                   marginRight: 1,
+                                                   marginTop: 1,
+                                                   backgroundColor: '#2CD9C51A',
+                                                }}
+                                             />
+                                          </Grid>
+                                       )
+                                    })}
+                                 </Grid>
+                              </CardContent>
+                           </CardActionArea>
+                        </Card>
+                        {/* </Link> */}
+                     </Grid>
+                  )
+               })}
+            </Grid>
+         </Container>
       </div>
    )
 }
