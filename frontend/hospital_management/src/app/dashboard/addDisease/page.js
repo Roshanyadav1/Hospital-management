@@ -212,7 +212,7 @@ const page = () => {
             </Box>
          </Modal>
 
-         <Grid container spacing={5} style={{ marginTop:1.5}}>
+         <Grid container spacing={5} style={{ marginTop:0.8}}>
            
             {getDisease?.data?.map((e, i) => {
                return (
