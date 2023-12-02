@@ -20,6 +20,8 @@ class DoctorViewSerializer(serializers.ModelSerializer):
         fields = ['doctor_id', 'disease_specialist', 'times', 'day', 'per_patient_time', 'status', 'created_at', 'updated_at', 'employee']
 
 class DoctorRelation(serializers.ModelSerializer):
+    employee = EmployeeRelation()
+
     class Meta:
         model = Doctor
-        exclude = ('created_at', 'updated_at', )
+        fields = ['doctor_id', 'disease_specialist', 'times', 'day', 'per_patient_time', 'status', 'employee']
