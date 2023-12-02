@@ -10,11 +10,12 @@ from bs4 import BeautifulSoup
 from pathlib import Path
 
 smtp_server = "smtp.gmail.com"
-smtp_port = 587  
+smtp_port = 587
 smtp_username = "achieversgrand@gmail.com"
 smtp_password = "bpfhbemqsenjkqud"
 from_email = "achieversgrand@gmail.com"
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 def send_appointment_email(appointment):
     # print(appointment.patient_id)
@@ -22,7 +23,8 @@ def send_appointment_email(appointment):
     # print(patient.name)
     cal = Calendar()
     event = Event()
-    dstart = str(appointment.appointment_date) + ' ' + str(appointment.appointment_time);
+    dstart = str(appointment.appointment_date) + ' ' + \
+        str(appointment.appointment_time)
     date = datetime.strptime(dstart, '%Y-%m-%d %H:%M:%S')
     event.add('summary', 'Appointment')
     event.add('dtstart', date)
@@ -61,6 +63,7 @@ We understand the importance of your time and are committed to providing you wit
     server.login(smtp_username, smtp_password)
     server.sendmail(from_email, to_email, msg.as_string())
     server.quit()
+
 
 def send_verification_email(url, user_email):
     html_content = ""
@@ -104,4 +107,3 @@ def send_verification_email(url, user_email):
     server.login(smtp_username, smtp_password)
     server.sendmail(from_email, to_email, message.as_string())
     server.quit()
-

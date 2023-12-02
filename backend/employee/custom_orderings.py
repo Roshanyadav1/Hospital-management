@@ -1,5 +1,6 @@
 from rest_framework.filters import OrderingFilter
 
+
 class CustomOrderingFilter(OrderingFilter):
     def get_ordering(self, request, queryset, view):
         sort_column_param = 'sortColumn'
@@ -7,7 +8,7 @@ class CustomOrderingFilter(OrderingFilter):
 
         sort_column = request.query_params.get(sort_column_param)
         sort_direction = request.query_params.get(sort_direction_param)
-        
+
         if sort_column is None:
             sort_column = 'employee_name'
         if sort_direction is None:

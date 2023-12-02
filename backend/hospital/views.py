@@ -84,7 +84,7 @@ class HospitalRegister(GenericAPIView):
 
 
 class HospitalView(APIView):
-    
+
     def get(self, request, input=None, format=None):
         id = input
         print(id)
