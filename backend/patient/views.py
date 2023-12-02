@@ -121,7 +121,7 @@ class PatientView(ListAPIView):
             {
                 'status': response_code, 
                 'message': "Patient " + response_message,
-                "count": len(response),
+                "count": len(response.data),
                 'data': response.data, 
             }
         )
