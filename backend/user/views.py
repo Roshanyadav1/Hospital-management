@@ -23,8 +23,21 @@ class UserRegister(GenericAPIView):
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
+        if User.objects.filter(employee_email = request.data.get('employee_email')).count() >= 1:
+            error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
+            return Response(
+                {
+                    'status': response_code,
+                    'message': 'Employee ' + response_message
+                },
+            )
+        else:
+         serializer.save()
+        
+        error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
         response_message = error.error_message
         response_code = error.error_code
         Response.status_code = error.error_code

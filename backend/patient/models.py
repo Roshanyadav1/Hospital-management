@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.core.validators import RegexValidator
+from django.contrib.auth.hashers import make_password
 
 
 class Patient(models.Model):
@@ -12,5 +13,13 @@ class Patient(models.Model):
     patient_email = models.EmailField(max_length=255)
     password = models.CharField(max_length=255)
     patient_mobile = models.BigIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    
+    def save(self, *args, **kwargs):
+        # Hash the password before saving
+        self.password = make_password(self.password)
+        super(Patient, self).save(*args, **kwargs)
+
+ 
