@@ -80,6 +80,7 @@ export const queries = createApi({
          }),
          providesTags: ['EMP'],
       }),
+
       getAllHospital : build.query({
          query: () => ({
             url: ' ',
