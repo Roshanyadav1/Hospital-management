@@ -6,6 +6,13 @@ import pdb
 import uuid
 from doctor.serializers import DoctorSerializer
 from doctor.models import Doctor
+from datetime import date , datetime
+
+
+
+ddate = date.today()
+now = datetime.now() 
+time  = now.strftime("%H:%M:%S")
 
 class TestSetUp(APITestCase):
     def setUp(self):
@@ -20,8 +27,12 @@ class TestSetUp(APITestCase):
         self.doctor_update_url = reverse(
             'doctor profile update', kwargs={'input': self.test})
         self.doctor_data = {
+            "doctor_profile_picture" :"test url",
             "disease_specialist":"test",
-            "doctor_type":"test",
+            "times":"test",
+            "day":"test",
+            "per_patient_time":time,
+            "status":"test"
             
         }
         return super().setUp()
@@ -73,8 +84,13 @@ class Testview(TestSetUp):
 class DoctorSerializerTest(TestCase):
     def test_serializer(self):
         self.doctor_data = {
+           "doctor_profile_picture" :"test url",
             "disease_specialist":"test",
-            "doctor_type":"test",
+            "times":"test",
+            "day":"test",
+            "per_patient_time":time,
+            "status":"test"
+            
             
         }
         serializer = DoctorSerializer(data=self.doctor_data)
