@@ -212,7 +212,7 @@ const page = () => {
             </Box>
          </Modal>
 
-         <Grid container spacing={5} style={{ marginTop: '20px'}}>
+         <Grid container spacing={5} style={{ marginTop:1.5}}>
            
             {getDisease?.data?.map((e, i) => {
                return (
@@ -221,27 +221,24 @@ const page = () => {
                         <CardActionArea>
                            <CardContent>
                            <div style={{ display: 'flex' }}>
+                              <div>
                              
                               <Typography >
                                  <CoronavirusTwoToneIcon/>
                               </Typography>
+                              </div>
                               <div>
                               <Typography gutterBottom variant='h6' component='div'>
                                  {e.disease_name}
                               </Typography>
-                              <div style={{ display: 'flex',paddingTop:5 }}>
-                                 
-                                 <div style={{ display: 'flex'}}>
-                                    {/* {e.disease_status} */}
-                                    <Typography  sx={{paddingTop:1 , color:"#8f9194"}}>Deactive</Typography>
+                              </div>
+                              </div>
+                              <div  style={{display:'block'}}>
+                                    <Typography sx={{paddingTop:1 , color:"primary"}}>Status</Typography>
                                     <GreenSwitch {...label} defaultChecked />
-                                    
-                                    <Typography sx={{paddingTop:1 , color:"green"}}>Active</Typography>
-                                 </div>
-                                 
                               </div>
-                              </div>
-                              </div>
+
+
                            </CardContent>
                         </CardActionArea>
                      </Card>
@@ -252,5 +249,13 @@ const page = () => {
       </div>
    )
 }
+                              
+                                 
+                                 
+                                    
+                                    
+                                 
+                                 
+                              
 
 export default page
