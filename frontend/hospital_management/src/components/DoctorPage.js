@@ -12,11 +12,12 @@ import { Card, CardContent } from '@mui/material'
 import { CardActionArea, CardMedia } from '@mui/material'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
-
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import { useGetSpecialistDoctorMutation } from '@/services/Query'
-import { useGetAllDoctorsQuery , useGetAllDiseasesQuery} from '@/services/Query'
+import { useGetAllDoctorsQuery ,useGetAllDiseasesQuery } from '@/services/Query'
 import Doctor from './Doctor'
 import Image from 'next/image'
 
@@ -71,6 +72,16 @@ function DoctorPage() {
    // filter use
    const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
    const { data: getDoctors, isLoading: isDoctorsLoading } = useGetAllDoctorsQuery()
+   
+   
+   if (isLoading||isDoctorsLoading)
+   return (
+     <div style={{height:"100vh"  , display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <Box sx={{ display: 'flex' }}>
+         <CircularProgress />
+      </Box>
+      </div>
+   )
 
    const Typo = {
       fontWeight: 800,

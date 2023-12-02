@@ -69,10 +69,8 @@ const data = [
 ];
 
 function Chart() {
-
     const { data: ViewDoctor } = useGetAllDoctorsQuery();
     const { data: ViewPatient } = useGetAllPatientsQuery();
-
     const [count1, setCount1] = useState(0);
     const [count2, setCount2] = useState(0);
     console.log(count1,count2)
@@ -204,16 +202,14 @@ function Chart() {
                                </Grid >
                                <Grid item xs={6}>
                                 <div  style={{width:'70%',height:'100%',marginTop:'10%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
-                                <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/>
+                                {/* lmkljjh<Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100} /> */}
                                 </div>
                             
 
                                </Grid>
                              </Grid>
-                           
                         </div>
                     </Grid>
-                    
                 </Grid>
 
                 <Grid pt={3} item xs={12} style={{ display: 'flex' }}>

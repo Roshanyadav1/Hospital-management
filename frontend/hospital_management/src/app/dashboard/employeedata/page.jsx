@@ -6,8 +6,8 @@ function Career() {
     <div onClick={()=>{
       toast.success("Career page")
     }}>
-     {/* <Dashboard/> */}
-     MEGHAAAAAAAAAAAAAAAAAA
+     <Dashboard/>
+     {/* MEGHAAAAAAAAAAAAAAAAAA */}
     </div>
   )
 }
