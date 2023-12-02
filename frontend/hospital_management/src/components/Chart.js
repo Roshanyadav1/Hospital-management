@@ -202,11 +202,7 @@ function Chart() {
                                </Grid >
                                <Grid item xs={6}>
                                 <div  style={{width:'70%',height:'100%',marginTop:'10%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
-<<<<<<< HEAD
-                                {/* lmkljjh<Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100} /> */}
-=======
                                 {/* <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100} src={Doctorrrr} /> */}
->>>>>>> 11243b846396ddcb2131b4927477b204c582243c
                                 </div>
                             
 
