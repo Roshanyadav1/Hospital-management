@@ -9,6 +9,7 @@ from rest_framework import status
 from error.models import Error
 from hospital_management.email import send_appointment_email
 from hospital_management.responses import ResponseMessage
+from hospital_management.custom_paginations import CustomPagination
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Count
@@ -46,7 +47,7 @@ class AppointmentView(ListAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentViewSerializer
     filterset_fields = ['doctor_id', 'appointment_time', 'patient_id',]
-    pagination_class = PageNumberPagination
+    pagination_class = CustomPagination
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
