@@ -19,7 +19,7 @@ import {
 import '@/components/container.css'
 import CommonListItem from './CommonListItem';
 import Image from 'next/image'
-// import Doc from './Doc.png'
+// import Doctorrrr from '../assest/Doc.pm'
 
 const data = [
     {
@@ -204,7 +204,7 @@ function Chart() {
                                </Grid >
                                <Grid item xs={6}>
                                 <div  style={{width:'70%',height:'100%',marginTop:'10%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
-                                <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/>
+                                {/* <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100} src={Doctorrrr} /> */}
                                 </div>
                             
 
