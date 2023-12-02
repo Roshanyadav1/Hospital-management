@@ -223,7 +223,7 @@ class AppointmentDelete(APIView):
             except:
                 response_message = ResponseMessage.DELETE_SUCCESS
                 response_code = status.HTTP_200_OK
-                Response.status_code = error.error_code
+                Response.status_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
