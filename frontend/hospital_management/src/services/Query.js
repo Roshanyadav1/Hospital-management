@@ -110,6 +110,12 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      getAllDiseases : build.query({
+         query: () => ({
+            url: 'disease/view/',
+            method: 'GET',
+         }),
+      }),
    }),
 })
 

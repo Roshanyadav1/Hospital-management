@@ -19,7 +19,7 @@ import {
 import '@/components/container.css'
 import CommonListItem from './CommonListItem';
 import Image from 'next/image'
-// import Doc from './Doc.png'
+import Doc from './Doc.png'
 
 const data = [
     {
