@@ -1,8 +1,9 @@
+
+
 "use client"
 
-
 import React from 'react';
-import { Grid, Typography, Button, Box } from '@mui/material';
+import { Grid, Typography, Button, Box,DialogContent, DialogTitle,Dialog } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -13,68 +14,92 @@ import Image from 'next/image';
 import Link from "@mui/material/Link";
 import { Container } from '@mui/system';
 import { useState } from 'react';
-function DoctorCard() { 
-  const [selectedSlot, setSelectedSlot] = useState('');
+function DoctorCard() {
+  const [selectedSlot, setSelectedSlot] = useState(null);
   const [appointments, setAppointments] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleSlotSelection = (slot) => {
-    setSelectedSlot(slot);
+    if (selectedSlot === null || selectedSlot.id !== slot.id) {
+      setSelectedSlot(slot); 
+    } else {
+      setSelectedSlot(null); 
+    }
   };
+
+ 
 
   const isSlotDisabled = (slot) => {
     const bookedAppointments = appointments.filter((apt) => apt.slot === slot.slot);
     return bookedAppointments.length >= slot.maxAppointments || slot.slot === selectedSlot;
+    // return selectedSlot !== null && selectedSlot.id === slot.id;
+  
   };
 
   const timeSlots = [
-    { id: '09:00 AM ' },
-    { id: '09:20 AM ' },
-    { id: '9:40 AM' },
+    { id: '09:00 AM' },
+    { id: '09:20 AM' },
+    { id: '9:40  AM' },
     { id: '10:00 AM' },
-    { id: '10:20 AM' },
-    { id: '01:40 PM ' },
+    { id: '12:00 PM' },
+    { id: '01:40 PM' },
     { id: '11:00 AM' },
-    { id: '03:20  PM' },
-    { id: '05:40  PM' },
+    { id: '03:20 PM' },
+    { id: '05:40 PM' },
   ];
   const bookAppointment = (slot) => {
-    const bookAppointment = (slot) => {
-      if (!isSlotDisabled(slot)) {
-        const appointmentData = {
-          time: slot.id, // Use the selected time slot
-          appointment_number: 1,
-          date: '2023-12-01', // Use the current date in YYYY-MM-DD format
-          diseaseId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-          doctorId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-          patientId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        };
-  
-  
-        fetch('https://hospital-management-six-chi.vercel.app/api/appointment/add/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(appointmentData),
-        })
-        .then((response) => {
-          // Handle response status
-          if (response.ok) {
-            // Update local state or UI to reflect the booked appointment
-            setAppointments([...appointments, { slot: slot.id }]);
-            setSelectedSlot('');
-          } else {
-            // Handle error response
-            console.error('Appointment booking failed');
-          }
+    if (!isSlotDisabled(slot)) {
+      const apiUrl = 'https://hospital-management-six-chi.vercel.app/api/appointment/add/';
+      const appointmentData = {
+        appointment_number: 1,
+        time: slot.id,
+        date: '2023-12-01',
+        doctorId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+        diseaseId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',        
+        patientId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+      };
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(appointmentData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setAppointments([...appointments, { slot: slot.id }]);
+          setSelectedSlot('');
+          // setOpenModal(true); 
+          console.log('Appointment booked:', data);
         })
         .catch((error) => {
-          console.error('Error occurred while booking appointment:', error);
+          console.error('Error booking appointment:', error);
+          
         });
+      }
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  const handleBookAppointment = () => {
+    const selectedAppointment = remainingSlots.find((slot) => slot.id === selectedSlot);
+    if (selectedAppointment) {
+      bookAppointment(selectedAppointment);
     }
   };
-  
+
   const remainingSlots = timeSlots.filter((slot) => !isSlotDisabled(slot));
+
+  // Function to check if  slot is selected
+  const isSelectedSlot = (slot) => {
+    return selectedSlot === slot.id;
+  };
+ // Function to check if  slot is booked
+  const isBookedSlot = (slot) => {
+    return appointments.some((apt) => apt.slot === slot.id);
+  };
+
   return (
     <Container maxWidth="lg" p={2}>
       <Grid container maxWidth="lg" boxShadow={1} spacing={5} display="flex" Direction="column">
@@ -102,8 +127,6 @@ function DoctorCard() {
               </Typography>
             </>
           </Grid>
-
-
         </Grid>
       </Grid>
       <br /> <br />
@@ -144,12 +167,12 @@ function DoctorCard() {
                 Appointment Time
               </Typography>
               <Typography gutterBottom variant="body2" margin={2} sx={{ border: "1px solid #13293D", borderRadius: "10px", padding: "1px" }}>
-                {remainingSlots.length} Slots
+              {remainingSlots.length} Slots
               </Typography>
             </Box>
             <hr />
             <Grid container spacing={0} justifyContent={"center"}>
-              {remainingSlots.map((slot) => (
+              { remainingSlots.map ((slot) => (
                 <Grid item p={1} display="flex" key={slot.id} xs={6} sm={6} md={4} >
                   <Button
                     variant="outlined"
@@ -162,7 +185,7 @@ function DoctorCard() {
                         borderColor: "#2CD9C5",
                         backgroundColor: "#2CD9C5",
                       },
-                      backgroundColor: isSlotDisabled(slot) ? "#EDF2F7" : null,
+                      backgroundColor: isBookedSlot(slot) ? "#EDF2F7" : isSlotDisabled(slot) ? "#EDF2F7" : null,
                       cursor: isSlotDisabled(slot) ? "not-allowed" : "pointer",
                     }}
                     onClick={() => bookAppointment(slot)}
@@ -172,20 +195,34 @@ function DoctorCard() {
                   </Button>
                 </Grid>
               ))}
-              <Grid item display="flex" justifyItems="center" marginBottom={2} justifyContent="center"  >
-                <Button variant="contained" sx={{ padding: 1, width: 200, backgroundColor: "#2CD9C5", borderRadius: "10px" }} >Book Appoinment</Button>
+
+              < Grid item display="flex" justifyItems="center" marginBottom={2} justifyContent="center">
+                <Button
+                  variant="contained"
+                  sx={{ padding: 1, width: 200, backgroundColor: "#2CD9C5", borderRadius: "10px" }}
+                  onClick={() => setOpenModal(true)} 
+                >
+                  Book Appointment
+                </Button>
               </Grid>
+
+              <Dialog open={openModal} onClose={() => setOpenModal(false)}>
+                <DialogTitle>Are you sure you want to booked appoinment!</DialogTitle>
+                <DialogContent>
+                  <Typography variant="body1">
+                    Date: 2023-12-02 Time: {selectedSlot}
+                  </Typography>
+                </DialogContent>
+              </Dialog>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
     </Container>
 
-  );
-}
-} 
+  )
+ };
 export default DoctorCard
-
 
 
 
