@@ -37,6 +37,37 @@ class DoctorRegister(GenericAPIView):
                 'message': 'Doctor ' + response_message
             },
         )
+
+class DoctorCount(ListAPIView):
+    queryset = Doctor.objects.all()
+    serializer_class = DoctorViewSerializer
+
+    def list(self, request, *args, **kwargs):
+         response = super().list(request, *args, **kwargs)
+         response_data = response.data
+
+
+         response_message = ""
+         response_code = ""
+
+         try:
+          error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
+          response_message = error.error_message
+          response_code = error.error_code
+          Response.status_code = error.error_code
+         except:
+             response_message = ResponseMessage.RETRIEVED_SUCCESS
+             response_code = status.HTTP_200_OK
+         return Response(
+            {
+                'status': response_code, 
+                'message': "Doctor " + response_message,
+                'count' : len(response_data),
+            }
+         )
+
+       
+           
     
 class DoctorView(ListAPIView):
     queryset = Doctor.objects.all()
