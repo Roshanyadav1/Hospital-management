@@ -84,8 +84,10 @@ class CheckUpUpdate(APIView):
         id = input
         if CheckUp.objects.filter(checkup_id=id).count() >= 1:
             checkup = CheckUp.objects.get(checkup_id=id)
-            serializer = CheckupSerializer.save(
+            serializer = CheckupSerializer(
                 checkup, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
             response_message = ""
             response_code = ""
             try:

@@ -246,8 +246,10 @@ class EmployeeUpdate(APIView):
         id = input
         if Employee.objects.filter(employee_id=id).count() >= 1:
             employee = Employee.objects.get(employee_id=id)
-            serializer = EmployeeSerializer.save(
+            serializer = EmployeeSerializer(
                 employee, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
             response_message = ""
             response_code = ""
             try:
