@@ -176,13 +176,8 @@ function Layout({children}) {
         <DrawerHeader></DrawerHeader>
         <List>
           {[
-<<<<<<< HEAD
-             { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
-            { text: "Employee", path: "/dashboard/employeedata" , icon : <TrackChangesIcon/>},
-=======
             { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
             { text: "Career", path: "/dashboard/career" , icon : <TrackChangesIcon/>},
->>>>>>> origin/apt_view
             { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},
             { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
             { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},
