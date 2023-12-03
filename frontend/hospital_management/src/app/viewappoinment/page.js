@@ -1,8 +1,9 @@
 import React from 'react'
+import ViewAppoinment from '@/components/ViewAppointment'
 function Contact() {
   return (
     <div>
-     <h1>View Appoinment page</h1>
+     <ViewAppoinment/>
     </div>
   )
 }

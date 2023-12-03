@@ -4,7 +4,7 @@ import Footer from '@/components/Footer'
 function page() {
   return (
     <div>
-     <Footer/>
+     {/* <Footer/> */}
     </div>
   )
 }

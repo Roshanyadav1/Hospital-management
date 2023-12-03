@@ -1,9 +1,8 @@
-
 "use client"
 import { useRouter } from 'next/navigation'
 import DataGridTable from './DataGridTable';
 import { useGetEmployeeQuery } from '@/services/Query';
-import { columns } from '@/data/ColumnData';
+import { columns } from '@/data/ColumData';
 import DataTable from './DataTable';
 
 

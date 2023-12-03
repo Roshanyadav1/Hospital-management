@@ -1,3 +1,6 @@
+
+"use client"
+
 import React from 'react'
 import { Grid, Card, CardContent, Typography, Button } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
@@ -100,7 +103,7 @@ function DoctorCard() {
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
                            <Link
                               style={{ textDecoration: 'none' }}
-                              href=''
+                               href="/doctorpage"
                            >
                               <Card
                                  sx={{

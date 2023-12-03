@@ -1,12 +1,12 @@
 "use client"
 import { toast } from "react-toastify"
-
+import Dashboard from '@/components/Dashboard'
 function Career() {
   return (
     <div onClick={()=>{
-      toast.success("Career page")
+      toast.success("Employee page")
     }}>
-      <h1>Career page</h1>
+     <Dashboard/>
     </div>
   )
 }

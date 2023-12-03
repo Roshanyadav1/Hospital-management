@@ -17,13 +17,13 @@ export const queries = createApi({
    keepUnusedDataFor: 30,
    refetchOnReconnect: true,
    refetchOnFocus: true,
-   tagTypes: ["EMP" , "LOGIN"],
+   tagTypes: ['EMP', 'LOGIN'],
    endpoints: build => ({
       registerHospital: build.mutation({
-         query: (value) => ({
+         query: value => ({
             url: 'hospital/register/',
             method: 'POST',
-            body:value
+            body: value,
          }),
          async onQueryStarted({ queryFulfilled }) {
             try {
@@ -32,29 +32,45 @@ export const queries = createApi({
             } catch (e) {
                toast.error(JSON.stringify(e))
             }
-         }
+         },
       }),
       addEmployee: build.mutation({
-         query:(payload)=>({
-            url:'employee/add/',
-            method:'POST',
-            body:payload
+         query: payload => ({
+            url: 'employee/add/',
+            method: 'POST',
+            body: payload,
          }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               await queryFulfilled
+               toast.success('Employee Added Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         },
       }),
       addDiseases: build.mutation({
-         query:(payload)=>({
-            url:'disease/add/',
-            method:'POST',
-            body:payload
+         query: payload => ({
+            url: 'disease/add/',
+            method: 'POST',
+            body: payload,
          }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               await queryFulfilled
+               toast.success('Disease Added Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         },
       }),
       deleteEmployee: build.mutation({
-         query: (value) => ({
-            url: 'employee/delete/'+value+"/",
+         query: value => ({
+            url: 'employee/delete/' + value + '/',
             method: 'DELETE',
             // body:value
          }),
-         invalidatesTags :['EMP']
+         invalidatesTags: ['EMP'],
       }),
       getEmployee: build.query({
          query: () => ({
@@ -63,25 +79,50 @@ export const queries = createApi({
          }),
          providesTags: ['EMP'],
       }),
-      getAllHospital : build.query({
+      getAllHospital: build.query({
          query: () => ({
-            url: ' ',
+            url: 'hospital/view/',
             method: 'GET',
          }),
       }),
-     getSpecialistDoctor : build.mutation({
-      mutation : (prop)=> ({
-         url:`doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
-         method:'GET',
+      getAllDoctors: build.query({
+         query: () => ({
+            url: 'doctor/view/',
+            method: 'GET',
+         }),
       }),
-     }),
-     getAllDiseases : build.query({
-      query: () => ({
-         url: 'disease/view/',
-         method: 'GET',
+      
+      getGraphAppointInfo : build.query({
+         query: () => ({
+            url: '/view/',
+            method: 'GET',
+         }),
       }),
-   }),
-
+      getAllPatients: build.query({
+         query: () => ({
+            url: 'patient/view/',
+            method: 'GET',
+         }),
+      }),
+    
+      getSpecialistDoctor: build.mutation({
+         mutation: prop => ({
+            url: `doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
+            method: 'GET',
+         }),
+      }),
+      getAllDiseases : build.query({
+         query: () => ({
+            url: 'disease/view/',
+            method: 'GET',
+         }),
+      }),
+      getAppointment: build.query({
+         query: () => ({
+            url: 'appointment/view/?patient_id=b1ebabba-6f65-4bbf-a3ca-f48e448a7d91',
+            method: 'GET',
+         }),
+      }),
    }),
 })
 export const {
@@ -91,7 +132,11 @@ export const {
    useDeleteEmployeeMutation,
    useGetEmployeeQuery,
    useGetAllHospitalQuery,
+   useGetAllDoctorsQuery,
+   useGetAllPatientsQuery,
    useGetSpecialistDoctorMutation,
    useGetAllDiseasesQuery,
+   useGetAppointmentQuery,
+   useGetGraphAppointInfoQuery
 } = queries
 
