@@ -29,10 +29,8 @@ export default function RootLayout({ children }) {
         <CustomProvider>
           <ThemeProvider theme={theme}>
             <body className={inter.className}>
-            <SteperNav />
+            {/* <SteperNav/> */}
               {children}
-           <Footer/>
-
             </body>
           </ThemeProvider>
         </CustomProvider>

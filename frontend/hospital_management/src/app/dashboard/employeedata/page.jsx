@@ -4,10 +4,9 @@ import Dashboard from '@/components/Dashboard'
 function Career() {
   return (
     <div onClick={()=>{
-      toast.success("Career page")
+      toast.success("Employee page")
     }}>
-     {/* <Dashboard/> */}
-     MEGHAAAAAAAAAAAAAAAAAA
+     <Dashboard/>
     </div>
   )
 }

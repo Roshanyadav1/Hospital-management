@@ -4,7 +4,7 @@ import { Grid } from "@mui/material"
 import List from '@mui/material/List';
 import { useGetAllDoctorsQuery } from '@/services/Query';
 import { useGetAllPatientsQuery } from '@/services/Query';
-// import { useGetGraphAppointInfoQuery } from '@/services/Query';
+import { useGetGraphAppointInfoQuery } from '@/services/Query';
 import {
     ComposedChart,
     Line,

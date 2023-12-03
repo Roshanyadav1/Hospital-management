@@ -92,8 +92,7 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-       
- 
+      
       getGraphAppointInfo : build.query({
          query: () => ({
             url: '/view/',
@@ -119,6 +118,12 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      getAppointment: build.query({
+         query: () => ({
+            url: 'appointment/view/?patient_id=b1ebabba-6f65-4bbf-a3ca-f48e448a7d91',
+            method: 'GET',
+         }),
+      }),
    }),
 })
 
@@ -133,5 +138,6 @@ export const {
    useGetAllPatientsQuery,
    useGetSpecialistDoctorMutation,
    useGetAllDiseasesQuery,
-   useGetGraphAppointInfoQuery,
+   useGetAppointmentQuery,
+   useGetGraphAppointInfoQuery
 } = queries

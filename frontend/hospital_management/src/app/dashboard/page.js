@@ -7,7 +7,7 @@ function FetchData() {
 
   return (
     <div>
-      {/* <DataGridTable data={isSuccess ? empData?.data : []} col={columns} /> */}
+      {/* < DataGridTable data={isSuccess ? empData?.data : []} col={columns} /> */}
       <Chart />
     </div>
   )
