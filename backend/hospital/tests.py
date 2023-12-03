@@ -30,7 +30,6 @@ class TestSetUp(APITestCase):
                               "hospital_address": "Sandalpur",
                               "hospital_city": "Khategaon",
                               "hospital_status": "True",
-                              "hospital_logo":"test url",
                               "hospital_type": "Private",
                               "hospital_category": "General",
                               "username": "Admin",
@@ -51,9 +50,9 @@ class Testview(TestSetUp):
         self.assertEqual(res.status_code, 200)
 
     def test_hospital_cannot_register(self):
-        res = self.client.get(self.hospital_register)
+        res = self.client.post(self.hospital_register)
         pdb.set_trace
-        self.assertEqual(res.status_code, 405)
+        self.assertEqual(res.status_code, 400)
 
     def test_hospital_can_view(self):
         res = self.client.get(self.hospital_view)
@@ -101,7 +100,6 @@ class TestHospitalSerializer(TestCase):
             "hospital_address": "Sandalpur",
             "hospital_city": "Khategaon",
             "hospital_status": "True",
-            "hospital_logo":"test url",
             "hospital_type": "Private",
             "hospital_category": "General",
             "username": "Admin",
@@ -133,13 +131,12 @@ class HospitalModelTestCase(TestCase):
         hospital_address = "Sandalpur"
         hospital_city = "Khategaon"
         hospital_status = False
-        hospital_logo = "test url"
         hospital_type = "Private"
         hospital_category = "General"
         username = "Admin"
         password = "admin@123"
         hospital = Hospital.objects.create(hospital_name=hospital_name, hospital_email=hospital_email, hospital_phone=hospital_phone, hospital_owner_name=hospital_owner_name, hospital_owner_phone=hospital_owner_phone, hospital_owner_email=hospital_owner_email,
-                                           hospital_address=hospital_address, hospital_city=hospital_city, hospital_status=hospital_status,hospital_logo = hospital_logo, hospital_type=hospital_type, hospital_category=hospital_category, username=username, password=password)
+                                           hospital_address=hospital_address, hospital_city=hospital_city, hospital_status=hospital_status, hospital_type=hospital_type, hospital_category=hospital_category, username=username, password=password)
         self.assertEqual(hospital_name, hospital.hospital_name)
         self.assertEqual(hospital_email, hospital.hospital_email)
         self.assertEqual(hospital_phone, hospital.hospital_phone)
@@ -149,7 +146,6 @@ class HospitalModelTestCase(TestCase):
         self.assertEqual(hospital_address, hospital.hospital_address)
         self.assertEqual(hospital_city, hospital.hospital_city)
         self.assertFalse(hospital_status, hospital.hospital_status)
-        self.assertEqual(hospital_logo,hospital.hospital_logo)
         self.assertEqual(hospital_type, hospital.hospital_type)
         self.assertEqual(hospital_category, hospital.hospital_category)
         self.assertEqual(username, hospital.username)

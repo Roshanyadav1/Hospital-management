@@ -8,13 +8,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
-from hospital_management.responses import ResponseMessage
 
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return {
-        'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
 
@@ -25,16 +23,24 @@ class UserRegister(GenericAPIView):
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        try:
-            error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
+        if User.objects.filter(employee_email = request.data.get('employee_email')).count() >= 1:
+            error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
             response_message = error.error_message
             response_code = error.error_code
             Response.status_code = error.error_code
-        except:
-            response_message = ResponseMessage.REGISTRATION_SUCCESS
-            response_code = status.HTTP_200_OK
-            Response.status_code = status.HTTP_200_OK
+            return Response(
+                {
+                    'status': response_code,
+                    'message': 'Employee ' + response_message
+                },
+            )
+        else:
+         serializer.save()
+        
+        error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+        response_message = error.error_message
+        response_code = error.error_code
+        Response.status_code = error.error_code
         return Response(
             {
                 'status': response_code,
@@ -49,30 +55,20 @@ class UserDelete(APIView):
         if User.objects.filter(user_id=id).count() >= 1:
             doctor = User.objects.get(user_id=id)
             doctor.delete()
-            try:
-                error = Error.objects.get(error_title='DELETE_SUCCESS')
-                response_message = error.error_message
-                response_code = error.error_code
-                Response.status_code = error.error_code
-            except:
-                response_message = ResponseMessage.DELETE_SUCCESS
-                response_code = status.HTTP_200_OK
-                Response.status_code = status.HTTP_200_OK
+            error = Error.objects.get(error_title='DELETE_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
             return Response(
                 {
                     'status': response_code,
                     'message': "User " + response_message,
                 },
             )
-        try:
-            error = Error.objects.get(error_title='INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-        except:
-            response_message = ResponseMessage.INVALID_ID
-            response_code = status.HTTP_400_BAD_REQUEST
-            Response.status_code = status.HTTP_400_BAD_REQUEST
+        error = Error.objects.get(error_title='INVALID_ID')
+        response_message = error.error_message
+        response_code = error.error_code
+        Response.status_code = error.error_code
         return Response(
             {
                 'status': response_code,
@@ -130,6 +126,7 @@ class UserLoginView(GenericAPIView):
                         },
                     )
         else:
+            Response.status_code = status.HTTP_404_NOT_FOUND
             return Response(
                 {
                     'status': status.HTTP_404_NOT_FOUND,
@@ -148,6 +145,7 @@ class UserVerificationView(APIView):
         # user_id = request.GET.get('user_id')
         # print(token, user_id)
         # serializer = UserProfileSerializer(request.user)
+        Response.status_code = status.HTTP_200_OK
         return Response(
             {
                 'status': status.HTTP_200_OK,
@@ -162,7 +160,14 @@ class UserView(APIView):
 
     def get(self, request, format=None):
         serializer = UserProfileSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        Response.status_code = status.HTTP_200_OK
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'message': "User Verified",
+                'data': serializer.data, 
+            }
+        )
 
 
 class UserUpdate(APIView):

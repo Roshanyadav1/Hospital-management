@@ -4,5 +4,11 @@ from employee.models import Employee
 
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
-        model= Employee
-        fields = '__all__'
+        model = Employee
+        exclude = ('employee_type', 'employee_status')
+
+
+class EmployeeRelation(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = ['employee_name']

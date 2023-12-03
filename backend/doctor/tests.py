@@ -6,13 +6,7 @@ import pdb
 import uuid
 from doctor.serializers import DoctorSerializer
 from doctor.models import Doctor
-from datetime import date , datetime
 
-
-
-ddate = date.today()
-now = datetime.now() 
-time  = now.strftime("%H:%M:%S")
 
 class TestSetUp(APITestCase):
     def setUp(self):
@@ -27,13 +21,9 @@ class TestSetUp(APITestCase):
         self.doctor_update_url = reverse(
             'doctor profile update', kwargs={'input': self.test})
         self.doctor_data = {
-            "doctor_profile_picture" :"test url",
-            "disease_specialist":"test",
-            "times":"test",
-            "day":"test",
-            "per_patient_time":time,
-            "status":"test"
-            
+            "disease_specialist": "test",
+            "doctor_type": "test",
+
         }
         return super().setUp()
 
@@ -43,7 +33,8 @@ class TestSetUp(APITestCase):
 
 class Testview(TestSetUp):
     def test_doctor_can_add(self):
-        res = self.client.post(self.doctor_add,self.doctor_data,format='json')
+        res = self.client.post(
+            self.doctor_add, self.doctor_data, format='json')
         self.assertEqual(res.status_code, 200)
 
     def test_doctor_cannot_add(self):
@@ -71,27 +62,24 @@ class Testview(TestSetUp):
         self.assertEqual(res.status_code, 200)
 
     def test_doctor_can_update_(self):
-        res = self.client.post(self.doctor_update_url,input=85874984)
+        res = self.client.post(self.doctor_update_url, input=85874984)
         self.assertEqual(res.status_code, 405)
 
     def test_doctor_delete(self):
         res = self.client.delete(self.doctor_delete_url, input=self.test)
         self.assertEqual(res.status_code, 200)
+
     def test_doctor_cannot_delete(self):
         res = self.client.post(self.doctor_delete_url, input=self.test)
         self.assertEqual(res.status_code, 405)
 
+
 class DoctorSerializerTest(TestCase):
     def test_serializer(self):
         self.doctor_data = {
-           "doctor_profile_picture" :"test url",
-            "disease_specialist":"test",
-            "times":"test",
-            "day":"test",
-            "per_patient_time":time,
-            "status":"test"
-            
-            
+            "disease_specialist": "test",
+            "doctor_type": "test",
+
         }
         serializer = DoctorSerializer(data=self.doctor_data)
         self.assertTrue(serializer.is_valid())
@@ -100,15 +88,10 @@ class DoctorSerializerTest(TestCase):
 
 class TestDoctorModel(TestCase):
     def test_model(self):
-       disease_specialist = "test"
-       doctor_type = "test"
+        disease_specialist = "test"
+        doctor_type = "test"
 
-       doctor = Doctor.objects.create(disease_specialist = disease_specialist,doctor_type = doctor_type)
-       self.assertEqual(disease_specialist, doctor.disease_specialist)
-       self.assertEqual(doctor_type, doctor.doctor_type)
-    
-
-
-      
-
-
+        doctor = Doctor.objects.create(
+            disease_specialist=disease_specialist, doctor_type=doctor_type)
+        self.assertEqual(disease_specialist, doctor.disease_specialist)
+        self.assertEqual(doctor_type, doctor.doctor_type)
