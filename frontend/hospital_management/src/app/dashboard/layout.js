@@ -12,7 +12,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ResponsiveAppBar from "@/components/Navbar";
-// import Footer from '@/components/Footer';
+import Footer from '@/components/Footer';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Toolbar } from "@mui/material";
@@ -233,6 +233,7 @@ function Layout({children}) {
           {children}
        </Container>
        </Box> 
+      
     </Box>
   );
 }
