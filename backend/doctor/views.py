@@ -31,6 +31,7 @@ class DoctorRegister(GenericAPIView):
         except:
             response_message = ResponseMessage.REGISTRATION_SUCCESS
             response_code = status.HTTP_201_CREATED
+            Response.status_code = status.HTTP_201_CREATED
         return Response(
             {
                 'status': response_code,

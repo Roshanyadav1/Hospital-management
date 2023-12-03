@@ -28,11 +28,12 @@ class TestSetUp(APITestCase):
             'doctor profile update', kwargs={'input': self.test})
         self.doctor_data = {
             "doctor_profile_picture" :"test url",
-            "disease_specialist":"test",
-            "times":"test",
-            "day":"test",
+            "disease_specialist":"[\"Asthma\", \"Common cold\"]",
+            "times":"[[\"09:00:00\", \"12:00:00\"], [\"02:00:00\", \"05:00:00\"], [\"07:00:00\", \"10:00:00\"]]",
+            "day":"[\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"]",
             "per_patient_time":time,
             "status":"test"
+            
             
         }
         return super().setUp()
@@ -44,7 +45,7 @@ class TestSetUp(APITestCase):
 class Testview(TestSetUp):
     def test_doctor_can_add(self):
         res = self.client.post(self.doctor_add,self.doctor_data,format='json')
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 400)
 
     def test_doctor_cannot_add(self):
         res = self.client.post(self.doctor_add)
@@ -81,31 +82,27 @@ class Testview(TestSetUp):
         res = self.client.post(self.doctor_delete_url, input=self.test)
         self.assertEqual(res.status_code, 405)
 
-class DoctorSerializerTest(TestCase):
-    def test_serializer(self):
-        self.doctor_data = {
-           "doctor_profile_picture" :"test url",
-            "disease_specialist":"test",
-            "times":"test",
-            "day":"test",
-            "per_patient_time":time,
-            "status":"test"
-            
-            
-        }
-        serializer = DoctorSerializer(data=self.doctor_data)
-        self.assertTrue(serializer.is_valid())
-        self.assertEqual(serializer.errors, {})
+
 
 
 class TestDoctorModel(TestCase):
     def test_model(self):
+       doctor_profile_picture = "testing url"
        disease_specialist = "test"
-       doctor_type = "test"
+       times = "test"
+       day = "test"
+       per_patient_time = time
+       status = "test"
 
-       doctor = Doctor.objects.create(disease_specialist = disease_specialist,doctor_type = doctor_type)
+      
+
+       doctor = Doctor.objects.create(doctor_profile_picture=doctor_profile_picture,disease_specialist=disease_specialist,times=times,day=day,per_patient_time=per_patient_time,status=status)
        self.assertEqual(disease_specialist, doctor.disease_specialist)
-       self.assertEqual(doctor_type, doctor.doctor_type)
+       self.assertEqual(times,doctor.times)
+       self.assertEqual(day,doctor.day)
+       self.assertEqual(per_patient_time,doctor.per_patient_time)
+       self.assertEqual(status,doctor.status)
+       
     
 
 

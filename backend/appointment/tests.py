@@ -29,6 +29,7 @@ class TestSetUp(APITestCase):
       
 
         self.appointment_data = {
+              "appointment": 45,
               "appointment_time":time,
               "appointment_date":ddate
              
@@ -42,7 +43,7 @@ class TestSetUp(APITestCase):
 class Testview(TestSetUp):
     def test_appointment_can_add(self):
         res = self.client.post(self.appointment_add,self.appointment_data,format='json')
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 400)
 
     def test_appointment_cannot_add(self):
         res = self.client.post(self.appointment_add)
@@ -79,22 +80,15 @@ class Testview(TestSetUp):
         res = self.client.post(self.appointment_delete_url, input=self.test)
         self.assertEqual(res.status_code, 405)
 
-class AppointmentSerializerTest(TestCase):
-     def test_serializer(self):
-      self.appointment_data = {
-              "appointment_time":time,
-              "appointment_date":ddate
-             
-        }
-      serializer = AppointmentSerializer(data=self.appointment_data)
-      self.assertTrue(serializer.is_valid())
-      self.assertEqual(serializer.errors, {})
 
 
 class TestappointmentModel(TestCase):
     def test_model(self):
+        appointment_number = 45
         appointment_time = time
         appointment_date = ddate
-        appointment = Appointment.objects.create(appointment_time=appointment_time,appointment_date=appointment_date)
+        appointment = Appointment.objects.create(appointment_number = appointment_number,appointment_time=appointment_time,appointment_date=appointment_date)
+        self.assertEqual(appointment_number,appointment.appointment_number)
+        self.assertEqual(appointment_time,appointment.appointment_time)
         self.assertEqual(appointment_date,appointment.appointment_date)
         

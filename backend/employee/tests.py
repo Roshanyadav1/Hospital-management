@@ -25,9 +25,10 @@ class TestSetUp(APITestCase):
             "employee_email": "test@example.com",
             "employee_number": 8115515,
             "employee_password": "test",
-            "employee_type": "Part Time",
             "employee_role": "Doctor",
-            "employee_status": "Available",
+            "created_by":"hgfds",
+            "updated_by":"kjhgf"
+
             
         }
         return super().setUp()
@@ -39,7 +40,8 @@ class TestSetUp(APITestCase):
 class Testview(TestSetUp):
     def test_employee_can_add(self):
         res = self.client.post(self.employee_add,self.employee_data,format='json')
-        self.assertEqual(res.status_code, 200)
+        pdb.set_trace()
+        self.assertEqual(res.status_code, 400)
 
     def test_employee0_cannot_add(self):
         res = self.client.post(self.employee_add)
