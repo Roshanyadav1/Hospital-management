@@ -8,11 +8,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
+from hospital_management.responses import ResponseMessage
 
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return {
+        'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
 
@@ -24,10 +26,15 @@ class UserRegister(GenericAPIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
-        response_message = error.error_message
-        response_code = error.error_code
-        Response.status_code = error.error_code
+        try:
+            error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
+        except:
+            response_message = ResponseMessage.REGISTRATION_SUCCESS
+            response_code = status.HTTP_200_OK
+            Response.status_code = status.HTTP_200_OK
         return Response(
             {
                 'status': response_code,
@@ -42,20 +49,30 @@ class UserDelete(APIView):
         if User.objects.filter(user_id=id).count() >= 1:
             doctor = User.objects.get(user_id=id)
             doctor.delete()
-            error = Error.objects.get(error_title='DELETE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            try:
+                error = Error.objects.get(error_title='DELETE_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
+            except:
+                response_message = ResponseMessage.DELETE_SUCCESS
+                response_code = status.HTTP_200_OK
+                Response.status_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
                     'message': "User " + response_message,
                 },
             )
-        error = Error.objects.get(error_title='INVALID_ID')
-        response_message = error.error_message
-        response_code = error.error_code
-        Response.status_code = error.error_code
+        try:
+            error = Error.objects.get(error_title='INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
+        except:
+            response_message = ResponseMessage.INVALID_ID
+            response_code = status.HTTP_400_BAD_REQUEST
+            Response.status_code = status.HTTP_400_BAD_REQUEST
         return Response(
             {
                 'status': response_code,
@@ -78,6 +95,7 @@ class UserLoginView(GenericAPIView):
 
             if is_verify == 'true':
                 token = get_tokens_for_user(user)
+                Response.status_code = status.HTTP_200_OK
                 return Response(
                     {
                         'status': status.HTTP_200_OK,
@@ -92,6 +110,7 @@ class UserLoginView(GenericAPIView):
                 user = authenticate(user_email=email, password=password)
                 if user is not None:
                     token = get_tokens_for_user(user)
+                    Response.status_code = status.HTTP_200_OK
                     return Response(
                         {
                             'status': status.HTTP_200_OK,
@@ -103,6 +122,7 @@ class UserLoginView(GenericAPIView):
                         },
                     )
                 else:
+                    Response.status_code = status.HTTP_400_BAD_REQUEST
                     return Response(
                         {
                             'status': status.HTTP_400_BAD_REQUEST,

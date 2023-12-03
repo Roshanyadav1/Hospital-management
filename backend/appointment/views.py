@@ -1,4 +1,3 @@
-from rest_framework.pagination import PageNumberPagination
 from appointment.serializers import *
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
@@ -13,6 +12,18 @@ from hospital_management.custom_paginations import CustomPagination
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Count
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
+
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 
 class AppointmentAdd(GenericAPIView):
@@ -48,14 +59,30 @@ class AppointmentView(ListAPIView):
     serializer_class = AppointmentViewSerializer
     filterset_fields = ['doctor_id', 'appointment_time', 'patient_id',]
     pagination_class = CustomPagination
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user_role = User.objects.get(user_id=user_id).user_role
+        print(user_role)
+        if user_role == "Patient":
+            if request.params.get('patient_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
         response_message = ""
         response_code = ""
         end_date = timezone.now().date()
         start_date = end_date - timedelta(days=6)
-       
+
         appointments_in_week = self.queryset.filter(
             appointment_date__range=[start_date, end_date])
         appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count(
