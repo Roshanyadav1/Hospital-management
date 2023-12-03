@@ -5,7 +5,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
-const CommonListItem = ({ avatarSrc, primaryText, secondaryText }) => {
+const CommonListItem = ({ avatarSrc, primaryText, secondaryText, disease_names, patient_name  }) => {
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
@@ -19,10 +19,24 @@ const CommonListItem = ({ avatarSrc, primaryText, secondaryText }) => {
               sx={{ display: 'inline' }}
               component="span"
               variant="body2"
-            //   color="text.primary"
-              className='Colo'
             >
               {secondaryText}
+            </Typography>
+            <br />
+            <Typography
+              sx={{ display: 'inline' }}
+              component="span"
+              variant="body2"
+            >
+              {disease_names}
+            </Typography>
+            <br />
+            <Typography
+              sx={{ display: 'inline' }}
+              component="span"
+              variant="body2"
+            >
+              {patient_name}
             </Typography>
           </React.Fragment>
         }
