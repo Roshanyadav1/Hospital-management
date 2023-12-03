@@ -6,6 +6,9 @@ import pdb
 import uuid
 from prescription.serializer import PrescriptionSerializer
 from prescription.models import Prescription
+from datetime import datetime
+
+now = datetime.now()
 
 
 class TestSetUp(APITestCase):
@@ -26,6 +29,7 @@ class TestSetUp(APITestCase):
             "frequency": "test",
             "route": "tablet",
             "duration": "test",
+
         }
         return super().setUp()
 
@@ -79,7 +83,8 @@ class PrecriptionSerializerTest(TestCase):
             "dosage": "4",
             "frequency": "10mg",
             "route": "tablet",
-            "duration": "5"
+            "duration": "5",
+
         }
 
         serializer = PrescriptionSerializer(data=self.prescription_data)

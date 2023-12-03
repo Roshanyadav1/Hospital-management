@@ -43,26 +43,26 @@ class TestSetUp(APITestCase):
 
 
 class Testview(TestSetUp):
-    def test_user_can_register(self):
+    def test_hospital_can_register(self):
         res = self.client.post(self.hospital_register,
                                self.hospital_data, format='json')
         pdb.set_trace
         self.assertEqual(res.status_code, 200)
 
-    def test_user_cannot_register(self):
+    def test_hospital_cannot_register(self):
         res = self.client.post(self.hospital_register)
         pdb.set_trace
         self.assertEqual(res.status_code, 400)
 
-    def test_user_can_view(self):
+    def test_hospital_can_view(self):
         res = self.client.get(self.hospital_view)
         self.assertEqual(res.status_code, 200)
 
-    def test_user_cannot_view(self):
+    def test_hospital_cannot_view(self):
         res = self.client.post(self.hospital_view)
         self.assertEqual(res.status_code, 405)
 
-    def test_user_can_delete(self):
+    def test_hospital_can_delete(self):
         res = self.client.delete(self.hospital_delete_url, input=self.test)
         self.assertEqual(res.status_code, 200)
 

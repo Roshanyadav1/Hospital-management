@@ -31,6 +31,11 @@ urlpatterns = [
              path('checkup/', include('checkup.urls')),
              path('user/', include('user.urls')),
              path('employee/', include('employee.urls')),
+<<<<<<< HEAD
              path('error/', include('error.urls'))
+=======
+             path('error/', include('error.urls')),
+             path('leave/', include('leave.urls')),
+>>>>>>> origin/main
          ]))
 ]

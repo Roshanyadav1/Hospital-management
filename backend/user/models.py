@@ -7,13 +7,13 @@ class UserManager(BaseUserManager):
     def create_user(self, member_id, user_name, user_email, user_role, user_password):
         if not user_email:
             raise ValueError("Users must have an email address")
-        
+
         user = self.model(
-            user_email = user_email,
-            member_id = member_id,
-            user_name = user_name,
-            user_password = user_password,
-            user_role = user_role,
+            user_email=user_email,
+            member_id=member_id,
+            user_name=user_name,
+            user_password=user_password,
+            user_role=user_role,
         )
 
         user.set_password(user_password)
@@ -22,11 +22,11 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, member_id, user_name, user_email, user_role, user_password):
         user = self.create_user(
-            member_id = member_id,
-            user_name = user_name,
-            user_email = user_email,
-            user_role = user_role,
-            user_password = user_password,
+            member_id=member_id,
+            user_name=user_name,
+            user_email=user_email,
+            user_role=user_role,
+            user_password=user_password,
         )
 
         user.is_admin = True
@@ -34,19 +34,21 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class User(AbstractBaseUser):
-    user_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False) 
-    member_id = models.UUIDField(default = uuid.uuid4, editable = False)
+    user_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
+    member_id = models.UUIDField(default=uuid.uuid4, editable=False)
     user_email = models.EmailField(
         verbose_name="email address",
         max_length=255,
         unique=True,
     )
     user_name = models.CharField(max_length=255)
-    user_role = models.CharField(max_length = 255, choices=(('Admin', 'Admin'),
-                                                            ('Manager', 'Manager'),
-                                                            ('Doctor', 'Doctor'),
-                                                            ('Patient', 'Patient')))
+    user_role = models.CharField(max_length=255, choices=(('Admin', 'Admin'),
+                                                          ('Manager', 'Manager'),
+                                                          ('Doctor', 'Doctor'),
+                                                          ('Patient', 'Patient')))
     user_password = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

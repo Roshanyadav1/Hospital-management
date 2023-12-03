@@ -12,9 +12,15 @@ from rest_framework import status
 class ErrorRegister(GenericAPIView):
     serializer_class = ErrorSerializer
 
+<<<<<<< HEAD
     def post(self, request, format = None):
         serializer = ErrorSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
+=======
+    def post(self, request, format=None):
+        serializer = ErrorSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+>>>>>>> origin/main
         serializer.save()
         return Response(
             {
@@ -22,4 +28,7 @@ class ErrorRegister(GenericAPIView):
                 'message': 'Error Successfully Registered'
             },
         )
+<<<<<<< HEAD
     
+=======
+>>>>>>> origin/main

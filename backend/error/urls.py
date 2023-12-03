@@ -3,4 +3,8 @@ from error.views import ErrorRegister
 
 urlpatterns = [
     path('register/', ErrorRegister.as_view()),
+<<<<<<< HEAD
 ]
+=======
+]
+>>>>>>> origin/main
