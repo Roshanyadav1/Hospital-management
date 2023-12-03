@@ -1,4 +1,3 @@
-from rest_framework.pagination import PageNumberPagination
 from appointment.serializers import *
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
@@ -66,6 +65,7 @@ class AppointmentView(ListAPIView):
         payload = jwt.decode(token, "secret", algorithms=['HS256'])
         user_id = payload['user_id']
         user_role = User.objects.get(user_id=user_id).user_role
+        
         if user_role == "Patient":
             if request.GET.get('patient_id') is None:
                 Response.status_code = status.HTTP_401_UNAUTHORIZED
