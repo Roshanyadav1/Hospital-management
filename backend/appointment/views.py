@@ -13,10 +13,14 @@ from hospital_management.custom_paginations import CustomPagination
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Count
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 class AppointmentAdd(GenericAPIView):
     serializer_class = AppointmentAddSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = AppointmentAddSerializer(data=request.data)
@@ -48,6 +52,7 @@ class AppointmentView(ListAPIView):
     serializer_class = AppointmentViewSerializer
     filterset_fields = ['doctor_id', 'appointment_time', 'patient_id',]
     pagination_class = CustomPagination
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -55,7 +60,31 @@ class AppointmentView(ListAPIView):
         response_code = ""
         end_date = timezone.now().date()
         start_date = end_date - timedelta(days=6)
-       
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[2]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user_role = User.objects.get(user_id=user_id).user_role
+        if user_role == "Patient":
+            if request.GET.get('patient_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
         appointments_in_week = self.queryset.filter(
             appointment_date__range=[start_date, end_date])
         appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count(
@@ -97,6 +126,7 @@ class AppointmentView(ListAPIView):
 
 
 class AppointmentViewById(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, input=None, format=None):
         id = input
@@ -143,6 +173,7 @@ class AppointmentViewById(APIView):
 
 
 class AppointmentUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -209,6 +240,7 @@ class AppointmentUpdate(APIView):
 
 
 class AppointmentDelete(APIView):
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request, input, format=None):
         id = input

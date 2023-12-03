@@ -12,10 +12,14 @@ from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
 from leave.models import Leave
 import json
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt 
 
 
 class DoctorRegister(GenericAPIView):
     serializer_class = DoctorSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = DoctorSerializer(data=request.data)
@@ -45,6 +49,7 @@ class DoctorView(ListAPIView):
     serializer_class = DoctorViewSerializer
     filter_backends = [SearchFilter, CustomOrderingFilter]
     pagination_class = CustomPagination
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -92,6 +97,7 @@ class DoctorView(ListAPIView):
 
 
 class DoctorViewById(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, input=None, format=None):
         id = input
@@ -149,6 +155,7 @@ class DoctorViewById(APIView):
 
 class DoctorUpdate(GenericAPIView):
     serializer_class = DoctorUpdateSerializer
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -196,6 +203,7 @@ class DoctorUpdate(GenericAPIView):
 
 
 class DoctorDelete(APIView):
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request, input, format=None):
         id = input

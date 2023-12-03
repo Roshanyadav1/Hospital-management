@@ -9,10 +9,14 @@ from rest_framework import status
 from error.models import Error
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 class LeaveRegister(GenericAPIView):
     serializer_class = LeaveSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = LeaveSerializer(data=request.data)
@@ -40,6 +44,7 @@ class LeaveView(ListAPIView):
     queryset = Leave.objects.all()
     serializer_class = LeaveSerializer
     pagination_class = CustomPagination
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
 
@@ -67,6 +72,8 @@ class LeaveView(ListAPIView):
 
 
 class LeaveViewById(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -111,6 +118,7 @@ class LeaveViewById(APIView):
 
 class LeaveUpdate(GenericAPIView):
     serializer_class = LeaveSerializer
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -156,6 +164,8 @@ class LeaveUpdate(GenericAPIView):
 
 
 class LeaveDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if Leave.objects.filter(leave_id=id).count() >= 1:

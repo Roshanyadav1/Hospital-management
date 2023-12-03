@@ -6,11 +6,15 @@ from rest_framework import status
 from checkup.serializers import CheckupSerializer
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 class CheckUpAdd(GenericAPIView):
     serializer_class = CheckupSerializer
-
+    permission_classes = [IsAuthenticated]
+    
     def post(self, request, format=None):
         serializer = CheckupSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -35,6 +39,7 @@ class CheckUpAdd(GenericAPIView):
 
 
 class CheckUpDelete(APIView):
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request, input=None, format=None):
         id = input
@@ -79,6 +84,7 @@ class CheckUpDelete(APIView):
 
 
 class CheckUpUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input=None, format=None):
         id = input
@@ -126,6 +132,7 @@ class CheckUpUpdate(APIView):
 
 
 class CheckUpView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, input=None, format=None):
         id = input

@@ -14,6 +14,9 @@ from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
 from hospital_management.responses import ResponseMessage
 from hospital_management.email import send_verification_email
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 def get_tokens_for_user(user):
@@ -38,6 +41,7 @@ class UserRegister(GenericAPIView):
 
 class PatientRegister(GenericAPIView):
     serializer_class = PatientSerializer
+    permission_classes = [IsAuthenticated]
 
     def options(self, request, *args, **kwargs):
         allowed_methods = ['GET', 'POST', 'PUT', 'DELETE']
@@ -108,6 +112,7 @@ class PatientView(ListAPIView):
     filter_backends = [SearchFilter, CustomOrderingFilter]
     search_fields = ['patient_name']
     pagination_class = CustomPagination
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -129,12 +134,13 @@ class PatientView(ListAPIView):
                 'status': response_code,
                 'message': "Patient " + response_message,
                 "count": len(response.data),
-                'data': response.data, 
+                'data': response.data,
             }
         )
 
 
 class PatientViewById(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, input=None, format=None):
         id = input
@@ -181,6 +187,7 @@ class PatientViewById(APIView):
 
 
 class PatientUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -218,6 +225,7 @@ class PatientUpdate(APIView):
 
 
 class PatientDelete(APIView):
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request, input, format=None):
         id = input

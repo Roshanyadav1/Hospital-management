@@ -18,6 +18,9 @@ import json
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from hospital_management.email import send_verification_email
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 def get_tokens_for_user(user):
@@ -43,6 +46,7 @@ class UserRegister(GenericAPIView):
 
 class EmployeeAdd(GenericAPIView):
     serializer_class = EmployeeSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         if Employee.objects.filter(employee_email=request.data.get('employee_email')).count() >= 1:
@@ -119,6 +123,7 @@ class EmployeeView(ListAPIView):
     filterset_fields = ['employee_role',]
     pagination_class = CustomPagination
     search_fields = ['employee_name', 'employee_role']
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response_message = ""
@@ -145,6 +150,7 @@ class EmployeeView(ListAPIView):
 
 
 class EmployeeViewById(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, input=None, format=None):
         id = input
@@ -191,6 +197,7 @@ class EmployeeViewById(APIView):
 
 
 class EmployeeDelete(APIView):
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request, input=None, format=None):
         id = input
@@ -241,6 +248,7 @@ class EmployeeDelete(APIView):
 
 
 class EmployeeUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input=None, format=None):
         id = input

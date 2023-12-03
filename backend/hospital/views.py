@@ -8,6 +8,9 @@ from rest_framework.generics import GenericAPIView
 from hospital_management.responses import ResponseMessage
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 class HospitalRegister(GenericAPIView):

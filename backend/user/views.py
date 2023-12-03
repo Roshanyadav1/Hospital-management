@@ -5,26 +5,30 @@ from rest_framework import status
 from user.serializers import *
 from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return {
+        'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
 
 
 class UserRegister(GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        if User.objects.filter(employee_email = request.data.get('employee_email')).count() >= 1:
-            error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
+        if User.objects.filter(employee_email=request.data.get('employee_email')).count() >= 1:
+            error = Error.objects.get(error_title='ALREADY_REGISTERED')
             response_message = error.error_message
             response_code = error.error_code
             Response.status_code = error.error_code
@@ -35,9 +39,9 @@ class UserRegister(GenericAPIView):
                 },
             )
         else:
-         serializer.save()
-        
-        error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+            serializer.save()
+
+        error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
         response_message = error.error_message
         response_code = error.error_code
         Response.status_code = error.error_code
@@ -50,6 +54,8 @@ class UserRegister(GenericAPIView):
 
 
 class UserDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if User.objects.filter(user_id=id).count() >= 1:
@@ -130,7 +136,7 @@ class UserLoginView(GenericAPIView):
             return Response(
                 {
                     'status': status.HTTP_404_NOT_FOUND,
-                    'message': "Invalid User Id",
+                    'message': "User With This Email Is Not Found",
                 },
             )
 
@@ -165,40 +171,13 @@ class UserView(APIView):
             {
                 'status': status.HTTP_200_OK,
                 'message': "User Verified",
-                'data': serializer.data, 
+                'data': serializer.data,
             }
         )
 
 
 class UserUpdate(APIView):
-    def put(self, request, input, format=None):
-        id = input
-        if User.objects.filter(user_id=id).count() >= 1:
-            doctor = User.objects.get(user_id=id)
-            serializer = UserSerializer(doctor, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            error = Error.objects.get(error_title='UPDATE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': 'User ' + response_message,
-                },
-            )
-        else:
-            error = Error.objects.get(error_title='INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': response_message,
-                },
-            )
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
