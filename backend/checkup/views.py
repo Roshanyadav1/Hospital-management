@@ -6,10 +6,12 @@ from rest_framework import status
 from checkup.serializers import CheckupSerializer
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+from rest_framework.permissions import IsAuthenticated
 
 
 class CheckUpAdd(GenericAPIView):
     serializer_class = CheckupSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = CheckupSerializer(data=request.data)

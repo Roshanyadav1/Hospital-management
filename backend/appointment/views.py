@@ -64,13 +64,21 @@ class AppointmentView(ListAPIView):
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         header_value = request.headers['Authorization']
-        token = header_value.split(' ')[1]
+        token = header_value.split(' ')[2]
         payload = jwt.decode(token, "secret", algorithms=['HS256'])
         user_id = payload['user_id']
         user_role = User.objects.get(user_id=user_id).user_role
-        print(user_role)
         if user_role == "Patient":
-            if request.params.get('patient_id') is None:
+            if request.GET.get('patient_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
                 Response.status_code = status.HTTP_401_UNAUTHORIZED
                 return Response(
                     {
@@ -124,6 +132,7 @@ class AppointmentView(ListAPIView):
 
 
 class AppointmentViewById(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, input=None, format=None):
         id = input
@@ -170,6 +179,7 @@ class AppointmentViewById(APIView):
 
 
 class AppointmentUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -236,6 +246,7 @@ class AppointmentUpdate(APIView):
 
 
 class AppointmentDelete(APIView):
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request, input, format=None):
         id = input
