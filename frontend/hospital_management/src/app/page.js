@@ -7,8 +7,8 @@ import SwipeableTextMobileStepper from '@/components/Steper'
 import DoctorCard from '@/components/DoctorsCard'
 import ShowDidease from '@/components/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import SteperNav from '@/components/SteperNav'
+import Footer  from '@/components/Footer'
 // for the patient page , the patient page will be the main page for the patient
 
 function page() {
