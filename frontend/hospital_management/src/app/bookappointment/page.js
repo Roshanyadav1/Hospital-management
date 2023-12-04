@@ -13,7 +13,7 @@ import Image from 'next/image';
 import Link from "@mui/material/Link";
 import { Container } from '@mui/system';
 import { useState } from 'react';
-function DoctorCard() {
+function BookAppoinment() {
   const [selectedSlot, setSelectedSlot] = useState('');
   const [appointments, setAppointments] = useState([]);
 
@@ -152,7 +152,7 @@ function DoctorCard() {
 
   )
 }
-export default DoctorCard
+export default BookAppoinment
 
 
 

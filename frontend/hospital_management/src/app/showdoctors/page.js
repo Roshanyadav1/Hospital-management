@@ -2,7 +2,7 @@
 
 // import React from 'react'
 // import Doctor from '@/components/Doctor'
-import DoctorCard from '@/app/docter/doctor1/page'
+import DoctorCard from '@/Pages/DoctorsCard'
 import SteperNav from'@/components/SteperNav'
 import Footer from '@/components/Footer'
 function DoctorPage() {
