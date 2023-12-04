@@ -4,8 +4,6 @@ from doctor.serializers import DoctorRelation
 from patient.serializers import PatientRelation
 from disease.serializers import DiseaseRelation
 
-# Appointment Serializer Class
-
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:

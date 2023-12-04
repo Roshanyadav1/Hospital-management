@@ -64,7 +64,7 @@ class AppointmentView(ListAPIView):
         token = header_value.split(' ')[2]
         payload = jwt.decode(token, "secret", algorithms=['HS256'])
         user_id = payload['user_id']
-        user_role = User.objects.get(user_id=user_id).user_role
+        user_role = payload['user_role']
         
         if user_role == "Patient":
             if request.GET.get('patient_id') is None:
@@ -119,7 +119,7 @@ class AppointmentView(ListAPIView):
             {
                 'status': response_code,
                 'message': "Appointment " + response_message,
-                'appointement_per_week': list(appointments_per_day),
+                'appointment_per_week': list(appointments_per_day),
                 'data': response.data,
             }
         )
@@ -250,7 +250,7 @@ class AppointmentDelete(APIView):
             response_message = ""
             response_code = ""
             try:
-                error = Error.objects.get(error_title='DELETE_SUCESS')
+                error = Error.objects.get(error_title='DELETE_SUCCESS')
                 response_message = error.error_message
                 response_code = error.error_code
                 Response.status_code = error.error_code
