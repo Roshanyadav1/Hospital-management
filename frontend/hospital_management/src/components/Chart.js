@@ -237,7 +237,7 @@ console.log("Data for Chart:", Data);
                             }}>
                         <ComposedChart
                             width={650}
-                            height={355}
+                            height={420}
                             data={Data}
                             margin={{
                                 top: 20,
