@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import RadioButtonGroup from '../../../components/RadioButton/RadioButtonGroup'
 import CustomAutocomplete from '../../../components/AutoComplete';
 import { useAddEmployeeMutation } from '@/services/Query';
-import Employee_Validation from '../../../components/FormValidation/employeeValidation';
+import Employee_Validation from '../../../components/FormValidation/EmployeeValidation';
 import Text from '../../../components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import Divider from '@mui/material/Divider';
