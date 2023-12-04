@@ -23,8 +23,11 @@ import 'swiper/css/navigation' // Add this line for navigation styles
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
+import { useGetViewDoctorQuery } from '@/services/Query'
 
 function DoctorCard() {
+   const {data:getDname,isLoding} = useGetViewDoctorQuery()
+   console.log('Doctor name',getDname)
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
    const showWarningToast = () => {
       toast.warning('Warning Example', { autoClose: false })
@@ -94,7 +97,7 @@ function DoctorCard() {
                modules={[Pagination, Navigation]}
                className='mySwiper'
             >
-               {doctorwelcome.map((result, index) => (
+               {getDname?.data?.map((result, index) => (
                   <Grid key={index} container spacing={1} marginY={1}>
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
@@ -114,7 +117,8 @@ function DoctorCard() {
                                  <Image
                                     height={250}
                                     width={350}
-                                    src={result.image}
+                                    src={result.doctor_profile_picture}
+                                    //doctor_profile_picture
                                     alt='image'
                                  />
                                  <Typography
@@ -122,7 +126,7 @@ function DoctorCard() {
                                     variant='h5'
                                     component='div'
                                  >
-                                    {result.name}
+                                    Dr.{result.employee.employee_name}
                                     <Typography
                                        variant='body2'
                                        color='text.secondary'
@@ -157,7 +161,6 @@ function DoctorCard() {
                   </Grid>
                ))}
             </Swiper>
-            {/* <div className='swiper-pagination-custom' style={{ marginTop: '30px',backgroundColor:"red",justifyContent:"center",alignContent:"center" }}></div> */}
             <div
                className='swiper-pagination-custom'
                style={{

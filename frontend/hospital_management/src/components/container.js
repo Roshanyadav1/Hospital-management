@@ -41,16 +41,16 @@ export default function FixedContainer() {
             <Typography variant="h6" sx={{ padding: 3 }}>
               Book an Appoinment{" "}
             </Typography>
-            <Typography variant="body" sx={{ padding: 3}}>
-              +9876543467 <br></br><br></br>{" "}
+            <Typography variant="body2" sx={{ padding: 2}}>
+            You can register and get an appointment online for the government hospitals
             </Typography>
-            <Typography variant="body" sx={{ padding: 1 }}>
+            {/* <Typography variant="body" sx={{ padding: 1 }}>
               OPD TIMING <br></br>{" "}
             </Typography>
             <Typography variant="body2" sx={{ padding: 1 }}>
               10:00AM to 12:30PM
             </Typography>
-            <Typography variant="body2">10:00AM to 12:30PM</Typography>
+            <Typography variant="body2">10:00AM to 12:30PM</Typography> */}
 
             <Button
               variant="contained"
@@ -80,7 +80,7 @@ export default function FixedContainer() {
             }}
           >
             <VolunteerActivismIcon sx={{ fontSize: 48 }} />
-            <Typography variant="h6" sx={{ padding: 2 }}>
+            <Typography variant="h6" sx={{ padding: 3 }}>
               Specialities & Treatments{" "}
             </Typography>
             <Typography variant="body2" sx={{ padding: 2 }}>
@@ -90,7 +90,7 @@ export default function FixedContainer() {
             <Button
               variant="contained"
               sx={{
-                marginTop: 15 ,
+                marginTop: 6 ,
                 backgroundColor: "white",
                 color: "#13293d",
                 padding:'10px',
@@ -116,17 +116,17 @@ export default function FixedContainer() {
             }}
           >
             <PersonAddIcon sx={{ fontSize: 48 }} />
-            <Typography variant="h6" sx={{ padding: 2 }}>
+            <Typography variant="h6" sx={{ padding: 3 }}>
               Find a Doctor{" "}
             </Typography>
-            <Typography variant="body2" sx={{ padding: 4 }}>
+            <Typography variant="body2" sx={{ padding: 2 }}>
               Trust the expert care of our doctors for your health and
               well-being.
             </Typography>
             <Button
               variant="contained"
               sx={{
-                marginTop: 9 ,
+                marginTop: 6 ,
                 backgroundColor: "white",
                 color: "#13293d",
                 padding:'10px',
@@ -152,7 +152,7 @@ export default function FixedContainer() {
             }}
           >
             <HealthAndSafetyIcon sx={{ fontSize: 48 }} />
-            <Typography variant="h6" sx={{ padding: 2 }}>
+            <Typography variant="h6" sx={{ padding: 3 }}>
               Health Checkup Packages{" "}
             </Typography>
             <Typography variant="body2" sx={{ padding: 2 }}>
@@ -162,7 +162,7 @@ export default function FixedContainer() {
             <Button
               variant="contained"
               sx={{
-                marginTop: 15,
+                marginTop: 6,
                 backgroundColor: "white",
                 color: "#13293d",
                 padding:'10px',

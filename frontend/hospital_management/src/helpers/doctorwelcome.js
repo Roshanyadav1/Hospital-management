@@ -44,7 +44,7 @@ export const doctorwelcome = [
     {
       name: "Dr. Kavita Porwal",
       image: "https://media.istockphoto.com/id/1346711310/photo/portrait-of-smiling-female-doctor-wearing-uniform-standing.webp?b=1&s=170667a&w=0&k=20&c=MP4Uz3zLO_2i8WGmcYaQgz8mOh2IrRjf5byFhqKRroY=",
-      specialization: "MBBS; MS (Ophthalmology), DNB (Ophthalmology) ",
+      specialization: "MBBS; MS (Ophthalmology),",
       category: "Opthalmology",
     },
     {
