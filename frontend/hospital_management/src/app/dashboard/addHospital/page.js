@@ -7,14 +7,14 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import RadioButtonGroup from './Components/RadioB/RadioButtonGroup';
-import FORM_VALIDATION from './Components/FormValidation/formValidation';
+import RadioButtonGroup from '../../../components/RadioB/RadioButtonGroup';
+import FORM_VALIDATION from '../../../components/FormValidation/HospitalValidation';
 import { Box,  } from '@mui/material';
-import Text from './Components/Textfield/Text'
+import Text from '../../../components/Textfield/Text'
 import { colors } from '@/styles/theme';
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 // import Image from 'next/image';
-import CustomAutocomplete from './Components/Autocomplete';
+import CustomAutocomplete from '../../../components/Autocomplete';
 import { useRegisterHospitalMutation } from '@/services/Query';
 // import * as Yup from 'yup'
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+// import React, { useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import style from '@/styles/swiper.module.css'
@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Box from "@mui/material/Box";
 // import './styles.css';
-import { Pagination, Navigation } from 'swiper/modules';
+import { Pagination,  } from 'swiper/modules';
 import { Typography } from '@mui/material';
 
 const images = [

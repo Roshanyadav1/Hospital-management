@@ -15,17 +15,17 @@ import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
 import Footer from './Footer';
 import Link from "next/link";
-import Docter from "@/app/dashboard/docter/page";
-import Career from "@/app/dashboard/employeedata/page";
-import Billing from "@/app/dashboard/billing/page"
-import AboutHospital from "@/app/dashboard/abouthospital/page";
-import Analytics from "@/app/dashboard/analytics/page";
-import Dashboardd from "@/app/dashboard/dashboardd/page";
-import Disease from "@/app/dashboard/disease/page";
-import DocterDetail from "@/app/dashboard/docterdetail/page";
-import Prescription from "@/app/dashboard/prescription/page";
+// import Docter from "@/app/dashboard/docter/page";
+// import Career from "@/app/dashboard/employeedata/page";
+// import Billing from "@/app/dashboard/billing/page"
+// import AboutHospital from "@/app/dashboard/abouthospital/page";
+// import Analytics from "@/app/dashboard/analytics/page";
+// import Dashboardd from "@/app/dashboard/dashboardd/page";
+// import Disease from "@/app/dashboard/disease/page";
+// import DocterDetail from "@/app/dashboard/docterdetail/page";
+// import Prescription from "@/app/dashboard/prescription/page";
 import Discharge from "@/app/dashboard/discharge/page";
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import { useRouter } from "next/navigation";
 const drawerWidth = 240;
 

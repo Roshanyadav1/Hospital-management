@@ -1,11 +1,7 @@
 "use client"
-import React from 'react';
-import { Grid, Card, CardContent, Typography, Button } from '@mui/material';
-import CardActions from "@mui/material/CardActions";
+import { Grid, Card, CardContent, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-import { CardActionArea, CardMedia } from '@mui/material';
-import Home from '@/app/dashboard/page';
-import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
+import { CardActionArea} from '@mui/material';
 import {welcome} from '@/helpers/welcome'
 import Image from 'next/image';
 export default function Cards() {

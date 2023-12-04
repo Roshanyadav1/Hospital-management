@@ -1,16 +1,16 @@
 "use client"
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import RadioButtonGroup from './components/RadioB/RadioButtonGroup';
-import CustomAutocomplete from './components/autocomplete';
+import RadioButtonGroup from '../../../components/RadioB/RadioButtonGroup'
+import CustomAutocomplete from '../../../components/Autocomplete';
 import { useAddEmployeeMutation } from '@/services/Query';
-import Employee_Validation from './components/EmployeeValidation/employeeValidation';
-import Text from './components/Textfield/Text'
+import Employee_Validation from '../../../components/FormValidation/employeeValidation';
+import Text from '../../../components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import Divider from '@mui/material/Divider';
 

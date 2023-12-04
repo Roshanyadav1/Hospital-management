@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import DataTable from "@/components/DataTable"
+import DataTable from "@/app/Pages/DataTable"
 function page() {
   return (
     <div>

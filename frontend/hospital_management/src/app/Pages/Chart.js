@@ -16,9 +16,9 @@ import {
     Legend,
     Area
 } from "recharts";
-import CommonListItem from './CommonListItem';
+import CommonListItem from '../../components/CommonListItem';
 import Image from 'next/image'
-import Doc from './Doc.png'
+// import Doc from '../assest/Doc.png'
 
 const data = [
     {
@@ -96,8 +96,8 @@ function Chart() {
         }
 
         function startCounters() {
-            counter("count1", 0, ViewDoctor.count, 1850);
-            counter("count2", 0, ViewPatient.count, 1500);
+            // counter("count1", 0, ViewDoctor.count, 1850);
+            // counter("count2", 0, ViewPatient.count, 1500);
         }
 
         function counter(id, start, end, duration) {
@@ -203,7 +203,7 @@ function Chart() {
                                </Grid >
                                <Grid item xs={6}>
                                 <div  style={{width:'70%',height:'100%',marginTop:'10%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
-                                <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/>
+                                {/* <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/> */}
                                 </div>
                             
 

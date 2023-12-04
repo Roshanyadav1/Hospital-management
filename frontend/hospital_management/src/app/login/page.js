@@ -1,6 +1,5 @@
 "use client"
-import { Button, Card, CardActionArea, Container, Grid, Input, Typography } from '@mui/material';
-import React from 'react';
+import { Button, Card, Container, Grid, Input, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 export default function Login() {

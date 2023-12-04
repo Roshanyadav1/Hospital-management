@@ -1,7 +1,4 @@
-
-
-
-    import DoctorPage from '@/components/DoctorPage'
+import DoctorPage from '@/app/Pages/DoctorPage'
    function page() {
      return (
        <div>
