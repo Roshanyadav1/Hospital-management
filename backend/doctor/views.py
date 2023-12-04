@@ -117,10 +117,22 @@ class DoctorView(ListAPIView):
 
         for remove_d in remove_data:
             response_data.remove(remove_d)
-            
+        
+        for data in response.data:
+             disease_data = json.loads(data.get('disease_specialist'))
+             data['disease_specialist'] = disease_data
+
+             times_data = json.loads(data.get('times'))
+             
+             data['times'] = times_data
+
+             days_data = json.loads(data.get('day'))
+             data['day'] = days_data
+
+        
         response_message = ""
         response_code = ""
-
+        
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message
