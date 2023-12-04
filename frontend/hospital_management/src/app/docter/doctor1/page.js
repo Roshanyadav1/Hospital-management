@@ -37,7 +37,7 @@ function DoctorCard() {
   const isSlotDisabled = (slot) => {
     const bookedAppointments = appointments.filter((apt) => apt.slot === slot.slot);
     return bookedAppointments.length >= slot.maxAppointments || slot.slot === selectedSlot;
-    // return selectedSlot !== null && selectedSlot.id === slot.id;
+    return selectedSlot !== null && selectedSlot.id === slot.id;
   
   };
 
@@ -58,7 +58,7 @@ function DoctorCard() {
       const appointmentData = {
         appointment_number: 1,
         time: slot.id,
-        date: '2023-12-01',
+        date: '2023-12-04',
         doctorId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
         diseaseId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',        
         patientId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
@@ -218,7 +218,7 @@ function DoctorCard() {
                   <Button variant="contained" sx={{  width: 100,margin:4 }} onClick={()=> SetconfirmOpenModal(true)} >
                     Confirm
                   </Button>
-                  <Button variant="contained" sx={{  width: 100,margin:4  }}   >
+                  <Button variant="contained" sx={{  width: 100,margin:4  }}>
                     Cancel
                   </Button>
                 </DialogContent>
@@ -243,5 +243,3 @@ function DoctorCard() {
   )
  };
 export default DoctorCard
-
-
