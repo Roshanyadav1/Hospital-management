@@ -3,10 +3,16 @@ from patient.models import Patient
 
 
 # Patient Serializer Class
+class PatientRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patient
+        exclude = ('patient_age',)
+
+
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = '__all__'
+        fields = '__all__'  
 
 class PatientLoginSerializer(serializers.ModelSerializer):
     class Meta:
