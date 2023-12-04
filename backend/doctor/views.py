@@ -157,8 +157,10 @@ class DoctorViewById(APIView):
             if Doctor.objects.filter(doctor_id = id).count() >= 1:
                 doctor = Doctor.objects.get(doctor_id = id)
                 inputDate = request.GET.get('date')
-                leave = Leave.objects.get(doctor = id)
-                
+                try:
+                 leave = Leave.objects.get(doctor = id)
+                except:
+                   pass
                 if inputDate is not None:
                     if str(leave.date) == str(inputDate):
                        doctor.status = "Unvailable"
@@ -167,8 +169,14 @@ class DoctorViewById(APIView):
                        doctor.status = "Available"
                 
                 serializer = DoctorSerializer(doctor)
-                response_message = ""
-                response_code = ""
+                serializer_data = serializer.data
+                disease_data = json.loads(serializer_data['disease_specialist'])
+                serializer_data['disease_specialist'] = disease_data
+                times_data = json.loads(serializer_data['times'])   
+                serializer_data['times'] = times_data
+                day_data = json.loads(serializer_data['day'])
+                serializer_data['day'] = day_data
+                
                 try:
                  error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
                  response_message = error.error_message
@@ -181,7 +189,7 @@ class DoctorViewById(APIView):
                     {
                         'status': response_code,
                         'message': "Doctor " + response_message,
-                        'data': serializer.data
+                        'data': serializer_data
                     },
                 )
             else:
