@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import DoctorCard from '@/app/Pages/DoctorsCard'
+import DoctorCard from '@/Pages/DoctorsCard'
 function Page() {
   return (
     <div>

@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import DataTable from "@/app/Pages/DataTable";
+import DataTable from "@/Pages/DataTable";
 function Prescription() {
   return (
     <div>

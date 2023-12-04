@@ -1,5 +1,5 @@
 import React from 'react'
-import ViewAppoinment from '@/app/Pages/ViewAppointment'
+import ViewAppoinment from '@/Pages/ViewAppointment'
 function Contact() {
   return (
     <div>

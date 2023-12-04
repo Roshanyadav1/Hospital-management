@@ -1,5 +1,5 @@
 import React from 'react'
-import Cards from '@/app/Pages/card'
+import Cards from '@/Pages/card'
 function Specialities() {
   return (
     <div>

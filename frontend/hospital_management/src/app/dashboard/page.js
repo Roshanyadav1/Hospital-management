@@ -1,8 +1,8 @@
 "use client"
-import DataGridTable from "@/app/Pages/DataGridTable";
+import DataGridTable from "@/Pages/DataGridTable";
 import { columns } from "@/helpers/columns";
 import { useGetEmployeeQuery } from '@/services/Query';
-import Chart from '@/app/Pages/Chart'
+import Chart from '@/Pages/Chart'
 function FetchData() {
 
   return (

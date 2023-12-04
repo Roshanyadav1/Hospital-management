@@ -16,7 +16,7 @@ import {
     Legend,
     Area
 } from "recharts";
-import CommonListItem from '../../components/CommonListItem';
+import CommonListItem from '../components/CommonListItem';
 import Image from 'next/image'
 // import Doc from '../assest/Doc.png'
 

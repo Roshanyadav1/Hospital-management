@@ -1,4 +1,4 @@
-import DoctorPage from '@/app/Pages/DoctorPage'
+import DoctorPage from '@/Pages/DoctorPage'
    function page() {
      return (
        <div>

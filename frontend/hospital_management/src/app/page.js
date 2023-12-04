@@ -1,11 +1,11 @@
 "use client"
 
-import FixedContainer from '@/app/Pages/container'
+import FixedContainer from '@/Pages/container'
 import { Grid } from '@mui/material' 
-import Cards from '@/app/Pages/card'
-import SwipeableTextMobileStepper from '@/app/Pages/Steper'
-import DoctorCard from '@/app/Pages/DoctorsCard'
-import ShowDidease from '@/app/Pages/DiseaseCard'
+import Cards from '@/Pages/card'
+import SwipeableTextMobileStepper from '@/Pages/Steper'
+import DoctorCard from '@/Pages/DoctorsCard'
+import ShowDidease from '@/Pages/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css';
 import SteperNav from '@/components/SteperNav'
 import Footer  from '@/components/Footer'
