@@ -14,9 +14,7 @@ import jwt
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
-    user_role = user.user_role
     access_token = refresh.access_token
-    access_token['user_role'] = user_role
 
     return {
         'refresh': str(refresh),

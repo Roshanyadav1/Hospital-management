@@ -64,8 +64,9 @@ class AppointmentView(ListAPIView):
         token = header_value.split(' ')[2]
         payload = jwt.decode(token, "secret", algorithms=['HS256'])
         user_id = payload['user_id']
-        user_role = payload['user_role']
-        
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
         if user_role == "Patient":
             if request.GET.get('patient_id') is None:
                 Response.status_code = status.HTTP_401_UNAUTHORIZED
