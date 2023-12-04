@@ -14,7 +14,8 @@ function Dashboard() {
     <>
           <DataGridTable        
             data={empData?.data || []}
-            columns={columns} />
+            columns={columns}
+            map_by={(row => row.employee_id)} />
     </>
   )
 }

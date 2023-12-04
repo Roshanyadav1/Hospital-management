@@ -62,28 +62,27 @@ const customstyles=`
 `
 
 export default function DataGridTable(props) {
-    const {data,columns} = props
+    const {data, columns, map_by} = props
     
   return (
     <>
-        <style>{customstyles}</style>
+        {/* <style>{customstyles}</style> */}
         <DataGrid
           rows={data?.length > 0 ? data : []}
           columns={columns}
           loading={data?.length > 0 ? false : true}
-          getRowId={(row) => row?.employee_id}
-          getRowHeight={() => 'auto'}
+          getRowId={map_by}
 
           //only table scroll not the scrreen
           autoHeight={true}
 
           checkboxSelection={false}
-          rowHeight={35}
-          sx={{
-            height: 392, 
-            display:'flex',
-            width:'100%',
-          }}
+          // rowHeight={35}
+          // sx={{
+          //   height: 392, 
+          //   display:'flex',
+          //   width:'100%',
+          // }}
           columnHeaderHeight={40}
           disableColumnMenu 
           />

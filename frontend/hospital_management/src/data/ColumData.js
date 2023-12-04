@@ -111,6 +111,28 @@ export const columns = [
       ),
     },
   
+  ];    
+
+  
+  export const doctorList = [
+    { field: 'employee', headerName: 'Doctore Name', width: 170, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false, valueGetter: (params) => {
+      return params.row.employee?.employee_name;
+    }, },
+    { field: 'disease_specialist', headerName: 'Diesese Specialisy', width: 170, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false, valueGetter: (params) => {
+      return JSON.parse(params.row.disease_specialist);
+    }, },    
+    {
+      field: 'Actions',
+      headerName: 'Actions',
+      width: 120,
+      headerClassName: 'headerlast',
+      cellClassName: 'column-linelast',
+      headerAlign: 'center',
+      sortable: false,
+      renderCell: (params) => (
+       <GetActionButton params={params}/>
+      ),
+    },
   ];
 
 // how can I find out the particular row's data from this table when i click on the delete button
