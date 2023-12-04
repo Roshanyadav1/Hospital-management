@@ -1,5 +1,5 @@
 from patient.models import Patient
-from patient.serializers import PatientSerializer
+from patient.serializers import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
@@ -23,7 +23,7 @@ def get_tokens_for_user(user):
     }
 
 class UserRegister(GenericAPIView):
-    serializer_class = PatientSerializer
+    serializer_class = PatientRegisterSerializer
     permission_classes = [IsAuthenticated]
 
     def user_verification(user):
@@ -34,7 +34,7 @@ class UserRegister(GenericAPIView):
         send_verification_email(url, user_email)
 
 class PatientRegister(GenericAPIView):
-    serializer_class = PatientSerializer
+    serializer_class = PatientRegisterSerializer
 
     def options(self, request, *args, **kwargs):
         allowed_methods = ['GET', 'POST', 'PUT', 'DELETE']
@@ -63,7 +63,7 @@ class PatientRegister(GenericAPIView):
                 },
               )
         else:
-            serializer = PatientSerializer(data=request.data)
+            serializer = PatientRegisterSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             patient = Patient.objects.get(
