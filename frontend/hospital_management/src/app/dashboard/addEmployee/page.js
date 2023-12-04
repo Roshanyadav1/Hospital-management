@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import RadioButtonGroup from '../../../components/RadioB/RadioButtonGroup'
-import CustomAutocomplete from '../../../components/Autocomplete';
+import RadioButtonGroup from '../../../components/RadioButton/RadioButtonGroup'
+import CustomAutocomplete from '../../../components/AutoComplete';
 import { useAddEmployeeMutation } from '@/services/Query';
 import Employee_Validation from '../../../components/FormValidation/employeeValidation';
 import Text from '../../../components/Textfield/Text'

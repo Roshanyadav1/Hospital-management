@@ -15,7 +15,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import Logo from '../assest/whiteSga.png';
+import Logo from '../assets/whiteSga.png';
 import Image from 'next/image';
 import Link from 'next/link'; 
 
@@ -23,7 +23,7 @@ const drawerWidth = 240;
 const navItems = [
   { label: 'Doctor', route: '/showdoctors' },
   { label: 'Specialities', route: '/Specilist' },
-  { label: 'Contact Us', route: '/contactUs' },
+  { label: 'Contact Us', route: '/contactus' },
   { label: 'Book Appoinment', route: '/bookappointment' },
   { label: 'View Appoinment', route: '/viewappoinment' },
 ];

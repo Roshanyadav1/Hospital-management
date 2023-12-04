@@ -71,7 +71,9 @@ function DoctorPage() {
 
    // filter use
    const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
-   const { data: getDoctors, isLoading: isDoctorsLoading } = useGetAllDoctorsQuery()
+   const { data: getDoctors , isLoading: isDoctorsLoading } = useGetAllDoctorsQuery(selectedDiseases)
+   const { } = useGetAllDoctorsQuery()
+   const [status,updatedStatus] = useState();
 
    if (isLoading||isDoctorsLoading)
    return (
@@ -132,6 +134,21 @@ function DoctorPage() {
                      </Grid>
 
                      <Grid item xs={12} sm={3} md={3.5}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                           <DemoItem label='Select Date'>
+                              <MobileDatePicker
+                                 defaultValue={dayjs(new Date())}
+                                 format='DD-MM-YYYY'
+                                 views={['year', 'month', 'day']}
+                                 value={selectedDate}
+                                 onChange={handleDateChange}
+                                 sx={{ background: 'white', borderRadius: '5px' }}
+                              />
+                           </DemoItem>
+                        </LocalizationProvider>
+                     </Grid>
+
+                     <Grid item xs={12} sm={3} md={3.5}>
                         <Typography variant='body2' sx={{ marginBottom: '6px' }}>
                            Select Doctor
                         </Typography>
@@ -160,20 +177,7 @@ function DoctorPage() {
                            )}
                         />
                      </Grid>
-                     <Grid item xs={12} sm={3} md={3.5}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                           <DemoItem label='Select Date'>
-                              <MobileDatePicker
-                                 defaultValue={dayjs(new Date())}
-                                 format='DD-MM-YYYY'
-                                 views={['year', 'month', 'day']}
-                                 value={selectedDate}
-                                 onChange={handleDateChange}
-                                 sx={{ background: 'white', borderRadius: '5px' }}
-                              />
-                           </DemoItem>
-                        </LocalizationProvider>
-                     </Grid>
+                    
                      <Grid item xs={12} sm={3} md={1.5}>
                         <Button
                            variant='contained'
@@ -195,8 +199,8 @@ function DoctorPage() {
             </Typography>
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
                {getDoctors?.data?.map((result, index) => {
-                  let diseases = JSON.parse(result?.disease_specialist || []) || []
-                  let days = JSON.parse(result?.day || []) || [] // available days
+                  let diseases = result?.disease_specialist || [];
+                  let days = result?.day || [] ; // available days
 
                   return (
                      <Grid item xs={12} md={3} sm={6} key={index}>

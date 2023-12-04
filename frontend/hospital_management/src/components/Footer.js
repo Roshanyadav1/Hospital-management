@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Image from "next/image";
 import {colors}  from '@/styles/theme';
-import Logo from '../assest/whiteSga.png';
+import Logo from '../assets/whiteSga.png';
 const Footer = () => {
   return (
     <Grid className="main-body"

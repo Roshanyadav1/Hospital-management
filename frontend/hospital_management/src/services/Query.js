@@ -87,8 +87,8 @@ export const queries = createApi({
          }),
       }),
       getAllDoctors: build.query({
-         query: () => ({
-            url: 'doctor/view/',
+         query: (prop) => ({
+            url: 'doctor/view/'+`?disease_specialist=${prop || ''}`,
             method: 'GET',
          }),
       }),

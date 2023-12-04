@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import RadioButtonGroup from '../../../components/RadioB/RadioButtonGroup'
+import RadioButtonGroup from '../../../components/RadioButton/RadioButtonGroup'
 import DOCTOR_VALIDATION from '../../../components/FormValidation/doc_validation';
 import Text from '../../../components/Textfield/Text'
 import { colors } from '@/styles/theme';

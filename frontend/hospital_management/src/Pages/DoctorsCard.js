@@ -9,7 +9,7 @@ import Container from '@mui/material/Container'
 // import Home from '@/app/dashboard/page'
 // import { AccessAlarm, ThreeDRotation } from '@mui/icons-material'
 import { toast } from 'react-toastify'
-import { doctorwelcome } from '@/helpers/doctorwelcome'
+import { doctorwelcome } from '@/helpers/DoctorWelcome'
 // import { maxWidth } from '@mui/system'
 import Image from 'next/image'
 

@@ -1,8 +1,8 @@
 "use client"
 
-import FixedContainer from '@/Pages/container'
+import FixedContainer from '@/Pages/Container'
 import { Grid } from '@mui/material' 
-import Cards from '@/Pages/card'
+import Cards from '@/Pages/Card'
 import SwipeableTextMobileStepper from '@/Pages/Steper'
 import DoctorCard from '@/Pages/DoctorsCard'
 import ShowDidease from '@/Pages/DiseaseCard'

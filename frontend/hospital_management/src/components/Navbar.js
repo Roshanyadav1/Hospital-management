@@ -9,7 +9,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from '@mui/icons-material/Menu';
-import Logo from '../assest/blueSga.png'
+import Logo from '../assets/blueSga.png'
 import Link from "next/link";
 import Image from "next/image";
 import { Grid } from "@mui/material";

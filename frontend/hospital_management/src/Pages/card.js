@@ -2,7 +2,7 @@
 import { Grid, Card, CardContent, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { CardActionArea} from '@mui/material';
-import {welcome} from '@/helpers/welcome'
+import {welcome} from '@/helpers/Welcome'
 import Image from 'next/image';
 export default function Cards() {
   const glass={
