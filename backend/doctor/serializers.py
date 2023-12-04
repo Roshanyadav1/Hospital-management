@@ -5,7 +5,7 @@ from employee.serializers import EmployeeRelation
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
-        fields = '__all__'
+        exclude = ('doctor_profile_picture')
 
 class DoctorUpdateSerializer(serializers.ModelSerializer):
     class Meta:
