@@ -47,53 +47,97 @@ class DoctorView(ListAPIView):
     # filterset_fields = ['disease_specialist','day']
     # search_fields = ['disease_specialist', 'day']
     
+    def post(self, request, format=None):
+        serializer = DoctorSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        response_message = ""
+        response_code = ""
+        try:
+            error = Error.objects.get(error_title='REGISTER_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
+        except:
+            response_message = ResponseMessage.REGISTRATION_SUCCESS
+            response_code = status.HTTP_201_CREATED
+            Response.status_code = status.HTTP_201_CREATED
+        return Response(
+            {
+                'status': response_code,
+                'message': 'Doctor ' + response_message
+            },
+        )
+
+
+class DoctorView(ListAPIView):
+    queryset = Doctor.objects.all()
+    serializer_class = DoctorViewSerializer
+    filter_backends = [SearchFilter, CustomOrderingFilter]
+    pagination_class = CustomPagination
+    
+
     def list(self, request, *args, **kwargs):
-         response = super().list(request, *args, **kwargs)
-         response_data = ""
-         if request.GET.get('pageSize') != None:
+        response = super().list(request, *args, **kwargs)
+        response_data = ""
+        if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
             response_data = response.data['results']
-         else:
+        else:
             response_data = response.data
-         disease_specialist = request.GET.get('disease_specialist')
-        #  print(disease_specialist)
-         remove_data = []
-         for data in response_data:
-            print('Loop')
-            times_data = json.loads(data.get('times'))
-            times_tuple_data = tuple(map(tuple, times_data))
+        disease_specialist = request.GET.get('disease_specialist')
 
+        inputDate = request.GET.get('date')
+        remove_data = []
+        
+        for data in response_data:
             disease_data = json.loads(data.get('disease_specialist'))
             disease_tuple_data = tuple(disease_data)
 
             if disease_specialist is not None:
-               if disease_specialist in disease_tuple_data:
-                    print(disease_specialist)
-               else:
+                if disease_specialist in disease_tuple_data:
+                    pass
+                else:
                     remove_data.append(data)
-                    print("Else")
-         for remove_d in remove_data:
+
+        for remove_d in remove_data:
             response_data.remove(remove_d)
-         response_message = ""
-         response_code = ""
 
-         try:
-          error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-          response_message = error.error_message
-          response_code = error.error_code
-          Response.status_code = error.error_code
-         except:
-             response_message = ResponseMessage.RETRIEVED_SUCCESS
-             response_code = status.HTTP_200_OK
-         return Response(
+        remove_data = []
+        for data in response_data:
+            if inputDate is not None:
+                id = data.get('doctor_id')
+                try:
+                    leave = Leave.objects.get(doctor=id)
+                    if leave is not None:
+                        if str(leave.date) == str(inputDate):
+                            remove_data.append(data)
+                except:
+                    pass
+
+        for remove_d in remove_data:
+            response_data.remove(remove_d)
+            
+        response_message = ""
+        response_code = ""
+
+        try:
+            error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
+        except:
+            response_message = ResponseMessage.RETRIEVED_SUCCESS
+            response_code = status.HTTP_200_OK
+            Response.status_code = status.HTTP_200_OK
+        return Response(
             {
-                'status': response_code, 
+                'status': response_code,
                 'message': "Doctor " + response_message,
-                'count' : len(response_data),
-                'data': response.data, 
+                'count': len(response_data),
+                'data': response.data,
             }
-         )
-
+        )
 class DoctorViewById(APIView):
     def get(self, request, input = None, format = None):
         id = input
