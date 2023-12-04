@@ -14,7 +14,10 @@ import Image from 'next/image';
 import Link from "@mui/material/Link";
 import { Container } from '@mui/system';
 import { useState } from 'react';
+import {useAddAppointmentMutation} from '@/services/Query'
 function DoctorCard() {
+  
+  const [addAppointment] = useAddAppointmentMutation();
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -27,17 +30,15 @@ function DoctorCard() {
       setSelectedSlot(null); 
     }
   };
+
   const handleClose = () => {
     SetconfirmOpenModal(false);
-    
   };
-
- 
 
   const isSlotDisabled = (slot) => {
     const bookedAppointments = appointments.filter((apt) => apt.slot === slot.slot);
     return bookedAppointments.length >= slot.maxAppointments || slot.slot === selectedSlot;
-    return selectedSlot !== null && selectedSlot.id === slot.id;
+    // return selectedSlot !== null && selectedSlot.id === slot.id;
   
   };
 
@@ -52,38 +53,19 @@ function DoctorCard() {
     { id: '03:20 PM' },
     { id: '05:40 PM' },
   ];
-  const bookAppointment = (slot) => {
-    if (!isSlotDisabled(slot)) {
-      const apiUrl = 'https://hospital-management-six-chi.vercel.app/api/appointment/add/';
-      const appointmentData = {
-        appointment_number: 1,
-        time: slot.id,
-        date: '2023-12-04',
-        doctorId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        diseaseId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',        
-        patientId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-      };
 
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(appointmentData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setAppointments([...appointments, { slot: slot.id }]);
-          setSelectedSlot('');
-          // setOpenModal(true); 
-          console.log('Appointment booked:', data);
-        })
-        .catch((error) => {
-          console.error('Error booking appointment:', error);
-          
-        });
-      }
+  const bookAppointment = async (appointmentData) => {
+    try {
+      const result = await addAppointment(appointmentData);
+      console.log('Appointment booked:', result);
+      
+    } catch (error) {
+      console.error('Error booking appointment:', error);
+      
+    }
   };
+
+    // HANDLE MODAL BOXXXXXXXX
   const handleCloseModal = () => {
     setOpenModal(false);
   };
@@ -134,7 +116,7 @@ function DoctorCard() {
           </Grid>
         </Grid>
       </Grid>
-      <br /> <br />
+      <br/> <br/>
 
 
       <Grid container Direction='column' display={"flex"} rowSpacing={4}>
