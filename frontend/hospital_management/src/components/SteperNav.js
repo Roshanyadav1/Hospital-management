@@ -21,10 +21,10 @@ import Link from 'next/link';
 
 const drawerWidth = 240;
 const navItems = [
-  { label: 'Doctor', route: '/docter' },
+  { label: 'Doctor', route: '/showdoctors' },
   { label: 'Specialities', route: '/Specilist' },
-  { label: 'Contact Us', route: '/contactus' },
-  { label: 'Book Appoinment', route: '/Doctor' },
+  { label: 'Contact Us', route: '/contactUs' },
+  { label: 'Book Appoinment', route: '/bookappointment' },
   { label: 'View Appoinment', route: '/viewappoinment' },
 ];
 

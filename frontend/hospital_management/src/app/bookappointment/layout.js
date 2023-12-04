@@ -1,6 +1,6 @@
 "use client";
 
-import Docter from '@/app/docter/page'
+import Docter from '@/app/bookappointment/page'
 export default function RootLayout({ children }) {
   return (
    
