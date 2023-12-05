@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate
 from patient.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
+from employee.models import Employee
 from hospital_management.responses import ResponseMessage
 from hospital_management.email import send_verification_email
 
@@ -45,7 +46,7 @@ class PatientRegister(GenericAPIView):
         return response
 
     def post(self, request, format=None):
-        if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() >= 1:
+        if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() and Employee.objects.filter(employee_email=request.data.get('patient_email')).count()  >= 1:
             response_message = ''
             response_code = ''
             try : 
