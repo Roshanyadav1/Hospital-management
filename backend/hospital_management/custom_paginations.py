@@ -6,15 +6,18 @@ class CustomPagination(PageNumberPagination):
     page_size_query_param = 'pageSize'
     page_query_param = 'pageNo'
 
+    def get_page_number(self, request, paginator):
+        try:
+            page_number = int(request.query_params.get(self.page_query_param, 1))
+        except (TypeError, ValueError):
+            page_number = 1
+        return page_number
+
     def paginate_queryset(self, queryset, request, view=None):
         self.page_size = request.query_params.get(self.page_size_query_param)
-        page_number = request.query_params['pageNo']
 
         if self.page_size == "":
             self.page_size = 10
-
-        if page_number == "":
-            page_number = 1
 
         return super().paginate_queryset(queryset, request, view)
 

@@ -122,8 +122,7 @@ class EmployeeView(ListAPIView):
         response_message = ""
         response_code = ""
         response = super().list(request, *args, **kwargs)
-        if request.GET.get('pageSize') != None:
-            response.data['page_size'] = int(request.GET.get('pageSize'))
+        
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message

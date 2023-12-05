@@ -112,8 +112,7 @@ class PatientView(ListAPIView):
         response = super().list(request, *args, **kwargs)
         response_message = ""
         response_code = ""
-        if request.GET.get('pageSize') != None:
-            response.data['page_size'] = int(request.GET.get('pageSize'))
+        
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message
