@@ -1,44 +1,44 @@
+'use client'
+import { ListItem, Container, Contect } from '@mui/material'
 import React from 'react'
-import { Grid, Card, CardContent, Typography, Button } from "@mui/material";
-import CardActions from "@mui/material/CardActions";
-import Container from "@mui/material/Container";
-import { CardActionArea, CardMedia } from "@mui/material";
-import Home from "@/app/dashboard/page";
-import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
-
+import moment from 'moment';
+import { useState, useEffect } from 'react';
 function page() {
+  const [timeSlots, setTimeSlots] = useState([]);
+
+  const createTimeSlots = (fromTime, toTime) => {
+    var startTime = moment(fromTime, 'HH:mm')
+    var endTime = moment(toTime, 'HH:mm')
+    if (endTime.isBefore(startTime)) {
+      endTime.add(1, 'day');
+    }
+    let arr = [];
+    while (startTime <= endTime) {
+      arr.push(new moment(startTime).format('HH:mm'))
+      startTime.add(30, 'minutes');
+    }
+    return arr;
+  };
+  useEffect(() => {
+
+    setTimeSlots(createTimeSlots('9:00', '6:00'));
+
+    //  let slots = createTimeSlots('9:00','6:00')
+    // console.log(slots)
+  }, []);
+
   return (
     <div>
-        <Grid container spacing={5} style={{ marginTop: "20px" }}>
-           <Grid item xs={12} md={4} sm={3}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardActionArea>
-                <CardMedia
-                  sx={{ height: 140, width:400, height:400 }}
-                 
-                    image="https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg"
-                  //   title="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Dr. Sumit Jain
-                    <Typography variant="body2" color="text.secondary">
-                      
-                      DrNB (Padiatric Cardiology)
-                      <Typography variant="body3" color="text.secondary">
-                       paediatric Cardiology
-                       
-                      </Typography>
-                    </Typography>
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="large"> Learn More</Button>  
-                </CardActions>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          </Grid>
+      <Container>
+        <Contect>
+          {timeSlots.map((item, index) => {
+            <ListItem>
+              <h4>Time Slots - {item}</h4>
+            </ListItem>
+          })
+          }
+        </Contect>
+      </Container>
     </div>
   )
 }

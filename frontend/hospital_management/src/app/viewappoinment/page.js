@@ -1,9 +1,9 @@
 import React from 'react'
-import ViewAppoinment from '@/components/ViewAppointment'
+import Slots from '@/components/ViewAppointment'
 function Contact() {
   return (
     <div>
-     <ViewAppoinment/>
+     <Slots/>
     </div>
   )
 }

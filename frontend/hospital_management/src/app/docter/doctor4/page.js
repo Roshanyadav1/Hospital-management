@@ -47,50 +47,50 @@
 
 
 
-const DoctorCard = () => {
-  // ... (existing code remains unchanged)
+// const DoctorCard = () => {
+//   // ... (existing code remains unchanged)
 
-  const handleBookAppointment = () => {
-    if (selectedSlot) {
-      setOpenModal(true); // Open the confirmation dialog
-    }
-  };
+//   const handleBookAppointment = () => {
+//     if (selectedSlot) {
+//       setOpenModal(true); // Open the confirmation dialog
+//     }
+//   };
 
-  const handleConfirmAppointment = () => {
-    if (selectedSlot) {
-      bookAppointment(selectedSlot); // Book the appointment only if a slot is selected
-      setOpenModal(false); // Close the confirmation dialog
-    }
-  };
+//   const handleConfirmAppointment = () => {
+//     if (selectedSlot) {
+//       bookAppointment(selectedSlot); // Book the appointment only if a slot is selected
+//       setOpenModal(false); // Close the confirmation dialog
+//     }
+//   };
 
-  return (
-    // ... (existing code remains unchanged)
+//   return (
+//     // ... (existing code remains unchanged)
 
-    <Grid item display="flex" justifyItems="center" marginBottom={2} justifyContent="center">
-      <Button
-        variant="contained"
-        sx={{ padding: 1, width: 200, backgroundColor: "#2CD9C5", borderRadius: "10px" }}
-        onClick={handleBookAppointment} // Updated to trigger dialog opening
-      >
-        Book Appointment
-      </Button>
-    </Grid>
+//     <Grid item display="flex" justifyItems="center" marginBottom={2} justifyContent="center">
+//       <Button
+//         variant="contained"
+//         sx={{ padding: 1, width: 200, backgroundColor: "#2CD9C5", borderRadius: "10px" }}
+//         onClick={handleBookAppointment} // Updated to trigger dialog opening
+//       >
+//         Book Appointment
+//       </Button>
+//     </Grid>
 
-    <Dialog open={openModal} onClose={() => setOpenModal(false)}>
-      <DialogTitle>Confirm Appointment</DialogTitle>
-      <DialogContent>
-        <Typography variant="body1">
-          Are you sure you want to book the appointment for {selectedSlot}?
-        </Typography>
-      </DialogContent>
-      <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
-        <Button variant="contained" onClick={() => setOpenModal(false)}>Cancel</Button>
-        <Button variant="contained" onClick={handleConfirmAppointment}>Confirm</Button>
-      </Box>
-    </Dialog>
+//     <Dialog open={openModal} onClose={() => setOpenModal(false)}>
+//       <DialogTitle>Confirm Appointment</DialogTitle>
+//       <DialogContent>
+//         <Typography variant="body1">
+//           Are you sure you want to book the appointment for {selectedSlot}?
+//         </Typography>
+//       </DialogContent>
+//       <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+//         <Button variant="contained" onClick={() => setOpenModal(false)}>Cancel</Button>
+//         <Button variant="contained" onClick={handleConfirmAppointment}>Confirm</Button>
+//       </Box>
+//     </Dialog>
 
-    // ... (existing code remains unchanged)
-  );
-};
+//     // ... (existing code remains unchanged)
+//   );
+// };
 
-export default DoctorCard;
+// export default DoctorCard;
