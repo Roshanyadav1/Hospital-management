@@ -13,6 +13,7 @@ from hospital_management.responses import ResponseMessage
 from django_filters.rest_framework import DjangoFilterBackend
 from leave.models import Leave
 import json
+from datetime import datetime,timedelta
 
 class DoctorRegister(GenericAPIView):
     serializer_class = DoctorSerializer
@@ -178,7 +179,21 @@ class DoctorViewById(APIView):
                 serializer_data['times'] = times_data
                 day_data = json.loads(serializer_data['day'])
                 serializer_data['day'] = day_data
+                for data in times_data:
+                 start_time =data['start_time']
+                 end_time = data['end_time']
+                 t1 = datetime.strptime(start_time, "%H:%M:%S")
+                 t2 = datetime.strptime(end_time, "%H:%M:%S")
+                 time =t2-t1 
+                 per_patient_time =serializer_data['per_patient_time']
+                 time_parts = per_patient_time.split(':')
+                 time_deltaa = timedelta(hours=int(time_parts[0]),minutes=int(time_parts[1]),seconds=int(time_parts[2]))
+                 slot = time/time_deltaa
+                 data['slots'] = int(slot) 
+                 
                 
+                
+
                 try:
                  error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
                  response_message = error.error_message
