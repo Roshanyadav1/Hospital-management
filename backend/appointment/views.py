@@ -139,7 +139,6 @@ class AppointmentView(ListAPIView):
             {
                 'status': response_code, 
                 'message': "Appointment " + response_message,
-                'appointement_per_week': list(appointments_per_day),
                 'data': response.data, 
             }
         )
