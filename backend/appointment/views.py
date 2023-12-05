@@ -73,8 +73,7 @@ class AppointmentCount(ListAPIView):
         # for entry in doctor_count_per_day:
         #   print(f"Date: {entry['appointment_date']}, Doctor Count: {entry['doctor_count']}")  
     
-        if request.GET.get('pageSize') != None:
-            response.data['page_size'] = int(request.GET.get('pageSize'))
+
         try:
          error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
          response_message = error.error_message
