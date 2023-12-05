@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
-// import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import ListItem from "@mui/material/ListItem";
@@ -15,17 +14,7 @@ import { BiRadioCircle } from "react-icons/bi";
 import ResponsiveAppBar from "./Navbar";
 import Footer from './Footer';
 import Link from "next/link";
-// import Docter from "@/app/dashboard/docter/page";
-// import Career from "@/app/dashboard/employeedata/page";
-// import Billing from "@/app/dashboard/billing/page"
-// import AboutHospital from "@/app/dashboard/abouthospital/page";
-// import Analytics from "@/app/dashboard/analytics/page";
-// import Dashboardd from "@/app/dashboard/dashboardd/page";
-// import Disease from "@/app/dashboard/disease/page";
-// import DocterDetail from "@/app/dashboard/docterdetail/page";
-// import Prescription from "@/app/dashboard/prescription/page";
 import Discharge from "@/app/dashboard/discharge/page";
-// import Typography from '@mui/material/Typography';
 import { useRouter } from "next/navigation";
 const drawerWidth = 240;
 
@@ -125,11 +114,7 @@ function MiniDrawer() {
             { text: "Doctor", path: "/dashboard/docter" },
             { text: "Disease", path: "/dashboard/disease" },
             { text: "Add Hospital", path: "/dashboard/abouthospital" },
-            // { text: "Billing", path: "/dashboard/billing" },
-            // { text: "Analytics", path: "/dashboard/analytics" },
-            // { text: "DocterDetail", path: "/dashboard/docterdetail" },
-            { text: "Prescription", path: "/dashboard/registerForm" },
-            // { text: "Discharge", path: "/dashboard/discharge" },
+            { text: "Prescription", path: "/dashboard/registerForm" }
           ].map((item, index) => (
             <ListItem
               key={item.text}
@@ -192,19 +177,6 @@ function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1}}>
-      
-      {/* {router.pathname === "/" && <Career />}
-        {router.pathname === "/dashboard/docter" && <Docter />}
-        {router.pathname === "/dashboard/disease" && <Disease />}
-        {router.pathname === "/dashboard/abouthospital" && <AboutHospital />}
-        {router.pathname === "/dashboard/billing" && <Billing />}
-        {router.pathname === "/dashboard/analytics" && <Analytics />}
-        {router.pathname === "/dashboard/dashboardd" && <Dashboardd />}
-        {router.pathname === "/dashboard/docterdetail" && <DocterDetail />}
-        {router.pathname === "/dashboard/prescription" && <Prescription />}
-        {router.pathname === "/dashboard/discharge" && <Discharge />} */}
-
-        {/* <Footer/> */}
       </Box>
         {router.pathname === "/dashboard/discharge" && <Discharge />} 
         <Box sx={{marginBottom:0 }}>

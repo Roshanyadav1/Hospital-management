@@ -183,14 +183,11 @@ console.log("Data for Chart:", Data);
 
                                </Grid >
                                <Grid item xs={6}>
-                                <div  style={{width:'80%',height:'100%',marginTop:'8%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
-                                <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/>
-                                </div>
-                            
-
+                               <div style={{ width: '80%', height: '100%', marginTop: '8%', marginLeft: '10%', backgroundColor: 'white', paddingTop: '10px', borderRadius: '50%', position: 'relative' }}>
+                                            <Image style={{ position: 'absolute', transform: 'translate(15%)' }} height={100} width={100} src={Doc} />
+                                        </div>
                                </Grid>
                              </Grid>
-                           
                         </div>
                     </Grid>
                     
