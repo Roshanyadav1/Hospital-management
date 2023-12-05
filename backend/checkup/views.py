@@ -8,6 +8,8 @@ from error.models import Error
 from hospital_management.responses import ResponseMessage
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
+from hospital_management.custom_paginations import CustomPagination
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class CheckUpAdd(GenericAPIView):
@@ -167,7 +169,8 @@ class CheckUpView(ListAPIView):
     queryset = CheckUp.objects.all()
     serializer_class = CheckupSerializer
     filterset_fields = ['doctor', 'patient', 'appointment', 'disease']
-    pagination_class = PageNumberPagination
+    filter_backends = [DjangoFilterBackend]
+    pagination_class = CustomPagination
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
