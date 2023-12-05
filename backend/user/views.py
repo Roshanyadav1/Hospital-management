@@ -52,6 +52,7 @@ class UserDelete(APIView):
             except:
                 response_message = "DELETE_SUCCESS"
                 response_code = status.HTTP_200_OK
+                Response.status_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
@@ -68,6 +69,7 @@ class UserDelete(APIView):
         except:
             response_message = "INVALID_ID"
             response_code = status.HTTP_400_BAD_REQUEST
+            Response.status_code = status.HTTP_400_BAD_REQUEST
         return Response(
             {
                 'status': response_code,
@@ -87,15 +89,18 @@ class UserLoginView(GenericAPIView):
         if User.objects.filter(user_email=email).count() >= 1:
             user = User.objects.get(user_email=email)
             is_verify = request.data.get('is_verify')
-            if user.is_active == True:
+
+            if user.status == True:
                 if is_verify == 'true':
                     token = get_tokens_for_user(user)
+                    Response.status_code = status.HTTP_200_OK
                     return Response(
                         {
                             'status': status.HTTP_200_OK,
                             'message': "Logged In As " + user.user_role,
                             'data': {
                                 'user_role': user.user_role,
+                                'id': user.user_role,
                                 'token': token,
                             }
                         },
@@ -104,17 +109,20 @@ class UserLoginView(GenericAPIView):
                     user = authenticate(user_email=email, password=password)
                     if user is not None:
                         token = get_tokens_for_user(user)
+                        Response.status_code = status.HTTP_200_OK
                         return Response(
                             {
                                 'status': status.HTTP_200_OK,
                                 'message': "Logged In As " + user.user_role,
                                 'data': {
                                     'user_role': user.user_role,
+                                    'id': user.member_id,
                                     'token': token,
                                 }
                             },
                         )
                     else:
+                        Response.status_code = status.HTTP_400_BAD_REQUEST
                         return Response(
                             {
                                 'status': status.HTTP_400_BAD_REQUEST,
@@ -122,8 +130,20 @@ class UserLoginView(GenericAPIView):
                             },
                         )
             else:
-                pass
+                message = ""
+                if user.user_role == "Doctor" or user.user_role == "Manager":
+                    message = "You Are Not Approved From Administrator"
+                if user.user_role == "Patient":
+                    message = "Verify Your Email First"
+                Response.status_code = status.HTTP_400_BAD_REQUEST
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': message,
+                    },
+                )
         else:
+            Response.status_code = status.HTTP_404_NOT_FOUND
             return Response(
                 {
                     'status': status.HTTP_404_NOT_FOUND,
@@ -139,9 +159,12 @@ class UserVerificationView(APIView):
     def post(self, request, format=None):
         # request.GET.headers.setdefault('Content-Type', 'application/json')
         # token = request.GET.get('token')
-        # user_id = request.GET.get('user_id')
+        # id = request.GET.get('user_id')
         # print(token, user_id)
         # serializer = UserProfileSerializer(request.user)
+        # user = User.objects.get(member_id=id)
+        # user.status = True
+        Response.status_code = status.HTTP_200_OK
         return Response(
             {
                 'status': status.HTTP_200_OK,
@@ -156,7 +179,13 @@ class UserView(APIView):
 
     def get(self, request, format=None):
         serializer = UserProfileSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        Response.status_code = status.HTTP_200_OK
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'data': serializer.data,
+            }
+        )
 
 
 class UserUpdate(APIView):
@@ -177,6 +206,7 @@ class UserUpdate(APIView):
             except:
                 response_message = "UPDATE_SUCCESS"
                 response_code = status.HTTP_200_OK
+                Response.status_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
@@ -194,6 +224,7 @@ class UserUpdate(APIView):
             except:
                 response_message = "INVALID ID"
                 response_code = status.HTTP_400_BAD_REQUEST
+                Response.status_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
                     'status': response_code,
