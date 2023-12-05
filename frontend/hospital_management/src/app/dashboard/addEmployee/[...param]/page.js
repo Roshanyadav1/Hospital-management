@@ -6,8 +6,7 @@ import { useAddEmployeeMutation } from '@/services/Query';
 import Employee_Validation from '@/components/form/EmployeeValidation/employeeValidation';
 import { colors } from '@/styles/theme';
 import AddEmployee from '@/components/AddEmployee';
-
-
+import { useSearchParams } from 'next/navigation';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   maxWidth: '950px',
@@ -24,9 +23,6 @@ const StyledTypography = styled(Typography)(() => ({
   color: colors.primary,
 }));
 
-
-
-
 //for the whole form
 const StyledFormWrapper = styled('div')({
   minHeight: '100vh',
@@ -37,7 +33,6 @@ const StyledFormWrapper = styled('div')({
     padding: '0rem',
   },
 });
-
 
 const INITIAL_FORM_STATE = {
   employee_name: '',
@@ -53,26 +48,31 @@ const INITIAL_FORM_STATE = {
 
 
 const EmpRegister = () => {
-  // const searchParam = useSearchParams()
-
-  // console.log( searchParam, "searchParam")
+  const searchParam = useSearchParams()         
   
- 
-  // for(const [name, value] of searchParam.entries()) {
-  //   console.log(name, value , "the name and value is")
-  // }
+  let formatedInitialState = {}
+    for(const [name] of searchParam.entries()) {
+        formatedInitialState = name
+       break;
+    }
+
+    console.log('formatedInitialState',formatedInitialState)
+
+  let originalFormate = {}
+  let parsed = JSON.parse(formatedInitialState)
+  for(const [name , value] of Object.entries(parsed)) {
+    originalFormate[name] = value
+  }
+
+
+  console.log(originalFormate ,"originalFormate")
+
 
   const [addemployee] = useAddEmployeeMutation()
 
   const handleRegister = async (values,{resetForm}) => {
-    try {
-      await addemployee(values);
-      resetForm();
-    } catch (error) {
-      // Handle error
-      // console.error('Error submitting form:', error);
-    }
-
+   console.log("values " , values)
+   
   }
 
   return (
@@ -80,16 +80,16 @@ const EmpRegister = () => {
       <StyledPaper elevation={3}>
 
         <StyledTypography variant="h4">
-          Employee Registration Form
+          Edit Employee Form
         </StyledTypography>
         <Typography variant="h6">
           General Information
         </Typography>
 
         <AddEmployee 
-        initialState={INITIAL_FORM_STATE}
-        validationSchema={Employee_Validation}
-        handleRegister={handleRegister}
+          initialState={originalFormate}
+          validationSchema={Employee_Validation}
+          handleRegister={handleRegister}
         />
 
       </StyledPaper>
