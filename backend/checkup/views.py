@@ -173,10 +173,7 @@ class CheckUpView(ListAPIView):
         response = super().list(request, *args, **kwargs)
         response_message = ""
         response_code = ""
-        # print(response.data)
-        # if request.GET.get('pageSize') != None: 
-        #     page_size = int(request.GET.get('pageSize'))
-        #     response.data['page_size'] = page_size
+
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message
@@ -192,23 +189,3 @@ class CheckUpView(ListAPIView):
                 'data': response.data,
             }
         )
-    #
-    # checkup = CheckUp.objects.all()
-    # serializer = CheckupSerializer(checkup, many=True)
-    # response_message = ""
-    # response_code = ""
-    # try:
-    #     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
-    #     response_message = error.error_message
-    #     response_code = error.error_code
-    #     Response.status_code = error.error_code
-    # except:
-    #     response_message = ResponseMessage.RETRIEVED_SUCCESS
-    #     response_code = status.HTTP_200_OK
-    # return Response(
-    #     {
-    #         'status': response_code,
-    #         'message': 'Checkup ' + response_message,
-    #         'data': serializer.data
-    #     },
-    # )

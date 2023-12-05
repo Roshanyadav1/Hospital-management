@@ -52,7 +52,6 @@ class AppointmentView(ListAPIView):
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response_message = ""
-<<<<<<< HEAD
         response_code = ""
         end_date = timezone.now().date()
         start_date = end_date - timedelta(days=6)
@@ -65,16 +64,6 @@ class AppointmentView(ListAPIView):
             patient_count=Count('patient')).order_by('appointment_date')
         doctor_count_per_day = appointments_in_week.values('appointment_date').annotate(
             doctor_count=Count('doctor')).order_by('appointment_date')
-=======
-        response_code=""
-        start_date = timezone.now().date()
-        end_date = start_date + timedelta(days=6)
-        appointments_in_week = self.queryset.filter(appointment_date__range=[start_date, end_date])
-        appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count('appointment_date'), doctor_count= Count('doctor',distnict=True)).order_by('appointment_date')
-        patient_count_per_day = appointments_in_week.values('appointment_date').annotate(patient_count=Count('patient')).order_by('appointment_date')
-        doctor_count_per_day = appointments_in_week.values('appointment_date').annotate(doctor_count=Count('doctor')).order_by('appointment_date')
-
->>>>>>> d7fc8a35cc2d8e1556cefd081f455a733acda5a8
 
         # for entry in appointments_per_day:
         #     print(f"Date: {entry['appointment_date']}, Appointments: {entry['appointment_count']}, Doctor: {entry['doctor_count']}")
