@@ -120,7 +120,7 @@ class DoctorView(ListAPIView):
         for remove_d in remove_data:
             response_data.remove(remove_d)
         
-        for data in response.data:
+        for data in response_data:
              disease_data = json.loads(data.get('disease_specialist'))
              data['disease_specialist'] = disease_data
 
