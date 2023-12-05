@@ -22,6 +22,27 @@ import { useGetAllDoctorsQuery } from '@/services/Query'
 import Image from 'next/image'
 
 function DoctorPage() {
+   const [filterDoctor] = useGetSpecialistDoctorMutation()
+
+   // filter use
+   const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
+   const { data: getDoctors } = useGetAllDoctorsQuery()
+
+   const [data,setData] = useState()
+
+   const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
+   const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
+   const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
+
+   const {  data: filterDoc , isFetching , isLoading :isDoctorsLoading} = useGetAllDoctorsQuery(selectedDiseases)
+
+
+   let fill = {
+      disease: selectedDate,
+      day: selectedDiseases,
+      doctor: selectedDoctor,
+   }
+
    const styles = {
       container: {
          backgroundImage: `url(${'https://e0.pxfuel.com/wallpapers/597/471/desktop-wallpaper-hospital-medical-care.jpg'})`,
@@ -36,10 +57,6 @@ function DoctorPage() {
       },
    }
 
-   const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
-   const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
-   const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
-
    const handleDateChange = date => {
       setSelectedDate(date)
    }
@@ -52,27 +69,24 @@ function DoctorPage() {
       setSelectedDoctor(values)
    }
 
-   const handleSubmit = event => {
-      event.preventDefault()
-
-      // Now you can use selectedDate and selectedDiseases in your fetch or any other logic
-      console.log('Selected Date:', selectedDate)
-      console.log('Selected Diseases:', selectedDiseases)
-      console.log('Selected Doctor:', selectedDoctor)
-      // Add your fetch or other logic here
+   const handleSubmit = async() => {
+      try{
+         alert("click")
+         // event.preventDefault()
+         let res = await filterDoctor(fill).unwrap()
+         console.log("res res",res)
+         setData(res)
+         console.log('Selected Date:', selectedDate)
+         console.log('Selected Diseases:', selectedDiseases)
+         console.log('Selected Doctor:', selectedDoctor)
+         // Add your fetch or other logic here
+      }catch(err){
+         console.warn(err)
+      }
    }
 
-   let fill = {
-      disease: selectedDate,
-      day: selectedDiseases,
-      doctor: selectedDoctor,
-   }
-   const [filterDoctor, { data: docData }] = useGetSpecialistDoctorMutation(fill)
+ 
 
-   // filter use
-   const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
-   const {  data: filterDoc , isFetching , isLoading :isDoctorsLoading} = useGetAllDoctorsQuery(selectedDiseases)
-   const { data: getDoctors } = useGetAllDoctorsQuery()
    // const [status, updatedStatus] = useState()
 
    if (isLoading || isDoctorsLoading)
@@ -107,7 +121,7 @@ function DoctorPage() {
                <Typography variant='h4' align='center' style={Typo}>
                   Book Your Appointment
                </Typography>
-               <form onSubmit={handleSubmit}>
+               <form>
                   <Grid container spacing={5} style={{ marginTop: '1rem' }}>
                      <Grid item xs={12} sm={3} md={3.5}>
                         <Typography variant='body2' sx={{ marginBottom: '6px' }}>
@@ -162,7 +176,7 @@ function DoctorPage() {
                            freeSolo
                            id='tags-outlined'
                            options={doctors}
-                           value={selectedDoctor}
+                           value={selectedDoctor.toString()}
                            onChange={handleDoctorChange}
                            sx={{
                               background: 'white',
@@ -188,7 +202,8 @@ function DoctorPage() {
                         <Button
                            variant='contained'
                            size='large'
-                           type='submit'
+                           // type='submit'
+                           onClick={handleSubmit}
                            sx={{ marginTop: '25px', height: '50px' }}
                         >
                            Search
