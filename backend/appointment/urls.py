@@ -8,4 +8,5 @@ urlpatterns = [
     path('view/<uuid:input>', AppointmentViewById.as_view(), name = 'appointment view by id'),
     path('update/<uuid:input>', AppointmentUpdate.as_view(), name = 'appointment update'),
     path('delete/<uuid:input>', AppointmentDelete.as_view(), name = 'appointment delete'),
+    path('appointmentCount/', AppointmentCount.as_view(), name="Appointment Count")
 ]

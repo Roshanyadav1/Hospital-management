@@ -42,6 +42,54 @@ class AppointmentAdd(GenericAPIView):
         )
 
 
+class AppointmentCount(ListAPIView):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentViewSerializer
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response_message = ""
+        response_code = ""
+        end_date = timezone.now().date()
+        start_date = end_date - timedelta(days=6)
+
+        appointments_in_week = self.queryset.filter(
+            appointment_date__range=[start_date, end_date])
+        appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count(
+            'appointment_date'), doctor_count=Count('doctor', distinct=True), patient_count=Count('patient')).order_by('appointment_date')
+        patient_count_per_day = appointments_in_week.values('appointment_date').annotate(
+            patient_count=Count('patient')).order_by('appointment_date')
+        doctor_count_per_day = appointments_in_week.values('appointment_date').annotate(
+            doctor_count=Count('doctor')).order_by('appointment_date')
+
+        # for entry in appointments_per_day:
+        #     print(f"Date: {entry['appointment_date']}, Appointments: {entry['appointment_count']}, Doctor: {entry['doctor_count']}")
+
+        # # Print the patient count for each day (for debugging purposes)
+        # for entry in patient_count_per_day:
+        #     print(f"Date: {entry['appointment_date']}, Patient Count: {entry['patient_count']}")
+
+        # for entry in doctor_count_per_day:
+        #   print(f"Date: {entry['appointment_date']}, Doctor Count: {entry['doctor_count']}")
+
+        try:
+            error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
+        except:
+            response_message = ResponseMessage.RETRIEVED_SUCCESS
+            response_code = status.HTTP_200_OK
+        return Response(
+            {
+                'status': response_code,
+                'message': "Appointment " + response_message,
+                'appointement_per_week': list(appointments_per_day)
+
+            }
+        )
+
+
 class AppointmentView(ListAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentViewSerializer
@@ -57,7 +105,7 @@ class AppointmentView(ListAPIView):
         start_date = end_date - timedelta(days=6)
 
         appointments_in_week = self.queryset.filter(
-            appointment_date__range=[end_date, start_date])
+            appointment_date__range=[start_date, end_date])
         appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count(
             'appointment_date'), doctor_count=Count('doctor', distinct=True), patient_count=Count('patient')).order_by('appointment_date')
         patient_count_per_day = appointments_in_week.values('appointment_date').annotate(
