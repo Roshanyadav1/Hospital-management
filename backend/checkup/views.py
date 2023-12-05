@@ -6,7 +6,6 @@ from rest_framework import status
 from checkup.serializers import CheckupSerializer
 from error.models import Error
 from hospital_management.responses import ResponseMessage
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
 from hospital_management.custom_paginations import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
@@ -177,6 +176,13 @@ class CheckUpView(ListAPIView):
         response_message = ""
         response_code = ""
 
+        pagination = CustomPagination()
+        if request.GET.get('pageSize') != None:
+            if request.GET.get('pageSize') == "":
+                pass
+            else:
+                response.data['page_size'] = int(request.GET.get('pageSize'))
+                pagination.page_size = int(request.GET.get('pageSize'))
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message

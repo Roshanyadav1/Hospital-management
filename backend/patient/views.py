@@ -9,7 +9,6 @@ from user.models import User
 from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth import authenticate
 from patient.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
@@ -17,11 +16,13 @@ from employee.models import Employee
 from hospital_management.responses import ResponseMessage
 from hospital_management.email import send_verification_email
 
+
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return {
         'access': str(refresh.access_token),
     }
+
 
 class UserRegister(GenericAPIView):
     serializer_class = PatientRegisterSerializer
@@ -31,8 +32,10 @@ class UserRegister(GenericAPIView):
         verification_token = get_tokens_for_user(user)
         user_id = str(user.user_id)
         user_email = user.user_email
-        url = 'https://hospital-management-six-chi.vercel.app/api/user/verification/?user_id=' + user_id + '&token=' + verification_token['access']
+        url = 'https://hospital-management-six-chi.vercel.app/api/user/verification/?user_id=' + \
+            user_id + '&token=' + verification_token['access']
         send_verification_email(url, user_email)
+
 
 class PatientRegister(GenericAPIView):
     serializer_class = PatientRegisterSerializer
@@ -46,11 +49,11 @@ class PatientRegister(GenericAPIView):
         return response
 
     def post(self, request, format=None):
-        if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() and Employee.objects.filter(employee_email=request.data.get('patient_email')).count()  >= 1:
+        if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() and Employee.objects.filter(employee_email=request.data.get('patient_email')).count() >= 1:
             response_message = ''
             response_code = ''
-            try : 
-                error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
+            try:
+                error = Error.objects.get(error_title='ALREADY_REGISTERED')
                 response_message = error.error_message
                 response_code = error.error_code
                 Response.status_code = error.error_code
@@ -59,10 +62,10 @@ class PatientRegister(GenericAPIView):
                 response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
-                'status': response_code,
-                'message': 'Patient ' + response_message
+                    'status': response_code,
+                    'message': 'Patient ' + response_message
                 },
-              )
+            )
         else:
             serializer = PatientRegisterSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -78,12 +81,12 @@ class PatientRegister(GenericAPIView):
 
             user = User.objects.create_user(
                 member, user_name, user_email, user_role, user_password)
-            
+
             UserRegister.user_verification(user)
             response_message = ''
             response_code = ''
-            try : 
-                error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+            try:
+                error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
                 response_message = error.error_message
                 response_code = error.error_code
                 Response.status_code = error.error_code
@@ -92,40 +95,42 @@ class PatientRegister(GenericAPIView):
                 response_code = status.HTTP_201_CREATED
             return Response(
                 {
-                'status': response_code,
-                'message': 'Patient ' + response_message
+                    'status': response_code,
+                    'message': 'Patient ' + response_message
                 },
-              )
-          
+            )
+
+
 class PatientView(ListAPIView):
     queryset = Patient.objects.all().order_by('created_at')
     serializer_class = PatientSerializer
     filter_backends = [SearchFilter, CustomOrderingFilter]
     search_fields = ['patient_name']
-    pagination_class  = CustomPagination
+    pagination_class = CustomPagination
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response_message = ""
-        response_code=""
+        response_code = ""
         if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
         try:
-         error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
+            error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
         except:
-            response_message=ResponseMessage.RETRIEVED_SUCCESS
-            response_code=status.HTTP_200_OK
+            response_message = ResponseMessage.RETRIEVED_SUCCESS
+            response_code = status.HTTP_200_OK
         return Response(
             {
-                'status': response_code, 
+                'status': response_code,
                 'message': "Patient " + response_message,
                 "count": len(response.data),
-                'data': response.data, 
+                'data': response.data,
             }
         )
+
 
 class PatientViewById(APIView):
     def get(self, request, input=None, format=None):
@@ -135,15 +140,15 @@ class PatientViewById(APIView):
                 doctor = Patient.objects.get(patient_id=id)
                 serializer = PatientSerializer(doctor)
                 response_message = ""
-                response_code=""
+                response_code = ""
                 try:
-                 error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
-                 response_message = error.error_message
-                 response_code = error.error_code
-                 Response.status_code = error.error_code
+                    error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
+                    response_message = error.error_message
+                    response_code = error.error_code
+                    Response.status_code = error.error_code
                 except:
-                       response_message = ResponseMessage.RETRIEVED_SUCCESS
-                       response_code=status.HTTP_200_OK
+                    response_message = ResponseMessage.RETRIEVED_SUCCESS
+                    response_code = status.HTTP_200_OK
 
                 return Response(
                     {
@@ -154,24 +159,25 @@ class PatientViewById(APIView):
                 )
             else:
                 response_message = ""
-                response_code=""
+                response_code = ""
                 try:
-                 error = Error.objects.get(error_title = 'INVALID_ID')
-                 response_message = error.error_message
-                 response_code = error.error_code
-                 Response.status_code = error.error_code
+                    error = Error.objects.get(error_title='INVALID_ID')
+                    response_message = error.error_message
+                    response_code = error.error_code
+                    Response.status_code = error.error_code
                 except:
-                       response_message=ResponseMessage.INVALID_ID
-                       response_code = status.HTTP_400_BAD_REQUEST
+                    response_message = ResponseMessage.INVALID_ID
+                    response_code = status.HTTP_400_BAD_REQUEST
                 return Response(
                     {
                         'status': response_code,
                         'message': response_message,
                     },
                 )
-            
+
+
 class PatientUpdate(APIView):
-   
+
     def patch(self, request, input, format=None):
         id = input
         if Patient.objects.filter(patient_id=id).count() >= 1:
@@ -181,12 +187,12 @@ class PatientUpdate(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             response_message = ""
-            response_code=""
+            response_code = ""
             try:
-             error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
-             response_message = error.error_message
-             response_code = error.error_code
-             Response.status_code = error.error_code
+                error = Error.objects.get(error_title='UPDATE_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
             except:
                 response_message = ResponseMessage.UPDATE_SUCCESS
                 response_code = status.HTTP_200_OK
@@ -213,15 +219,15 @@ class PatientDelete(APIView):
             doctor = Patient.objects.get(patient_id=id)
             doctor.delete()
             response_message = ""
-            response_code=""
+            response_code = ""
             try:
-             error = Error.objects.get(error_title = 'DELETE_SUCCESS')
-             response_message = error.error_message
-             response_code = error.error_code
-             Response.status_code = error.error_code
+                error = Error.objects.get(error_title='DELETE_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
             except:
                 response_message = ResponseMessage.DELETE_SUCCESS
-                response_code  = status.HTTP_200_OK
+                response_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
@@ -230,12 +236,12 @@ class PatientDelete(APIView):
             )
         else:
             response_message = ""
-            response_code=""
+            response_code = ""
             try:
-             error = Error.objects.get(error_title = 'INVALID_ID')
-             response_message = error.error_message
-             response_code = error.error_code
-             Response.status_code = error.error_code
+                error = Error.objects.get(error_title='INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
             except:
                 response_message = ResponseMessage.INVALID_ID
                 response_code = status.HTTP_400_BAD_REQUEST

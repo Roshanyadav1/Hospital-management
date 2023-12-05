@@ -5,7 +5,6 @@ from disease.models import Disease
 import uuid
 
 
-# Appointment Model Class
 class Appointment(models.Model):
     appointment_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     appointment_number = models.IntegerField()
@@ -14,3 +13,4 @@ class Appointment(models.Model):
     disease =  models.ForeignKey(Disease, default = uuid.uuid4, on_delete = models.CASCADE)
     appointment_time = models.TimeField()
     appointment_date = models.DateField()
+    created_at = models.DateTimeField(auto_now=True)

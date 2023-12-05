@@ -91,7 +91,7 @@ class AppointmentCount(ListAPIView):
 
 
 class AppointmentView(ListAPIView):
-    queryset = Appointment.objects.all()
+    queryset = Appointment.objects.all().order_by('created_at')
     serializer_class = AppointmentViewSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['doctor_id', 'appointment_time', 'patient_id',]
@@ -102,9 +102,6 @@ class AppointmentView(ListAPIView):
         response_message = ""
         response_code = ""
 
-
-        if request.GET.get('pageSize') != None:
-            response.data['page_size'] = int(request.GET.get('pageSize'))
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message

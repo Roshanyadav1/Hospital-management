@@ -1,7 +1,6 @@
 from employee.serializers import EmployeeSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
-from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from employee.models import Employee
@@ -9,10 +8,8 @@ from user.models import User
 from rest_framework import status
 from doctor.serializers import DoctorSerializer
 from error.models import Error
-from employee.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
-from django_filters.rest_framework import DjangoFilterBackend
 from doctor.models import Doctor
 import json
 from rest_framework_simplejwt.tokens import RefreshToken
