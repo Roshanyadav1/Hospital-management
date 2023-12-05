@@ -23,7 +23,7 @@ import {
 import '@/styles/container.css'
 import CommonListItem from '../components/CommonListItem';
 import Image from 'next/image'
-import Doc from '../assets/dashboardimages'
+import Doc from '../assets/dashboardimages/Doc.png'
 
 const data = [
     {
