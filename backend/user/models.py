@@ -15,6 +15,7 @@ class UserManager(BaseUserManager):
             user_name = user_name,
             user_password = user_password,
             user_role = user_role,
+            is_active = False
         )
 
         user.set_password(user_password)
@@ -28,6 +29,7 @@ class UserManager(BaseUserManager):
             user_email = user_email,
             user_role = user_role,
             user_password = user_password,
+            is_active = False
         )
 
         user.is_admin = True

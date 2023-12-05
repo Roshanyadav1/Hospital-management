@@ -24,10 +24,10 @@ class UserRegister(GenericAPIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
+        error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
         response_message = error.error_message
         response_code = error.error_code
-        Response.status_code = error.error_code 
+        Response.status_code = error.error_code
         return Response(
             {
                 'status': response_code,
@@ -45,10 +45,10 @@ class UserDelete(APIView):
             response_message = ""
             response_code = ""
             try:
-             error = Error.objects.get(error_title = 'DELETE_SUCCESS')
-             response_message = error.error_message
-             response_code = error.error_code
-             Response.status_code = error.error_code
+                error = Error.objects.get(error_title='DELETE_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
             except:
                 response_message = "DELETE_SUCCESS"
                 response_code = status.HTTP_200_OK
@@ -61,10 +61,10 @@ class UserDelete(APIView):
         response_code = ""
         response_message = ""
         try:
-         error = Error.objects.get(error_title = 'INVALID_ID')
-         response_message = error.error_message
-         response_code = error.error_code
-         Response.status_code = error.error_code
+            error = Error.objects.get(error_title='INVALID_ID')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
         except:
             response_message = "INVALID_ID"
             response_code = status.HTTP_400_BAD_REQUEST
@@ -87,22 +87,8 @@ class UserLoginView(GenericAPIView):
         if User.objects.filter(user_email=email).count() >= 1:
             user = User.objects.get(user_email=email)
             is_verify = request.data.get('is_verify')
-
-            if is_verify == 'true':
-                token = get_tokens_for_user(user)
-                return Response(
-                    {
-                        'status': status.HTTP_200_OK,
-                        'message': "Logged In As " + user.user_role,
-                        'data': {
-                            'user_role': user.user_role,
-                            'token': token,
-                        }
-                    },
-                )
-            else:
-                user = authenticate(user_email=email, password=password)
-                if user is not None:
+            if user.is_active == True:
+                if is_verify == 'true':
                     token = get_tokens_for_user(user)
                     return Response(
                         {
@@ -115,12 +101,28 @@ class UserLoginView(GenericAPIView):
                         },
                     )
                 else:
-                    return Response(
-                        {
-                            'status': status.HTTP_400_BAD_REQUEST,
-                            'message': "Password Mismatch",
-                        },
-                    )
+                    user = authenticate(user_email=email, password=password)
+                    if user is not None:
+                        token = get_tokens_for_user(user)
+                        return Response(
+                            {
+                                'status': status.HTTP_200_OK,
+                                'message': "Logged In As " + user.user_role,
+                                'data': {
+                                    'user_role': user.user_role,
+                                    'token': token,
+                                }
+                            },
+                        )
+                    else:
+                        return Response(
+                            {
+                                'status': status.HTTP_400_BAD_REQUEST,
+                                'message': "Password Mismatch",
+                            },
+                        )
+            else:
+                pass
         else:
             return Response(
                 {
@@ -128,6 +130,7 @@ class UserLoginView(GenericAPIView):
                     'message': "Invalid User Id",
                 },
             )
+
 
 class UserVerificationView(APIView):
     serializer_class = UserProfileSerializer
@@ -145,6 +148,7 @@ class UserVerificationView(APIView):
                 'message': "User Verified",
             },
         )
+
 
 class UserView(APIView):
     serializer_class = UserProfileSerializer
@@ -166,11 +170,11 @@ class UserUpdate(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             try:
-             error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
-             response_message = error.error_message
-             response_code = error.error_code
-             Response.status_code = error.error_code
-            except: 
+                error = Error.objects.get(error_title='UPDATE_SUCCESS')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
+            except:
                 response_message = "UPDATE_SUCCESS"
                 response_code = status.HTTP_200_OK
             return Response(
@@ -183,10 +187,10 @@ class UserUpdate(APIView):
             response_message = ""
             response_code = ""
             try:
-             error = Error.objects.get(error_title = 'INVALID_ID')
-             response_message = error.error_message
-             response_code = error.error_code
-             Response.status_code = error.error_code
+                error = Error.objects.get(error_title='INVALID_ID')
+                response_message = error.error_message
+                response_code = error.error_code
+                Response.status_code = error.error_code
             except:
                 response_message = "INVALID ID"
                 response_code = status.HTTP_400_BAD_REQUEST
