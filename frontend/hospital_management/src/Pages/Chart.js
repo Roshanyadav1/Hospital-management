@@ -1,6 +1,3 @@
-
-
-
 'use client'
 import { useEffect, useState } from 'react';
 import { Grid } from "@mui/material"
@@ -20,57 +17,10 @@ import {
     Legend,
     Area
 } from "recharts";
-import '@/styles/container.css'
-import CommonListItem from '../components/CommonListItem';
+import '@/styles/dashboard.css'
+import CommonListItem from './CommonListItem';
 import Image from 'next/image'
 import Doc from '../assets/dashboardimages/Doc.png'
-
-const data = [
-    {
-        name: "Sun",
-        Patients: 29,
-        Appoints: 25,
-        Doctors: 6,
-    },
-    {
-        name: "Mon",
-        Patients: 32,
-        Appoints: 32,
-        Doctors: 11,
-    },
-    {
-        name: "Tues",
-        Patients: 38,
-        Appoints: 23,
-        Doctors: 4,
-    },
-    {
-        name: "Wed",
-        Patients: 32,
-        Appoints: 27,
-        Doctors: 7,
-    },
-
-    {
-        name: "Thurs",
-        Patients: 22,
-        Appoints: 15,
-        Doctors: 3,
-    },
-    {
-        name: "Fri",
-        Patients: 26,
-        Appoints: 19,
-        Doctors: 9,
-    },
-    {
-        name: "Sat",
-        Patients: 22,
-        Appoints: 15,
-        Doctors: 7,
-    },
-
-];
 
 function Chart() {
 
@@ -183,11 +133,14 @@ console.log("Data for Chart:", Data);
 
                                </Grid >
                                <Grid item xs={6}>
-                               <div style={{ width: '80%', height: '100%', marginTop: '8%', marginLeft: '10%', backgroundColor: 'white', paddingTop: '10px', borderRadius: '50%', position: 'relative' }}>
-                                            <Image style={{ position: 'absolute', transform: 'translate(15%)' }} height={100} width={100} src={Doc} />
-                                        </div>
+                                <div  style={{width:'80%',height:'100%',marginTop:'8%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
+                                <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/>
+                                </div>
+                            
+
                                </Grid>
                              </Grid>
+                           
                         </div>
                     </Grid>
                     
