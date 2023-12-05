@@ -5,12 +5,12 @@ from user.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        exclude = ('is_verify',)
+        exclude = ('is_verify', 'status')
 
 class UserLoginSerializer(serializers.ModelSerializer):
     class Meta: 
         model = User
-        fields = ["user_email", "user_password", "is_verify"]
+        fields = ["user_email", "user_password", "is_verify", "status"]
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -20,4 +20,4 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta: 
         model = User
-        exclude = ('password', 'is_verify', 'is_admin', 'is_active', 'last_login',)
+        exclude = ('password', 'is_verify', 'is_admin', 'is_active', 'last_login', 'status')
