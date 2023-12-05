@@ -89,19 +89,21 @@ class DoctorView(ListAPIView):
 
         inputDate = request.GET.get('date')
         remove_data = []
-        
-        for data in response_data:
-            disease_data = json.loads(data.get('disease_specialist'))
-            disease_tuple_data = tuple(disease_data)
-
-            if disease_specialist is not None:
-                if disease_specialist in disease_tuple_data:
-                    pass
-                else:
-                    remove_data.append(data)
-
-        for remove_d in remove_data:
-            response_data.remove(remove_d)
+        if disease_specialist == "":
+            pass
+        else:
+            for data in response_data:
+                disease_data = json.loads(data.get('disease_specialist'))
+                disease_tuple_data = tuple(disease_data)
+    
+                if disease_specialist is not None:
+                    if disease_specialist in disease_tuple_data:
+                        pass
+                    else:
+                        remove_data.append(data)
+    
+            for remove_d in remove_data:
+                response_data.remove(remove_d)
 
         remove_data = []
         for data in response_data:
