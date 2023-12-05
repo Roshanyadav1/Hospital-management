@@ -23,11 +23,7 @@ class TestSetUp(APITestCase):
         self.prescription_update_url = reverse(
             'prescription update', kwargs={'input': self.test})
         self.prescription_data = {
-            "medication_name": "test",
-            "dosage": "test",
-            "frequency": "test",
-            "route": "Tablet",
-            "duration": "test",
+            "prescription_photo":"image test"
            
         }
         return super().setUp()
@@ -78,11 +74,7 @@ class Testview(TestSetUp):
 class PrecriptionSerializerTest(TestCase):
     def test_serializer(self):
         self.prescription_data = {
-            "medication_name": "Asprin",
-            "dosage": "4",
-            "frequency": "10mg",
-            "route": "Tablet",
-            "duration": "5",
+           "prescription_photo":"image test"
           
         }
 
@@ -93,18 +85,9 @@ class PrecriptionSerializerTest(TestCase):
 
 class TestPrescriptionModel(TestCase):
     def test_model(self):
-        medication_name = 'Asprin'
-        dosage = "4",
-        frequency = "10mg",
-        route = "tablet",
-        duration = '5'
+        prescription_photo  = 'image test'
      
 
-        prescription = Prescription.objects.create(
-            medication_name=medication_name, dosage=dosage, frequency=frequency, route=route, duration=duration)
-        self.assertEqual(medication_name, prescription.medication_name)
-        self.assertEqual(dosage, prescription.dosage)
-        self.assertEqual(frequency, prescription.frequency)
-        self.assertEqual(route, prescription.route)
-        self.assertEqual(duration, prescription.duration)
+        prescription = Prescription.objects.create(prescription_photo=prescription_photo)
+        self.assertEqual(prescription_photo,prescription.prescription_photo)
        
