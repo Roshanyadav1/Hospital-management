@@ -15,7 +15,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import Logo from '../assets/whiteSga.png';
+import Logo from '../assets/navbarimages/whiteSga.png';
 import Image from 'next/image';
 import Link from 'next/link'; 
 
