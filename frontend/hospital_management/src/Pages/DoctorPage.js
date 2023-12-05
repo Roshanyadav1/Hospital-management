@@ -71,9 +71,9 @@ function DoctorPage() {
 
    // filter use
    const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
-   const {  data: filterDoc , isLoading: isDoctorsLoading } = useGetAllDoctorsQuery(selectedDiseases)
+   const {  data: filterDoc , isFetching , isLoading :isDoctorsLoading} = useGetAllDoctorsQuery(selectedDiseases)
    const { data: getDoctors } = useGetAllDoctorsQuery()
-   const [status, updatedStatus] = useState()
+   // const [status, updatedStatus] = useState()
 
    if (isLoading || isDoctorsLoading)
       return (
@@ -98,7 +98,7 @@ function DoctorPage() {
 
    // for filter use
    const diseases = getDisease?.data?.map(disease => disease.disease_name) || []
-   let doctors = filterDoc?.data?.length >= 1 ? filterDoc?.data?.map(doctor => doctor.employee.employee_name) : ['No Doctor Found !']
+   let doctors = (filterDoc?.data?.length >= 1 && !isFetching) ? filterDoc?.data?.map(doctor => doctor.employee.employee_name) : ['No Doctor Found !']
 
    return (
       <div>
@@ -176,7 +176,7 @@ function DoctorPage() {
                                  //  label="Search input"
                                  InputProps={{
                                     ...params.InputProps,
-                                    placeholder: 'doctor',
+                                    placeholder: isFetching ?'loading...' : 'select a doctor',
                                     type: 'search',
                                  }}
                               />
