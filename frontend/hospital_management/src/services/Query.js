@@ -145,6 +145,6 @@ export const {
    useGetSpecialistDoctorMutation,
    useGetAllDiseasesQuery,
    useGetAppointmentQuery,
-   useGetGraphAppointInfoQuery
+   useGetGraphAppointInfoQuery,
    useGetAppointPatientDoctorDateQuery
 } = queries
