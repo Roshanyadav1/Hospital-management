@@ -91,8 +91,8 @@ function Chart() {
       startCounters();
     }
     function startCounters() {
-      counter("count1", 0, ViewDoctor.count, 1250);
-      counter("count2", 0, ViewPatient.count, 1000);
+      counter("count1", 0, ViewDoctor.count, 1550);
+      counter("count2", 0, ViewPatient.count, 1400);
     }
     function counter(id, start, end, duration) {
       let obj = document.getElementById(id),
@@ -110,26 +110,40 @@ function Chart() {
     }
   }, [ViewDoctor, ViewPatient]);
 
+  const weeklyData = appointmentData?.appointement_per_week?.map((appointment) => {
+    return {
+      name: appointment.appointment_date,
+      Patients: appointment.patient_count,
+      Appoints: appointment.appointment_count,
+      Doctors: appointment.doctor_count,
+      // Add other properties if needed
+    };
+  });
+
   const Data = appointmentData?.data?.map((appointment) => {
     let diseaseSpecialist = "";
     if (Array.isArray(appointment.doctor.disease_specialist)) {
+      // Join disease_specialist array into a string
       diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
     } else {
       diseaseSpecialist = appointment.doctor.disease_specialist || "";
     }
 
+    // Remove square brackets and double quotes from disease_names
+    diseaseSpecialist = diseaseSpecialist.replace(/[\[\]"]+/g, '');
+
     return {
-      name: appointment.appointement_per_week.appointment_date,
+      name: appointment.appointment_date,
       Patients: appointment.patient_count,
       Appoints: appointment.appointment_count,
       Doctors: appointment.doctor_count,
       avatarSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU",
       primaryText: appointment.doctor.employee.employee_name,
       secondaryText: `Appointment Date: ${appointment.appointment_date}`,
-      disease_names: `Disease Specialist: ${diseaseSpecialist}`,
+      disease_names: `Disease Specialist: ${(diseaseSpecialist)}`,
       patient_name: `Patient Name: ${appointment.patient.patient_name}`,
     };
-});
+  });
 console.log("Data for Chart:", Data);
 
     // const Data = [
@@ -238,7 +252,7 @@ console.log("Data for Chart:", Data);
                         <ComposedChart
                             width={650}
                             height={420}
-                            data={Data}
+                            data={weeklyData}
                             margin={{
                                 top: 20,
                                 right: 80,
@@ -272,13 +286,13 @@ console.log("Data for Chart:", Data);
                     <h2 className='Colo' style={{ textAlign: 'center' }}>Appointments</h2>
                  {/* <div style={{backgroundColor:'white'}}> */}
                  {Data?.map((item, index) => (
-          <div  style={{ backgroundColor: '#006494', borderRadius: '50px', marginBottom: '8px' }} key={index}>
+          <div  style={{ borderRadius: '50px', marginBottom: '8px'}} key={index}>
           <CommonListItem
             avatarSrc={item.avatarSrc}
-            primaryText={<span style={{ color: 'white' }}>{item.primaryText}</span>}
-            secondaryText={<span style={{ color: 'white' }}>{item.secondaryText}</span>}
-            disease_names={<span style={{ color: 'white' }}>{item.disease_names}</span>}
-            patient_name={<span style={{ color: 'white' }}>{item.patient_name}</span>}
+            primaryText={<span style={{ color: 'white', fontSize:'1rem',fontWeight:'525',fontFamily:'verdana'  }}>{item.primaryText}</span>}
+            secondaryText={<span style={{ color: 'white', fontSize:'.9rem',fontFamily:'verdana'  }}>{item.secondaryText}</span>}
+            disease_names={<span style={{ color: 'white', fontSize:'.9rem',fontFamily:'verdana'  }}>{item.disease_names}</span>}
+            patient_name={<span style={{ color: 'lightgreen', fontSize:'.9rem',fontFamily:'verdana'  }}>{item.patient_name}</span>}
           />
         </div>
         ))}
@@ -299,32 +313,32 @@ export default Chart
 // {
 //   "status": 200,
 //   "message": "Appointment Data Retrieved Successfully",
-//   "appointement_per_week": [
-//     {
-//       "appointment_date": "2023-11-29",
-//       "appointment_count": 1,
-//       "doctor_count": 1,
-//       "patient_count": 1
-//     },
-//     {
-//       "appointment_date": "2023-11-30",
-//       "appointment_count": 2,
-//       "doctor_count": 2,
-//       "patient_count": 2
-//     },
-//     {
-//       "appointment_date": "2023-12-01",
-//       "appointment_count": 1,
-//       "doctor_count": 1,
-//       "patient_count": 1
-//     },
-//     {
-//       "appointment_date": "2023-12-03",
-//       "appointment_count": 1,
-//       "doctor_count": 1,
-//       "patient_count": 1
-//     }
-//   ],
+  // "appointement_per_week": [
+  //   {
+  //     "appointment_date": "2023-11-29",
+  //     "appointment_count": 1,
+  //     "doctor_count": 1,
+  //     "patient_count": 1
+  //   },
+  //   {
+  //     "appointment_date": "2023-11-30",
+  //     "appointment_count": 2,
+  //     "doctor_count": 2,
+  //     "patient_count": 2
+  //   },
+  //   {
+  //     "appointment_date": "2023-12-01",
+  //     "appointment_count": 1,
+  //     "doctor_count": 1,
+  //     "patient_count": 1
+  //   },
+  //   {
+  //     "appointment_date": "2023-12-03",
+  //     "appointment_count": 1,
+  //     "doctor_count": 1,
+  //     "patient_count": 1
+  //   }
+  // ],
 //   "data": [
 //     {
 //       "appointment_id": "dd26fb07-b855-46d8-bcae-63c221210230",
