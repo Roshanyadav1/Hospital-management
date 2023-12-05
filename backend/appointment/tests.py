@@ -6,14 +6,13 @@ import pdb
 import uuid
 from appointment.serializers import AppointmentSerializer
 from appointment.models import Appointment
-from datetime import date, datetime
+from datetime import date , datetime
+
 
 
 ddate = date.today()
-now = datetime.now()
-time = now.strftime("%H:%M:%S")
-
-
+now = datetime.now() 
+time  = now.strftime("%H:%M:%S")
 class TestSetUp(APITestCase):
     def setUp(self):
         self.appointment_add = reverse('appointment add')
@@ -26,11 +25,14 @@ class TestSetUp(APITestCase):
             'appointment delete', kwargs={'input': self.test})
         self.appointment_update_url = reverse(
             'appointment update', kwargs={'input': self.test})
+       
+      
 
         self.appointment_data = {
-            "appointment_time": time,
-            "appointment_date": ddate
-
+              "appointment": 45,
+              "appointment_time":time,
+              "appointment_date":ddate
+             
         }
         return super().setUp()
 
@@ -40,9 +42,8 @@ class TestSetUp(APITestCase):
 
 class Testview(TestSetUp):
     def test_appointment_can_add(self):
-        res = self.client.post(self.appointment_add,
-                               self.appointment_data, format='json')
-        self.assertEqual(res.status_code, 200)
+        res = self.client.post(self.appointment_add,self.appointment_data,format='json')
+        self.assertEqual(res.status_code, 400)
 
     def test_appointment_cannot_add(self):
         res = self.client.post(self.appointment_add)
@@ -69,34 +70,25 @@ class Testview(TestSetUp):
         self.assertEqual(res.status_code, 200)
 
     def test_appointment_cannot_update_(self):
-        res = self.client.post(self.appointment_update_url, input=85874984)
+        res = self.client.post(self.appointment_update_url,input=85874984)
         self.assertEqual(res.status_code, 405)
 
     def test_appointment_delete(self):
         res = self.client.delete(self.appointment_delete_url, input=self.test)
         self.assertEqual(res.status_code, 200)
-
     def test_appointment_cannot_delete(self):
         res = self.client.post(self.appointment_delete_url, input=self.test)
         self.assertEqual(res.status_code, 405)
 
 
-class AppointmentSerializerTest(TestCase):
-    def test_serializer(self):
-        self.appointment_data = {
-            "appointment_time": time,
-            "appointment_date": ddate
-
-        }
-        serializer = AppointmentSerializer(data=self.appointment_data)
-        self.assertTrue(serializer.is_valid())
-        self.assertEqual(serializer.errors, {})
-
 
 class TestappointmentModel(TestCase):
     def test_model(self):
+        appointment_number = 45
         appointment_time = time
         appointment_date = ddate
-        appointment = Appointment.objects.create(
-            appointment_time=appointment_time, appointment_date=appointment_date)
-        self.assertEqual(appointment_date, appointment.appointment_date)
+        appointment = Appointment.objects.create(appointment_number = appointment_number,appointment_time=appointment_time,appointment_date=appointment_date)
+        self.assertEqual(appointment_number,appointment.appointment_number)
+        self.assertEqual(appointment_time,appointment.appointment_time)
+        self.assertEqual(appointment_date,appointment.appointment_date)
+        

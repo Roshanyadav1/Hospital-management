@@ -41,9 +41,8 @@ class TestSetUp(APITestCase):
 
 class Testview(TestSetUp):
     def test_patient_can_register(self):
-        res = self.client.post(self.patient_register,
-                               self.patient_data, format='json')
-
+        res = self.client.post(self.patient_register,self.patient_data, format='json')
+        
         self.assertEqual(res.status_code, 200)
 
     def test_patient_cannot_register(self):
@@ -67,11 +66,11 @@ class Testview(TestSetUp):
         res = self.client.post(self.patient_view_url)
         self.assertEqual(res.status_code, 405)
 
-    def test_user_can_delete(self):
+    def test_patient_can_delete(self):
         res = self.client.delete(self.patient_delete_url, input=self.test)
         self.assertEqual(res.status_code, 200)
 
-    def test_user_cannot_delete_(self):
+    def test_patient_cannot_delete_(self):
         res = self.client.post(self.patient_delete_url, input=uuid.uuid4())
         self.assertEqual(res.status_code, 405)
 
@@ -79,7 +78,7 @@ class Testview(TestSetUp):
         res = self.client.patch(self.patient_update_url, input=self.test)
         self.assertEqual(res.status_code, 200)
 
-    def test_user_update_(self):
+    def test_patient_update_(self):
         res = self.client.post(self.patient_update_url)
         self.assertEqual(res.status_code, 405)
 

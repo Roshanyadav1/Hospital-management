@@ -7,7 +7,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         model = Employee
         exclude = ('employee_type', 'employee_status')
 
-
 class EmployeeRelation(serializers.ModelSerializer):
     class Meta:
         model = Employee

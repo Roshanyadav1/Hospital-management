@@ -6,13 +6,11 @@ import pdb
 import uuid
 from checkup.serializers import CheckupSerializer
 from checkup.models import CheckUp
-from datetime import date, datetime
+from datetime import date , datetime
 
 ddate = date.today()
-now = datetime.now()
-time = now.strftime("%H:%M:%S")
-
-
+now = datetime.now() 
+time  = now.strftime("%H:%M:%S")
 class TestSetUp(APITestCase):
     def setUp(self):
         self.checkup_add = reverse('checkup add')
@@ -26,9 +24,9 @@ class TestSetUp(APITestCase):
         self.checkup_update_url = reverse(
             'checkup update', kwargs={'input': self.test})
         self.checkup_data = {
-            "check_status": "test",
-            "next_appointment_date": ddate,
-            "next_appointment_time": time
+            "check_status":"test",
+            "next_appointment_date":ddate,
+            "next_appointment_time":time
         }
         return super().setUp()
 
@@ -38,8 +36,7 @@ class TestSetUp(APITestCase):
 
 class Testview(TestSetUp):
     def test_checkup_can_add(self):
-        res = self.client.post(
-            self.checkup_add, self.checkup_data, format='json')
+        res = self.client.post(self.checkup_add,self.checkup_data,format='json')
         self.assertEqual(res.status_code, 200)
 
     def test_checkup_cannot_add(self):
@@ -67,28 +64,26 @@ class Testview(TestSetUp):
         self.assertEqual(res.status_code, 200)
 
     def test_checkup_cannot_update_(self):
-        res = self.client.post(self.checkup_update_url, input=85874984)
+        res = self.client.post(self.checkup_update_url,input=85874984)
         self.assertEqual(res.status_code, 405)
 
     def test_checkup_delete(self):
         res = self.client.delete(self.checkup_delete_url, input=self.test)
         self.assertEqual(res.status_code, 200)
-
     def test_checkup_cannot_delete(self):
         res = self.client.post(self.checkup_delete_url, input=self.test)
         self.assertEqual(res.status_code, 405)
 
-
 class CheckupSerializerTest(TestCase):
-    def test_serializer(self):
-        self.checkup_data = {
-            "check_status": "test",
-            "next_appointment_date": ddate,
-            "next_appointment_time": time
+     def test_serializer(self):
+      self.checkup_data = {
+            "check_status":"test",
+            "next_appointment_date":ddate,
+            "next_appointment_time":time
         }
-        serializer = CheckupSerializer(data=self.checkup_data)
-        self.assertTrue(serializer.is_valid())
-        self.assertEqual(serializer.errors, {})
+      serializer = CheckupSerializer(data=self.checkup_data)
+      self.assertTrue(serializer.is_valid())
+      self.assertEqual(serializer.errors, {})
 
 
 class TestCheckupModel(TestCase):
@@ -96,3 +91,5 @@ class TestCheckupModel(TestCase):
         check_status = "test"
         checkup = CheckUp.objects.create(check_status=check_status)
         self.assertEqual(check_status, checkup.check_status)
+
+    

@@ -23,24 +23,11 @@ class UserRegister(GenericAPIView):
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        if User.objects.filter(employee_email = request.data.get('employee_email')).count() >= 1:
-            error = Error.objects.get(error_title = 'ALREADY_REGISTERED')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': 'Employee ' + response_message
-                },
-            )
-        else:
-         serializer.save()
-        
+        serializer.save()
         error = Error.objects.get(error_title = 'REGISTRATION_SUCCESS')
         response_message = error.error_message
         response_code = error.error_code
-        Response.status_code = error.error_code
+        Response.status_code = error.error_code 
         return Response(
             {
                 'status': response_code,
@@ -55,20 +42,32 @@ class UserDelete(APIView):
         if User.objects.filter(user_id=id).count() >= 1:
             doctor = User.objects.get(user_id=id)
             doctor.delete()
-            error = Error.objects.get(error_title='DELETE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code = ""
+            try:
+             error = Error.objects.get(error_title = 'DELETE_SUCCESS')
+             response_message = error.error_message
+             response_code = error.error_code
+             Response.status_code = error.error_code
+            except:
+                response_message = "DELETE_SUCCESS"
+                response_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
                     'message': "User " + response_message,
                 },
             )
-        error = Error.objects.get(error_title='INVALID_ID')
-        response_message = error.error_message
-        response_code = error.error_code
-        Response.status_code = error.error_code
+        response_code = ""
+        response_message = ""
+        try:
+         error = Error.objects.get(error_title = 'INVALID_ID')
+         response_message = error.error_message
+         response_code = error.error_code
+         Response.status_code = error.error_code
+        except:
+            response_message = "INVALID_ID"
+            response_code = status.HTTP_400_BAD_REQUEST
         return Response(
             {
                 'status': response_code,
@@ -130,7 +129,6 @@ class UserLoginView(GenericAPIView):
                 },
             )
 
-
 class UserVerificationView(APIView):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
@@ -148,7 +146,6 @@ class UserVerificationView(APIView):
             },
         )
 
-
 class UserView(APIView):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
@@ -159,34 +156,6 @@ class UserView(APIView):
 
 
 class UserUpdate(APIView):
-    def put(self, request, input, format=None):
-        id = input
-        if User.objects.filter(user_id=id).count() >= 1:
-            doctor = User.objects.get(user_id=id)
-            serializer = UserSerializer(doctor, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            error = Error.objects.get(error_title='UPDATE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': 'User ' + response_message,
-                },
-            )
-        else:
-            error = Error.objects.get(error_title='INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
-            return Response(
-                {
-                    'status': response_code,
-                    'message': response_message,
-                },
-            )
 
     def patch(self, request, input, format=None):
         id = input
@@ -196,10 +165,14 @@ class UserUpdate(APIView):
                 doctor, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            error = Error.objects.get(error_title='UPDATE_SUCCESS')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            try:
+             error = Error.objects.get(error_title = 'UPDATE_SUCCESS')
+             response_message = error.error_message
+             response_code = error.error_code
+             Response.status_code = error.error_code
+            except: 
+                response_message = "UPDATE_SUCCESS"
+                response_code = status.HTTP_200_OK
             return Response(
                 {
                     'status': response_code,
@@ -207,10 +180,16 @@ class UserUpdate(APIView):
                 },
             )
         else:
-            error = Error.objects.get(error_title='INVALID_ID')
-            response_message = error.error_message
-            response_code = error.error_code
-            Response.status_code = error.error_code
+            response_message = ""
+            response_code = ""
+            try:
+             error = Error.objects.get(error_title = 'INVALID_ID')
+             response_message = error.error_message
+             response_code = error.error_code
+             Response.status_code = error.error_code
+            except:
+                response_message = "INVALID ID"
+                response_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
                     'status': response_code,

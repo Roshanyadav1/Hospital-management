@@ -6,7 +6,7 @@ from employee.serializers import EmployeeRelation
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
-        exclude = ('doctor_type', )
+        exclude = ('doctor_profile_picture',)
 
 
 class DoctorUpdateSerializer(serializers.ModelSerializer):
@@ -20,13 +20,11 @@ class DoctorViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Doctor
-        fields = ['doctor_id', 'disease_specialist', 'times', 'day',
-                  'per_patient_time', 'status', 'created_at', 'updated_at', 'employee']
+        fields = ['doctor_id', 'disease_specialist', 'doctor_profile_picture', 'times',
+                  'day', 'per_patient_time', 'status', 'created_at', 'updated_at', 'employee']
 
 
 class DoctorRelation(serializers.ModelSerializer):
-    employee = EmployeeRelation()
-
     class Meta:
         model = Doctor
-        fields = ['doctor_id', 'disease_specialist', 'times', 'day', 'per_patient_time', 'status', 'employee']
+        exclude = ('created_at', 'updated_at', )
