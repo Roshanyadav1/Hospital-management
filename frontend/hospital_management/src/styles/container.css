@@ -11,9 +11,28 @@
     height: inherit;
   }
 
-  
-
-
 .Colo{
   color:white
 }
+
+
+&::-webkit-scrollbar {
+  width: 6px;
+}
+
+&::-webkit-scrollbar-thumb {
+  background-color: white; /* Change this color to white */
+  border-radius: 10px;
+
+&::-webkit-scrollbar-track {
+  background-color: #244C73; /* Change this color as needed */
+  border-radius: 10px;
+}
+
+/* Firefox */
+scrollbar-color: white #244C73; /* Change these colors as needed */
+}
+
+
+
+

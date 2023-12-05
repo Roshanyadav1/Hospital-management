@@ -1,3 +1,6 @@
+
+
+
 'use client'
 import { useEffect, useState } from 'react';
 import { Grid } from "@mui/material"
@@ -5,6 +8,7 @@ import List from '@mui/material/List';
 import { useGetAllDoctorsQuery } from '@/services/Query';
 import { useGetAllPatientsQuery } from '@/services/Query';
 import { useGetGraphAppointInfoQuery } from '@/services/Query';
+import { useGetAppointPatientDoctorDateQuery } from '@/services/Query';
 import {
     ComposedChart,
     Line,
@@ -16,159 +20,88 @@ import {
     Legend,
     Area
 } from "recharts";
+import '@/styles/container.css'
 import CommonListItem from '../components/CommonListItem';
 import Image from 'next/image'
-// import Doc from '../assest/Doc.png'
-
-const data = [
-    {
-        name: "Sun",
-        Patients: 29,
-        Appoints: 25,
-        Doctors: 6,
-    },
-    {
-        name: "Mon",
-        Patients: 32,
-        Appoints: 32,
-        Doctors: 11,
-    },
-    {
-        name: "Tues",
-        Patients: 38,
-        Appoints: 23,
-        Doctors: 4,
-    },
-    {
-        name: "Wed",
-        Patients: 32,
-        Appoints: 27,
-        Doctors: 7,
-    },
-
-    {
-        name: "Thurs",
-        Patients: 22,
-        Appoints: 15,
-        Doctors: 3,
-    },
-    {
-        name: "Fri",
-        Patients: 26,
-        Appoints: 19,
-        Doctors: 9,
-    },
-    {
-        name: "Sat",
-        Patients: 22,
-        Appoints: 15,
-        Doctors: 7,
-    },
-
-];
-
+import Doc from '../assest/Doc.png'
 function Chart() {
 
     const { data: ViewDoctor } = useGetAllDoctorsQuery();
     const { data: ViewPatient } = useGetAllPatientsQuery();
 
-    const [count1, setCount1] = useState(0);
-    const [count2, setCount2] = useState(0);
-    console.log(count1,count2)
+    const { data: appointmentData } = useGetGraphAppointInfoQuery();
+    const { data: appointmentCount } = useGetAppointPatientDoctorDateQuery();
 
-    useEffect(() => {
-        // Check if data is available before setting counts
-        if (ViewDoctor && ViewDoctor.count !== undefined) {
-            setCount1(ViewDoctor.count);
-        }
+  const [count1, setCount1] = useState(0);
+  const [count2, setCount2] = useState(0);
+  console.log(count1,count2)
 
-        if (ViewPatient && ViewPatient.count !== undefined) {
-            setCount2(ViewPatient.count);
-        }
+  useEffect(() => {
+    if (ViewDoctor && ViewDoctor.count !== undefined) {
+      setCount1(ViewDoctor.count);
+    }
+    if (ViewPatient && ViewPatient.count !== undefined) {
+      setCount2(ViewPatient.count);
+    }
+    document.getElementById("count1").textContent = "";
+    document.getElementById("count2").textContent = "";
+    if (ViewDoctor && ViewPatient && ViewDoctor.count !== undefined && ViewPatient.count !== undefined) {
+      startCounters();
+    }
+    function startCounters() {
+      counter("count1", 0, ViewDoctor.count, 1550);
+      counter("count2", 0, ViewPatient.count, 1400);
+    }
+    function counter(id, start, end, duration) {
+      let obj = document.getElementById(id),
+        current = start,
+        range = end - start,
+        increment = end > start ? 1 : -1,
+        step = Math.abs(Math.floor(duration / range)),
+        timer = setInterval(() => {
+          current += increment;
+          obj.textContent = current;
+          if (current === end) {
+            clearInterval(timer);
+          }
+        }, step);
+    }
+  }, [ViewDoctor, ViewPatient]);
 
-        // Clear previous counters
-        document.getElementById("count1").textContent = "";
-        document.getElementById("count2").textContent = "";
+  const weeklyData = appointmentCount?.appointement_per_week?.map((appointment) => {
+    return {
+      name: appointment.appointment_date,
+      Patients: appointment.patient_count,
+      Appoints: appointment.appointment_count,
+      Doctors: appointment.doctor_count,
+    };
+  });
 
-        // Start counters only if counts are available
-        if (ViewDoctor && ViewPatient && ViewDoctor.count !== undefined && ViewPatient.count !== undefined) {
-            startCounters();
-        }
+  const Data = appointmentData?.data?.map((appointment) => {
+    let diseaseSpecialist = "";
+    if (Array.isArray(appointment.doctor.disease_specialist)) {
+      // Join disease_specialist array into a string
+      diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
+    } else {
+      diseaseSpecialist = appointment.doctor.disease_specialist || "";
+    }
 
-        function startCounters() {
-            // counter("count1", 0, ViewDoctor.count, 1850);
-            // counter("count2", 0, ViewPatient.count, 1500);
-        }
+    // Remove square brackets and double quotes from disease_names
+    diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
 
-        function counter(id, start, end, duration) {
-            let obj = document.getElementById(id),
-                current = start,
-                range = end - start,
-                increment = end > start ? 1 : -1,
-                step = Math.abs(Math.floor(duration / range)),
-                timer = setInterval(() => {
-                    current += increment;
-                    obj.textContent = current;
-                    if (current === end) {
-                        clearInterval(timer);
-                    }
-                }, step);
-        }
-    }, [ViewDoctor, ViewPatient]);
-    
-    const Data = [
-        {
-            avatarSrc: "https://st2.depositphotos.com/45049140/44509/v/450/depositphotos_445090736-stock-illustration-flat-male-doctor-avatar-in.jpg",
-            primaryText: "Brunch this weekend?",
-            secondaryText: "Ali Connors — I'll be in your neighborhood doing errands this…",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Andonia tonight?",
-            secondaryText: "Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "DPplans ?",
-            secondaryText: " I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Actonr plans for tonight?",
-            secondaryText: "Steve Smith — Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Star Price road",
-            secondaryText: "Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Aquaf for tonight?",
-            secondaryText: "Smith — Sorry, ...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Dinner plans for tonight?",
-            secondaryText: "Bob Smith — Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Dinner plans for tonight?",
-            secondaryText: "Bob Smith — Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Dinner",
-            secondaryText: " other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: " for tonight?",
-            secondaryText: " — Sorry, I have other plans already...",
-        },
-        // Add more data objects as needed
-    ];
+    return {
+      name: appointment.appointment_date,
+      Patients: appointment.patient_count,
+      Appoints: appointment.appointment_count,
+      Doctors: appointment.doctor_count,
+      avatarSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU",
+      primaryText: appointment.doctor.employee.employee_name,
+      secondaryText: `Appointment Date: ${appointment.appointment_date}`,
+      disease_names: `Disease Specialist: ${(diseaseSpecialist)}`,
+      patient_name: `Patient Name: ${appointment.patient.patient_name}`,
+    };
+  });
+console.log("Data for Chart:", Data);
 
     return (
         <Grid container >
@@ -202,8 +135,8 @@ function Chart() {
 
                                </Grid >
                                <Grid item xs={6}>
-                                <div  style={{width:'70%',height:'100%',marginTop:'10%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
-                                {/* <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/> */}
+                                <div  style={{width:'80%',height:'100%',marginTop:'8%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
+                                <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/>
                                 </div>
                             
 
@@ -217,12 +150,12 @@ function Chart() {
 
                 <Grid pt={3} item xs={12} style={{ display: 'flex' }}>
                     <Grid item xs={12}  style={{
-                                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px' ,backgroundColor:'#FAFAFA'
+                                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px' ,backgroundColor:'#FAFAFA',paddingTop:'1.5rem', paddingLeft:'.5rem'
                             }}>
                         <ComposedChart
-                            width={740}
-                            height={435}
-                            data={data}
+                            width={650}
+                            height={345}
+                            data={weeklyData}
                             margin={{
                                 top: 20,
                                 right: 80,
@@ -234,7 +167,7 @@ function Chart() {
                             <CartesianGrid stroke="#f5f5f5" />
                             <XAxis
                                 dataKey="name"
-                                label={{ value: "Days", position: "insideBottomRight", offset: -10 }}
+                                label={{ value: "Date", position: "insideBottomRight", offset: -10 }}
                             // scale="band"
                             />
                             <YAxis label={{ value: "Quantity", angle: -90, position: "insideLeft" }} />
@@ -248,21 +181,23 @@ function Chart() {
                 </Grid>
             </Grid>
 
-            <Grid item xs={4} pl={3} >
-                {/* <div style={{ backgroundColor: '#13293D' }}> */}
+            <Grid item xs={4} pl={4} >
 
-                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px',marginTop:'2.5%', overflowY: 'scroll', height: 'calc(100vh - 105px)', backgroundColor: '#244C73' }} className='Colo' sx={{ width: '100%', maxWidth: 375 }}>
+                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px',marginTop:'2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73',scrollbarColor: '#244C73 #0F1C2B', }} className='Colo' sx={{ width: '100%', maxWidth: 385 }}>
 
-                    <h2 className='Colo' style={{ textAlign: 'center' }}>Appointments</h2>
-                    {Data.map((item, index) => (
-                        <CommonListItem
-                            key={index}
-                            avatarSrc={item.avatarSrc}
-                            primaryText={item.primaryText}
-                            secondaryText={item.secondaryText}
-                        />
-                    ))}
-
+                    <h2 className='Colo' style={{ textAlign: 'center', color:'white' }}>Appointments</h2>
+                 {Data?.map((item, index) => (
+          <div  style={{ borderRadius: '50px', marginBottom: '8px'}} key={index}>
+          <CommonListItem
+            avatarSrc={item.avatarSrc}
+            primaryText={<span style={{ color: 'white', fontSize:'1rem',fontWeight:'525',fontFamily:'verdana'  }}>{item.primaryText}</span>}
+            secondaryText={<span style={{ color: 'white', fontSize:'.7rem',fontFamily:'verdana'  }}>{item.secondaryText}</span>}
+            disease_names={<span style={{ color: 'white', fontSize:'.7rem',fontFamily:'verdana'  }}>{item.disease_names}</span>}
+            patient_name={<span style={{ color: 'lightgreen', fontSize:'.7rem',fontFamily:'verdana'  }}>{item.patient_name}</span>}
+          />
+        </div>
+        ))}
+                 {/* </div> */}
                 </List>
                 {/* </div> */}
             </Grid>
@@ -273,4 +208,3 @@ function Chart() {
 }
 
 export default Chart
-
