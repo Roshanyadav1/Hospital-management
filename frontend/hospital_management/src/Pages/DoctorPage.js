@@ -71,18 +71,25 @@ function DoctorPage() {
 
    // filter use
    const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
-   const { data: getDoctors , isLoading: isDoctorsLoading } = useGetAllDoctorsQuery(selectedDiseases)
-   const { } = useGetAllDoctorsQuery()
-   const [status,updatedStatus] = useState();
+   const {  data: filterDoc , isLoading: isDoctorsLoading } = useGetAllDoctorsQuery(selectedDiseases)
+   const { data: getDoctors } = useGetAllDoctorsQuery()
+   const [status, updatedStatus] = useState()
 
-   if (isLoading||isDoctorsLoading)
-   return (
-     <div style={{height:"100vh"  , display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <Box sx={{ display: 'flex' }}>
-         <CircularProgress />
-      </Box>
-      </div>
-   )
+   if (isLoading || isDoctorsLoading)
+      return (
+         <div
+            style={{
+               height: '100vh',
+               display: 'flex',
+               alignItems: 'center',
+               justifyContent: 'center',
+            }}
+         >
+            <Box sx={{ display: 'flex' }}>
+               <CircularProgress />
+            </Box>
+         </div>
+      )
 
    const Typo = {
       fontWeight: 800,
@@ -91,8 +98,7 @@ function DoctorPage() {
 
    // for filter use
    const diseases = getDisease?.data?.map(disease => disease.disease_name) || []
-   const doctors =
-      getDoctors?.data?.map(doctor => doctor.employee.employee_name) || []
+   let doctors = filterDoc?.data?.length >= 1 ? filterDoc?.data?.map(doctor => doctor.employee.employee_name) : ['No Doctor Found !']
 
    return (
       <div>
@@ -177,7 +183,7 @@ function DoctorPage() {
                            )}
                         />
                      </Grid>
-                    
+
                      <Grid item xs={12} sm={3} md={1.5}>
                         <Button
                            variant='contained'
@@ -199,15 +205,15 @@ function DoctorPage() {
             </Typography>
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
                {getDoctors?.data?.map((result, index) => {
-                  let diseases = result?.disease_specialist || [];
-                  let days = result?.day || [] ; // available days
+                  let diseases = result?.disease_specialist || []
+                  let days = result?.day || [] // available days
 
                   return (
                      <Grid item xs={12} md={3} sm={6} key={index}>
                         {/* here the redirection url is not defined when the page is complete than it work */}
                         {/* <Link style={{textDecoration:'none'}} href=""> */}
                         <Card sx={{ borderRadius: '5px' }}>
-                           <CardActionArea sx={{minHeight: 280}}>
+                           <CardActionArea sx={{ minHeight: 280 }}>
                               <CardContent>
                                  <Grid container>
                                     <Grid item>
