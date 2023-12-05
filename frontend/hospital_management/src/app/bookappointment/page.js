@@ -142,7 +142,7 @@ function BookAppoinment() {
                 </Grid>
               ))}
               <Grid item display="flex" justifyItems="center" marginBottom={2} justifyContent="center"  >
-                <Button variant="contained" sx={{ padding: 1, width: 200, backgroundColor: "#2CD9C5", borderRadius: "10px" }} >Book Appoinment</Button>
+                < Button variant="contained" sx={{ padding: 1, width: 200, backgroundColor: "#2CD9C5", borderRadius: "10px" }} >Book Appoinment</Button>
               </Grid>
             </Grid>
           </Grid>
