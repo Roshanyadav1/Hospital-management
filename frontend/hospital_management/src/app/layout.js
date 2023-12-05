@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider theme={theme}> 
             <body className={inter.className}>
             <NextTopLoader />
-
+              
               {children}
             </body>
           </ThemeProvider>

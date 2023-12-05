@@ -104,6 +104,12 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      getAppointPatientDoctorDate : build.query({
+         query: () => ({
+            url: 'appointment/appointmentCount/',
+            method: 'GET',
+         }),
+      }),
    }),
 })
 
@@ -117,4 +123,5 @@ export const {
    useGetAllDoctorsQuery,
    useGetAllPatientsQuery,
    useGetGraphAppointInfoQuery,
+   useGetAppointPatientDoctorDateQuery
 } = queries
