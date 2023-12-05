@@ -142,8 +142,8 @@ function DoctorCard() {
                                  </Typography>
 
                                  <Button
-                                    onClick={showWarningToast}
-                                    size='small'
+                                    // onClick={showWarningToast}
+                                    // size='small'
                                     sx={{
                                        border: '1px solid',
                                        '&:hover': {
