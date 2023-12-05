@@ -18,7 +18,7 @@ import {
 } from "recharts";
 import CommonListItem from '../components/CommonListItem';
 import Image from 'next/image'
-// import Doc from '../assest/Doc.png'
+ import Doc from '../assets/dashboardimages'
 
 const data = [
     {
