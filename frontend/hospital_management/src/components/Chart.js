@@ -133,7 +133,7 @@ console.log("Data for Chart:", Data);
 
                                </Grid >
                                <Grid item xs={6}>
-                                <div  style={{width:'70%',height:'100%',marginTop:'10%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
+                                <div  style={{width:'80%',height:'100%',marginTop:'8%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
                                 <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/>
                                 </div>
                             
@@ -148,11 +148,11 @@ console.log("Data for Chart:", Data);
 
                 <Grid pt={3} item xs={12} style={{ display: 'flex' }}>
                     <Grid item xs={12}  style={{
-                                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px' ,backgroundColor:'#FAFAFA',paddingTop:'1.5rem', paddingLeft:'2rem'
+                                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px' ,backgroundColor:'#FAFAFA',paddingTop:'1.5rem', paddingLeft:'.5rem'
                             }}>
                         <ComposedChart
                             width={650}
-                            height={420}
+                            height={345}
                             data={weeklyData}
                             margin={{
                                 top: 20,
@@ -181,17 +181,17 @@ console.log("Data for Chart:", Data);
 
             <Grid item xs={4} pl={4} >
 
-                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px',marginTop:'2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73' }} className='Colo' sx={{ width: '100%', maxWidth: 385 }}>
+                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px',marginTop:'2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73',scrollbarColor: '#244C73 #0F1C2B', }} className='Colo' sx={{ width: '100%', maxWidth: 385 }}>
 
-                    <h2 className='Colo' style={{ textAlign: 'center' }}>Appointments</h2>
+                    <h2 className='Colo' style={{ textAlign: 'center', color:'white' }}>Appointments</h2>
                  {Data?.map((item, index) => (
           <div  style={{ borderRadius: '50px', marginBottom: '8px'}} key={index}>
           <CommonListItem
             avatarSrc={item.avatarSrc}
             primaryText={<span style={{ color: 'white', fontSize:'1rem',fontWeight:'525',fontFamily:'verdana'  }}>{item.primaryText}</span>}
-            secondaryText={<span style={{ color: 'white', fontSize:'.9rem',fontFamily:'verdana'  }}>{item.secondaryText}</span>}
-            disease_names={<span style={{ color: 'white', fontSize:'.9rem',fontFamily:'verdana'  }}>{item.disease_names}</span>}
-            patient_name={<span style={{ color: 'lightgreen', fontSize:'.9rem',fontFamily:'verdana'  }}>{item.patient_name}</span>}
+            secondaryText={<span style={{ color: 'white', fontSize:'.7rem',fontFamily:'verdana'  }}>{item.secondaryText}</span>}
+            disease_names={<span style={{ color: 'white', fontSize:'.7rem',fontFamily:'verdana'  }}>{item.disease_names}</span>}
+            patient_name={<span style={{ color: 'lightgreen', fontSize:'.7rem',fontFamily:'verdana'  }}>{item.patient_name}</span>}
           />
         </div>
         ))}
