@@ -99,10 +99,10 @@ export default function RecipeReviewCard() {
       return <p>Error: {error.message}</p>
    } else {
       return (   
-         <Grid container spacing={1}>
+         <Grid container spacing={1} >
             {Array.isArray(appointment?.data) &&
                appointment?.data?.map((e, i) => (
-                  <Grid item key={i} xs={12} sm={12} md={12}  lg={12} sx={{paddingBottom:'1rem'}}>
+                  <Grid item key={i} xs={12} sm={12} md={12}  lg={12} sx={{paddingBottom:'1rem',justifyContent:'center'}}>
                      <Card sx={{ width: '100%', backgroundColor:"#C4D0DC" }}>
                         <CardHeader
                            avatar={
