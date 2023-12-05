@@ -97,7 +97,7 @@ function DoctorCard() {
                modules={[Pagination, Navigation]}
                className='mySwiper'
             >
-               {getDname?.data?.map((result, index) => (
+               {getDname?.data?.results?.map((result, index) => (
                   <Grid key={index} container spacing={1} marginY={1}>
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>

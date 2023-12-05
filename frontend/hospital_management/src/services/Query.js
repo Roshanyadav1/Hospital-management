@@ -100,7 +100,7 @@ export const queries = createApi({
       }),
       getAppointment: build.query({
          query: () => ({
-            url: 'appointment/view/?3fa85f64-5717-4562-b3fc-2c963f66afa6',
+            url: '/appointment/view/?patient_id=0f0885e1-c1aa-41a5-a27c-2978624b52fd',
             method: 'GET',
          }),
       }),
