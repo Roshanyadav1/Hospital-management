@@ -142,7 +142,7 @@ class DoctorViewById(APIView):
                     pass
                 if inputDate is not None:
                     if str(leave.date) == str(inputDate):
-                        doctor.status = "Unvailable"
+                        doctor.status = "Unavailable"
                         print(doctor.status)
                     else:
                         doctor.status = "Available"
@@ -168,7 +168,7 @@ class DoctorViewById(APIView):
                         time_parts[1]), seconds=int(time_parts[2]))
                     slot = time/time_deltaa
                     data['slots'] = int(slot)
-
+                
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message

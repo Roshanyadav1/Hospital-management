@@ -49,7 +49,8 @@ class PatientRegister(GenericAPIView):
         return response
 
     def post(self, request, format=None):
-        if Patient.objects.filter(patient_email=request.data.get('patient_email')).count() and Employee.objects.filter(employee_email=request.data.get('patient_email')).count() >= 1:
+        if Employee.objects.filter(employee_email=request.data.get('patient_email')).count() >= 1 or Patient.objects.filter(patient_email=request.data.get('patient_email')).count() >=1:
+          
             response_message = ''
             response_code = ''
             try:
@@ -66,6 +67,7 @@ class PatientRegister(GenericAPIView):
                     'message': 'Patient ' + response_message
                 },
             )
+           
         else:
             serializer = PatientRegisterSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
