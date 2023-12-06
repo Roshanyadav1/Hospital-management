@@ -13,6 +13,9 @@ from django.utils import timezone
 from django.db.models import Count
 from hospital_management.custom_paginations import CustomPagination
 from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 
 class AppointmentAdd(GenericAPIView):
@@ -93,10 +96,11 @@ class AppointmentCount(ListAPIView):
 class AppointmentView(ListAPIView):
     queryset = Appointment.objects.all().order_by('created_at')
     serializer_class = AppointmentViewSerializer
-    filterset_fields = ['doctor_id', 'appointment_time', 'patient_id', 'appointment_date', 'appointment_time']
+    filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
-    filter_backends = [OrderingFilter]
-    ordering_fields = ['appointment_number']
+    filterset_fields = ['doctor_id', 'appointment_time', 'patient_id', 'appointment_date', 'appointment_time']
+    ordering_fields = ['appointment_number', 'appointment_date']
+    search_fields = ['appointment_number', 'appointment_date']
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)

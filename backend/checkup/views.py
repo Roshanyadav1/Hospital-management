@@ -9,6 +9,8 @@ from hospital_management.responses import ResponseMessage
 from rest_framework.generics import ListAPIView
 from hospital_management.custom_paginations import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
+from rest_framework.filters import SearchFilter
 
 
 class CheckUpAdd(GenericAPIView):
@@ -167,9 +169,11 @@ class CheckUpViewById(APIView):
 class CheckUpView(ListAPIView):
     queryset = CheckUp.objects.all().order_by('created_at')
     serializer_class = CheckupSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['doctor_id', 'patient_id']
+    filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
+    filterset_fields = ['doctor_id', 'patient_id']
+    ordering_fields = ['patient_id']
+    search_fields = ['doctor_id']
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)

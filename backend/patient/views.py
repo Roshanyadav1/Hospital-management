@@ -8,13 +8,14 @@ from rest_framework.filters import SearchFilter
 from user.models import User
 from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
-from patient.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
 from employee.models import Employee
 from hospital_management.responses import ResponseMessage
-from hospital_management.email import send_verification_email
+# from rest_framework.permissions import IsAuthenticated
+# from hospital_management.email import send_verification_email
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 def get_tokens_for_user(user):
@@ -109,9 +110,11 @@ class PatientRegister(GenericAPIView):
 class PatientView(ListAPIView):
     queryset = Patient.objects.all().order_by('created_at')
     serializer_class = PatientSerializer
-    filter_backends = [SearchFilter, CustomOrderingFilter]
-    search_fields = ['patient_name']
+    filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
+    filterset_fields = ['patient_name']
+    ordering_fields = ['patient_name']
+    search_fields = ['patient_name']
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)

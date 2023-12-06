@@ -18,6 +18,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from user.models import User
+from rest_framework.filters import SearchFilter
 
 
 def get_tokens_for_user(user):
@@ -116,10 +117,11 @@ class EmployeeAdd(GenericAPIView):
 class EmployeeView(ListAPIView):
     queryset = Employee.objects.all().order_by('created_at')
     serializer_class = EmployeeSerializer
+    filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
-    filter_backends = [OrderingFilter, DjangoFilterBackend]
-    ordering_fields = ['employee_name']
     filterset_fields = ['employee_role', 'employee_name']
+    ordering_fields = ['employee_name']
+    search_fields = ['employee_name', 'employee_role']
 
     def list(self, request, *args, **kwargs):
         response_message = ""
