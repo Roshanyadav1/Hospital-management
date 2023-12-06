@@ -16,30 +16,33 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
-import { useGetSpecialistDoctorMutation } from '@/services/Query'
+import { useSpecialistDoctorMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import Image from 'next/image'
 
 function DoctorPage() {
-   const [filterDoctor] = useGetSpecialistDoctorMutation()
+   const [filterDoctor , {isLoading : filterDocLoading}] = useSpecialistDoctorMutation()
 
    // filter use
    const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
-   const { data: getDoctors } = useGetAllDoctorsQuery()
+   const { data: getDoctors , isFetching : docListLoading } = useGetAllDoctorsQuery()
 
-   const [data,setData] = useState()
+   const [data, setData] = useState([])
 
    const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
    const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
    const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
 
-   const {  data: filterDoc , isFetching , isLoading :isDoctorsLoading} = useGetAllDoctorsQuery(selectedDiseases)
-
+   const {
+      data: filterDoc,
+      isFetching,
+      isLoading: isDoctorsLoading,
+   } = useGetAllDoctorsQuery(selectedDiseases)
 
    let fill = {
-      disease: selectedDate,
-      day: selectedDiseases,
+      disease: selectedDiseases,
+      day: selectedDate,
       doctor: selectedDoctor,
    }
 
@@ -63,29 +66,27 @@ function DoctorPage() {
 
    const handleDiseasesChange = (event, values) => {
       setSelectedDiseases(values)
+      setSelectedDoctor('')
    }
 
    const handleDoctorChange = (event, values) => {
       setSelectedDoctor(values)
    }
 
-   const handleSubmit = async() => {
-      try{
-         alert("click")
-         // event.preventDefault()
+   const handleSubmit = async event => {
+      try {
+         event.preventDefault()
          let res = await filterDoctor(fill).unwrap()
-         console.log("res res",res)
-         setData(res)
+         console.log('res res', res)
+         setData(res.data)
          console.log('Selected Date:', selectedDate)
          console.log('Selected Diseases:', selectedDiseases)
          console.log('Selected Doctor:', selectedDoctor)
          // Add your fetch or other logic here
-      }catch(err){
+      } catch (err) {
          console.warn(err)
       }
    }
-
- 
 
    // const [status, updatedStatus] = useState()
 
@@ -112,8 +113,23 @@ function DoctorPage() {
 
    // for filter use
    const diseases = getDisease?.data?.map(disease => disease.disease_name) || []
-   let doctors = (filterDoc?.data?.length >= 1 && !isFetching) ? filterDoc?.data?.map(doctor => doctor.employee.employee_name) : ['No Doctor Found !']
+   let doctors =
+      filterDoc?.data?.length >= 1 && !isFetching
+         ? filterDoc?.data?.map(doctor => doctor?.employee?.employee_name)
+         : ['No Doctor Found !']
 
+   const getFilteredDoc = () => {
+      if (selectedDoctor && data?.length > 0) {
+         return getDoctors?.data.filter(
+            e => e.employee.employee_name === selectedDoctor
+         )
+      } else {
+         return data?.length > 0 ? data : getDoctors?.data || []
+      }
+   }
+
+   let allDoctor = getFilteredDoc()
+   //  selectedDoctor  &&  allDoctor  &&  data
    return (
       <div>
          <div style={styles.container}>
@@ -121,96 +137,97 @@ function DoctorPage() {
                <Typography variant='h4' align='center' style={Typo}>
                   Book Your Appointment
                </Typography>
-               <form>
-                  <Grid container spacing={5} style={{ marginTop: '1rem' }}>
-                     <Grid item xs={12} sm={3} md={3.5}>
-                        <Typography variant='body2' sx={{ marginBottom: '6px' }}>
-                           Select Disease
-                        </Typography>
-                        <Autocomplete
-                           freeSolo
-                           id='tags-outlined'
-                           options={diseases}
-                           value={selectedDiseases}
-                           onChange={handleDiseasesChange}
-                           sx={{
-                              background: 'white',
-                              outline: 'none',
-                              borderRadius: '5px',
-                           }}
-                           disableClearable
-                           renderInput={params => (
-                              <TextField
-                                 {...params}
-                                 //  label="Search input"
-                                 InputProps={{
-                                    ...params.InputProps,
-                                    placeholder: 'disease',
-                                    type: 'search',
-                                 }}
-                              />
-                           )}
-                        />
-                     </Grid>
 
-                     <Grid item xs={12} sm={3} md={3.5}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                           <DemoItem label='Select Date'>
-                              <MobileDatePicker
-                                 defaultValue={dayjs(new Date())}
-                                 format='DD-MM-YYYY'
-                                 views={['year', 'month', 'day']}
-                                 value={selectedDate}
-                                 onChange={handleDateChange}
-                                 sx={{ background: 'white', borderRadius: '5px' }}
-                              />
-                           </DemoItem>
-                        </LocalizationProvider>
-                     </Grid>
-
-                     <Grid item xs={12} sm={3} md={3.5}>
-                        <Typography variant='body2' sx={{ marginBottom: '6px' }}>
-                           Select Doctor
-                        </Typography>
-                        <Autocomplete
-                           freeSolo
-                           id='tags-outlined'
-                           options={doctors}
-                           value={selectedDoctor.toString()}
-                           onChange={handleDoctorChange}
-                           sx={{
-                              background: 'white',
-                              outline: 'none',
-                              borderRadius: '5px',
-                           }}
-                           disableClearable
-                           renderInput={params => (
-                              <TextField
-                                 {...params}
-                                 //  label="Search input"
-                                 InputProps={{
-                                    ...params.InputProps,
-                                    placeholder: isFetching ?'loading...' : 'select a doctor',
-                                    type: 'search',
-                                 }}
-                              />
-                           )}
-                        />
-                     </Grid>
-
-                     <Grid item xs={12} sm={3} md={1.5}>
-                        <Button
-                           variant='contained'
-                           size='large'
-                           // type='submit'
-                           onClick={handleSubmit}
-                           sx={{ marginTop: '25px', height: '50px' }}
-                        >
-                           Search
-                        </Button>
-                     </Grid>
+               <Grid container spacing={5} style={{ marginTop: '1rem' }}>
+                  <Grid item xs={12} sm={3} md={3.5}>
+                     <Typography variant='body2' sx={{ marginBottom: '6px' }}>
+                        Select Disease
+                     </Typography>
+                     <Autocomplete
+                        freeSolo
+                        id='tags-outlined'
+                        options={diseases}
+                        value={selectedDiseases}
+                        onChange={handleDiseasesChange}
+                        sx={{
+                           background: 'white',
+                           outline: 'none',
+                           borderRadius: '5px',
+                        }}
+                        disableClearable
+                        renderInput={params => (
+                           <TextField
+                              {...params}
+                              //  label="Search input"
+                              InputProps={{
+                                 ...params.InputProps,
+                                 placeholder: 'disease',
+                                 type: 'search',
+                              }}
+                           />
+                        )}
+                     />
                   </Grid>
-               </form>
+
+                  <Grid item xs={12} sm={3} md={3.5}>
+                     <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoItem label='Select Date'>
+                           <MobileDatePicker
+                              defaultValue={dayjs(new Date())}
+                              format='DD-MM-YYYY'
+                              views={['year', 'month', 'day']}
+                              value={selectedDate}
+                              onChange={handleDateChange}
+                              sx={{ background: 'white', borderRadius: '5px' }}
+                           />
+                        </DemoItem>
+                     </LocalizationProvider>
+                  </Grid>
+
+                  <Grid item xs={12} sm={3} md={3.5}>
+                     <Typography variant='body2' sx={{ marginBottom: '6px' }}>
+                        Select Doctor
+                     </Typography>
+                     <Autocomplete
+                        freeSolo
+                        id='tags-outlined'
+                        options={doctors}
+                        value={selectedDoctor.toString()}
+                        onChange={handleDoctorChange}
+                        sx={{
+                           background: 'white',
+                           outline: 'none',
+                           borderRadius: '5px',
+                        }}
+                        disableClearable
+                        disabled={isFetching} // Set disabled based on isFetching
+                        renderInput={params => (
+                           <TextField
+                              {...params}
+                              //  label="Search input"
+                              InputProps={{
+                                 ...params.InputProps,
+                                 placeholder: isFetching
+                                    ? 'loading...'
+                                    : 'select a doctor',
+                                 type: 'search',
+                              }}
+                           />
+                        )}
+                     />
+                  </Grid>
+
+                  <Grid item xs={12} sm={3} md={1.5}>
+                     <Button
+                        variant='contained'
+                        size='large'
+                        onClick={handleSubmit}
+                        sx={{ marginTop: '25px', height: '50px' }}
+                     >
+                        Search
+                     </Button>
+                  </Grid>
+               </Grid>
             </Container>
          </div>
          {/* // all doctor view  */}
@@ -219,7 +236,7 @@ function DoctorPage() {
                Doctors
             </Typography>
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
-               {getDoctors?.data?.map((result, index) => {
+               {allDoctor?.map((result, index) => {
                   let diseases = result?.disease_specialist || []
                   let days = result?.day || [] // available days
 
