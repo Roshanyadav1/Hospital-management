@@ -165,7 +165,7 @@ class CheckUpViewById(APIView):
 
 
 class CheckUpView(ListAPIView):
-    queryset = CheckUp.objects.all()
+    queryset = CheckUp.objects.all().order_by('created_at')
     serializer_class = CheckupSerializer
     filterset_fields = ['doctor', 'patient', 'appointment', 'disease']
     filter_backends = [DjangoFilterBackend]

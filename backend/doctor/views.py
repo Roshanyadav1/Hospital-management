@@ -42,7 +42,7 @@ class DoctorRegister(GenericAPIView):
 
 
 class DoctorView(ListAPIView):
-    queryset = Doctor.objects.all()
+    queryset = Doctor.objects.all().order_by('created_at')
     serializer_class = DoctorViewSerializer
     filter_backends = [SearchFilter, CustomOrderingFilter]
     pagination_class = CustomPagination
