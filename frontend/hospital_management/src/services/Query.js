@@ -123,6 +123,13 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      getViewDoctor: build.query({
+         query:() => ({
+            url:'/doctor/view/?pageSize=9',
+            method:'Get',
+         })
+
+      })
    }),
 })
 
@@ -139,5 +146,6 @@ export const {
    useGetAllDiseasesQuery,
    useGetAppointmentQuery,
    useGetGraphAppointInfoQuery,
-   useGetAppointPatientDoctorDateQuery
+   useGetAppointPatientDoctorDateQuery,
+   useGetViewDoctorQuery
 } = queries
