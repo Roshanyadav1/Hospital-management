@@ -8,6 +8,9 @@ class CustomOrderingFilter(OrderingFilter):
         sort_column = request.query_params.get(sort_column_param)
         sort_direction = request.query_params.get(sort_direction_param)
         
+        if sort_direction == "":
+            sort_direction = 'ASC'
+
         if sort_column is None:
             sort_column = 'employee_name'
         if sort_direction is None:

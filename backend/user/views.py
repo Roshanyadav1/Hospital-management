@@ -90,24 +90,24 @@ class UserLoginView(GenericAPIView):
             user = User.objects.get(user_email=email)
             is_verify = request.data.get('is_verify')
 
-            if user.status == True:
-                if is_verify == 'true':
-                    token = get_tokens_for_user(user)
-                    Response.status_code = status.HTTP_200_OK
-                    return Response(
-                        {
-                            'status': status.HTTP_200_OK,
-                            'message': "Logged In As " + user.user_role,
-                            'data': {
-                                'user_role': user.user_role,
-                                'id': user.user_role,
-                                'token': token,
-                            }
-                        },
-                    )
-                else:
-                    user = authenticate(user_email=email, password=password)
-                    if user is not None:
+            if is_verify == 'true':
+                token = get_tokens_for_user(user)
+                Response.status_code = status.HTTP_200_OK
+                return Response(
+                    {
+                        'status': status.HTTP_200_OK,
+                        'message': "Logged In As " + user.user_role,
+                        'data': {
+                            'user_role': user.user_role,
+                            'id': user.user_role,
+                            'token': token,
+                        }
+                    },
+                )
+            else:
+                user = authenticate(user_email=email, password=password)
+                if user is not None:
+                    if user.status == True:
                         token = get_tokens_for_user(user)
                         Response.status_code = status.HTTP_200_OK
                         return Response(
@@ -122,26 +122,26 @@ class UserLoginView(GenericAPIView):
                             },
                         )
                     else:
+                        message = ""
+                        if user.user_role == "Doctor" or user.user_role == "Manager":
+                            message = "You Are Not Approved From Administrator"
+                        if user.user_role == "Patient":
+                            message = "Verify Your Email First"
                         Response.status_code = status.HTTP_400_BAD_REQUEST
                         return Response(
                             {
                                 'status': status.HTTP_400_BAD_REQUEST,
-                                'message': "Password Mismatch",
+                                'message': message,
                             },
                         )
-            else:
-                message = ""
-                if user.user_role == "Doctor" or user.user_role == "Manager":
-                    message = "You Are Not Approved From Administrator"
-                if user.user_role == "Patient":
-                    message = "Verify Your Email First"
-                Response.status_code = status.HTTP_400_BAD_REQUEST
-                return Response(
-                    {
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'message': message,
-                    },
-                )
+                else:
+                    Response.status_code = status.HTTP_400_BAD_REQUEST
+                    return Response(
+                        {
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': "Password Mismatch",
+                        },
+                    )
         else:
             Response.status_code = status.HTTP_404_NOT_FOUND
             return Response(
@@ -154,16 +154,13 @@ class UserLoginView(GenericAPIView):
 
 class UserVerificationView(APIView):
     serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
-        # request.GET.headers.setdefault('Content-Type', 'application/json')
-        # token = request.GET.get('token')
-        # id = request.GET.get('user_id')
-        # print(token, user_id)
-        # serializer = UserProfileSerializer(request.user)
-        # user = User.objects.get(member_id=id)
-        # user.status = True
+        token = request.POST.get('token')
+        id = request.POST.get('id')
+        print(id, token)
+        user = User.objects.get(member_id=id)
+        user.status = True
         Response.status_code = status.HTTP_200_OK
         return Response(
             {
