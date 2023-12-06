@@ -1,3 +1,4 @@
+
 from doctor.serializers import *
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
@@ -12,7 +13,8 @@ from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
 from leave.models import Leave
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta , time
+from appointment.models import Appointment
 
 
 class DoctorRegister(GenericAPIView):
@@ -161,16 +163,27 @@ class DoctorViewById(APIView):
                     end_time = data['end_time']
                     t1 = datetime.strptime(start_time, "%H:%M:%S")
                     t2 = datetime.strptime(end_time, "%H:%M:%S")
-                    time = t2-t1
+                    diiff = t2-t1
                     per_patient_time = serializer_data['per_patient_time']
                     time_parts = per_patient_time.split(':')
                     time_deltaa = timedelta(hours=int(time_parts[0]), minutes=int(
                         time_parts[1]), seconds=int(time_parts[2]))
-                    slot = time/time_deltaa
-                    data['slots'] = int(slot)
+                    slot = diiff/time_deltaa
+                    
+                    appointment = Appointment.objects.filter(doctor_id = id)
+                    for appoint in appointment:
+                     start_time_iso = time.fromisoformat(start_time)
+                     end_time_iso = time.fromisoformat(end_time)
+                     between_time = appoint.appointment_time
+                     if  between_time> start_time_iso and between_time < end_time_iso:
+                        data['slots'] = int(slot-1)
+                                   
                 slots_data = json.dumps(serializer_data['times'])
                 doctor.times = slots_data
                 doctor.save()
+                
+                     
+
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message
