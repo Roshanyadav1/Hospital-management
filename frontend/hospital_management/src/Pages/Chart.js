@@ -75,28 +75,45 @@ function Chart() {
         };
     });
 
-  const Data = appointmentData?.data?.map((appointment) => {
-    let diseaseSpecialist = "";
-    if (Array.isArray(appointment.doctor.disease_specialist)) {
-        diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
-    } else {
-        diseaseSpecialist = appointment.doctor.disease_specialist || "";
-    }
-    diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
+    const Data = appointmentData?.data?.map((appointment) => {
+        let diseaseSpecialist = "";
+        if (Array.isArray(appointment.doctor.disease_specialist)) {
+            diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
+        } else {
+            diseaseSpecialist = appointment.doctor.disease_specialist || "";
+        }
+        diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
 
-    return {
-        name: appointment.appointment_date,
-        Patients: appointment.patient_count,
-        Appoints: appointment.appointment_count,
-        Doctors: appointment.doctor_count,
-        avatarSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU",
-        primaryText: appointment.doctor.employee.employee_name,
-        secondaryText: `Appointment Date: ${appointment.appointment_date}`,
-        disease_names: `Disease Specialist: ${diseaseSpecialist}`,
-        patient_name: `Patient Name: ${appointment.patient.patient_name}`, // Corrected this line
-    };
-});
+        return {
+            name: appointment.appointment_date,
+            Patients: appointment.patient_count,
+            Appoints: appointment.appointment_count,
+            Doctors: appointment.doctor_count,
+            avatarSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU",
+            primaryText: appointment.doctor.employee.employee_name,
+            secondaryText: `Appointment Date: ${appointment.appointment_date}`,
+            disease_names: `Disease Specialist: ${diseaseSpecialist}`,
+            patient_name: `Patient Name: ${appointment.patient.patient_name}`, // Corrected line
+        };
+    });
 
+    const [searchTerm, setSearchTerm] = useState("");
+
+    // Update the Data mapping to filter based on the search term
+    const filteredData = searchTerm
+        ? Data?.filter((item) => {
+            const doctorName = item.primaryText.toLowerCase();
+            const searchLower = searchTerm.toLowerCase();
+
+            return doctorName.includes(searchLower);
+        })
+        : [];
+
+    const displayedData = searchTerm ? filteredData : Data;
+
+
+    const filteredCount = filteredData ? filteredData.length : 0;
+    // it is still showing the error in filteredData.length
     console.log("Data for Chart:", Data);
 
     const showServerError = isErrorDoctor || isErrorPatient || isErrorAppData || isErrorAppCount;
@@ -106,7 +123,7 @@ function Chart() {
         <Grid container >
 
             <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
-                <Grid container item mt={1} xs={12}  >
+                <Grid container item xs={12}  >
 
                     <Grid container item mt={1} xs={12}  >
                         <Grid item xs={6} style={{ transition: 'box-shadow 0.3s' }} >
@@ -150,7 +167,7 @@ function Chart() {
                     </Grid>
                 </Grid>
 
-                <Grid pt={3} item xs={12} style={{ display: 'flex' }}>
+                <Grid pt={3} mt={2} item xs={12} style={{ display: 'flex', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px' }}>
                     {showServerError && (
                         <div>
                             <h2>Error fetching data from the server</h2>
@@ -162,7 +179,7 @@ function Chart() {
                     {!showServerError && (
                         <ComposedChart
                             width={650}
-                            height={345}
+                            height={355}
                             data={weeklyData}
                             margin={{
                                 top: 20,
@@ -186,175 +203,65 @@ function Chart() {
                     )}
                 </Grid>
             </Grid>
+            <Grid item xs={4} pl={3}>
 
-            <Grid item xs={4} pl={4} >
-                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px', marginTop: '2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73', scrollbarColor: '#244C73 #0F1C2B', }} className='Colo' sx={{ width: '100%', maxWidth: 385 }}>
-                    <h2 className='Colo' style={{ textAlign: 'center', color: 'white' }}>Appointments</h2>
-                    {Data?.map((item, index) => (
-                        <div style={{ borderRadius: '50px', marginBottom: '8px' }} key={index}>
-                            <CommonListItem
-                                avatarSrc={item.avatarSrc}
-                                primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
-                                secondaryText={<span style={{ color: 'white', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
-                                disease_names={<span style={{ color: 'white', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
-                                patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
-                            />
+                <List className='Colo' sx={{
+                    width: '100%', maxWidth: 385, paddingY: '0px'
+                }} style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px', marginTop: '2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73', scrollbarColor: '#244C73 #0F1C2B', }}>
+                    <div style={{ position: 'sticky', top: 0, backgroundColor: '#244C73', zIndex: 1, padding: '3%' }} >
+                        <h2 className='Colo' style={{ textAlign: 'center', color: 'white' }}>Appointments</h2>
+                        <Grid mb={2} ml={3} mr={3} p={1} xs={12} style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                            <Grid xs={2} >
+                                {filteredCount > 0 && (
+                                    <span style={{ color: 'black', textAlign: 'center', paddingLeft: '0.5rem', fontWeight: 'bold', fontSize: '1rem' }}>{filteredCount}</span>
+                                )}
+                            </Grid>
+                            <Grid xs={10} style={{ textAlign: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                                    <input
+                                        type="text"
+                                        placeholder="Search by Doctor Name"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        style={{
+                                            width: '100%',
+                                            border: 'none',
+                                            padding: '0.25rem',
+                                            borderRadius: '5px',
+                                            marginRight: '0.25rem',
+                                            outline: 'none',
+                                            fontSize: '.8rem',
+                                            fontWeight: 'bold'
+                                        }}
+                                    />
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <hr />
+
+                    {displayedData && displayedData.length > 0 ? (
+                        displayedData.map((item, index) => (
+                            <div style={{ borderRadius: '50px' }} key={index}>
+                                <CommonListItem
+                                    avatarSrc={item.avatarSrc}
+                                    primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
+                                    secondaryText={<span style={{ color: 'white', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
+                                    disease_names={<span style={{ color: 'white', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
+                                    patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <div style={{ textAlign: 'center', color: 'white', marginTop: '20px' }}>
+                            No Data Found
                         </div>
-                    ))}                </List>
+                    )}
+                </List>
             </Grid>
+
         </Grid>
     );
 }
 
 export default Chart;
-
-
-
-// {
-//     "status": 200,
-//     "message": "Appointment Data Retrieved Successfully",
-//     "data": [
-//         {
-//             "appointment_id": "0fae2e3c-1007-47c3-a698-f16e44dc7f15",
-//             "appointment_number": 2,
-//             "appointment_time": "10:00:00",
-//             "appointment_date": "2023-12-20",
-//             "doctor": {
-//                 "doctor_id": "044c330a-0b54-43ed-8968-aaeb2d941f15",
-//                 "employee": {
-//                     "employee_name": "John Smith"
-//                 }
-//             },
-//             "patient": {
-//                 "patient_id": "0f0885e1-c1aa-41a5-a27c-2978624b52fd",
-//                 "patient_name": "John Doe"
-//             },
-//             "disease": {
-//                 "disease_name": "Asthma"
-//             },
-//             "created_at": null
-//         },
-//         {
-//             "appointment_id": "4e63a551-1fe9-4425-8a07-01452935601c",
-//             "appointment_number": 3,
-//             "appointment_time": "10:00:00",
-//             "appointment_date": "2023-11-27",
-//             "doctor": {
-//                 "doctor_id": "044c330a-0b54-43ed-8968-aaeb2d941f15",
-//                 "employee": {
-//                     "employee_name": "John Smith"
-//                 }
-//             },
-//             "patient": {
-//                 "patient_id": "0f0885e1-c1aa-41a5-a27c-2978624b52fd",
-//                 "patient_name": "John Doe"
-//             },
-//             "disease": {
-//                 "disease_name": "Brain cancer"
-//             },
-//             "created_at": null
-//         },
-//         {
-//             "appointment_id": "60bee72b-e89f-4f1d-9450-9c710ede3cd8",
-//             "appointment_number": 4,
-//             "appointment_time": "11:00:00",
-//             "appointment_date": "2022-11-25",
-//             "doctor": {
-//                 "doctor_id": "091e0bcc-dce0-44de-a545-b512ff193bac",
-//                 "employee": {
-//                     "employee_name": "kavita porwal"
-//                 }
-//             },
-//             "patient": {
-//                 "patient_id": "0f0885e1-c1aa-41a5-a27c-2978624b52fd",
-//                 "patient_name": "John Doe"
-//             },
-//             "disease": {
-//                 "disease_name": "Chickenpox"
-//             },
-//             "created_at": null
-//         },
-//         {
-//             "appointment_id": "0c9541dc-0826-494f-baf5-9dc56dbb59b9",
-//             "appointment_number": 5,
-//             "appointment_time": "21:30:00",
-//             "appointment_date": "2023-11-29",
-//             "doctor": {
-//                 "doctor_id": "8da95926-dc8d-46af-963b-857de698898e",
-//                 "employee": {
-//                     "employee_name": "Mohammad Haris"
-//                 }
-//             },
-//             "patient": {
-//                 "patient_id": "83ffa146-7c56-4cdb-b0ba-933b819decad",
-//                 "patient_name": "Goutam kushwa"
-//             },
-//             "disease": {
-//                 "disease_name": "Harnia"
-//             },
-//             "created_at": null
-//         },
-//         {
-//             "appointment_id": "88372151-85c5-46e3-a2ca-26327706bb79",
-//             "appointment_number": 6,
-//             "appointment_time": "02:05:00",
-//             "appointment_date": "2024-02-02",
-//             "doctor": {
-//                 "doctor_id": "7702cbeb-4103-4e18-b900-dbd928614f03",
-//                 "employee": {
-//                     "employee_name": "Novi"
-//                 }
-//             },
-//             "patient": {
-//                 "patient_id": "06a974ef-325f-4490-a0aa-458f3aebab47",
-//                 "patient_name": "Subham Meena"
-//             },
-//             "disease": {
-//                 "disease_name": "Harnia"
-//             },
-//             "created_at": "2023-12-06T05:13:36.199000Z"
-//         },
-//         {
-//             "appointment_id": "7cc6b01a-935d-4413-b23e-2fedb5b4f59c",
-//             "appointment_number": 8,
-//             "appointment_time": "14:05:00",
-//             "appointment_date": "2024-12-05",
-//             "doctor": {
-//                 "doctor_id": "8da95926-dc8d-46af-963b-857de698898e",
-//                 "employee": {
-//                     "employee_name": "Mohammad Haris"
-//                 }
-//             },
-//             "patient": {
-//                 "patient_id": "329a5f32-5bbf-4a5d-b3af-75f013f6236f",
-//                 "patient_name": "Harsh Sharma"
-//             },
-//             "disease": {
-//                 "disease_name": "Lung cancer"
-//             },
-//             "created_at": "2023-12-06T05:14:08.205000Z"
-//         },
-//         {
-//             "appointment_id": "3a6fef21-0834-45b5-b0ce-af7d1d12d321",
-//             "appointment_number": 9,
-//             "appointment_time": "02:00:00",
-//             "appointment_date": "2023-12-12",
-//             "doctor": {
-//                 "doctor_id": "8da95926-dc8d-46af-963b-857de698898e",
-//                 "employee": {
-//                     "employee_name": "Mohammad Haris"
-//                 }
-//             },
-//             "patient": {
-//                 "patient_id": "83ffa146-7c56-4cdb-b0ba-933b819decad",
-//                 "patient_name": "Goutam kushwa"
-//             },
-//             "disease": {
-//                 "disease_name": "Malaria"
-//             },
-//             "created_at": "2023-12-06T05:15:18.001000Z"
-//         }
-//     ]
-// }
-
-//  the disease name and the patient name are not displayed from this api to the above code, please fix this and provide the proper api call to find the particular data
