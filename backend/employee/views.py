@@ -117,8 +117,7 @@ class EmployeeView(ListAPIView):
     serializer_class = EmployeeSerializer
     filterset_fields = ['employee_role', 'employee_name']
     pagination_class = CustomPagination
-    filter_backends = [OrderingFilter, SearchFilter]
-    search_fields = ['employee_name', 'employee_role']
+    filter_backends = [OrderingFilter]
     ordering_fields = ['employee_name']
 
     def list(self, request, *args, **kwargs):
