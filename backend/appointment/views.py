@@ -94,7 +94,7 @@ class AppointmentView(ListAPIView):
     queryset = Appointment.objects.all().order_by('created_at')
     serializer_class = AppointmentViewSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['doctor_id', 'appointment_time', 'patient_id',]
+    filterset_fields = ['doctor_id', 'appointment_time', 'patient_id', 'appointment_date', 'appointment_time']
     pagination_class = CustomPagination
 
     def list(self, request, *args, **kwargs):
