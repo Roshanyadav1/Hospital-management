@@ -18,7 +18,7 @@ import {
     Area
 } from "recharts";
 import '@/styles/dashboard.css'
-import CommonListItem from './CommonListItem';
+import CommonListItem from '@/components/CommonListItem';
 import Image from 'next/image'
 import Doc from '../assets/dashboardimages/Doc.png'
 
