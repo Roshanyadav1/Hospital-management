@@ -154,11 +154,11 @@ class UserLoginView(GenericAPIView):
 
 class UserVerificationView(APIView):
     serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
-        id = request.GET.get('id')
-        print(id)
+        token = request.POST.get('token')
+        id = request.POST.get('id')
+        print(id, token)
         user = User.objects.get(member_id=id)
         user.status = True
         Response.status_code = status.HTTP_200_OK
