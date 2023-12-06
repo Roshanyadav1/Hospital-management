@@ -61,7 +61,7 @@ class AppointmentView(ListAPIView):
         start_date = end_date - timedelta(days=6)
 
         header_value = request.headers['Authorization']
-        token = header_value.split(' ')[2]
+        token = header_value.split(' ')[1]
         payload = jwt.decode(token, "secret", algorithms=['HS256'])
         user_id = payload['user_id']
         user = User.objects.get(user_id=user_id)
