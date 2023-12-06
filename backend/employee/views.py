@@ -13,9 +13,9 @@ from hospital_management.responses import ResponseMessage
 from doctor.models import Doctor
 import json
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
-from hospital_management.email import send_verification_email
-from rest_framework.filters import OrderingFilter
+# from rest_framework.permissions import IsAuthenticated
+# from hospital_management.email import send_verification_email
+from rest_framework.filters import OrderingFilter, SearchFilter
 from user.models import User
 
 
@@ -115,10 +115,10 @@ class EmployeeAdd(GenericAPIView):
 class EmployeeView(ListAPIView):
     queryset = Employee.objects.all().order_by('created_at')
     serializer_class = EmployeeSerializer
-    filterset_fields = ['employee_role',]
+    filterset_fields = ['employee_role', 'employee_name']
     pagination_class = CustomPagination
+    filter_backends = [OrderingFilter, SearchFilter]
     search_fields = ['employee_name', 'employee_role']
-    filter_backends = [OrderingFilter]
     ordering_fields = ['employee_name']
 
     def list(self, request, *args, **kwargs):
