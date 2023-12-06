@@ -16,6 +16,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from hospital_management.email import send_verification_email
 from rest_framework.filters import OrderingFilter
+from user.models import User
 
 
 def get_tokens_for_user(user):
@@ -43,7 +44,7 @@ class EmployeeAdd(GenericAPIView):
     serializer_class = EmployeeSerializer
 
     def post(self, request, format=None):
-        if Employee.objects.filter(employee_email=request.data.get('employee_email')).count() >= 1:
+        if User.objects.filter(user_email=request.data.get('employee_email')).count() >= 1:
             response_message = ""
             response_code = ""
             try:
