@@ -92,7 +92,7 @@ function Chart() {
             avatarSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU",
             primaryText: appointment.doctor.employee.employee_name,
             secondaryText: `Appointment Date: ${appointment.appointment_date}`,
-            disease_names: `Disease Specialist: ${diseaseSpecialist}`,
+            disease_names: `Disease Name: ${appointment.disease.disease_name}`,
             patient_name: `Patient Name: ${appointment.patient.patient_name}`, // Corrected line
         };
     });
@@ -203,14 +203,14 @@ function Chart() {
                     )}
                 </Grid>
             </Grid>
-            <Grid item xs={4} pl={3}>
+            <Grid item xs={4} pl={4}>
 
-                <List className='Colo' sx={{
+                <List  className='Colo'  sx={{
                     width: '100%', maxWidth: 385, paddingY: '0px'
                 }} style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px', marginTop: '2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73', scrollbarColor: '#244C73 #0F1C2B', }}>
-                    <div style={{ position: 'sticky', top: 0, backgroundColor: '#244C73', zIndex: 1, padding: '3%' }} >
+                    <div style={{ position: 'sticky', top: 0, backgroundColor: '#244C73', zIndex: 1,padding:'3%'}} >
                         <h2 className='Colo' style={{ textAlign: 'center', color: 'white' }}>Appointments</h2>
-                        <Grid mb={2} ml={3} mr={3} p={1} xs={12} style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                        <Grid mb={2} ml={1} mr={1} p={1} xs={12} style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
                             <Grid xs={2} >
                                 {filteredCount > 0 && (
                                     <span style={{ color: 'black', textAlign: 'center', paddingLeft: '0.5rem', fontWeight: 'bold', fontSize: '1rem' }}>{filteredCount}</span>
@@ -240,23 +240,24 @@ function Chart() {
                     </div>
                     <hr />
 
-                    {displayedData && displayedData.length > 0 ? (
-                        displayedData.map((item, index) => (
-                            <div style={{ borderRadius: '50px' }} key={index}>
-                                <CommonListItem
-                                    avatarSrc={item.avatarSrc}
-                                    primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
-                                    secondaryText={<span style={{ color: 'white', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
-                                    disease_names={<span style={{ color: 'white', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
-                                    patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
-                                />
-                            </div>
-                        ))
-                    ) : (
-                        <div style={{ textAlign: 'center', color: 'white', marginTop: '20px' }}>
-                            No Data Found
-                        </div>
-                    )}
+  {displayedData && displayedData.length > 0 ? (
+      displayedData.map((item, index) => (
+        <div style={{ borderRadius: '50px' }} key={index}>
+          <CommonListItem
+            avatarSrc={item.avatarSrc}
+            primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
+            secondaryText={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
+            disease_names={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
+            patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
+          />
+      <hr/>
+        </div>
+      )) 
+    ) : (
+      <div style={{ textAlign: 'center', color: 'white', marginTop: '20px' }}>
+        No Data Found
+      </div>
+    )}
                 </List>
             </Grid>
 
