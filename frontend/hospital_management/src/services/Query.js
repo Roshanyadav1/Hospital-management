@@ -95,7 +95,11 @@ export const queries = createApi({
       
       getGraphAppointInfo : build.query({
          query: () => ({
+<<<<<<< HEAD
             url: '/appointment/view/',
+=======
+            url: 'appointment/view/',
+>>>>>>> 6e44bfa35df4a370fc9601727002173f58030997
             method: 'GET',
          }),
       }),

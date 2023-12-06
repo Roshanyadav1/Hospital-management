@@ -17,15 +17,10 @@ import {
     Legend,
     Area
 } from "recharts";
-<<<<<<< HEAD
-import '@/styles/dashboard.css'
-import CommonListItem from '@/components/CommonListItem';
-=======
-import '../styles/dashboard.css'
-import CommonListItem from '../components/CommonListItem';
->>>>>>> 6e44bfa35df4a370fc9601727002173f58030997
+import '@/components/App.css'
+import CommonListItem from './CommonListItem';
 import Image from 'next/image'
-import Doc from '../assets/Doc.png'
+import Doc from './Doc.png'
 
 function Chart() {
 
@@ -137,7 +132,7 @@ function Chart() {
                                         <h4 style={{ color: 'white', paddingLeft: '2rem', marginBottom: '0', fontSize: '2rem', fontFamily: 'mainlux' }}>Doctors</h4>
                                         <span style={{ paddingLeft: '2.5rem', color: 'white', fontSize: '1.52rem' }} id="count1"></span>
                                         <span style={{ color: 'white', fontSize: '1.52rem' }}>+</span>
-
+                                        
                                     </Grid >
                                     <Grid item xs={6}>
                                         <div style={{ width: '80%', height: '100%', marginTop: '8%', marginLeft: '10%', backgroundColor: 'white', paddingTop: '10px', borderRadius: '50%', position: 'relative' }}>
