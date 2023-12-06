@@ -6,7 +6,7 @@ import { themeOptions } from "@/styles/theme";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import NextTopLoader from 'nextjs-toploader';
+// import NextTopLoader from 'nextjs-toploader';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
         <CustomProvider>
           <ThemeProvider theme={theme}> 
             <body className={inter.className}>
-            <NextTopLoader />
+            {/* <NextTopLoader /> */}
               
               {children}
             </body>
