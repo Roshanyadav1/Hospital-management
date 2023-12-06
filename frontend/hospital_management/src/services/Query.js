@@ -5,14 +5,7 @@ export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
-      // prepareHeaders: (headers, { getState }) => {
-      //    const token = getState().rootReducer.companyDetails.token
-      //    // If we have a token set in state, let's assume that we should be passing it.
-      //    if (token) {
-      //       headers.set('token', `${token}`)
-      //    }
-      //    return headers
-      // },
+     
    }),
 
    keepUnusedDataFor: 30,
@@ -95,11 +88,7 @@ export const queries = createApi({
       
       getGraphAppointInfo : build.query({
          query: () => ({
-<<<<<<< HEAD
-            url: '/appointment/view/',
-=======
             url: 'appointment/view/',
->>>>>>> 6e44bfa35df4a370fc9601727002173f58030997
             method: 'GET',
          }),
       }),

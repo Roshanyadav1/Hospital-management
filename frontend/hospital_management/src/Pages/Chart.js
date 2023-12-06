@@ -17,13 +17,8 @@ import {
     Legend,
     Area
 } from "recharts";
-<<<<<<< HEAD
-import '@/styles/dashboard.css'
-import CommonListItem from '@/components/CommonListItem';
-=======
 import '../styles/dashboard.css'
 import CommonListItem from '../components/CommonListItem';
->>>>>>> 6e44bfa35df4a370fc9601727002173f58030997
 import Image from 'next/image'
 import Doc from '../assets/Doc.png'
 
