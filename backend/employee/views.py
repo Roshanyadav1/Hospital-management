@@ -129,6 +129,23 @@ class EmployeeView(ListAPIView):
         response_message = ""
         response_code = ""
         response = super().list(request, *args, **kwargs)
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient" or user_role == "Doctor" or user_role == "Manager":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+
         if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
         try:

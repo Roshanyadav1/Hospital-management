@@ -49,7 +49,6 @@ class DoctorView(ListAPIView):
     serializer_class = DoctorViewSerializer
     filter_backends = [SearchFilter, CustomOrderingFilter]
     pagination_class = CustomPagination
-    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)

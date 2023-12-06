@@ -7,6 +7,9 @@ from checkup.serializers import CheckupSerializer
 from error.models import Error
 from hospital_management.responses import ResponseMessage
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView
+from django_filters.rest_framework import DjangoFilterBackend
+from hospital_management.custom_paginations import CustomPagination
 from user.models import User
 import jwt
 
@@ -14,7 +17,7 @@ import jwt
 class CheckUpAdd(GenericAPIView):
     serializer_class = CheckupSerializer
     permission_classes = [IsAuthenticated]
-    
+
     def post(self, request, format=None):
         serializer = CheckupSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -131,8 +134,7 @@ class CheckUpUpdate(APIView):
             )
 
 
-class CheckUpView(APIView):
-    permission_classes = [IsAuthenticated]
+class CheckUpViewById(APIView):
 
     def get(self, request, input=None, format=None):
         id = input
@@ -150,7 +152,6 @@ class CheckUpView(APIView):
                 except:
                     response_message = ResponseMessage.RETRIEVED_SUCCESS
                     response_code = status.HTTP_200_OK
-                    Response.status_code = status.HTTP_200_OK
                 return Response(
                     {
                         'status': response_code,
@@ -169,31 +170,71 @@ class CheckUpView(APIView):
                 except:
                     response_message = ResponseMessage.INVALID_ID
                     response_code = status.HTTP_400_BAD_REQUEST
-                    Response.status_code = status.HTTP_400_BAD_REQUEST
                 return Response(
                     {
                         'status': response_code,
                         'message': response_message,
                     },
                 )
-        else:
-            checkup = CheckUp.objects.all()
-            serializer = CheckupSerializer(checkup, many=True)
-            response_message = ""
-            response_code = ""
-            try:
-                error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
-                response_message = error.error_message
-                response_code = error.error_code
-                Response.status_code = error.error_code
-            except:
-                response_message = ResponseMessage.RETRIEVED_SUCCESS
-                response_code = status.HTTP_200_OK
-                Response.status_code = status.HTTP_200_OK
-            return Response(
-                {
-                    'status': response_code,
-                    'message': 'Checkup ' + response_message,
-                    'data': serializer.data
-                },
-            )
+
+
+class CheckUpView(ListAPIView):
+    queryset = CheckUp.objects.all()
+    serializer_class = CheckupSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['doctor_id', 'patient_id']
+    pagination_class = CustomPagination
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response_message = ""
+        response_code = ""
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            if request.GET.get('patient_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
+        pagination = CustomPagination()
+        if request.GET.get('pageSize') != None:
+            if request.GET.get('pageSize') == "":
+                pass
+            else:
+                response.data['page_size'] = int(request.GET.get('pageSize'))
+                pagination.page_size = int(request.GET.get('pageSize'))
+        try:
+            error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
+            response_message = error.error_message
+            response_code = error.error_code
+            Response.status_code = error.error_code
+        except:
+            response_message = ResponseMessage.RETRIEVED_SUCCESS
+            response_code = status.HTTP_200_OK
+        return Response(
+            {
+                'status': response_code,
+                'message': "Checkup " + response_message,
+                'data': response.data,
+            }
+        )
