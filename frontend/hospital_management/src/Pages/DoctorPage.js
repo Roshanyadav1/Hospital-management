@@ -1,6 +1,5 @@
 'use client'
-import * as React from 'react'
-import { useState } from 'react'
+import React ,{ useState , useMemo} from 'react'
 import dayjs from 'dayjs'
 import { DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -20,6 +19,7 @@ import { useSpecialistDoctorMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import Image from 'next/image'
+import { useCallback } from 'react'
 
 function DoctorPage() {
    const [filterDoctor , {isLoading : filterDocLoading}] = useSpecialistDoctorMutation()
@@ -28,7 +28,7 @@ function DoctorPage() {
    const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
    const { data: getDoctors , isFetching : docListLoading } = useGetAllDoctorsQuery()
 
-   const [data, setData] = useState([])
+   const [data, setData] = useState('')
 
    const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
    const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
@@ -76,13 +76,14 @@ function DoctorPage() {
    const handleSubmit = async event => {
       try {
          event.preventDefault()
-         let res = await filterDoctor(fill).unwrap()
-         console.log('res res', res)
-         setData(res.data)
-         console.log('Selected Date:', selectedDate)
-         console.log('Selected Diseases:', selectedDiseases)
-         console.log('Selected Doctor:', selectedDoctor)
-         // Add your fetch or other logic here
+         let res = await filterDoctor(fill).unwrap()    
+         if (selectedDoctor){
+            setData(res?.data.filter(
+               e => e.employee.employee_name === selectedDoctor
+            ))
+         }else{
+            setData(res?.data)
+         }     
       } catch (err) {
          console.warn(err)
       }
@@ -118,18 +119,10 @@ function DoctorPage() {
          ? filterDoc?.data?.map(doctor => doctor?.employee?.employee_name)
          : ['No Doctor Found !']
 
-   const getFilteredDoc = () => {
-      if (selectedDoctor && data?.length > 0) {
-         return getDoctors?.data.filter(
-            e => e.employee.employee_name === selectedDoctor
-         )
-      } else {
-         return data?.length > 0 ? data : getDoctors?.data || []
-      }
-   }
 
-   let allDoctor = getFilteredDoc()
+   let allDoctor = data ? data : getDoctors?.data || []
    //  selectedDoctor  &&  allDoctor  &&  data
+
    return (
       <div>
          <div style={styles.container}>
