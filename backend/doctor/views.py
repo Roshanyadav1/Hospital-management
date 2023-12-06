@@ -168,7 +168,9 @@ class DoctorViewById(APIView):
                         time_parts[1]), seconds=int(time_parts[2]))
                     slot = time/time_deltaa
                     data['slots'] = int(slot)
-                
+                slots_data = json.dumps(serializer_data['times'])
+                doctor.times = slots_data
+                doctor.save()
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message
