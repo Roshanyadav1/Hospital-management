@@ -167,8 +167,8 @@ class CheckUpViewById(APIView):
 class CheckUpView(ListAPIView):
     queryset = CheckUp.objects.all().order_by('created_at')
     serializer_class = CheckupSerializer
-    filterset_fields = ['doctor', 'patient', 'appointment', 'disease']
     filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['doctor_id', 'patient_id']
     pagination_class = CustomPagination
 
     def list(self, request, *args, **kwargs):
@@ -194,7 +194,7 @@ class CheckUpView(ListAPIView):
         return Response(
             {
                 'status': response_code,
-                'message': "Appointment " + response_message,
+                'message': "Checkup " + response_message,
                 'data': response.data,
             }
         )
