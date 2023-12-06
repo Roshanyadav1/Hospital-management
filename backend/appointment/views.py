@@ -12,7 +12,7 @@ from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Count
 from hospital_management.custom_paginations import CustomPagination
-from django_filters.rest_framework import DjangoFilterBackend, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class AppointmentAdd(GenericAPIView):
