@@ -25,18 +25,18 @@ def get_tokens_for_user(user):
     }
 
 
-class UserRegister(GenericAPIView):
-    serializer_class = EmployeeSerializer
-    permission_classes = [IsAuthenticated]
+# class UserRegister(GenericAPIView):
+#     serializer_class = EmployeeSerializer
+#     permission_classes = [IsAuthenticated]
 
-    def user_verification(user):
-        verification_token = get_tokens_for_user(user)
-        user_id = str(user.user_id)
-        # user_email = user.user_email
-        user_email = "achieversgrand@gmail.com"
-        url = 'https://hospital-management-six-chi.vercel.app/api/user/verification?user_id=' + \
-            user_id + '&token=' + verification_token['access']
-        send_verification_email(url, user_email)
+#     def user_verification(user):
+#         verification_token = get_tokens_for_user(user)
+#         user_id = str(user.user_id)
+#         # user_email = user.user_email
+#         user_email = "achieversgrand@gmail.com"
+#         url = 'https://hospital-management-six-chi.vercel.app/api/user/verification?user_id=' + \
+#             user_id + '&token=' + verification_token['access']
+#         send_verification_email(url, user_email)
 
 
 class EmployeeAdd(GenericAPIView):
@@ -92,7 +92,7 @@ class EmployeeAdd(GenericAPIView):
 
             user = User.objects.create_user(
                 member, user_name, user_email, user_role, user_password)
-            UserRegister.user_verification(user)
+            # UserRegister.user_verification(user)
             response_message = ""
             response_code = ""
             try:
