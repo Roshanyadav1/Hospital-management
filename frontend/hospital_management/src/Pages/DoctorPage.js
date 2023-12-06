@@ -1,5 +1,5 @@
 'use client'
-import React ,{ useState , useMemo} from 'react'
+import React, { useState, useMemo } from 'react'
 import dayjs from 'dayjs'
 import { DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -12,6 +12,7 @@ import { CardActionArea } from '@mui/material'
 import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
+import LinearProgress from '@mui/material/LinearProgress'
 
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
@@ -22,11 +23,11 @@ import Image from 'next/image'
 import { useCallback } from 'react'
 
 function DoctorPage() {
-   const [filterDoctor , {isLoading : filterDocLoading}] = useSpecialistDoctorMutation()
-
+   const [filterDoctor, { isLoading: filterDocLoading , isError}] =
+      useSpecialistDoctorMutation()
    // filter use
-   const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
-   const { data: getDoctors , isFetching : docListLoading } = useGetAllDoctorsQuery()
+   const { data: getDisease, isLoading: DiseaseLoading } = useGetAllDiseasesQuery()
+   const { data: getDoctors, isFetching: docListLoading } = useGetAllDoctorsQuery()
 
    const [data, setData] = useState('')
 
@@ -36,7 +37,7 @@ function DoctorPage() {
 
    const {
       data: filterDoc,
-      isFetching,
+      isFetching: DocFetch,
       isLoading: isDoctorsLoading,
    } = useGetAllDoctorsQuery(selectedDiseases)
 
@@ -76,14 +77,14 @@ function DoctorPage() {
    const handleSubmit = async event => {
       try {
          event.preventDefault()
-         let res = await filterDoctor(fill).unwrap()    
-         if (selectedDoctor){
-            setData(res?.data.filter(
-               e => e.employee.employee_name === selectedDoctor
-            ))
-         }else{
+         let res = await filterDoctor(fill).unwrap()
+         if (selectedDoctor) {
+            setData(
+               res?.data.filter(e => e.employee.employee_name === selectedDoctor)
+            )
+         } else {
             setData(res?.data)
-         }     
+         }
       } catch (err) {
          console.warn(err)
       }
@@ -91,40 +92,33 @@ function DoctorPage() {
 
    // const [status, updatedStatus] = useState()
 
-   if (isLoading || isDoctorsLoading)
-      return (
-         <div
-            style={{
-               height: '100vh',
-               display: 'flex',
-               alignItems: 'center',
-               justifyContent: 'center',
-            }}
-         >
-            <Box sx={{ display: 'flex' }}>
-               <CircularProgress />
-            </Box>
-         </div>
-      )
-
    const Typo = {
       fontWeight: 800,
       fontSize: '2.5rem',
    }
 
    // for filter use
-   const diseases = getDisease?.data?.map(disease => disease.disease_name) || []
+   const diseases = getDisease?.data?.map(disease => disease.disease_name) || [
+      'No Disease Found !',
+   ]
    let doctors =
-      filterDoc?.data?.length >= 1 && !isFetching
+      filterDoc?.data?.length >= 1 && !DocFetch
          ? filterDoc?.data?.map(doctor => doctor?.employee?.employee_name)
          : ['No Doctor Found !']
 
-
+   // default all doctor show
    let allDoctor = data ? data : getDoctors?.data || []
    //  selectedDoctor  &&  allDoctor  &&  data
 
    return (
       <div>
+         {( DiseaseLoading) && (
+            <div>
+               <Box sx={{ width: '100%' }}>
+                  <LinearProgress />
+               </Box>
+            </div>
+         )}
          <div style={styles.container}>
             <Container maxWidth='lg'>
                <Typography variant='h4' align='center' style={Typo}>
@@ -140,6 +134,7 @@ function DoctorPage() {
                         freeSolo
                         id='tags-outlined'
                         options={diseases}
+                        disable={DiseaseLoading}
                         value={selectedDiseases}
                         onChange={handleDiseasesChange}
                         sx={{
@@ -154,7 +149,9 @@ function DoctorPage() {
                               //  label="Search input"
                               InputProps={{
                                  ...params.InputProps,
-                                 placeholder: 'disease',
+                                 placeholder: DiseaseLoading
+                                    ? 'loading...'
+                                    : 'disease',
                                  type: 'search',
                               }}
                            />
@@ -193,14 +190,14 @@ function DoctorPage() {
                            borderRadius: '5px',
                         }}
                         disableClearable
-                        disabled={isFetching} // Set disabled based on isFetching
+                        disabled={DocFetch} // Set disabled based on isFetching
                         renderInput={params => (
                            <TextField
                               {...params}
                               //  label="Search input"
                               InputProps={{
                                  ...params.InputProps,
-                                 placeholder: isFetching
+                                 placeholder: DocFetch
                                     ? 'loading...'
                                     : 'select a doctor',
                                  type: 'search',
@@ -214,10 +211,19 @@ function DoctorPage() {
                      <Button
                         variant='contained'
                         size='large'
+                        disabled={docListLoading || DiseaseLoading}
                         onClick={handleSubmit}
-                        sx={{ marginTop: '25px', height: '50px' }}
+                        sx={{ marginTop: '25px', height: '56px', width :'100px' }}
                      >
-                        Search
+                        {filterDocLoading ? (
+                           <div >
+                              <Box sx={{ color: '#fff' }}>
+                                 <CircularProgress color="inherit" size={20} />
+                              </Box>
+                           </div>
+                        ) : (
+                           "Search"
+                        )}
                      </Button>
                   </Grid>
                </Grid>
@@ -228,6 +234,18 @@ function DoctorPage() {
             <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
                Doctors
             </Typography>
+        
+            {filterDocLoading ? (
+      <div style={{ height: "30%" }}>
+         <Box sx={{ display: 'flex', justifyContent: "center", width: "100%", maxHeight: "30%" }}>
+            <CircularProgress />
+         </Box>
+      </div>
+   ) : (
+      <>
+         {isError && (<div>Something went Wrong</div>)}
+
+
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
                {allDoctor?.map((result, index) => {
                   let diseases = result?.disease_specialist || []
@@ -325,6 +343,8 @@ function DoctorPage() {
                   )
                })}
             </Grid>
+            </>
+   )}
          </Container>
       </div>
    )
