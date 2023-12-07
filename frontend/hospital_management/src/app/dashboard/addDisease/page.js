@@ -25,6 +25,7 @@ import { useAddDiseasesMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import CircularProgress from '@mui/material/CircularProgress'
 import CoronavirusTwoToneIcon from '@mui/icons-material/CoronavirusTwoTone';
+import { toast } from 'react-toastify'
 
 const VisuallyHiddenInput = styled('input')({
    clip: 'rect(0 0 0 0)',
@@ -111,7 +112,8 @@ const page = () => {
 
    const handleRegister = async (values, { resetForm }) => {
       try {
-         await addDisease(values)
+         let res = await addDisease(values)
+         toast.success(res?.data?.message || "Disease added successfully")
          resetForm()
       } catch (error) {
          // Handle error

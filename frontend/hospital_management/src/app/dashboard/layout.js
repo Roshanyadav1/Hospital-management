@@ -163,6 +163,17 @@ function Layout({children}) {
       return disableStyle
     }
 }
+const handleRegister = async (values, { resetForm }) => {
+  try {
+     let res = await addDisease(values)
+     console.log(res)
+     toast.success(res?.data?.message || "Doctor added successfully")
+     resetForm()
+  } catch (error) {
+     // Handle error
+     // console.error('Error submitting form:', error);
+  }
+}
 
   return (
     <Box sx={{ display: "flex" }}>

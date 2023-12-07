@@ -16,6 +16,8 @@ import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
 
 function DoctorCard() {
+   const {data:getDname,isLoding} = useGetViewDoctorQuery();
+   console.log('Doctor name',getDname);
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
    const showWarningToast = () => {
       toast.warning('Warning Example', { autoClose: false })

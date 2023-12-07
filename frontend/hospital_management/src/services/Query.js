@@ -1,3 +1,4 @@
+'use client'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
 
@@ -5,7 +6,6 @@ export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
-     
    }),
 
    keepUnusedDataFor: 30,
@@ -34,14 +34,6 @@ export const queries = createApi({
             method: 'POST',
             body: payload,
          }),
-         async onQueryStarted({ queryFulfilled }) {
-            try {
-               await queryFulfilled
-               toast.success('Employee Added Successfully')
-            } catch (e) {
-               toast.error(JSON.stringify(e))
-            }
-         },
       }),
       addDiseases: build.mutation({
          query: payload => ({
@@ -49,14 +41,6 @@ export const queries = createApi({
             method: 'POST',
             body: payload,
          }),
-         async onQueryStarted({ queryFulfilled }) {
-            try {
-               await queryFulfilled
-               toast.success('Disease Added Successfully')
-            } catch (e) {
-               toast.error(JSON.stringify(e))
-            }
-         },
       }),
       deleteEmployee: build.mutation({
          query: value => ({
@@ -67,8 +51,8 @@ export const queries = createApi({
          invalidatesTags: ['EMP'],
       }),
       getEmployee: build.query({
-         query: () => ({
-            url: 'employee/view/',
+         query: (arg) => ({
+            url:`employee/view/?employee_role=Manager&pageNo=${arg.page}&pageSize=${arg.pageSize}`,
             method: 'GET',
          }),
          providesTags: ['EMP'],
@@ -80,13 +64,13 @@ export const queries = createApi({
          }),
       }),
       getAllDoctors: build.query({
-         query: (prop) => ({
-            url: 'doctor/view/'+`?disease_specialist=${prop || ''}`,
+         query: prop => ({
+            url: 'doctor/view/' + `?disease_specialist=${prop || ''}`,
             method: 'GET',
          }),
       }),
-      
-      getGraphAppointInfo : build.query({
+
+      getGraphAppointInfo: build.query({
          query: () => ({
             url: 'appointment/view/',
             method: 'GET',
@@ -98,18 +82,27 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-    
+
       getSpecialistDoctor: build.mutation({
          mutation: prop => ({
             url: `doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
             method: 'GET',
          }),
       }),
-      getAllDiseases : build.query({
+      getAllDiseases: build.query({
          query: () => ({
             url: 'disease/view/',
             method: 'GET',
          }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               let result = await queryFulfilled
+               console.log(result, 'resresres')
+               toast.success(' Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         },
       }),
       getAppointment: build.query({
          query: () => ({
@@ -117,24 +110,18 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-        getAppointPatientDoctorDate : build.query({
+      getAppointPatientDoctorDate: build.query({
          query: () => ({
             url: 'appointment/appointmentCount/',
             method: 'GET',
          }),
       }),
       getViewDoctor: build.query({
-         query:() => ({
-            url:'/doctor/view/?pageSize=9',
-            method:'Get',
-         })
+         query: () => ({
+            url: 'doctor/view/?pageSize=9',
+            method: 'Get',
+         }),
       }),
-      getDoctorTimes: build.query({
-         query:()=>({
-               url:'/doctor/view/?doctor_id= ae8baecf-7a36-4498-b505-6a942f8a0cd7',
-               method:'Get',
-            })
-         })
    }),
 })
 
@@ -153,5 +140,4 @@ export const {
    useGetGraphAppointInfoQuery,
    useGetAppointPatientDoctorDateQuery,
    useGetViewDoctorQuery,
-   useGetDoctorTimesQuery
 } = queries
