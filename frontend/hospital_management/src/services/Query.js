@@ -108,7 +108,7 @@ export const queries = createApi({
     
       specialistDoctor: build.mutation({
          query: prop => ({
-            url: `doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
+            url: `doctor/view/?disease_specialist=${prop.disease}&date=${prop.day}`,
             method: 'GET',
          }),
       }),

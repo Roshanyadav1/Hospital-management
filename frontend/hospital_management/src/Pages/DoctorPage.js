@@ -237,13 +237,13 @@ function DoctorPage() {
         
             {filterDocLoading ? (
       <div style={{ height: "30%" }}>
-         <Box sx={{ display: 'flex', justifyContent: "center", width: "100%", maxHeight: "30%" }}>
+         <Box sx={{ display: 'flex', justifyContent: "center", width: "100%", height: "30%" , alignContent:"center" }}>
             <CircularProgress />
          </Box>
       </div>
    ) : (
       <>
-         {isError && (<div>Something went Wrong</div>)}
+         {isError ?(<div>Oops ! Something went Wrong</div>)  :(
 
 
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
@@ -343,6 +343,7 @@ function DoctorPage() {
                   )
                })}
             </Grid>
+         )}
             </>
    )}
          </Container>
