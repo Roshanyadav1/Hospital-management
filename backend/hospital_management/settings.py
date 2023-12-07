@@ -74,7 +74,7 @@ INSTALLED_APPS = [
     'employee',
     'error',
     'leave',
-    'auth0_user'
+
 ]
 
 MIDDLEWARE = [
