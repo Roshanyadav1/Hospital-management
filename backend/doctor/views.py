@@ -50,6 +50,9 @@ class DoctorView(ListAPIView):
     serializer_class = DoctorViewSerializer
     filter_backends = [SearchFilter, CustomOrderingFilter]
     pagination_class = CustomPagination
+    filterset_fields = ['doctor_id']
+    ordering_fields = ['doctor_id',]
+    search_fields = ['doctor_id']
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)

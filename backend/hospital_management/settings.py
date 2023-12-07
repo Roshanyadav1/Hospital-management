@@ -13,10 +13,21 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 import os
+from dotenv import load_dotenv, find_dotenv
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+
+
+AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN')
+AUTH0_ALGORITHMS = ['RS256']
+AUTH0_API_AUDIENCE = os.getenv('AUTH0_API_AUDIENCE')
 
 
 # Quick-start development settings - unsuitable for production
@@ -62,7 +73,8 @@ INSTALLED_APPS = [
     'user',
     'employee',
     'error',
-    'leave'
+    'leave',
+    'auth0_user'
 ]
 
 MIDDLEWARE = [
@@ -163,11 +175,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'auth0_user.authentication.Auth0TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.RemoteUserBackend',
+]
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -190,6 +208,8 @@ SIMPLE_JWT = {
 
     "JTI_CLAIM": "jti",
 }
+
+
 
 # LOGGING = {
 #     'version': 1,

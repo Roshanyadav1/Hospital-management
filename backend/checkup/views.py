@@ -171,8 +171,8 @@ class CheckUpView(ListAPIView):
     serializer_class = CheckupSerializer
     filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
-    filterset_fields = ['doctor_id', 'patient_id']
-    ordering_fields = ['patient_id']
+    filterset_fields = ['doctor_id', 'patient_id', 'appointment_id']
+    ordering_fields = ['next_appointment_date']
     search_fields = ['doctor_id']
 
     def list(self, request, *args, **kwargs):
