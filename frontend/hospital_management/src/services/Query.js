@@ -35,6 +35,21 @@ export const queries = createApi({
             }
          },
       }),
+      doctorUpdate: build.mutation({
+         query: value => ({
+            url: 'doctor/update/',
+            method: 'POST',
+            body: value,
+         }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               await queryFulfilled
+               toast.success('Doctor Updated Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         },
+      }),
       addEmployee: build.mutation({
          query: payload => ({
             url: 'employee/add/',
@@ -129,6 +144,7 @@ export const queries = createApi({
 
 export const {
    useRegisterHospitalMutation,
+   useDoctorUpdateMutation,
    useAddEmployeeMutation,
    useAddDiseasesMutation,
    useDeleteEmployeeMutation,

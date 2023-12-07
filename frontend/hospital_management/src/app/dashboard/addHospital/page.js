@@ -10,13 +10,13 @@ import { styled } from '@mui/material/styles';
 import RadioButtonGroup from '../../../components/RadioButton/RadioButtonGroup';
 import FORM_VALIDATION from '../../../components/FormValidation/HospitalValidation';
 import { Box,  } from '@mui/material';
-import Text from '../../../components/Textfield/Text'
+// import Text from '../../../components/Textfield/Text'
 import { colors } from '@/styles/theme';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Image from 'next/image';
-import CustomAutocomplete from './Components/Autocomplete';
+import CustomAutocomplete from '../../../components/Autocomplete';
 import { useRegisterHospitalMutation } from '@/services/Query';
-
+import Text from '../../../components/Textfield/Text'
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   maxWidth: '950px',
@@ -330,7 +330,7 @@ const handleRegister = async (values,{resetForm}) => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                   <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital's logo
                   </Typography>
                   <Box onClick={handleChooseLogoClick} sx={{ height: '150px', width: '150px', margin: '1rem 0rem' }}>
@@ -346,7 +346,8 @@ const handleRegister = async (values,{resetForm}) => {
                         </Grid>
                       </StyledBox>
                     )}
-                  </Box> 
+                  </Box>
+                   
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
