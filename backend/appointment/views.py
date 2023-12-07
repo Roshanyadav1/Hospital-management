@@ -15,7 +15,7 @@ from hospital_management.custom_paginations import CustomPagination
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
+from django.http import JsonResponse
 
 
 class AppointmentAdd(GenericAPIView):
@@ -60,10 +60,15 @@ class AppointmentCount(ListAPIView):
             appointment_date__range=[start_date, end_date])
         appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count(
             'appointment_date'), doctor_count=Count('doctor', distinct=True), patient_count=Count('patient')).order_by('appointment_date')
-        patient_count_per_day = appointments_in_week.values('appointment_date').annotate(
-            patient_count=Count('patient')).order_by('appointment_date')
-        doctor_count_per_day = appointments_in_week.values('appointment_date').annotate(
-            doctor_count=Count('doctor')).order_by('appointment_date')
+
+
+        if not appointments_per_day:
+            
+            # Return a JsonResponse with 'Data Not Found' message
+             return Response({
+                  'status' :404,
+                  'message': "Data not found"
+             })
 
         # for entry in appointments_per_day:
         #     print(f"Date: {entry['appointment_date']}, Appointments: {entry['appointment_count']}, Doctor: {entry['doctor_count']}")
