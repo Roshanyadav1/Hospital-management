@@ -38,6 +38,7 @@ const GreenSwitch = styled(Switch)(({ theme }) => ({
  }));
  
  const label = { inputProps: { 'aria-label': 'Color switch demo' } };
+import { toast } from 'react-toastify'
 
 const VisuallyHiddenInput = styled('input')({
    clip: 'rect(0 0 0 0)',
@@ -124,7 +125,8 @@ const page = () => {
 
    const handleRegister = async (values, { resetForm }) => {
       try {
-         await addDisease(values)
+         let res = await addDisease(values)
+         toast.success(res?.data?.message || "Disease added successfully")
          resetForm()
       } catch (error) {
          // Handle error

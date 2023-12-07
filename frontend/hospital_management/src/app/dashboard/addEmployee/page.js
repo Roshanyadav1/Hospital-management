@@ -6,6 +6,8 @@ import { useAddEmployeeMutation } from '@/services/Query';
 import Employee_Validation from '@/components/form/EmployeeValidation/employeeValidation';
 import { colors } from '@/styles/theme';
 import AddEmployee from '@/components/AddEmployee';
+import Divider from '@mui/material/Divider';
+import { toast } from 'react-toastify';
 
 
 
@@ -66,7 +68,9 @@ const EmpRegister = () => {
 
   const handleRegister = async (values,{resetForm}) => {
     try {
-      await addemployee(values);
+      let res = await addemployee(values);
+      console.log(res)
+      toast.success(res?.data?.message || " Employee added successfully" )
       resetForm();
     } catch (error) {
       // Handle error

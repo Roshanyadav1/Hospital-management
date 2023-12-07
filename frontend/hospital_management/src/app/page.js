@@ -1,5 +1,6 @@
 "use client"
 
+// import DataGridTable2 from "@/Pages/DataGridTable"
 import FixedContainer from '@/Pages/Container'
 import { Grid } from '@mui/material' 
 import Cards from '@/Pages/Card'
@@ -14,6 +15,7 @@ import Footer  from '@/components/Footer'
 
 function page() {
   return (
+ 
     <div>
       <SteperNav />
       <SwipeableTextMobileStepper/>

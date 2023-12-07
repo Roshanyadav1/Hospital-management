@@ -112,8 +112,8 @@ export const columns = [
     { field: 'employee_email', headerName: 'Email', width: 240, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
     { field: 'employee_number', headerName: 'Phone', width: 170, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
     { field: 'employee_role', headerName: 'Role', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-    { field: 'employee_type', headerName: 'Type', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    // { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
+    // { field: 'employee_type', headerName: 'Type', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
     {
       field: 'Actions',
       headerName: 'Actions',
