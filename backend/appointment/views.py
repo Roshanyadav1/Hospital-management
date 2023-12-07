@@ -65,6 +65,45 @@ class AppointmentCount(ListAPIView):
         doctor_count_per_day = appointments_in_week.values('appointment_date').annotate(
             doctor_count=Count('doctor')).order_by('appointment_date')
 
+        appointment_list =[]
+        appointment_date_list = []
+        
+        
+        
+        duplicate_doctor = set()
+        duplicate_patient = set()
+        appointment_count = 0
+        doctor = 1
+        appointment_datee = Appointment.objects.order_by('appointment_date')
+        for date in appointment_datee:
+              appointment_date_list.append(date.appointment_date)
+        # appointment_date_set = set(appointment_date_list)
+        # appointment_date_list_2 = [appointment_date_set]
+        for date in appointment_date_list:
+            print(date)
+            appointment_detail = Appointment.objects.filter(appointment_date=date)         
+            for appointment in appointment_detail:
+                   print(appointment.doctor_id)
+                   print(appointment.appointment_date)
+                   appointment_count += 1
+                   duplicate_doctor.add(appointment.doctor_id)
+                   duplicate_patient.add(appointment.patient_id)
+                  
+            
+            new_dict = {"appointment_date":appointment.appointment_date,"appointment_count":appointment_count,"patient_count":len(duplicate_patient),"doctor_count":len(duplicate_doctor)}
+            if new_dict in appointment_list:
+                print(appointment.appointment_date,duplicate_patient)
+                duplicate_doctor=set()
+                duplicate_patient = set()
+                appointment_count = 0
+            else:
+             print(appointment.appointment_date,duplicate_patient)
+             appointment_list.append(new_dict)
+             duplicate_doctor = set()
+             duplicate_patient = set()
+             appointment_count = 0
+
+        print(appointment_list)    
         # for entry in appointments_per_day:
         #     print(f"Date: {entry['appointment_date']}, Appointments: {entry['appointment_count']}, Doctor: {entry['doctor_count']}")
 
@@ -87,7 +126,8 @@ class AppointmentCount(ListAPIView):
             {
                 'status': response_code,
                 'message': "Appointment " + response_message,
-                'appointement_per_week': list(appointments_per_day)
+                # 'appointement_per_week': list(appointments_per_day),
+                "appointments_per_day":appointment_list
 
             }
         )

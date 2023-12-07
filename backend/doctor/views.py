@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from doctor.models import Doctor
 from rest_framework import status
 from error.models import Error
+from doctor.custom_orderings import CustomOrderingFilter
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
 from leave.models import Leave
@@ -47,11 +48,8 @@ class DoctorRegister(GenericAPIView):
 class DoctorView(ListAPIView):
     queryset = Doctor.objects.all().order_by('created_at')
     serializer_class = DoctorViewSerializer
-    filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
+    filter_backends = [SearchFilter, CustomOrderingFilter]
     pagination_class = CustomPagination
-    filterset_fields = ['doctor_id']
-    ordering_fields = ['doctor_id']
-    search_fields = ['doctor_id']
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
