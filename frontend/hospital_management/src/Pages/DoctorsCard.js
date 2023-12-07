@@ -11,14 +11,10 @@ import { maxWidth } from '@mui/system'
 import Image from 'next/image'
 
 import { useEffect, useState } from 'react'
-
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
-
-// Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
-import 'swiper/css/navigation' // Add this line for navigation styles
+import 'swiper/css/navigation'
 
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules'
@@ -38,8 +34,6 @@ function DoctorCard() {
       const handleResize = () => {
          setScreenSize(getInitialScreenSize())
       }
-
-      // Check if window is defined (i.e., we are in the browser)
       console.log(window, 'window')
       if (typeof window !== 'undefined') {
          // Attach the event listener
@@ -101,10 +95,6 @@ function DoctorCard() {
                   <Grid key={index} container spacing={1} marginY={1}>
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
-                           <Link
-                              style={{ textDecoration: 'none' }}
-                               href="/doctorpage"
-                           >
                               <Card
                                  sx={{
                                     maxWidth: 350,
@@ -140,22 +130,20 @@ function DoctorCard() {
                                        </Typography>
                                     </Typography>
                                  </Typography>
-
+                                 <Link href={`/doctorpage`} passHref>
                                  <Button
-                                    // onClick={showWarningToast}
-                                    // size='small'
                                     sx={{
                                        border: '1px solid',
                                        '&:hover': {
                                           backgroundColor: '#13293d',
-                                          color: '#fff', // Change text color if needed
+                                          color: '#fff', 
                                        },
                                     }}
                                  >
                                     Book Appointment
                                  </Button>
+                                 </Link>
                               </Card>
-                           </Link>
                         </Grid>
                      </SwiperSlide>
                   </Grid>
