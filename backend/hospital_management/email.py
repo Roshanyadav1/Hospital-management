@@ -10,34 +10,40 @@ from doctor.models import Doctor
 from employee.models import Employee
 from bs4 import BeautifulSoup
 from pathlib import Path
+from hospital.models import Hospital
 
 smtp_server = "smtp.gmail.com"
-smtp_port = 587  
+smtp_port = 587
 smtp_username = "achieversgrand@gmail.com"
 smtp_password = "bpfhbemqsenjkqud"
 from_email = "achieversgrand@gmail.com"
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 def send_appointment_email(appointment):
-    patient = Patient.objects.get(patient_id = appointment.patient_id)
-    doctor = Doctor.objects.get(doctor_id = appointment.doctor_id)
-    employee = Employee.objects.get(employee_id = doctor.employee_id)
+    patient = Patient.objects.get(patient_id=appointment.patient_id)
+    doctor = Doctor.objects.get(doctor_id=appointment.doctor_id)
+    employee = Employee.objects.get(employee_id=doctor.employee_id)
+    hospital = Hospital.objects.get(hospital_email="singaji@gmail.com")
     cal = Calendar()
     event = Event()
     summary = 'Appointment With Dr. {}'.format(employee.employee_name)
-    dstart = str(appointment.appointment_date) + ' ' + str(appointment.appointment_time);
+    location = hospital.hospital_name + ', ' + hospital.hospital_address
+    dstart = str(appointment.appointment_date) + ' ' + \
+        str(appointment.appointment_time)
     date = datetime.strptime(dstart, '%Y-%m-%d %H:%M:%S')
     event.add('summary', summary)
     event.add('dtstart', date)
     event.add('dtend', datetime(2023, 10, 31, 10, 0, 0))
-    event.add('location', 'Event Location')
+    event.add('location', location)
     event.add('description', 'Event Description')
+    event.add('organizer', employee.employee_name)
 
     cal.add_component(event)
 
     ics_content = cal.to_ical().decode('utf-8')
 
-    to_email = "keshava.bca2022@ssism.org"
+    to_email = patient.patient_email
     subject = "Appointment Booked Successfully"
 
     msg = MIMEMultipart()
@@ -49,9 +55,9 @@ def send_appointment_email(appointment):
 
 I hope this email finds you in good health. I am writing to inform you that your appointment has been successfully booked with our clinic. We are delighted to confirm the details of your upcoming appointment:
 
-Date: {} Time: {} Location: [Clinic Address]
+Date: {} Time: {} Location: {}
 
-We understand the importance of your time and are committed to providing you with the best possible care. To ensure a smooth and efficient visit, we kindly request that you arrive at least 10 minutes before your scheduled appointment. This will allow us to complete any necessary paperwork and make sure you receive the full attention and care you deserve""".format(patient.patient_name, appointment.appointment_date, appointment.appointment_time)
+We understand the importance of your time and are committed to providing you with the best possible care. To ensure a smooth and efficient visit, we kindly request that you arrive at least 10 minutes before your scheduled appointment. This will allow us to complete any necessary paperwork and make sure you receive the full attention and care you deserve""".format(patient.patient_name, appointment.appointment_date, appointment.appointment_time, location)
     print(body)
     msg.attach(MIMEText(body, 'plain'))
     print("Email Sent Successfully")
@@ -68,6 +74,7 @@ We understand the importance of your time and are committed to providing you wit
     server.sendmail(from_email, to_email, msg.as_string())
     server.quit()
     print("Email Sent Successfully")
+
 
 def send_verification_email(url, user_email):
     html_content = ""
@@ -111,4 +118,3 @@ def send_verification_email(url, user_email):
     server.login(smtp_username, smtp_password)
     server.sendmail(from_email, to_email, message.as_string())
     server.quit()
-
