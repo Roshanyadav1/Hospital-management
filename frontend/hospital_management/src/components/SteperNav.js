@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react'
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -18,6 +19,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Logo from '../assets/navbarimages/whiteSga.png';
 import Image from 'next/image';
 import Link from 'next/link'; 
+// import { useState } from 'react';
 
 const drawerWidth = 240;
 const navItems = [
@@ -30,7 +32,7 @@ const navItems = [
 
 function SteperNav(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const { user } = useUser();
 

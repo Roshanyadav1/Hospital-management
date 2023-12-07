@@ -119,6 +119,24 @@ function Chart() {
     const showServerError = isErrorDoctor || isErrorPatient || isErrorAppData || isErrorAppCount;
     const showReloadButton = showServerError && !isFetchingDoctor && !isFetchingPatient && !isFetchingAppData && !isFetchingAppCount;
 
+    const [visibleData, setVisibleData] = useState(weeklyData?.slice(0, 5));
+
+    const handleChartScroll = (event) => {
+        const scrollLeft = event.target.scrollLeft;
+        const startIndex = Math.floor(scrollLeft / (chartWidth / totalDays)); // Assuming each day is of equal width
+
+        setVisibleData(weeklyData.slice(startIndex, startIndex + visibleDays));
+    };
+
+    const totalDays = weeklyData?.length;
+    const visibleDays = 5; // Number of days to show by default
+    const chartWidth = 650; // Adjust as needed
+
+    const handleView = (event) =>{
+
+    }
+
+
     return (
         <Grid container >
 
@@ -177,38 +195,42 @@ function Chart() {
                         </div>
                     )}
                     {!showServerError && (
-                        <ComposedChart
-                            width={650}
-                            height={355}
-                            data={weeklyData}
-                            margin={{
-                                top: 20,
-                                right: 80,
-                                bottom: 20,
-                                left: 20
-                            }}
-                        >
-                            <CartesianGrid stroke="#f5f5f5" />
-                            <XAxis
-                                dataKey="name"
-                                label={{ value: "Date", position: "insideBottomRight", offset: -10 }}
-                            // scale="band"
-                            />
-                            <YAxis label={{ value: "Quantity", angle: -90, position: "insideLeft" }} />
-                            <Tooltip />
-                            <Legend />
-                            <Area type="monotone" dataKey="Appoints" fill="#AEE3F0" stroke="#AEE3F0" />
-                            <Bar dataKey="Patients" barSize={20} fill="#006494" />
-                            <Line type="monotone" dataKey="Doctors" stroke="#ff7300" />            </ComposedChart>
+                        <div onScroll={handleChartScroll}>
+                            <ComposedChart
+                                width={650}
+                                height={355}
+                                data={weeklyData}
+                                margin={{
+                                    top: 20,
+                                    right: 80,
+                                    bottom: 20,
+                                    left: 20
+                                }}
+                            >
+                                <CartesianGrid stroke="#f5f5f5" />
+                                <XAxis
+                                    dataKey="name"
+                                    label={{ value: "Date", position: "insideBottomRight", offset: -10 }}
+                                // scale="band"
+                                />
+                                <YAxis label={{ value: "Quantity", angle: -90, position: "insideLeft" }} />
+                                <Tooltip />
+                                <Legend />
+                                <Area type="monotone" dataKey="Appoints" fill="#AEE3F0" stroke="#AEE3F0" />
+                                <Bar dataKey="Patients" barSize={20} fill="#006494" />
+                                <Line type="monotone" dataKey="Doctors" stroke="#ff7300" />
+                            </ComposedChart>
+                        </div>
                     )}
                 </Grid>
+
             </Grid>
             <Grid item xs={4} pl={4}>
 
-                <List  className='Colo'  sx={{
+                <List className='Colo' sx={{
                     width: '100%', maxWidth: 385, paddingY: '0px'
                 }} style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px', marginTop: '2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73', scrollbarColor: '#244C73 #0F1C2B', }}>
-                    <div style={{ position: 'sticky', top: 0, backgroundColor: '#244C73', zIndex: 1,padding:'3%'}} >
+                    <div style={{ position: 'sticky', top: 0, backgroundColor: '#244C73', zIndex: 1, padding: '3%' }} >
                         <h2 className='Colo' style={{ textAlign: 'center', color: 'white' }}>Appointments</h2>
                         <Grid mb={2} ml={1} mr={1} p={1} xs={12} style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
                             <Grid xs={2} >
@@ -240,24 +262,31 @@ function Chart() {
                     </div>
                     <hr />
 
-  {displayedData && displayedData.length > 0 ? (
-      displayedData.map((item, index) => (
-        <div style={{ borderRadius: '50px' }} key={index}>
-          <CommonListItem
-            avatarSrc={item.avatarSrc}
-            primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
-            secondaryText={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
-            disease_names={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
-            patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
-          />
-      <hr/>
-        </div>
-      )) 
-    ) : (
-      <div style={{ textAlign: 'center', color: 'white', marginTop: '20px' }}>
-        No Data Found
-      </div>
-    )}
+                    {displayedData && displayedData.length > 0 ? (
+                        displayedData.map((item, index) => (
+                            <div style={{ borderRadius: '50px' }} key={index}>
+                                <CommonListItem
+                                    avatarSrc={item.avatarSrc}
+                                    primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
+                                    secondaryText={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
+                                    disease_names={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
+                                    patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
+
+                                />
+                                <Grid xs={12} style={{textAlign:'center'}}>
+                                <Button onClick={handleView} variant="contained" size="small" style={{backgroundColor:'#13293D',width:'5rem',height:'1.4rem',fontSize:'200',cursor:'pointer'}}>
+                                    View
+                                </Button>
+                                </Grid>
+                                
+                                <hr />
+                            </div>
+                        ))
+                    ) : (
+                        <div style={{ textAlign: 'center', color: 'white', marginTop: '20px' }}>
+                            No Data Found
+                        </div>
+                    )}
                 </List>
             </Grid>
 
@@ -266,3 +295,8 @@ function Chart() {
 }
 
 export default Chart;
+
+// check this code and tell if the scrollbar is added to to x-axis or not for the chart graph if the data exceeds to 5, give the proper ans for this that will it work properly as expected or not
+
+
+{/* add scrollbar to this chart on the x-axis in such a way that the 5 days data should be shown only as default and if the data exceeeds to it then then scrollbar should be added to it and by scrolling the chart all the data will be there */ }
