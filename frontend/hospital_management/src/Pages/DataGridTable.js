@@ -1,9 +1,9 @@
-"use client"
-import { DataGrid } from '@mui/x-data-grid';
+'use client'
+import { DataGrid } from '@mui/x-data-grid'
+import { useState, useEffect } from 'react'
+import { customStyles } from '@mui/material'
 
-
-
-const customstyles=`
+const customstyles = `
 .MuiDataGrid-root .MuiDataGrid-row:nth-child(even) {
   background-color: #E6E8F0;
 }
@@ -62,39 +62,79 @@ const customstyles=`
 `
 
 export default function DataGridTable(props) {
-    const {data,columns} = props
-    
-  return (
-    <>
-        <style>{customstyles}</style>
-        <DataGrid
-          rows={data?.length > 0 ? data : []}
-          columns={columns}
-          loading={data?.length > 0 ? false : true}
-          getRowId={(row) => row?.employee_id}
-          getRowHeight={() => 'auto'}
+   const { data, columns } = props
 
-          //only table scroll not the scrreen
-          autoHeight={true}
+   const handlePageChange = newPage => {
+      setPageState(prev => ({ ...prev, page: newPage }))
+   }
 
-          checkboxSelection={false}
-          rowHeight={35}
-          sx={{
-            height: 392, 
-            display:'flex',
-            width:'100%',
-          }}
-          columnHeaderHeight={40}
-          disableColumnMenu 
-          />
-
-          
-    </>
-   
-  );
+   return (
+      <>
+         <style>{customstyles}</style>
+         <DataGrid
+            rows={data?.length > 0 ? data : []}
+            columns={columns}
+            loading={data?.length > 0 ? false : true}
+            // getRowpageStateId={row => row?.employee_id}
+            getRowId={(row) => row?.employee_id}
+            getRowHeight={() => 'auto'}
+            pageSizeOptions={[5, 10, 25]}
+            autoHeight={true}
+            checkboxSelection={false}
+            rowHeight={35}
+            sx={{
+               height: 392,
+               display: 'flex',
+               width: '100%',
+            }}
+            columnHeaderHeight={40}
+            disableColumnMenu
+         />
+      </>
+   )
 }
 
+{
+   /* return (
+      <>
+         <style>{customStyles}</style>
 
-// insert the delete insert and view buttons in every row of the data in Actions column 
+         <DataGrid
+            // treeData={getTreeDataPath && true}
+            rows={data?.length > 0 ? data : []}
+            columns={columns}
+            loading={data?.length > 0 ? false : true}
+            getRowId={row => row?.employee_id}
+            getRowHeight={() => 'auto'}
+            autoHeight
+            onFilterModelChange={() => setFilterModelData({ filterModel: filterModel })}
+
+            pageSize={pageState?.pageSize || 10} //on selection change
+            pageSizeOptions={[5, 10, 25]}
+            // pageSizeOptions={[5]}
+            paginationModel={paginationModel}
+            paginationMode="server"
+            onPaginationModelChange={setPaginationModel}
+            pagination
+            keep previous checkboxearlier
+            keepNonExistentRowsSelected
+            initialState={{
+               aggregation: {
+                  model: {
+                     ro_amount: 'sum',
+                     ro_rate: 'avg',
+                     billing_amount: 'sum',
+                     billing_rate: 'avg',
+                     label: '',
+                     insertions: 'sum',
+                  },
+                  label: '',
+               },
+            }}
+         />
+      </>
+   ) */
+}
+// insert the delete insert and view buttons in every row of the data in Actions column
 // fix the size of the table to 8 rows with the pagination in it and when the other page will be opened then the size of the table should renains the same and the left over data should be shown on the rows and the other rows should be displayed wheteher it is fillrf or not
-// below the employee table heading provide one more heading that is 'Employees data is viewed here. You can view, delete & edit ' in h5 with proper allignment 
+// below the employee table heading provide one more heading that is 'Employees data is viewed here. You can view, delete & edit ' in h5 with proper allignment

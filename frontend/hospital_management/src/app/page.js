@@ -14,9 +14,7 @@ import Footer  from '@/components/Footer'
 
 function page() {
   return (
-    // <div>
-    //   <DataGridTable2/>
-    // </div>
+ 
     <div>
       <SteperNav />
       <SwipeableTextMobileStepper/>
