@@ -21,6 +21,7 @@ import '../styles/dashboard.css'
 import CommonListItem from '../components/CommonListItem';
 import Image from 'next/image'
 import Doc from '../assets/Doc.png'
+import Link from 'next/link';
 
 function Chart() {
 
@@ -66,7 +67,7 @@ function Chart() {
         }
     }, [ViewDoctor, ViewPatient]);
 
-    const weeklyData = appointmentCount?.appointement_per_week?.map((appointment) => {
+    const weeklyData = appointmentCount?.appointments_per_day?.map((appointment) => {
         return {
             name: appointment.appointment_date,
             Patients: appointment.patient_count,
@@ -85,6 +86,7 @@ function Chart() {
         diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
 
         return {
+            ...appointment,
             name: appointment.appointment_date,
             Patients: appointment.patient_count,
             Appoints: appointment.appointment_count,
@@ -119,7 +121,7 @@ function Chart() {
     const showServerError = isErrorDoctor || isErrorPatient || isErrorAppData || isErrorAppCount;
     const showReloadButton = showServerError && !isFetchingDoctor && !isFetchingPatient && !isFetchingAppData && !isFetchingAppCount;
 
-    const [visibleData, setVisibleData] = useState(weeklyData?.slice(0, 5));
+    const [visibleData, setVisibleData] = useState(weeklyData?.slice(0, 4));
 
     const handleChartScroll = (event) => {
         const scrollLeft = event.target.scrollLeft;
@@ -129,12 +131,10 @@ function Chart() {
     };
 
     const totalDays = weeklyData?.length;
-    const visibleDays = 5; // Number of days to show by default
+    const visibleDays = 4; // Number of days to show by default
     const chartWidth = 650; // Adjust as needed
 
-    const handleView = (event) =>{
-
-    }
+   
 
 
     return (
@@ -273,10 +273,16 @@ function Chart() {
                                     patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
 
                                 />
+                                {
+                                    console.log(item , "item")
+                                }
                                 <Grid xs={12} style={{textAlign:'center'}}>
-                                <Button onClick={handleView} variant="contained" size="small" style={{backgroundColor:'#13293D',width:'5rem',height:'1.4rem',fontSize:'200',cursor:'pointer'}}>
+                                    <Link href={`dashboard/${item?.doctor?.doctor_id}`} >
+                                    <Button variant="contained" size="small" style={{backgroundColor:'#13293D',width:'5rem',height:'1.4rem',fontSize:'200',cursor:'pointer'}}>
                                     View
                                 </Button>
+                                    </Link>
+                               
                                 </Grid>
                                 
                                 <hr />
@@ -295,6 +301,14 @@ function Chart() {
 }
 
 export default Chart;
+
+
+// provide the functionality such that when the user clicks on the view button then the next page dashboard/individualappointment should open through route that is defined in this code through doctor_id show the full information of the doctor and related to it through its id, provide this functionality properly 
+
+
+
+
+
 
 // check this code and tell if the scrollbar is added to to x-axis or not for the chart graph if the data exceeds to 5, give the proper ans for this that will it work properly as expected or not
 
