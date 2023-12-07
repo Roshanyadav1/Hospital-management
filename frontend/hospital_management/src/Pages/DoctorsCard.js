@@ -26,8 +26,8 @@ import Link from 'next/link'
 import { useGetViewDoctorQuery } from '@/services/Query'
 
 function DoctorCard() {
-   const {data:getDname,isLoding} = useGetViewDoctorQuery()
-   console.log('Doctor name',getDname)
+   const {data:getDname,isLoding} = useGetViewDoctorQuery();
+   console.log('Doctor name',getDname);
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
    const showWarningToast = () => {
       toast.warning('Warning Example', { autoClose: false })

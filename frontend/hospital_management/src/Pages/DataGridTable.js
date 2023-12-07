@@ -87,6 +87,8 @@ export default function DataGridTable(props) {
           columnHeaderHeight={40}
           disableColumnMenu 
           />
+
+          
     </>
    
   );
