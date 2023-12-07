@@ -16,6 +16,7 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from django.http import JsonResponse
+from rest_framework.filters import SearchFilter
 
 
 class AppointmentAdd(GenericAPIView):
