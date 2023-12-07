@@ -13,6 +13,7 @@ import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import LinearProgress from '@mui/material/LinearProgress'
+
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import { useSpecialistDoctorMutation } from '@/services/Query'
@@ -22,7 +23,7 @@ import Image from 'next/image'
 import { useCallback } from 'react'
 
 function DoctorPage() {
-   const [filterDoctor, { isLoading: filterDocLoading , isError}] =
+   const [filterDoctor, { isLoading: filterDocLoading, isError }] =
       useSpecialistDoctorMutation()
    // filter use
    const { data: getDisease, isLoading: DiseaseLoading } = useGetAllDiseasesQuery()
@@ -30,9 +31,9 @@ function DoctorPage() {
 
    const [data, setData] = useState('')
 
-   const [selectedDate, setSelectedDate] = useState(dayjs(new Date()))
-   const [selectedDiseases, setSelectedDiseases] = useState([]) 
-   const [selectedDoctor, setSelectedDoctor] = useState([])
+   const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
+   const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
+   const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
 
    const {
       data: filterDoc,
@@ -52,7 +53,7 @@ function DoctorPage() {
          backgroundSize: 'cover',
          backgroundRepeat: 'no-repeat',
          backgroundPosition: 'center',
-         color: 'white', 
+         color: 'white', // Adjust text color based on your background
          padding: '2rem',
          display: 'flex',
          alignItems: 'center',
@@ -88,6 +89,9 @@ function DoctorPage() {
          console.warn(err)
       }
    }
+
+   // const [status, updatedStatus] = useState()
+
    const Typo = {
       fontWeight: 800,
       fontSize: '2.5rem',
@@ -108,7 +112,7 @@ function DoctorPage() {
 
    return (
       <div>
-         {( DiseaseLoading) && (
+         {DiseaseLoading && (
             <div>
                <Box sx={{ width: '100%' }}>
                   <LinearProgress />
@@ -209,16 +213,16 @@ function DoctorPage() {
                         size='large'
                         disabled={docListLoading || DiseaseLoading}
                         onClick={handleSubmit}
-                        sx={{ marginTop: '25px', height: '56px', width :'100px' }}
+                        sx={{ marginTop: '25px', height: '56px', width: '100px' }}
                      >
                         {filterDocLoading ? (
-                           <div >
+                           <div>
                               <Box sx={{ color: '#fff' }}>
-                                 <CircularProgress color="inherit" size={20} />
+                                 <CircularProgress color='inherit' size={20} />
                               </Box>
                            </div>
                         ) : (
-                           "Search"
+                           'Search'
                         )}
                      </Button>
                   </Grid>
@@ -230,84 +234,94 @@ function DoctorPage() {
             <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
                Doctors
             </Typography>
-        
+
             {filterDocLoading ? (
-      <div style={{ height: "30%" }}>
-         <Box sx={{ display: 'flex', justifyContent: "center", width: "100%", maxHeight: "30%" }}>
-            <CircularProgress />
-         </Box>
-      </div>
-   ) : (
-      <>
-         {isError && (<div>Something went Wrong</div>)}
+               <div style={{ height: '30%' }}>
+                  <Box
+                     sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '30%',
+                        alignContent: 'center',
+                     }}
+                  >
+                     <CircularProgress />
+                  </Box>
+               </div>
+            ) : (
+               <>
+                  {isError ? (
+                     <div>Oops ! Something went Wrong</div>
+                  ) : (
+                     <Grid container spacing={6} style={{ marginTop: '20px' }}>
+                        {allDoctor?.map((result, index) => {
+                           let diseases = result?.disease_specialist || []
+                           let days = result?.day || [] // available days
 
+                           return (
+                              <Grid item xs={12} md={3} sm={6} key={index}>
+                                 {/* here the redirection url is not defined when the page is complete than it work */}
+                                 {/* <Link style={{textDecoration:'none'}} href=""> */}
+                                 <Card sx={{ borderRadius: '5px' }}>
+                                    <CardActionArea sx={{ minHeight: 285 }}>
+                                       <CardContent>
+                                          <Grid container>
+                                             <Grid item>
+                                                <Image
+                                                   height={50}
+                                                   width={50}
+                                                   src='https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg'
+                                                />
+                                             </Grid>
+                                             <Grid item sx={{ paddingLeft: 2 }}>
+                                                <Typography
+                                                   variant='body2'
+                                                   color={'#2CD9C5'}
+                                                   sx={{ fontWeight: 700 }}
+                                                >
+                                                   Name
+                                                </Typography>
+                                                <Typography
+                                                   gutterBottom
+                                                   variant='h6'
+                                                   component='div'
+                                                >
+                                                   Dr.{' '}
+                                                   {result.employee.employee_name}
+                                                </Typography>
+                                             </Grid>
+                                          </Grid>
 
-            <Grid container spacing={6} style={{ marginTop: '20px' }}>
-               {allDoctor?.map((result, index) => {
-                  let diseases = result?.disease_specialist || []
-                  let days = result?.day || [] // available days
-
-                  return (
-                     <Grid item xs={12} md={3} sm={6} key={index}>
-                        {/* here the redirection url is not defined when the page is complete than it work */}
-                        {/* <Link style={{textDecoration:'none'}} href=""> */}
-                        <Card sx={{ borderRadius: '5px' }}>
-                           <CardActionArea sx={{ minHeight: 280 }}>
-                              <CardContent>
-                                 <Grid container>
-                                    <Grid item>
-                                       <Image
-                                          height={50}
-                                          width={50}
-                                          src='https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg'
-                                       />
-                                    </Grid>
-                                    <Grid item sx={{ paddingLeft: 2 }}>
-                                       <Typography
-                                          variant='body2'
-                                          color={'#2CD9C5'}
-                                          sx={{ fontWeight: 700 }}
-                                       >
-                                          Name
-                                       </Typography>
-                                       <Typography
-                                          gutterBottom
-                                          variant='h6'
-                                          component='div'
-                                       >
-                                          Dr. {result.employee.employee_name}
-                                       </Typography>
-                                    </Grid>
-                                 </Grid>
-
-                                 <Typography
-                                    variant='body2'
-                                    color='#2CD9C5'
-                                    sx={{ fontWeight: 700 }}
-                                 >
-                                    Disease Specialist
-                                 </Typography>
-                                 <div
-                                    display='flex'
-                                    justifyContent='center'
-                                    style={{ marginBottom: 10 }}
-                                 >
-                                    {diseases?.map(item => {
-                                       return (
-                                          <Chip
-                                             key={item}
-                                             size='small'
-                                             label={item}
-                                             sx={{
-                                                marginRight: 1,
-                                                marginTop: 1,
-                                                backgroundColor: '#2CD9C51A',
-                                             }}
-                                          />
-                                       )
-                                    })}
-                                 </div>
-                                 <Typography
+                                          <Typography
+                                             variant='body2'
+                                             color='#2CD9C5'
+                                             sx={{ fontWeight: 700 ,marginTop : 1.5}}
+                                          >
+                                             Disease Specialist
+                                          </Typography>
+                                          <div
+                                             display='flex'
+                                             justifyContent='center'
+                                             style={{ marginBottom: 10 }}
+                                          >
+                                             {diseases?.map(item => {
+                                                return (
+                                                   <Chip
+                                                      key={item}
+                                                      size='small'
+                                                      label={item}
+                                                      sx={{
+                                                         marginRight: 1,
+                                                         marginTop: 1,
+                                                         backgroundColor:
+                                                            '#2CD9C51A',
+                                                      }}
+                                                   />
+                                                )
+                                             })}
+                                          </div>
+                                          {/* <Typography
                                     variant='body2'
                                     color='#2CD9C5'
                                     sx={{ fontWeight: 700 }}
@@ -330,17 +344,28 @@ function DoctorPage() {
                                           </Grid>
                                        )
                                     })}
-                                 </Grid>
-                              </CardContent>
-                           </CardActionArea>
-                        </Card>
-                        {/* </Link> */}
+                                 </Grid> */}
+
+                                          <div
+                                             
+                                             style={{ paddingTop:10}}
+                                             
+                                          >
+                                             <Button variant='contained' size="small"  >
+                                                Book Appointment
+                                             </Button>
+                                          </div>
+                                       </CardContent>
+                                    </CardActionArea>
+                                 </Card>
+                                 {/* </Link> */}
+                              </Grid>
+                           )
+                        })}
                      </Grid>
-                  )
-               })}
-            </Grid>
-            </>
-   )}
+                  )}
+               </>
+            )}
          </Container>
       </div>
    )

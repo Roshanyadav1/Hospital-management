@@ -5,7 +5,7 @@ import Container from '@mui/material/Container'
 import { toast } from 'react-toastify'
 import { doctorwelcome } from '@/helpers/doctorwelcome'
 import Image from 'next/image'
-
+import {useGetViewDoctorQuery} from '@/services/Query'
 import { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
