@@ -5,14 +5,7 @@ export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
-      // prepareHeaders: (headers, { getState }) => {
-      //    const token = getState().rootReducer.companyDetails.token
-      //    // If we have a token set in state, let's assume that we should be passing it.
-      //    if (token) {
-      //       headers.set('token', `${token}`)
-      //    }
-      //    return headers
-      // },
+     
    }),
 
    keepUnusedDataFor: 30,
@@ -110,7 +103,7 @@ export const queries = createApi({
       
       getGraphAppointInfo : build.query({
          query: () => ({
-            url: '/view/',
+            url: 'appointment/view/',
             method: 'GET',
          }),
       }),
@@ -135,10 +128,23 @@ export const queries = createApi({
       }),
       getAppointment: build.query({
          query: () => ({
-            url: 'appointment/view/?patient_id=b1ebabba-6f65-4bbf-a3ca-f48e448a7d91',
+            url: '/appointment/view/?patient_id=0f0885e1-c1aa-41a5-a27c-2978624b52fd',
             method: 'GET',
          }),
       }),
+        getAppointPatientDoctorDate : build.query({
+         query: () => ({
+            url: 'appointment/appointmentCount/',
+            method: 'GET',
+         }),
+      }),
+      getViewDoctor: build.query({
+         query:() => ({
+            url:'/doctor/view/?pageSize=9',
+            method:'Get',
+         })
+
+      })
    }),
 })
 
@@ -155,5 +161,7 @@ export const {
    useSpecialistDoctorMutation,
    useGetAllDiseasesQuery,
    useGetAppointmentQuery,
-   useGetGraphAppointInfoQuery
+   useGetGraphAppointInfoQuery,
+   useGetAppointPatientDoctorDateQuery,
+   useGetViewDoctorQuery
 } = queries

@@ -3,7 +3,7 @@
 import { Grid, Card, CardContent, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { CardActionArea, CardMedia } from '@mui/material';
-import {patient} from '@/helpers/Diseaase';
+import {patient} from '@/helpers/disease';
 import Link from 'next/link';
 // import {patientPageTwo} from '@/components/patientPageTwo.js'
 // import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
