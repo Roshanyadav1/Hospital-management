@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Formik, Form ,FieldArray, Field } from 'formik'
+import { Formik, Form, FieldArray, Field } from 'formik'
 // import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -164,8 +164,8 @@ const DocUpdate = () => {
             >
                {({ values, handleChange, handleBlur, touched }) => (
                   <Form>
-                     <Grid container spacing={2} >
-                        <Grid item xs={12} sm={6} md={6}>
+                     <Grid container spacing={2}>
+                        <Grid item xs={12} sm={12} md={6}>
                            <Text
                               name='disease_specialist'
                               label='Diseases name'
@@ -179,84 +179,116 @@ const DocUpdate = () => {
                               }}
                            />
                         </Grid>
-
-                        <FieldArray
-                           name='times'
-                           render={(arrayHelpers) => (
-                              <>
-                                 {values.times.map((time, index) => (
-                                    <Grid item md={6}>
-                                    <Grid
-                                       item
-                                       xs={12}
-                                       sm={6}
-                                       md={12}
-                                       sx={{marginBottom:1,marginY:2}}
-                                       key={index}
-                                    >
-                                       <Field
-                                          name={`Stimes.${index}`}
-                                          as={TimeText}
-                                          label={"Start Time"}
-                                          autoComplete=''
-                                          InputProps={{
-                                             style: {
-                                                background: 'white',
-                                                border: 'none',
-                                                borderRadius: '20px',
-                                             },
-                                          }}
-                                       />
-                                    </Grid>
-                                    <Grid
-                                    item
-                                    xs={12}
-                                    sm={6}
-                                    md={12}
-                                    sx={{marginBottom:1,marginY:2}}
-
-                                    key={index}
-                                 >
-                                    <Field
-                                       name={`Etimes.${index}`}
-                                       as={TimeText}
-                                       label={"End Time"}
-                                       autoComplete=''
-                                       InputProps={{
-                                          style: {
-                                             background: 'white',
-                                             border: 'none',
-                                             borderRadius: '20px',
-                                          },
-                                       }}
-                                    />
-                                 </Grid>
-                                 </Grid>
-                                 ))}
-
-                                 <Grid item xs={12} sm={6} md={6}>
-                                    <Button
-                                       variant='contained'
-                                       size='large'
-                                       color='primary'
-                                       onClick={() =>
-                                          arrayHelpers.push('00:00:00')
-                                       }
-                                    >
-                                       +AddTime
-                                    </Button>
-                                 </Grid>
-                              </>
-                           )}
-                        />
-
                         <Grid item xs={12} sm={6}>
-                           <VisuallyHiddenInput
-                              id='logoInput'
-                              type='file'
-                              accept='image/*'
+                           <Text
+                              name='day'
+                              label='Available Days'
+                              autoComplete='off'
+                              InputProps={{
+                                 style: {
+                                    background: 'white',
+                                    border: 'none',
+                                    borderRadius: '20px',
+                                 },
+                              }}
                            />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                           <TimeText
+                              name='per_patient_time'
+                              label='Per Patient Time'
+                              autoComplete='off'
+                              InputProps={{
+                                 style: {
+                                    background: 'white',
+                                    border: 'none',
+                                    borderRadius: '20px',
+                                 },
+                              }}
+                           />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                  <RadioButtonGroup
+                    label="status"
+                    name="Status"
+                    options={[
+                      { value: 'Active', label: 'Active' },
+                      { value: 'Inactive', label: 'Inactive' },
+                      
+                    ]}
+                  />
+                </Grid>
+                        <Grid item xs={12} sm={12} md={6}>
+                           <FieldArray
+                              name='times'
+                              render={arrayHelpers => (
+                                 <>
+                                    {values.times.map((time, index) => (
+                                       <Grid item md={12}>
+                                          <Grid
+                                             item
+                                             xs={12}
+                                             sm={6}
+                                             md={12}
+                                             sx={{ marginBottom: 1, marginY: 2 }}
+                                             key={index}
+                                          >
+                                             <Field
+                                                name={`Stimes.${index}`}
+                                                as={TimeText}
+                                                label={'Start Time'}
+                                                autoComplete=''
+                                                InputProps={{
+                                                   style: {
+                                                      background: 'white',
+                                                      border: 'none',
+                                                      borderRadius: '20px',
+                                                   },
+                                                }}
+                                             />
+                                          </Grid>
+                                          <Grid
+                                             item
+                                             xs={12}
+                                             sm={6}
+                                             md={12}
+                                             sx={{ marginBottom: 1, marginY: 2 }}
+                                             key={index}
+                                          >
+                                             <Field
+                                                name={`Etimes.${index}`}
+                                                as={TimeText}
+                                                label={'End Time'}
+                                                autoComplete=''
+                                                InputProps={{
+                                                   style: {
+                                                      background: 'white',
+                                                      border: 'none',
+                                                      borderRadius: '20px',
+                                                   },
+                                                }}
+                                             />
+                                          </Grid>
+                                       </Grid>
+                                    ))}
+
+                                    <Grid item xs={12} sm={6} md={6}>
+                                       <Button
+                                          variant='contained'
+                                          size='large'
+                                          color='primary'
+                                          onClick={() =>
+                                             arrayHelpers.push('00:00:00')
+                                          }
+                                       >
+                                          +AddTime
+                                       </Button>
+                                    </Grid>
+                                 </>
+                              )}
+                           />
+                        </Grid>
+                        
 
                         <Grid item xs={12} sm={6}>
                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>
@@ -291,17 +323,37 @@ const DocUpdate = () => {
                                              height: '35px',
                                              color: colors.secondary,
                                              position: 'relative',
-                                             left: '1.6rem',
+                                             left: '2rem',
                                           }}
                                        />
                                        <StyledTypography variant='body2'>
-                                          upload logo
+                                          upload Picture
                                        </StyledTypography>
                                     </Grid>
                                  </StyledBox>
                               )}
                            </Box>
                         </Grid>
+
+                        <Grid item xs={0} sm={5}>
+                           <VisuallyHiddenInput
+                              id='logoInput'
+                              type='file'
+                              accept='image/*'
+                           />
+                        </Grid>
+
+                       < Grid item xs={12} sm={6}>
+                  <Button
+                  container justify="center" alignItems="flex-end"
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+
                      </Grid>
                   </Form>
                )}
