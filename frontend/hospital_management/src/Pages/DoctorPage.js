@@ -40,7 +40,7 @@ function DoctorPage() {
       isFetching: DocFetch,
       isLoading: isDoctorsLoading,
    } = useGetAllDoctorsQuery(selectedDiseases)
-
+    console.log(filterDoc)
    let fill = {
       disease: selectedDiseases,
       day: selectedDate,
