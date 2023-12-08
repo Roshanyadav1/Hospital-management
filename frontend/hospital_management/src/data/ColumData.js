@@ -2,11 +2,7 @@ import { useState } from 'react';
 import { Button,  Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Delete, Create, Visibility } from '@mui/icons-material';
 import { useDeleteEmployeeMutation } from '@/services/Query';
-<<<<<<< HEAD
  import  {useGetEmployeeQuery} from '@/services/Query'
-=======
-
->>>>>>> 842b13f18608f0bbe0df2abf883fdccc5c6327a9
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 
 
@@ -67,17 +63,6 @@ const GetActionButton =(row)=>{
     <div style={{ display: 'flex', justifyContent: 'center',alignItems:'center' }}>
 
         <Dialog open={openModal} onClose={handleCloseModal}>
-<<<<<<< HEAD
-       <DialogTitle>Delete Confirmation</DialogTitle>
-       <DialogContent>
-       <p>Do you want to delete the data for {selectedRow?.employee_name}?</p>
-     </DialogContent>
-     <DialogActions>
-        <Button onClick={handleCloseModal} color="primary">
-          No
-        </Button>
-        <Button onClick={handleConfirmDelete} color="primary">
-=======
        <DialogTitle style={{border:'1px solid white',borderRadius:'10px',boxShadow:'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',fontWeight:'bolder',fontSize:'1rem'}}>Delete Confirmation</DialogTitle>
        <DialogContent>
        <p>Do you want to delete the data for <span className='Data'>{selectedRow?.employee_name}</span></p>
@@ -87,7 +72,6 @@ const GetActionButton =(row)=>{
           No
         </Button>
         <Button onClick={handleConfirmDelete} color="primary" className='Yes'>
->>>>>>> 842b13f18608f0bbe0df2abf883fdccc5c6327a9
           Yes
         </Button>
        </DialogActions>
