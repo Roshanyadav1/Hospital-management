@@ -142,7 +142,7 @@ class AppointmentView(ListAPIView):
     serializer_class = AppointmentViewSerializer
     filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
-    filterset_fields = ['doctor_id', 'appointment_time',
+    filterset_fields = ['appointment_id', 'doctor_id', 'appointment_time',
                         'patient_id', 'appointment_date', 'appointment_time']
     ordering_fields = ['appointment_number', 'appointment_date']
     search_fields = ['appointment_number', 'appointment_date']
