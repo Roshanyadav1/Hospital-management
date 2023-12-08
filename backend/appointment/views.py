@@ -62,54 +62,52 @@ class AppointmentCount(ListAPIView):
         appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count(
             'appointment_date'), doctor_count=Count('doctor', distinct=True), patient_count=Count('patient')).order_by('appointment_date')
 
-
         if not appointments_per_day:
-            
-            # Return a JsonResponse with 'Data Not Found' message
-             return Response({
-                  'status' :404,
-                  'message': "Data not found"
-             })
 
-        appointment_list =[]
+            # Return a JsonResponse with 'Data Not Found' message
+            return Response({
+                'status': 404,
+                'message': "Data not found"
+            })
+
+        appointment_list = []
         appointment_date_list = []
-        
-        
-        
+
         duplicate_doctor = set()
         duplicate_patient = set()
         appointment_count = 0
         doctor = 1
         appointment_datee = Appointment.objects.order_by('appointment_date')
         for date in appointment_datee:
-              appointment_date_list.append(date.appointment_date)
+            appointment_date_list.append(date.appointment_date)
         # appointment_date_set = set(appointment_date_list)
         # appointment_date_list_2 = [appointment_date_set]
         for date in appointment_date_list:
             print(date)
-            appointment_detail = Appointment.objects.filter(appointment_date=date)         
+            appointment_detail = Appointment.objects.filter(
+                appointment_date=date)
             for appointment in appointment_detail:
-                   print(appointment.doctor_id)
-                   print(appointment.appointment_date)
-                   appointment_count += 1
-                   duplicate_doctor.add(appointment.doctor_id)
-                   duplicate_patient.add(appointment.patient_id)
-                  
-            
-            new_dict = {"appointment_date":appointment.appointment_date,"appointment_count":appointment_count,"patient_count":len(duplicate_patient),"doctor_count":len(duplicate_doctor)}
+                print(appointment.doctor_id)
+                print(appointment.appointment_date)
+                appointment_count += 1
+                duplicate_doctor.add(appointment.doctor_id)
+                duplicate_patient.add(appointment.patient_id)
+
+            new_dict = {"appointment_date": appointment.appointment_date, "appointment_count": appointment_count,
+                        "patient_count": len(duplicate_patient), "doctor_count": len(duplicate_doctor)}
             if new_dict in appointment_list:
-                print(appointment.appointment_date,duplicate_patient)
-                duplicate_doctor=set()
+                print(appointment.appointment_date, duplicate_patient)
+                duplicate_doctor = set()
                 duplicate_patient = set()
                 appointment_count = 0
             else:
-             print(appointment.appointment_date,duplicate_patient)
-             appointment_list.append(new_dict)
-             duplicate_doctor = set()
-             duplicate_patient = set()
-             appointment_count = 0
+                print(appointment.appointment_date, duplicate_patient)
+                appointment_list.append(new_dict)
+                duplicate_doctor = set()
+                duplicate_patient = set()
+                appointment_count = 0
 
-        print(appointment_list)    
+        print(appointment_list)
         # for entry in appointments_per_day:
         #     print(f"Date: {entry['appointment_date']}, Appointments: {entry['appointment_count']}, Doctor: {entry['doctor_count']}")
 
@@ -133,7 +131,7 @@ class AppointmentCount(ListAPIView):
                 'status': response_code,
                 'message': "Appointment " + response_message,
                 # 'appointement_per_week': list(appointments_per_day),
-                "appointments_per_day":appointment_list
+                "appointments_per_day": appointment_list
 
             }
         )
@@ -144,7 +142,8 @@ class AppointmentView(ListAPIView):
     serializer_class = AppointmentViewSerializer
     filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
-    filterset_fields = ['doctor_id', 'appointment_time', 'patient_id', 'appointment_date', 'appointment_time']
+    filterset_fields = ['doctor_id', 'appointment_time',
+                        'patient_id', 'appointment_date', 'appointment_time']
     ordering_fields = ['appointment_number', 'appointment_date']
     search_fields = ['appointment_number', 'appointment_date']
 
@@ -187,10 +186,11 @@ class AppointmentViewById(APIView):
                 except:
                     response_message = ResponseMessage.RETRIEVED_SUCCESS
                     response_code = status.HTTP_200_OK
+                    Response.status_code = status.HTTP_200_OK
                 return Response(
                     {
                         'status': response_code,
-                        'message': 'Appointment ' +  response_message,
+                        'message': 'Appointment ' + response_message,
                         'data': serializer.data
                     },
                 )
