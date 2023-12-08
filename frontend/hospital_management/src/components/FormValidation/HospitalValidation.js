@@ -36,7 +36,7 @@ const FORM_VALIDATION = Yup.object().shape({
       return true;
     }
     return value && value.size <= 1024 * 1024;
-  }),
+  }).required('logo is required'),
   hospital_owner_name: Yup.string()
     .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
     .required('Required!'),

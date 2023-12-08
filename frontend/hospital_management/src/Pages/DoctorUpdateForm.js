@@ -207,17 +207,18 @@ const DocUpdate = () => {
                               }}
                            />
                         </Grid>
+
                         <Grid item xs={12} sm={6}>
                   <RadioButtonGroup
-                    label="status"
-                    name="Status"
+                    label="Status"
+                    name="status"
                     options={[
-                      { value: 'Active', label: 'Active' },
-                      { value: 'Inactive', label: 'Inactive' },
-                      
+                      { value: true, label: 'Active' },
+                      { value: false, label: 'Inactive' },
                     ]}
                   />
                 </Grid>
+
                         <Grid item xs={12} sm={12} md={6}>
                            <FieldArray
                               name='times'
@@ -234,9 +235,9 @@ const DocUpdate = () => {
                                              key={index}
                                           >
                                              <Field
-                                                name={`Stimes.${index}`}
+                                                name={'Stimes'}
                                                 as={TimeText}
-                                                label={'Start Time'}
+                                                label={` Start Time #${index + 1}`}
                                                 autoComplete=''
                                                 InputProps={{
                                                    style: {
@@ -256,9 +257,9 @@ const DocUpdate = () => {
                                              key={index}
                                           >
                                              <Field
-                                                name={`Etimes.${index}`}
+                                                name={'Etimes'}
                                                 as={TimeText}
-                                                label={'End Time'}
+                                                label={` End Time #${index + 1}`}
                                                 autoComplete=''
                                                 InputProps={{
                                                    style: {
@@ -290,7 +291,7 @@ const DocUpdate = () => {
                         </Grid>
                         
 
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={6} sm={6}>
                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>
                               Profile Picture
                            </Typography>
@@ -343,7 +344,7 @@ const DocUpdate = () => {
                            />
                         </Grid>
 
-                       < Grid item xs={12} sm={6}>
+                       < Grid item xs={6} sm={6}>
                   <Button
                   container justify="center" alignItems="flex-end"
                     variant="contained"

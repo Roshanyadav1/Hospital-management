@@ -17,7 +17,7 @@ function page() {
   return (
  
     <div>
-      <SteperNav />
+      {/* <SteperNav />
       <SwipeableTextMobileStepper/>
       <Grid container item padding={3} >
         <FixedContainer />
@@ -25,8 +25,8 @@ function page() {
       <Cards/>
       <ShowDidease/>
       <DoctorCard/>
-      <Footer/>
-      {/* <DocUpdate /> */}
+      <Footer/> */}
+      <DocUpdate />
     </div>
   )
 
