@@ -189,8 +189,8 @@ class AppointmentViewById(APIView):
                     response_code = status.HTTP_200_OK
                 return Response(
                     {
-                        'status': 'Appointment ' + response_code,
-                        'message': response_message,
+                        'status': response_code,
+                        'message': 'Appointment ' +  response_message,
                         'data': serializer.data
                     },
                 )
