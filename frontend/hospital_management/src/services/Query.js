@@ -51,7 +51,10 @@ export const queries = createApi({
          invalidatesTags: ['EMP'],
       }),
       getEmployee: build.query({
-         query: (arg) => ({
+         query: (arg) => 
+         (
+            console.log('%c [ arg ]-55', 'font-size:13px; background:pink; color:#bf2c9f;', arg),
+            {
             url:`employee/view/?employee_role=Manager&pageNo=${arg.page}&pageSize=${arg.pageSize}`,
             method: 'GET',
          }),

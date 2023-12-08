@@ -1,10 +1,8 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DataGridTable from './DataGridTable'
 import { useGetEmployeeQuery } from '@/services/Query'
 import { columns } from '@/data/ColumData'
-import DataTable from './DataTable'
-import { Button } from '@mui/material'
 
 //////////////////
 function Dashboard() {
@@ -17,25 +15,38 @@ function Dashboard() {
       page: 1,
       pageSize: 10,
    })
-
+   console.log('%c [ pageState ]-12', 'font-size:13px; background:pink; color:#bf2c9f;', pageState)
+   const [paginationModel, setPaginationModel] = useState({
+      page: 1,
+      pageSize: 5,
+     });
    const { data: empData } = useGetEmployeeQuery(pageState, {
       refetchOnMountOrArgChange: true,
    })
-
-   const nextPage = () => {
-      setPageState(prev => ({ ...prev, page: pageState.page + 1 }))
+useEffect(() => {
+   if(paginationModel){
+      setPageState({
+         isLoding: pageState?.isLoding,
+         data: pageState?.data,
+         total: empData?.data?.count,
+         page: paginationModel?.page,
+         pageSize: paginationModel?.pageSize,
+      })
    }
-   const prevPage = () => {
-      setPageState(prev => ({ ...prev, page: pageState.page - 1 }))
-   }
 
-   let isNextPage = empData?.data?.current_page_number <= empData?.data?.total_pages
-
+}, [empData?.data?.count, pageState?.data, pageState?.isLoding, paginationModel])
    return (
       <>
-         <DataGridTable data={empData?.data?.results || []} columns={columns} />
-         <Button disabled={!isNextPage} onClick={nextPage}>Next page</Button>
-         <Button onClick={prevPage}>previous page</Button>
+         <DataGridTable data={empData?.data?.results || []} 
+         columns={columns} 
+         setPageState={setPageState} 
+         map_by={row => row.employee_id} 
+         pageState={pageState}
+         setPaginationModel={setPaginationModel}
+         paginationModel={paginationModel}
+         pageInfo={empData?.data}
+
+         />
       </>
    )
 }
