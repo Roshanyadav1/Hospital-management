@@ -17,10 +17,14 @@ from datetime import datetime, timedelta , time
 from appointment.models import Appointment
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt 
 
 
 class DoctorRegister(GenericAPIView):
     serializer_class = DoctorSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = DoctorSerializer(data=request.data)
@@ -137,6 +141,8 @@ class DoctorView(ListAPIView):
 
 
 class DoctorViewById(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -228,6 +234,7 @@ class DoctorViewById(APIView):
 
 class DoctorUpdate(GenericAPIView):
     serializer_class = DoctorUpdateSerializer
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -273,6 +280,8 @@ class DoctorUpdate(GenericAPIView):
 
 
 class DoctorDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if Doctor.objects.filter(doctor_id=id).count() >= 1:

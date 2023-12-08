@@ -12,16 +12,19 @@ from hospital_management.custom_paginations import CustomPagination
 from error.models import Error
 from employee.models import Employee
 from hospital_management.responses import ResponseMessage
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 # from hospital_management.email import send_verification_email
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from user.models import User
+import jwt
 
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return {
         'access': str(refresh.access_token),
+        'refresh': str(refresh)
     }
 
 
@@ -115,6 +118,7 @@ class PatientView(ListAPIView):
     filterset_fields = ['patient_name']
     ordering_fields = ['patient_name']
     search_fields = ['patient_name']
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -140,6 +144,8 @@ class PatientView(ListAPIView):
 
 
 class PatientViewById(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -184,6 +190,7 @@ class PatientViewById(APIView):
 
 
 class PatientUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -220,6 +227,8 @@ class PatientUpdate(APIView):
 
 
 class PatientDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if Patient.objects.filter(patient_id=id).count() >= 1:

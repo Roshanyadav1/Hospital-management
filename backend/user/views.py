@@ -8,6 +8,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 def get_tokens_for_user(user):
@@ -18,26 +21,28 @@ def get_tokens_for_user(user):
     }
 
 
-class UserRegister(GenericAPIView):
-    serializer_class = UserSerializer
+# class UserRegister(GenericAPIView):
+#     serializer_class = UserSerializer
 
-    def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
-        response_message = error.error_message
-        response_code = error.error_code
-        Response.status_code = error.error_code
-        return Response(
-            {
-                'status': response_code,
-                'message': 'User ' + response_message
-            },
-        )
+#     def post(self, request, format=None):
+#         serializer = UserSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
+#         response_message = error.error_message
+#         response_code = error.error_code
+#         Response.status_code = error.error_code
+#         return Response(
+#             {
+#                 'status': response_code,
+#                 'message': 'User ' + response_message
+#             },
+#         )
 
 
 class UserDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if User.objects.filter(user_id=id).count() >= 1:
@@ -153,22 +158,22 @@ class UserLoginView(GenericAPIView):
             )
 
 
-class UserVerificationView(APIView):
-    serializer_class = UserProfileSerializer
+# class UserVerificationView(APIView):
+#     serializer_class = UserProfileSerializer
 
-    def post(self, request, format=None):
-        token = request.POST.get('token')
-        id = request.POST.get('id')
-        print(id, token)
-        user = User.objects.get(member_id=id)
-        user.status = True
-        Response.status_code = status.HTTP_200_OK
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "User Verified",
-            },
-        )
+#     def post(self, request, format=None):
+#         token = request.POST.get('token')
+#         id = request.POST.get('id')
+#         print(id, token)
+#         user = User.objects.get(member_id=id)
+#         user.status = True
+#         Response.status_code = status.HTTP_200_OK
+#         return Response(
+#             {
+#                 'status': status.HTTP_200_OK,
+#                 'message': "User Verified",
+#             },
+#         )
 
 
 class UserView(APIView):
@@ -187,6 +192,7 @@ class UserView(APIView):
 
 
 class UserUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input

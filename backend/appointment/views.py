@@ -17,10 +17,14 @@ from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from django.http import JsonResponse
 from rest_framework.filters import SearchFilter
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 class AppointmentAdd(GenericAPIView):
     serializer_class = AppointmentAddSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = AppointmentAddSerializer(data=request.data)
@@ -49,6 +53,7 @@ class AppointmentAdd(GenericAPIView):
 class AppointmentCount(ListAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentViewSerializer
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -146,11 +151,38 @@ class AppointmentView(ListAPIView):
                         'patient_id', 'appointment_date', 'appointment_time']
     ordering_fields = ['appointment_number', 'appointment_date']
     search_fields = ['appointment_number', 'appointment_date']
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response_message = ""
         response_code = ""
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            if request.GET.get('patient_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
 
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
@@ -170,6 +202,8 @@ class AppointmentView(ListAPIView):
 
 
 class AppointmentViewById(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -214,6 +248,7 @@ class AppointmentViewById(APIView):
 
 
 class AppointmentUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -277,6 +312,8 @@ class AppointmentUpdate(APIView):
 
 
 class AppointmentDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if Appointment.objects.filter(appointment_id=id).count() >= 1:

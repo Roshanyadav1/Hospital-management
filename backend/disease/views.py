@@ -6,10 +6,15 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
+from drf_yasg.utils import swagger_auto_schema
 
 
 class DiseaseAdd(GenericAPIView):
     serializer_class = DiseaseSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         disease_name = request.data.get('disease_name')
@@ -51,6 +56,7 @@ class DiseaseAdd(GenericAPIView):
 
 
 class DiseaseUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -96,6 +102,8 @@ class DiseaseUpdate(APIView):
 
 
 class DiseaseDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if Disease.objects.filter(disease_id=id).count() >= 1:
@@ -137,6 +145,7 @@ class DiseaseDelete(APIView):
 
 
 class DiseaseView(APIView):
+    @swagger_auto_schema(security=[])
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
