@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from prescription.serializer import PrescriptionSerializer
+from prescription.serializer import PrescriptionSerializer,PrescriptionViewSerializer
 from prescription.models import Prescription
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
@@ -76,7 +76,7 @@ class PrescriptionView(APIView):
                 )
         else:
             prescription = Prescription.objects.all()
-            serializer = PrescriptionSerializer(prescription, many=True)
+            serializer = PrescriptionViewSerializer(prescription, many=True)
             response_message = ""
             response_code = ""
             try:
