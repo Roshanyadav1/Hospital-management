@@ -122,6 +122,19 @@ export const queries = createApi({
             method: 'Get',
          }),
       }),
+      getDoctorTimes: build.query({ 
+         query:()=>({
+               url:'/doctor/view/?doctor_id=0747267a-5a51-4831-9d31-3dfef1991ccf',
+               method:'Get',
+            })
+         }),
+         getAddAppointment: build.mutation({
+            query: appointmentData => ({
+              url: 'appointment/add/',
+              method: 'POST',
+              body: appointmentData,
+            }),
+         })
    }),
 })
 
@@ -140,4 +153,6 @@ export const {
    useGetGraphAppointInfoQuery,
    useGetAppointPatientDoctorDateQuery,
    useGetViewDoctorQuery,
+   useGetDoctorTimesQuery,
+   useGetAddAppointmentMutation,
 } = queries
