@@ -174,7 +174,7 @@ class DoctorViewById(APIView):
                     time_deltaa = timedelta(hours=int(time_parts[0]), minutes=int(
                         time_parts[1]), seconds=int(time_parts[2]))
                     slot = diiff/time_deltaa
-                   
+                    data['total_slots'] = int(slot)
                     appointment = Appointment.objects.filter(doctor_id = id)
                     for appoint in appointment:
                      start_time_iso = time.fromisoformat(start_time)
