@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { Grid } from "@mui/material"
+import { Grid, Button } from "@mui/material"
 import List from '@mui/material/List';
 import { useGetAllDoctorsQuery } from '@/services/Query';
 import { useGetAllPatientsQuery } from '@/services/Query';
 import { useGetGraphAppointInfoQuery } from '@/services/Query';
+import { useGetAppointPatientDoctorDateQuery } from '@/services/Query';
 import {
     ComposedChart,
     Line,
@@ -16,90 +17,40 @@ import {
     Legend,
     Area
 } from "recharts";
+import '../styles/dashboard.css'
 import CommonListItem from '../components/CommonListItem';
 import Image from 'next/image'
-// import Doc from '../assest/Doc.png'
-
-const data = [
-    {
-        name: "Sun",
-        Patients: 29,
-        Appoints: 25,
-        Doctors: 6,
-    },
-    {
-        name: "Mon",
-        Patients: 32,
-        Appoints: 32,
-        Doctors: 11,
-    },
-    {
-        name: "Tues",
-        Patients: 38,
-        Appoints: 23,
-        Doctors: 4,
-    },
-    {
-        name: "Wed",
-        Patients: 32,
-        Appoints: 27,
-        Doctors: 7,
-    },
-
-    {
-        name: "Thurs",
-        Patients: 22,
-        Appoints: 15,
-        Doctors: 3,
-    },
-    {
-        name: "Fri",
-        Patients: 26,
-        Appoints: 19,
-        Doctors: 9,
-    },
-    {
-        name: "Sat",
-        Patients: 22,
-        Appoints: 15,
-        Doctors: 7,
-    },
-
-];
+import Doc from '../assets/Doc.png'
+import Link from 'next/link';
 
 function Chart() {
 
-    const { data: ViewDoctor } = useGetAllDoctorsQuery();
-    const { data: ViewPatient } = useGetAllPatientsQuery();
+    const { data: ViewDoctor, isError: isErrorDoctor, isFetching: isFetchingDoctor } = useGetAllDoctorsQuery();
+    const { data: ViewPatient, isError: isErrorPatient, isFetching: isFetchingPatient } = useGetAllPatientsQuery();
+
+    const { data: appointmentData, isError: isErrorAppData, isFetching: isFetchingAppData } = useGetGraphAppointInfoQuery();
+    const { data: appointmentCount, isError: isErrorAppCount, isFetching: isFetchingAppCount, refetch: refetchAppCount } = useGetAppointPatientDoctorDateQuery();
 
     const [count1, setCount1] = useState(0);
     const [count2, setCount2] = useState(0);
-    console.log(count1,count2)
+    console.log(count1, count2)
 
     useEffect(() => {
-        // Check if data is available before setting counts
         if (ViewDoctor && ViewDoctor.count !== undefined) {
             setCount1(ViewDoctor.count);
         }
-
         if (ViewPatient && ViewPatient.count !== undefined) {
             setCount2(ViewPatient.count);
         }
-
-        // Clear previous counters
         document.getElementById("count1").textContent = "";
         document.getElementById("count2").textContent = "";
-
-        // Start counters only if counts are available
         if (ViewDoctor && ViewPatient && ViewDoctor.count !== undefined && ViewPatient.count !== undefined) {
             startCounters();
         }
-
         function startCounters() {
-            // counter("count1", 0, ViewDoctor.count, 1850);
-            // counter("count2", 0, ViewPatient.count, 1500);
+            counter("count1", 0, ViewDoctor.count, 1550);
+            counter("count2", 0, ViewPatient.count, 1400);
         }
-
         function counter(id, start, end, duration) {
             let obj = document.getElementById(id),
                 current = start,
@@ -115,162 +66,251 @@ function Chart() {
                 }, step);
         }
     }, [ViewDoctor, ViewPatient]);
-    
-    const Data = [
-        {
-            avatarSrc: "https://st2.depositphotos.com/45049140/44509/v/450/depositphotos_445090736-stock-illustration-flat-male-doctor-avatar-in.jpg",
-            primaryText: "Brunch this weekend?",
-            secondaryText: "Ali Connors — I'll be in your neighborhood doing errands this…",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Andonia tonight?",
-            secondaryText: "Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "DPplans ?",
-            secondaryText: " I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Actonr plans for tonight?",
-            secondaryText: "Steve Smith — Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Star Price road",
-            secondaryText: "Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Aquaf for tonight?",
-            secondaryText: "Smith — Sorry, ...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Dinner plans for tonight?",
-            secondaryText: "Bob Smith — Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Dinner plans for tonight?",
-            secondaryText: "Bob Smith — Sorry, I have other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: "Dinner",
-            secondaryText: " other plans already...",
-        },
-        {
-            avatarSrc: "https://t4.ftcdn.net/jpg/01/34/29/31/360_F_134293169_ymHT6Lufl0i94WzyE0NNMyDkiMCH9HWx.jpg",
-            primaryText: " for tonight?",
-            secondaryText: " — Sorry, I have other plans already...",
-        },
-        // Add more data objects as needed
-    ];
+
+    const weeklyData = appointmentCount?.appointments_per_day?.map((appointment) => {
+        return {
+            name: appointment.appointment_date,
+            Patients: appointment.patient_count,
+            Appoints: appointment.appointment_count,
+            Doctors: appointment.doctor_count,
+        };
+    });
+
+    const Data = appointmentData?.data?.map((appointment) => {
+        let diseaseSpecialist = "";
+        if (Array.isArray(appointment.doctor.disease_specialist)) {
+            diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
+        } else {
+            diseaseSpecialist = appointment.doctor.disease_specialist || "";
+        }
+        diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
+
+        return {
+            ...appointment,
+            name: appointment.appointment_date,
+            Patients: appointment.patient_count,
+            Appoints: appointment.appointment_count,
+            Doctors: appointment.doctor_count,
+            avatarSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU",
+            primaryText: appointment.doctor.employee.employee_name,
+            secondaryText: `Appointment Date: ${appointment.appointment_date}`,
+            disease_names: `Disease Name: ${appointment.disease.disease_name}`,
+            patient_name: `Patient Name: ${appointment.patient.patient_name}`, // Corrected line
+        };
+    });
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    // Update the Data mapping to filter based on the search term
+    const filteredData = searchTerm
+        ? Data?.filter((item) => {
+            const doctorName = item.primaryText.toLowerCase();
+            const searchLower = searchTerm.toLowerCase();
+
+            return doctorName.includes(searchLower);
+        })
+        : [];
+
+    const displayedData = searchTerm ? filteredData : Data;
+
+
+    const filteredCount = filteredData ? filteredData.length : 0;
+    // it is still showing the error in filteredData.length
+    console.log("Data for Chart:", Data);
+
+    const showServerError = isErrorDoctor || isErrorPatient || isErrorAppData || isErrorAppCount;
+    const showReloadButton = showServerError && !isFetchingDoctor && !isFetchingPatient && !isFetchingAppData && !isFetchingAppCount;
+
+    const [visibleData, setVisibleData] = useState(weeklyData?.slice(0, 4));
+
+    const handleChartScroll = (event) => {
+        const scrollLeft = event.target.scrollLeft;
+        const startIndex = Math.floor(scrollLeft / (chartWidth / totalDays)); // Assuming each day is of equal width
+
+        setVisibleData(weeklyData.slice(startIndex, startIndex + visibleDays));
+    };
+
+    const totalDays = weeklyData?.length;
+    const visibleDays = 4; // Number of days to show by default
+    const chartWidth = 650; // Adjust as needed
+
+   
+
 
     return (
         <Grid container >
 
             <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
-                <Grid container item  mt={1} xs={12}  >
-                    <Grid  item xs={6} style={{ transition: 'box-shadow 0.3s'}} >
-                        <div className="hov">
-                            <div style={{background: 'linear-gradient(135deg,#006494,#35CFF4)', height: '10rem',  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'  ,marginRight: '1rem', borderRadius: '10px' }}>
-                             <Grid style={{display:'flex'}} item xs={12}>
-                             <Grid itme xs={6}>
-                               <h4  style={{color:'white',  marginBottom:'0',paddingLeft:'2rem',  fontSize: '2rem', fontFamily: 'mainlux' }}>Patients</h4>
-                                <span style={{paddingLeft:'2rem', color:'white', fontSize: '1.52rem' }} id="count2"></span>
-                                <span style={{ color:'white', fontSize: '1.52rem'}}>+</span>
-                               </Grid >
-                               <Grid item xs={6}>
-                                  {/* <div style={{backgroundColor:'white', borderTopLeftRadius:'50%',maxWidth:'5rem',height:'100px'}}></div> */}
-                               </Grid>
-                             </Grid>
-                            </div>
-                        </div>
-                    </Grid>
+                <Grid container item xs={12}  >
 
-                    <Grid className="hov" item xs={6} >
-                        <div style={{ background: 'linear-gradient(-35deg, #35CFF4,#006494)' ,height: '10rem', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' , borderRadius: '10px' }}>
-                        <Grid style={{display:'flex'}} item xs={12}>
-                             <Grid itme xs={6}>
-                             <h4 style={{color:'white',  paddingLeft:'2rem', marginBottom:'0',  fontSize: '2rem', fontFamily: 'mainlux' }}>Doctors</h4>
-                            <span style={{paddingLeft:'2.5rem', color:'white', fontSize: '1.52rem' }} id="count1"></span>
-                            <span style={{ color:'white', fontSize: '1.52rem'}}>+</span>
-
-                               </Grid >
-                               <Grid item xs={6}>
-                                <div  style={{width:'70%',height:'100%',marginTop:'10%',marginLeft:'10%',backgroundColor:'white', paddingTop:'10px',borderRadius:'50%', position:'relative'}}>
-                                {/* <Image style={{position:'absolute',transform:'translate(15%)'}} height={100} width={100}  src={Doc}/> */}
+                    <Grid container item mt={1} xs={12}  >
+                        <Grid item xs={6} style={{ transition: 'box-shadow 0.3s' }} >
+                            <div className="hov">
+                                <div style={{ background: 'linear-gradient(135deg,#006494,#35CFF4)', height: '10rem', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', marginRight: '1rem', borderRadius: '10px' }}>
+                                    <Grid style={{ display: 'flex' }} item xs={12}>
+                                        <Grid itme xs={6}>
+                                            <h4 style={{ color: 'white', marginBottom: '0', paddingLeft: '2rem', fontSize: '2rem', fontFamily: 'mainlux' }}>Patients</h4>
+                                            <span style={{ paddingLeft: '2rem', color: 'white', fontSize: '1.52rem' }} id="count2"></span>
+                                            <span style={{ color: 'white', fontSize: '1.52rem' }}>+</span>
+                                        </Grid >
+                                        <Grid item xs={6}>
+                                            {/* <div style={{backgroundColor:'white', borderTopLeftRadius:'50%',maxWidth:'5rem',height:'100px'}}></div> */}
+                                        </Grid>
+                                    </Grid>
                                 </div>
-                            
+                            </div>
+                        </Grid>
 
-                               </Grid>
-                             </Grid>
-                           
+                        <Grid className="hov" item xs={6} >
+                            <div style={{ background: 'linear-gradient(-35deg, #35CFF4,#006494)', height: '10rem', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '10px' }}>
+                                <Grid style={{ display: 'flex' }} item xs={12}>
+                                    <Grid itme xs={6}>
+                                        <h4 style={{ color: 'white', paddingLeft: '2rem', marginBottom: '0', fontSize: '2rem', fontFamily: 'mainlux' }}>Doctors</h4>
+                                        <span style={{ paddingLeft: '2.5rem', color: 'white', fontSize: '1.52rem' }} id="count1"></span>
+                                        <span style={{ color: 'white', fontSize: '1.52rem' }}>+</span>
+
+                                    </Grid >
+                                    <Grid item xs={6}>
+                                        <div style={{ width: '80%', height: '100%', marginTop: '8%', marginLeft: '10%', backgroundColor: 'white', paddingTop: '10px', borderRadius: '50%', position: 'relative' }}>
+                                            <Image style={{ position: 'absolute', transform: 'translate(15%)' }} height={100} width={100} src={Doc} />
+                                        </div>
+
+
+                                    </Grid>
+                                </Grid>
+
+                            </div>
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+
+                <Grid pt={3} mt={2} item xs={12} style={{ display: 'flex', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px' }}>
+                    {showServerError && (
+                        <div>
+                            <h2>Error fetching data from the server</h2>
+                            {showReloadButton && (
+                                <Button onClick={() => refetchAppCount()}>Reload</Button>
+                            )}
                         </div>
-                    </Grid>
-                    
+                    )}
+                    {!showServerError && (
+                        <div onScroll={handleChartScroll}>
+                            <ComposedChart
+                                width={650}
+                                height={355}
+                                data={weeklyData}
+                                margin={{
+                                    top: 20,
+                                    right: 80,
+                                    bottom: 20,
+                                    left: 20
+                                }}
+                            >
+                                <CartesianGrid stroke="#f5f5f5" />
+                                <XAxis
+                                    dataKey="name"
+                                    label={{ value: "Date", position: "insideBottomRight", offset: -10 }}
+                                // scale="band"
+                                />
+                                <YAxis label={{ value: "Quantity", angle: -90, position: "insideLeft" }} />
+                                <Tooltip />
+                                <Legend />
+                                <Area type="monotone" dataKey="Appoints" fill="#AEE3F0" stroke="#AEE3F0" />
+                                <Bar dataKey="Patients" barSize={20} fill="#006494" />
+                                <Line type="monotone" dataKey="Doctors" stroke="#ff7300" />
+                            </ComposedChart>
+                        </div>
+                    )}
                 </Grid>
 
-                <Grid pt={3} item xs={12} style={{ display: 'flex' }}>
-                    <Grid item xs={12}  style={{
-                                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px' ,backgroundColor:'#FAFAFA'
-                            }}>
-                        <ComposedChart
-                            width={740}
-                            height={435}
-                            data={data}
-                            margin={{
-                                top: 20,
-                                right: 80,
-                                bottom: 20,
-                                left: 20
-                            }}
-                           
-                        >
-                            <CartesianGrid stroke="#f5f5f5" />
-                            <XAxis
-                                dataKey="name"
-                                label={{ value: "Days", position: "insideBottomRight", offset: -10 }}
-                            // scale="band"
-                            />
-                            <YAxis label={{ value: "Quantity", angle: -90, position: "insideLeft" }} />
-                            <Tooltip />
-                            <Legend />
-                            <Area  type="monotone" dataKey="Appoints" fill="#AEE3F0" stroke="#AEE3F0" />
-                            <Bar dataKey="Patients" barSize={20} fill="#006494" />
-                            <Line type="monotone" dataKey="Doctors" stroke="#ff7300" />
-                        </ComposedChart>
-                    </Grid>
-                </Grid>
             </Grid>
+            <Grid item xs={4} pl={4}>
 
-            <Grid item xs={4} pl={3} >
-                {/* <div style={{ backgroundColor: '#13293D' }}> */}
+                <List className='Colo' sx={{
+                    width: '100%', maxWidth: 385, paddingY: '0px'
+                }} style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px', marginTop: '2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73', scrollbarColor: '#244C73 #0F1C2B', }}>
+                    <div style={{ position: 'sticky', top: 0, backgroundColor: '#244C73', zIndex: 1, padding: '3%' }} >
+                        <h2 className='Colo' style={{ textAlign: 'center', color: 'white' }}>Appointments</h2>
+                        <Grid mb={2} ml={1} mr={1} p={1} xs={12} style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                            <Grid xs={2} >
+                                {filteredCount > 0 && (
+                                    <span style={{ color: 'black', textAlign: 'center', paddingLeft: '0.5rem', fontWeight: 'bold', fontSize: '1rem' }}>{filteredCount}</span>
+                                )}
+                            </Grid>
+                            <Grid xs={10} style={{ textAlign: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                                    <input
+                                        type="text"
+                                        placeholder="Search by Doctor Name"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        style={{
+                                            width: '100%',
+                                            border: 'none',
+                                            padding: '0.25rem',
+                                            borderRadius: '5px',
+                                            marginRight: '0.25rem',
+                                            outline: 'none',
+                                            fontSize: '.8rem',
+                                            fontWeight: 'bold'
+                                        }}
+                                    />
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <hr />
 
-                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius: '5px',marginTop:'2.5%', overflowY: 'scroll', height: 'calc(100vh - 105px)', backgroundColor: '#244C73' }} className='Colo' sx={{ width: '100%', maxWidth: 375 }}>
+                    {displayedData && displayedData.length > 0 ? (
+                        displayedData.map((item, index) => (
+                            <div style={{ borderRadius: '50px' }} key={index}>
+                                <CommonListItem
+                                    avatarSrc={item.avatarSrc}
+                                    primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
+                                    secondaryText={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
+                                    disease_names={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
+                                    patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
 
-                    <h2 className='Colo' style={{ textAlign: 'center' }}>Appointments</h2>
-                    {Data.map((item, index) => (
-                        <CommonListItem
-                            key={index}
-                            avatarSrc={item.avatarSrc}
-                            primaryText={item.primaryText}
-                            secondaryText={item.secondaryText}
-                        />
-                    ))}
-
+                                />
+                                {
+                                    console.log(item , "item")
+                                }
+                                <Grid xs={12} style={{textAlign:'center'}}>
+                                    <Link href={`dashboard/${item?.doctor?.doctor_id}`} >
+                                    <Button variant="contained" size="small" style={{backgroundColor:'#13293D',width:'5rem',height:'1.4rem',fontSize:'200',cursor:'pointer'}}>
+                                    View
+                                </Button>
+                                    </Link>
+                               
+                                </Grid>
+                                
+                                <hr />
+                            </div>
+                        ))
+                    ) : (
+                        <div style={{ textAlign: 'center', color: 'white', marginTop: '20px' }}>
+                            No Data Found
+                        </div>
+                    )}
                 </List>
-                {/* </div> */}
             </Grid>
+
         </Grid>
-
-
-    )
+    );
 }
 
-export default Chart
+export default Chart;
 
+
+// provide the functionality such that when the user clicks on the view button then the next page dashboard/individualappointment should open through route that is defined in this code through doctor_id show the full information of the doctor and related to it through its id, provide this functionality properly 
+
+
+
+
+
+
+// check this code and tell if the scrollbar is added to to x-axis or not for the chart graph if the data exceeds to 5, give the proper ans for this that will it work properly as expected or not
+
+
+{/* add scrollbar to this chart on the x-axis in such a way that the 5 days data should be shown only as default and if the data exceeeds to it then then scrollbar should be added to it and by scrolling the chart all the data will be there */ }

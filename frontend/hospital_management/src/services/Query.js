@@ -1,3 +1,4 @@
+'use client'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
 
@@ -5,14 +6,6 @@ export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
-      // prepareHeaders: (headers, { getState }) => {
-      //    const token = getState().rootReducer.companyDetails.token
-      //    // If we have a token set in state, let's assume that we should be passing it.
-      //    if (token) {
-      //       headers.set('token', `${token}`)
-      //    }
-      //    return headers
-      // },
    }),
 
    keepUnusedDataFor: 30,
@@ -35,20 +28,27 @@ export const queries = createApi({
             }
          },
       }),
+      doctorUpdate: build.mutation({
+         query: value => ({
+            url: 'doctor/update/',
+            method: 'POST',
+            body: value,
+         }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               await queryFulfilled
+               toast.success('Doctor Updated Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         },
+      }),
       addEmployee: build.mutation({
          query: payload => ({
             url: 'employee/add/',
             method: 'POST',
             body: payload,
          }),
-         async onQueryStarted({ queryFulfilled }) {
-            try {
-               await queryFulfilled
-               toast.success('Employee Added Successfully')
-            } catch (e) {
-               toast.error(JSON.stringify(e))
-            }
-         },
       }),
       addDiseases: build.mutation({
          query: payload => ({
@@ -56,14 +56,6 @@ export const queries = createApi({
             method: 'POST',
             body: payload,
          }),
-         async onQueryStarted({ queryFulfilled }) {
-            try {
-               await queryFulfilled
-               toast.success('Disease Added Successfully')
-            } catch (e) {
-               toast.error(JSON.stringify(e))
-            }
-         },
       }),
       deleteEmployee: build.mutation({
          query: value => ({
@@ -74,8 +66,8 @@ export const queries = createApi({
          invalidatesTags: ['EMP'],
       }),
       getEmployee: build.query({
-         query: () => ({
-            url: 'employee/view/',
+         query: (arg) => ({
+            url:`employee/view/?employee_role=Manager&pageNo=${arg.page}&pageSize=${arg.pageSize}`,
             method: 'GET',
          }),
          providesTags: ['EMP'],
@@ -87,15 +79,15 @@ export const queries = createApi({
          }),
       }),
       getAllDoctors: build.query({
-         query: (prop) => ({
-            url: 'doctor/view/'+`?disease_specialist=${prop || ''}`,
+         query: prop => ({
+            url: 'doctor/view/' + `?disease_specialist=${prop || ''}`,
             method: 'GET',
          }),
       }),
-      
-      getGraphAppointInfo : build.query({
+
+      getGraphAppointInfo: build.query({
          query: () => ({
-            url: '/view/',
+            url: 'appointment/view/',
             method: 'GET',
          }),
       }),
@@ -112,16 +104,37 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-      getAllDiseases : build.query({
+      getAllDiseases: build.query({
          query: () => ({
             url: 'disease/view/',
             method: 'GET',
          }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               let result = await queryFulfilled
+               console.log(result, 'resresres')
+               toast.success(' Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         },
       }),
       getAppointment: build.query({
          query: () => ({
-            url: 'appointment/view/?patient_id=b1ebabba-6f65-4bbf-a3ca-f48e448a7d91',
+            url: '/appointment/view/?patient_id=0f0885e1-c1aa-41a5-a27c-2978624b52fd',
             method: 'GET',
+         }),
+      }),
+      getAppointPatientDoctorDate: build.query({
+         query: () => ({
+            url: 'appointment/appointmentCount/',
+            method: 'GET',
+         }),
+      }),
+      getViewDoctor: build.query({
+         query: () => ({
+            url: 'doctor/view/?pageSize=9',
+            method: 'Get',
          }),
       }),
    }),
@@ -129,6 +142,7 @@ export const queries = createApi({
 
 export const {
    useRegisterHospitalMutation,
+   useDoctorUpdateMutation,
    useAddEmployeeMutation,
    useAddDiseasesMutation,
    useDeleteEmployeeMutation,
@@ -139,5 +153,7 @@ export const {
    useSpecialistDoctorMutation,
    useGetAllDiseasesQuery,
    useGetAppointmentQuery,
-   useGetGraphAppointInfoQuery
+   useGetGraphAppointInfoQuery,
+   useGetAppointPatientDoctorDateQuery,
+   useGetViewDoctorQuery,
 } = queries

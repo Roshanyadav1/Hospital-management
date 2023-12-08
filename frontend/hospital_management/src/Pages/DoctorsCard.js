@@ -1,33 +1,25 @@
 
 "use client"
-
-// import React from 'react'
 import { Grid, Card, Typography, Button } from '@mui/material'
-// import CardActions from '@mui/material/CardActions'
 import Container from '@mui/material/Container'
-// import { CardActionArea, CardMedia } from '@mui/material'
-// import Home from '@/app/dashboard/page'
-// import { AccessAlarm, ThreeDRotation } from '@mui/icons-material'
 import { toast } from 'react-toastify'
-import { doctorwelcome } from '@/helpers/DoctorWelcome'
-// import { maxWidth } from '@mui/system'
+import { doctorwelcome } from '@/helpers/doctorwelcome'
 import Image from 'next/image'
-
+import { useGetViewDoctorQuery } from '@/services/Query'
 import { useEffect, useState } from 'react'
-
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
-import 'swiper/css/navigation' // Add this line for navigation styles
-
+import 'swiper/css/navigation'
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
 
 function DoctorCard() {
+   const {data:getDname,isLoding} = useGetViewDoctorQuery();
+   console.log('Doctor name',getDname);
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
    const showWarningToast = () => {
       toast.warning('Warning Example', { autoClose: false })
@@ -79,13 +71,11 @@ function DoctorCard() {
       slidesPerView: screenSize,
       spaceBetween: screenSize * 10,
    }
-
    return (
       <>
          <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
             Our Doctors
          </Typography>
-
          <Container maxWidth='lg' sx={{ padding: '3rem' }}>
             <Swiper
                {...settings}
@@ -160,7 +150,6 @@ function DoctorCard() {
                   </Grid>
                ))}
             </Swiper>
-            {/* <div className='swiper-pagination-custom' style={{ marginTop: '30px',backgroundColor:"red",justifyContent:"center",alignContent:"center" }}></div> */}
             <div
                className='swiper-pagination-custom'
                style={{

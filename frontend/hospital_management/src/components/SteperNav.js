@@ -1,5 +1,5 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+"use client"
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,9 +15,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import Logo from '../assets/whiteSga.png';
+import Logo from '../assets/navbarimages/whiteSga.png';
 import Image from 'next/image';
 import Link from 'next/link'; 
+import  {useState} from 'react'
 
 const drawerWidth = 240;
 const navItems = [
@@ -30,7 +31,7 @@ const navItems = [
 
 function SteperNav(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const { user } = useUser();
 
@@ -133,8 +134,5 @@ function SteperNav(props) {
   );
 }
 
-SteperNav.propTypes = {
-  window: PropTypes.func
-};
 
 export default SteperNav;
