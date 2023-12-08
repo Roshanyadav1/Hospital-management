@@ -7,45 +7,46 @@ import { columns } from '@/data/ColumData'
 //////////////////
 function Dashboard() {
    // const router = useRouter()
-
    const [pageState, setPageState] = useState({
-      isLoding: false,
+      isLoading: false,
       data: [],
       total: 0,
       page: 1,
-      pageSize: 10,
-   })
-   console.log('%c [ pageState ]-12', 'font-size:13px; background:pink; color:#bf2c9f;', pageState)
-   const [paginationModel, setPaginationModel] = useState({
+      pageSize: 10
+    })
+    const [paginationModel, setPaginationModel] = useState({
       page: 1,
       pageSize: 5,
      });
+    
+
    const { data: empData } = useGetEmployeeQuery(pageState, {
       refetchOnMountOrArgChange: true,
    })
-useEffect(() => {
-   if(paginationModel){
-      setPageState({
-         isLoding: pageState?.isLoding,
-         data: pageState?.data,
-         total: empData?.data?.count,
-         page: paginationModel?.page,
-         pageSize: paginationModel?.pageSize,
-      })
-   }
+   useEffect(() => {
+      if(empData?.data?.results?.length > 0){
+         setPageState({
+            isLoading: pageState?.isLoading,
+            data: empData?.data?.results,
+            total: pageState?.total,
+            page: paginationModel?.page,
+            pageSize: paginationModel?.pageSize
+          })
+      }
 
-}, [empData?.data?.count, pageState?.data, pageState?.isLoding, paginationModel])
+   }, [])
+
    return (
       <>
-         <DataGridTable data={empData?.data?.results || []} 
+         <DataGridTable 
+         data={empData?.data?.results?.length ? empData?.data?.results : []} 
          columns={columns} 
-         setPageState={setPageState} 
          map_by={row => row.employee_id} 
-         pageState={pageState}
-         setPaginationModel={setPaginationModel}
-         paginationModel={paginationModel}
          pageInfo={empData?.data}
-
+         pageState={pageState}
+         setPageState={setPageState}
+         paginationModel={paginationModel}
+         setPaginationModel={setPaginationModel}
          />
       </>
    )
