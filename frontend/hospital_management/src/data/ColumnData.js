@@ -1,11 +1,14 @@
+"use client"
 import { useState } from 'react';
 import { Button,  Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Delete, Create, Visibility } from '@mui/icons-material';
 import { useDeleteEmployeeMutation } from '@/services/Query';
+import { useRouter } from 'next/navigation';
 
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 
 const GetActionButton =(row)=>{
+  const router = useRouter()
   const [deleteEmployee] = useDeleteEmployeeMutation()
 
   const [selectedRow, setSelectedRow] = useState(null);
@@ -18,11 +21,7 @@ const GetActionButton =(row)=>{
 };
 // console.log('Delete :', selectedRow);
 
-
-  const handleEdit = () => {
-    // Handle edit logic here
-    console.log('Edit:', row);
-  };
+ 
   
   const handleView = () => {
     // Handle view logic here
@@ -80,7 +79,11 @@ const GetActionButton =(row)=>{
       <Delete />
     </IconButton>
     {/* dont fill the color in the delete button just outlineit */}
-    <IconButton onClick={handleEdit} color="primary" size="small">
+    <IconButton onClick={() => {
+        router.push(`/dashboard/addEmployee/${row.params.row.employee_id}?${JSON.stringify(row.params.row)}`)
+        console.log('this works');
+      }} 
+    color="primary" size="small">
       <Create />
     </IconButton>
     <IconButton onClick={handleView} color="success" size="small">

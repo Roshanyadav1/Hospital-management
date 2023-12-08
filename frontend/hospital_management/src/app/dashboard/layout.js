@@ -98,6 +98,18 @@ const Drawer = styled(MuiDrawer, {
 }));
 
  
+const INITIAL_FORM_STATE = {
+  employee_name: '',
+  employee_email: '',
+  employee_number: '',
+  employee_password: '',// not available
+  employee_type: '',
+  employee_role: '',
+  employee_status: '',
+  created_by: 'admin',
+  updated_by: 'admin',
+};
+
 function Layout({children}) {
   const pathname = usePathname()
 
@@ -178,7 +190,7 @@ const handleRegister = async (values, { resetForm }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={false} elevation={0.1}>
+      <AppBar position="fixed" open={false} elevation={1}>
         <ResponsiveAppBar sidebarChanges={sidebarChanges} open={open} />
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -189,10 +201,10 @@ const handleRegister = async (values, { resetForm }) => {
           {[
             { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
             { text: "Employee", path: "/dashboard/employeedata" , icon : <TrackChangesIcon/>},
-            { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},
-            { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
-            { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},
-            { text: "Add Employee", path: "/dashboard/addEmployee" , icon : <GroupAddIcon /> },
+            { text: "Add Doctor", path: "/dashboard/adddoctor" , icon : <SettingsAccessibilityIcon/>},
+            { text: "Add Disease", path: "/dashboard/adddisease" , icon : <CoronavirusIcon/>},
+            { text: "Add Hospital", path: "/dashboard/addhospital" , icon : <AddBoxIcon/>},
+            { text: "Add Employee", path: "/dashboard/addemployee" , icon : <GroupAddIcon /> },
             // { text: "Billing", path: "/dashboard/billing" , icon : <AccountBalanceWalletIcon/>},
             // { text: "Analytics", path: "/dashboard/analytics" , icon : <AnalyticsIcon/>},
             // { text: "DocterDetail", path: "/dashboard/docterdetail" , icon : <AddReactionIcon/>},
@@ -209,7 +221,14 @@ const handleRegister = async (values, { resetForm }) => {
               {/* Wrap the ListItemButton with Link */}
               <Link style={{
                 textDecoration:'none'
-              }} href={item.path} passHref>
+              }} 
+              prefetch={true}
+              href={{
+                pathname: item.path,
+                
+                query: { ...INITIAL_FORM_STATE },
+              }}
+               >
                 <ListItemButton
                   component="a" 
                   sx={{

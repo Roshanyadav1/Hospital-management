@@ -10,13 +10,14 @@ import ShowDidease from '@/Pages/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css';
 import SteperNav from '@/components/SteperNav'
 import Footer  from '@/components/Footer'
+import DocUpdate from '@/Pages/DoctorUpdateForm'
 // for the patient page , the patient page will be the main page for the patient
 
 function page() {
   return (
  
     <div>
-      <SteperNav />
+      {/* <SteperNav />
       <SwipeableTextMobileStepper/>
       <Grid container item padding={3} >
         <FixedContainer />
@@ -24,7 +25,8 @@ function page() {
       <Cards/>
       <ShowDidease/>
       <DoctorCard/>
-      // <Footer/>
+      <Footer/> */}
+      <DocUpdate />
     </div>
   )
 

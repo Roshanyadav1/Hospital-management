@@ -1,6 +1,5 @@
 'use client'
-import * as React from 'react'
-import { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import dayjs from 'dayjs'
 import { DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -13,33 +12,38 @@ import { CardActionArea } from '@mui/material'
 import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
+import LinearProgress from '@mui/material/LinearProgress'
 
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
-import { useGetSpecialistDoctorMutation } from '@/services/Query'
+import { useSpecialistDoctorMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import Image from 'next/image'
+import { useCallback } from 'react'
 
 function DoctorPage() {
-   const [filterDoctor] = useGetSpecialistDoctorMutation()
-
+   const [filterDoctor, { isLoading: filterDocLoading, isError }] =
+      useSpecialistDoctorMutation()
    // filter use
-   const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
-   const { data: getDoctors } = useGetAllDoctorsQuery()
+   const { data: getDisease, isLoading: DiseaseLoading } = useGetAllDiseasesQuery()
+   const { data: getDoctors, isFetching: docListLoading } = useGetAllDoctorsQuery()
 
-   const [data,setData] = useState()
+   const [data, setData] = useState('')
 
    const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
    const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
    const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
 
-   const {  data: filterDoc , isFetching , isLoading :isDoctorsLoading} = useGetAllDoctorsQuery(selectedDiseases)
-
-
+   const {
+      data: filterDoc,
+      isFetching: DocFetch,
+      isLoading: isDoctorsLoading,
+   } = useGetAllDoctorsQuery(selectedDiseases)
+    console.log(filterDoc)
    let fill = {
-      disease: selectedDate,
-      day: selectedDiseases,
+      disease: selectedDiseases,
+      day: selectedDate,
       doctor: selectedDoctor,
    }
 
@@ -63,47 +67,30 @@ function DoctorPage() {
 
    const handleDiseasesChange = (event, values) => {
       setSelectedDiseases(values)
+      setSelectedDoctor('')
    }
 
    const handleDoctorChange = (event, values) => {
       setSelectedDoctor(values)
    }
 
-   const handleSubmit = async() => {
-      try{
-         alert("click")
-         // event.preventDefault()
+   const handleSubmit = async event => {
+      try {
+         event.preventDefault()
          let res = await filterDoctor(fill).unwrap()
-         console.log("res res",res)
-         setData(res)
-         console.log('Selected Date:', selectedDate)
-         console.log('Selected Diseases:', selectedDiseases)
-         console.log('Selected Doctor:', selectedDoctor)
-         // Add your fetch or other logic here
-      }catch(err){
+         if (selectedDoctor) {
+            setData(
+               res?.data.filter(e => e.employee.employee_name === selectedDoctor)
+            )
+         } else {
+            setData(res?.data)
+         }
+      } catch (err) {
          console.warn(err)
       }
    }
 
- 
-
    // const [status, updatedStatus] = useState()
-
-   if (isLoading || isDoctorsLoading)
-      return (
-         <div
-            style={{
-               height: '100vh',
-               display: 'flex',
-               alignItems: 'center',
-               justifyContent: 'center',
-            }}
-         >
-            <Box sx={{ display: 'flex' }}>
-               <CircularProgress />
-            </Box>
-         </div>
-      )
 
    const Typo = {
       fontWeight: 800,
@@ -111,106 +98,135 @@ function DoctorPage() {
    }
 
    // for filter use
-   const diseases = getDisease?.data?.map(disease => disease.disease_name) || []
-   let doctors = (filterDoc?.data?.length >= 1 && !isFetching) ? filterDoc?.data?.map(doctor => doctor.employee.employee_name) : ['No Doctor Found !']
+   const diseases = getDisease?.data?.map(disease => disease.disease_name) || [
+      'No Disease Found !',
+   ]
+   let doctors =
+      filterDoc?.data?.length >= 1 && !DocFetch
+         ? filterDoc?.data?.map(doctor => doctor?.employee?.employee_name)
+         : ['No Doctor Found !']
+
+   // default all doctor show
+   let allDoctor = data ? data : getDoctors?.data || []
+   //  selectedDoctor  &&  allDoctor  &&  data
 
    return (
       <div>
+         {DiseaseLoading && (
+            <div>
+               <Box sx={{ width: '100%' }}>
+                  <LinearProgress />
+               </Box>
+            </div>
+         )}
          <div style={styles.container}>
             <Container maxWidth='lg'>
                <Typography variant='h4' align='center' style={Typo}>
                   Book Your Appointment
                </Typography>
-               <form>
-                  <Grid container spacing={5} style={{ marginTop: '1rem' }}>
-                     <Grid item xs={12} sm={3} md={3.5}>
-                        <Typography variant='body2' sx={{ marginBottom: '6px' }}>
-                           Select Disease
-                        </Typography>
-                        <Autocomplete
-                           freeSolo
-                           id='tags-outlined'
-                           options={diseases}
-                           value={selectedDiseases}
-                           onChange={handleDiseasesChange}
-                           sx={{
-                              background: 'white',
-                              outline: 'none',
-                              borderRadius: '5px',
-                           }}
-                           disableClearable
-                           renderInput={params => (
-                              <TextField
-                                 {...params}
-                                 //  label="Search input"
-                                 InputProps={{
-                                    ...params.InputProps,
-                                    placeholder: 'disease',
-                                    type: 'search',
-                                 }}
-                              />
-                           )}
-                        />
-                     </Grid>
 
-                     <Grid item xs={12} sm={3} md={3.5}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                           <DemoItem label='Select Date'>
-                              <MobileDatePicker
-                                 defaultValue={dayjs(new Date())}
-                                 format='DD-MM-YYYY'
-                                 views={['year', 'month', 'day']}
-                                 value={selectedDate}
-                                 onChange={handleDateChange}
-                                 sx={{ background: 'white', borderRadius: '5px' }}
-                              />
-                           </DemoItem>
-                        </LocalizationProvider>
-                     </Grid>
-
-                     <Grid item xs={12} sm={3} md={3.5}>
-                        <Typography variant='body2' sx={{ marginBottom: '6px' }}>
-                           Select Doctor
-                        </Typography>
-                        <Autocomplete
-                           freeSolo
-                           id='tags-outlined'
-                           options={doctors}
-                           value={selectedDoctor.toString()}
-                           onChange={handleDoctorChange}
-                           sx={{
-                              background: 'white',
-                              outline: 'none',
-                              borderRadius: '5px',
-                           }}
-                           disableClearable
-                           renderInput={params => (
-                              <TextField
-                                 {...params}
-                                 //  label="Search input"
-                                 InputProps={{
-                                    ...params.InputProps,
-                                    placeholder: isFetching ?'loading...' : 'select a doctor',
-                                    type: 'search',
-                                 }}
-                              />
-                           )}
-                        />
-                     </Grid>
-
-                     <Grid item xs={12} sm={3} md={1.5}>
-                        <Button
-                           variant='contained'
-                           size='large'
-                           // type='submit'
-                           onClick={handleSubmit}
-                           sx={{ marginTop: '25px', height: '50px' }}
-                        >
-                           Search
-                        </Button>
-                     </Grid>
+               <Grid container spacing={5} style={{ marginTop: '1rem' }}>
+                  <Grid item xs={12} sm={3} md={3.5}>
+                     <Typography variant='body2' sx={{ marginBottom: '6px' }}>
+                        Select Disease
+                     </Typography>
+                     <Autocomplete
+                        freeSolo
+                        id='tags-outlined'
+                        options={diseases}
+                        disable={DiseaseLoading}
+                        value={selectedDiseases}
+                        onChange={handleDiseasesChange}
+                        sx={{
+                           background: 'white',
+                           outline: 'none',
+                           borderRadius: '5px',
+                        }}
+                        disableClearable
+                        renderInput={params => (
+                           <TextField
+                              {...params}
+                              //  label="Search input"
+                              InputProps={{
+                                 ...params.InputProps,
+                                 placeholder: DiseaseLoading
+                                    ? 'loading...'
+                                    : 'disease',
+                                 type: 'search',
+                              }}
+                           />
+                        )}
+                     />
                   </Grid>
-               </form>
+
+                  <Grid item xs={12} sm={3} md={3.5}>
+                     <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoItem label='Select Date'>
+                           <MobileDatePicker
+                              defaultValue={dayjs(new Date())}
+                              format='DD-MM-YYYY'
+                              views={['year', 'month', 'day']}
+                              value={selectedDate}
+                              onChange={handleDateChange}
+                              sx={{ background: 'white', borderRadius: '5px' }}
+                           />
+                        </DemoItem>
+                     </LocalizationProvider>
+                  </Grid>
+
+                  <Grid item xs={12} sm={3} md={3.5}>
+                     <Typography variant='body2' sx={{ marginBottom: '6px' }}>
+                        Select Doctor
+                     </Typography>
+                     <Autocomplete
+                        freeSolo
+                        id='tags-outlined'
+                        options={doctors}
+                        value={selectedDoctor.toString()}
+                        onChange={handleDoctorChange}
+                        sx={{
+                           background: 'white',
+                           outline: 'none',
+                           borderRadius: '5px',
+                        }}
+                        disableClearable
+                        disabled={DocFetch} // Set disabled based on isFetching
+                        renderInput={params => (
+                           <TextField
+                              {...params}
+                              //  label="Search input"
+                              InputProps={{
+                                 ...params.InputProps,
+                                 placeholder: DocFetch
+                                    ? 'loading...'
+                                    : 'select a doctor',
+                                 type: 'search',
+                              }}
+                           />
+                        )}
+                     />
+                  </Grid>
+
+                  <Grid item xs={12} sm={3} md={1.5}>
+                     <Button
+                        variant='contained'
+                        size='large'
+                        disabled={docListLoading || DiseaseLoading}
+                        onClick={handleSubmit}
+                        sx={{ marginTop: '25px', height: '56px', width: '100px' }}
+                     >
+                        {filterDocLoading ? (
+                           <div>
+                              <Box sx={{ color: '#fff' }}>
+                                 <CircularProgress color='inherit' size={20} />
+                              </Box>
+                           </div>
+                        ) : (
+                           'Search'
+                        )}
+                     </Button>
+                  </Grid>
+               </Grid>
             </Container>
          </div>
          {/* // all doctor view  */}
@@ -218,72 +234,94 @@ function DoctorPage() {
             <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
                Doctors
             </Typography>
-            <Grid container spacing={6} style={{ marginTop: '20px' }}>
-               {getDoctors?.data?.map((result, index) => {
-                  let diseases = result?.disease_specialist || []
-                  let days = result?.day || [] // available days
 
-                  return (
-                     <Grid item xs={12} md={3} sm={6} key={index}>
-                        {/* here the redirection url is not defined when the page is complete than it work */}
-                        {/* <Link style={{textDecoration:'none'}} href=""> */}
-                        <Card sx={{ borderRadius: '5px' }}>
-                           <CardActionArea sx={{ minHeight: 280 }}>
-                              <CardContent>
-                                 <Grid container>
-                                    <Grid item>
-                                       <Image
-                                          height={50}
-                                          width={50}
-                                          src='https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg'
-                                       />
-                                    </Grid>
-                                    <Grid item sx={{ paddingLeft: 2 }}>
-                                       <Typography
-                                          variant='body2'
-                                          color={'#2CD9C5'}
-                                          sx={{ fontWeight: 700 }}
-                                       >
-                                          Name
-                                       </Typography>
-                                       <Typography
-                                          gutterBottom
-                                          variant='h6'
-                                          component='div'
-                                       >
-                                          Dr. {result.employee.employee_name}
-                                       </Typography>
-                                    </Grid>
-                                 </Grid>
+            {filterDocLoading ? (
+               <div style={{ height: '30%' }}>
+                  <Box
+                     sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '30%',
+                        alignContent: 'center',
+                     }}
+                  >
+                     <CircularProgress />
+                  </Box>
+               </div>
+            ) : (
+               <>
+                  {isError ? (
+                     <div>Oops ! Something went Wrong</div>
+                  ) : (
+                     <Grid container spacing={6} style={{ marginTop: '20px' }}>
+                        {allDoctor?.map((result, index) => {
+                           let diseases = result?.disease_specialist || []
+                           let days = result?.day || [] // available days
 
-                                 <Typography
-                                    variant='body2'
-                                    color='#2CD9C5'
-                                    sx={{ fontWeight: 700 }}
-                                 >
-                                    Disease Specialist
-                                 </Typography>
-                                 <div
-                                    display='flex'
-                                    justifyContent='center'
-                                    style={{ marginBottom: 10 }}
-                                 >
-                                    {diseases?.map(item => {
-                                       return (
-                                          <Chip
-                                             key={item}
-                                             size='small'
-                                             label={item}
-                                             sx={{
-                                                marginRight: 1,
-                                                marginTop: 1,
-                                                backgroundColor: '#2CD9C51A',
-                                             }}
-                                          />
-                                       )
-                                    })}
-                                 </div>
-                                 <Typography
+                           return (
+                              <Grid item xs={12} md={3} sm={6} key={index}>
+                                 {/* here the redirection url is not defined when the page is complete than it work */}
+                                 {/* <Link style={{textDecoration:'none'}} href=""> */}
+                                 <Card sx={{ borderRadius: '5px' }}>
+                                    <CardActionArea sx={{ minHeight: 285 }}>
+                                       <CardContent>
+                                          <Grid container>
+                                             <Grid item>
+                                                <Image
+                                                   height={50}
+                                                   width={50}
+                                                   src='https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg'
+                                                />
+                                             </Grid>
+                                             <Grid item sx={{ paddingLeft: 2 }}>
+                                                <Typography
+                                                   variant='body2'
+                                                   color={'#2CD9C5'}
+                                                   sx={{ fontWeight: 700 }}
+                                                >
+                                                   Name
+                                                </Typography>
+                                                <Typography
+                                                   gutterBottom
+                                                   variant='h6'
+                                                   component='div'
+                                                >
+                                                   Dr.{' '}
+                                                   {result.employee.employee_name}
+                                                </Typography>
+                                             </Grid>
+                                          </Grid>
+
+                                          <Typography
+                                             variant='body2'
+                                             color='#2CD9C5'
+                                             sx={{ fontWeight: 700 ,marginTop : 1.5}}
+                                          >
+                                             Disease Specialist
+                                          </Typography>
+                                          <div
+                                             display='flex'
+                                             justifyContent='center'
+                                             style={{ marginBottom: 10 }}
+                                          >
+                                             {diseases?.map(item => {
+                                                return (
+                                                   <Chip
+                                                      key={item}
+                                                      size='small'
+                                                      label={item}
+                                                      sx={{
+                                                         marginRight: 1,
+                                                         marginTop: 1,
+                                                         backgroundColor:
+                                                            '#2CD9C51A',
+                                                      }}
+                                                   />
+                                                )
+                                             })}
+                                          </div>
+                                          {/* <Typography
                                     variant='body2'
                                     color='#2CD9C5'
                                     sx={{ fontWeight: 700 }}
@@ -306,15 +344,28 @@ function DoctorPage() {
                                           </Grid>
                                        )
                                     })}
-                                 </Grid>
-                              </CardContent>
-                           </CardActionArea>
-                        </Card>
-                        {/* </Link> */}
+                                 </Grid> */}
+
+                                          <div
+                                             
+                                             style={{ paddingTop:10}}
+                                             
+                                          >
+                                             <Button variant='contained' size="small"  >
+                                                Book Appointment
+                                             </Button>
+                                          </div>
+                                       </CardContent>
+                                    </CardActionArea>
+                                 </Card>
+                                 {/* </Link> */}
+                              </Grid>
+                           )
+                        })}
                      </Grid>
-                  )
-               })}
-            </Grid>
+                  )}
+               </>
+            )}
          </Container>
       </div>
    )

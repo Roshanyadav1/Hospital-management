@@ -1,29 +1,21 @@
-import React from 'react'
-import { Grid, Card, CardContent, Typography, Button } from '@mui/material'
-import CardActions from '@mui/material/CardActions'
+
+"use client"
+import { Grid, Card, Typography, Button } from '@mui/material'
 import Container from '@mui/material/Container'
-import { CardActionArea, CardMedia } from '@mui/material'
-import Home from '@/app/dashboard/page'
-import { AccessAlarm, ThreeDRotation } from '@mui/icons-material'
 import { toast } from 'react-toastify'
 import { doctorwelcome } from '@/helpers/doctorwelcome'
-import { maxWidth } from '@mui/system'
 import Image from 'next/image'
-
+import { useGetViewDoctorQuery } from '@/services/Query'
 import { useEffect, useState } from 'react'
-
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
-import 'swiper/css/navigation' // Add this line for navigation styles
-
+import 'swiper/css/navigation'
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
-import { useGetViewDoctorQuery } from '@/services/Query'
 
 function DoctorCard() {
    const {data:getDname,isLoding} = useGetViewDoctorQuery();
@@ -79,13 +71,11 @@ function DoctorCard() {
       slidesPerView: screenSize,
       spaceBetween: screenSize * 10,
    }
-
    return (
       <>
          <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
             Our Doctors
          </Typography>
-
          <Container maxWidth='lg' sx={{ padding: '3rem' }}>
             <Swiper
                {...settings}
@@ -97,7 +87,7 @@ function DoctorCard() {
                modules={[Pagination, Navigation]}
                className='mySwiper'
             >
-               {getDname?.data?.results?.map((result, index) => (
+               {doctorwelcome.map((result, index) => (
                   <Grid key={index} container spacing={1} marginY={1}>
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
@@ -117,8 +107,7 @@ function DoctorCard() {
                                  <Image
                                     height={250}
                                     width={350}
-                                    src={result.doctor_profile_picture}
-                                    //doctor_profile_picture
+                                    src={result.image}
                                     alt='image'
                                  />
                                  <Typography
@@ -126,7 +115,7 @@ function DoctorCard() {
                                     variant='h5'
                                     component='div'
                                  >
-                                    Dr.{result.employee.employee_name}
+                                    {result.name}
                                     <Typography
                                        variant='body2'
                                        color='text.secondary'
@@ -142,8 +131,8 @@ function DoctorCard() {
                                  </Typography>
 
                                  <Button
-                                    // onClick={showWarningToast}
-                                    // size='small'
+                                    onClick={showWarningToast}
+                                    size='small'
                                     sx={{
                                        border: '1px solid',
                                        '&:hover': {

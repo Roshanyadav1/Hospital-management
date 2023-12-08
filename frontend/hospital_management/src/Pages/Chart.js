@@ -21,6 +21,7 @@ import '../styles/dashboard.css'
 import CommonListItem from '../components/CommonListItem';
 import Image from 'next/image'
 import Doc from '../assets/Doc.png'
+import Link from 'next/link';
 
 function Chart() {
 
@@ -66,7 +67,7 @@ function Chart() {
         }
     }, [ViewDoctor, ViewPatient]);
 
-    const weeklyData = appointmentCount?.appointement_per_week?.map((appointment) => {
+    const weeklyData = appointmentCount?.appointments_per_day?.map((appointment) => {
         return {
             name: appointment.appointment_date,
             Patients: appointment.patient_count,
@@ -75,38 +76,72 @@ function Chart() {
         };
     });
 
-  const Data = appointmentData?.data?.map((appointment) => {
-    let diseaseSpecialist = "";
-    if (Array.isArray(appointment.doctor.disease_specialist)) {
-        diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
-    } else {
-        diseaseSpecialist = appointment.doctor.disease_specialist || "";
-    }
-    diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
+    const Data = appointmentData?.data?.map((appointment) => {
+        let diseaseSpecialist = "";
+        if (Array.isArray(appointment.doctor.disease_specialist)) {
+            diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
+        } else {
+            diseaseSpecialist = appointment.doctor.disease_specialist || "";
+        }
+        diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
 
-    return {
-        name: appointment.appointment_date,
-        Patients: appointment.patient_count,
-        Appoints: appointment.appointment_count,
-        Doctors: appointment.doctor_count,
-        avatarSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU",
-        primaryText: appointment.doctor.employee.employee_name,
-        secondaryText: `Appointment Date: ${appointment.appointment_date}`,
-        disease_names: `Disease Specialist: ${diseaseSpecialist}`,
-        patient_name: `Patient Name: ${appointment.patient.patient_name}`, // Corrected this line
-    };
-});
+        return {
+            ...appointment,
+            name: appointment.appointment_date,
+            Patients: appointment.patient_count,
+            Appoints: appointment.appointment_count,
+            Doctors: appointment.doctor_count,
+            avatarSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU",
+            primaryText: appointment.doctor.employee.employee_name,
+            secondaryText: `Appointment Date: ${appointment.appointment_date}`,
+            disease_names: `Disease Name: ${appointment.disease.disease_name}`,
+            patient_name: `Patient Name: ${appointment.patient.patient_name}`, // Corrected line
+        };
+    });
 
+    const [searchTerm, setSearchTerm] = useState("");
+
+    // Update the Data mapping to filter based on the search term
+    const filteredData = searchTerm
+        ? Data?.filter((item) => {
+            const doctorName = item.primaryText.toLowerCase();
+            const searchLower = searchTerm.toLowerCase();
+
+            return doctorName.includes(searchLower);
+        })
+        : [];
+
+    const displayedData = searchTerm ? filteredData : Data;
+
+
+    const filteredCount = filteredData ? filteredData.length : 0;
+    // it is still showing the error in filteredData.length
     console.log("Data for Chart:", Data);
 
     const showServerError = isErrorDoctor || isErrorPatient || isErrorAppData || isErrorAppCount;
     const showReloadButton = showServerError && !isFetchingDoctor && !isFetchingPatient && !isFetchingAppData && !isFetchingAppCount;
 
+    const [visibleData, setVisibleData] = useState(weeklyData?.slice(0, 4));
+
+    const handleChartScroll = (event) => {
+        const scrollLeft = event.target.scrollLeft;
+        const startIndex = Math.floor(scrollLeft / (chartWidth / totalDays)); // Assuming each day is of equal width
+
+        setVisibleData(weeklyData.slice(startIndex, startIndex + visibleDays));
+    };
+
+    const totalDays = weeklyData?.length;
+    const visibleDays = 4; // Number of days to show by default
+    const chartWidth = 650; // Adjust as needed
+
+   
+
+
     return (
         <Grid container >
 
             <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
-                <Grid container item mt={1} xs={12}  >
+                <Grid container item xs={12}  >
 
                     <Grid container item mt={1} xs={12}  >
                         <Grid item xs={6} style={{ transition: 'box-shadow 0.3s' }} >
@@ -150,7 +185,7 @@ function Chart() {
                     </Grid>
                 </Grid>
 
-                <Grid pt={3} item xs={12} style={{ display: 'flex' }}>
+                <Grid pt={3} mt={2} item xs={12} style={{ display: 'flex', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px' }}>
                     {showServerError && (
                         <div>
                             <h2>Error fetching data from the server</h2>
@@ -160,48 +195,107 @@ function Chart() {
                         </div>
                     )}
                     {!showServerError && (
-                        <ComposedChart
-                            width={650}
-                            height={345}
-                            data={weeklyData}
-                            margin={{
-                                top: 20,
-                                right: 80,
-                                bottom: 20,
-                                left: 20
-                            }}
-                        >
-                            <CartesianGrid stroke="#f5f5f5" />
-                            <XAxis
-                                dataKey="name"
-                                label={{ value: "Date", position: "insideBottomRight", offset: -10 }}
-                            // scale="band"
-                            />
-                            <YAxis label={{ value: "Quantity", angle: -90, position: "insideLeft" }} />
-                            <Tooltip />
-                            <Legend />
-                            <Area type="monotone" dataKey="Appoints" fill="#AEE3F0" stroke="#AEE3F0" />
-                            <Bar dataKey="Patients" barSize={20} fill="#006494" />
-                            <Line type="monotone" dataKey="Doctors" stroke="#ff7300" />            </ComposedChart>
+                        <div onScroll={handleChartScroll}>
+                            <ComposedChart
+                                width={650}
+                                height={355}
+                                data={weeklyData}
+                                margin={{
+                                    top: 20,
+                                    right: 80,
+                                    bottom: 20,
+                                    left: 20
+                                }}
+                            >
+                                <CartesianGrid stroke="#f5f5f5" />
+                                <XAxis
+                                    dataKey="name"
+                                    label={{ value: "Date", position: "insideBottomRight", offset: -10 }}
+                                // scale="band"
+                                />
+                                <YAxis label={{ value: "Quantity", angle: -90, position: "insideLeft" }} />
+                                <Tooltip />
+                                <Legend />
+                                <Area type="monotone" dataKey="Appoints" fill="#AEE3F0" stroke="#AEE3F0" />
+                                <Bar dataKey="Patients" barSize={20} fill="#006494" />
+                                <Line type="monotone" dataKey="Doctors" stroke="#ff7300" />
+                            </ComposedChart>
+                        </div>
                     )}
                 </Grid>
+
+            </Grid>
+            <Grid item xs={4} pl={4}>
+
+                <List className='Colo' sx={{
+                    width: '100%', maxWidth: 385, paddingY: '0px'
+                }} style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px', marginTop: '2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73', scrollbarColor: '#244C73 #0F1C2B', }}>
+                    <div style={{ position: 'sticky', top: 0, backgroundColor: '#244C73', zIndex: 1, padding: '3%' }} >
+                        <h2 className='Colo' style={{ textAlign: 'center', color: 'white' }}>Appointments</h2>
+                        <Grid mb={2} ml={1} mr={1} p={1} xs={12} style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                            <Grid xs={2} >
+                                {filteredCount > 0 && (
+                                    <span style={{ color: 'black', textAlign: 'center', paddingLeft: '0.5rem', fontWeight: 'bold', fontSize: '1rem' }}>{filteredCount}</span>
+                                )}
+                            </Grid>
+                            <Grid xs={10} style={{ textAlign: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                                    <input
+                                        type="text"
+                                        placeholder="Search by Doctor Name"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        style={{
+                                            width: '100%',
+                                            border: 'none',
+                                            padding: '0.25rem',
+                                            borderRadius: '5px',
+                                            marginRight: '0.25rem',
+                                            outline: 'none',
+                                            fontSize: '.8rem',
+                                            fontWeight: 'bold'
+                                        }}
+                                    />
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <hr />
+
+                    {displayedData && displayedData.length > 0 ? (
+                        displayedData.map((item, index) => (
+                            <div style={{ borderRadius: '50px' }} key={index}>
+                                <CommonListItem
+                                    avatarSrc={item.avatarSrc}
+                                    primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
+                                    secondaryText={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
+                                    disease_names={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
+                                    patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
+
+                                />
+                                {
+                                    console.log(item , "item")
+                                }
+                                <Grid xs={12} style={{textAlign:'center'}}>
+                                    <Link href={`dashboard/${item?.doctor?.doctor_id}`} >
+                                    <Button variant="contained" size="small" style={{backgroundColor:'#13293D',width:'5rem',height:'1.4rem',fontSize:'200',cursor:'pointer'}}>
+                                    View
+                                </Button>
+                                    </Link>
+                               
+                                </Grid>
+                                
+                                <hr />
+                            </div>
+                        ))
+                    ) : (
+                        <div style={{ textAlign: 'center', color: 'white', marginTop: '20px' }}>
+                            No Data Found
+                        </div>
+                    )}
+                </List>
             </Grid>
 
-            <Grid item xs={4} pl={4} >
-                <List style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '5px', marginTop: '2.5%', overflowY: 'scroll', height: 'calc(100vh - 95px)', backgroundColor: '#244C73', scrollbarColor: '#244C73 #0F1C2B', }} className='Colo' sx={{ width: '100%', maxWidth: 385 }}>
-                    <h2 className='Colo' style={{ textAlign: 'center', color: 'white' }}>Appointments</h2>
-                    {Data?.map((item, index) => (
-                        <div style={{ borderRadius: '50px', marginBottom: '8px' }} key={index}>
-                            <CommonListItem
-                                avatarSrc={item.avatarSrc}
-                                primaryText={<span style={{ color: 'white', fontSize: '1rem', fontWeight: '525', fontFamily: 'verdana' }}>{item.primaryText}</span>}
-                                secondaryText={<span style={{ color: 'white', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.secondaryText}</span>}
-                                disease_names={<span style={{ color: 'white', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.disease_names}</span>}
-                                patient_name={<span style={{ color: 'lightgreen', fontSize: '.7rem', fontFamily: 'verdana' }}>{item.patient_name}</span>}
-                            />
-                        </div>
-                    ))}                </List>
-            </Grid>
         </Grid>
     );
 }
@@ -209,4 +303,14 @@ function Chart() {
 export default Chart;
 
 
+// provide the functionality such that when the user clicks on the view button then the next page dashboard/individualappointment should open through route that is defined in this code through doctor_id show the full information of the doctor and related to it through its id, provide this functionality properly 
 
+
+
+
+
+
+// check this code and tell if the scrollbar is added to to x-axis or not for the chart graph if the data exceeds to 5, give the proper ans for this that will it work properly as expected or not
+
+
+{/* add scrollbar to this chart on the x-axis in such a way that the 5 days data should be shown only as default and if the data exceeeds to it then then scrollbar should be added to it and by scrolling the chart all the data will be there */ }

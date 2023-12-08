@@ -28,6 +28,21 @@ export const queries = createApi({
             }
          },
       }),
+      doctorUpdate: build.mutation({
+         query: value => ({
+            url: 'doctor/update/',
+            method: 'POST',
+            body: value,
+         }),
+         async onQueryStarted({ queryFulfilled }) {
+            try {
+               await queryFulfilled
+               toast.success('Doctor Updated Successfully')
+            } catch (e) {
+               toast.error(JSON.stringify(e))
+            }
+         },
+      }),
       addEmployee: build.mutation({
          query: payload => ({
             url: 'employee/add/',
@@ -85,10 +100,10 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-
-      getSpecialistDoctor: build.mutation({
-         mutation: prop => ({
-            url: `doctor/view/?disease_specialist=${prop.disease}&search=${prop.day}`,
+    
+      specialistDoctor: build.mutation({
+         query: prop => ({
+            url: `doctor/view/?disease_specialist=${prop.disease}&date=${prop.day}`,
             method: 'GET',
          }),
       }),
@@ -130,6 +145,7 @@ export const queries = createApi({
 
 export const {
    useRegisterHospitalMutation,
+   useDoctorUpdateMutation,
    useAddEmployeeMutation,
    useAddDiseasesMutation,
    useDeleteEmployeeMutation,
@@ -137,7 +153,7 @@ export const {
    useGetAllHospitalQuery,
    useGetAllDoctorsQuery,
    useGetAllPatientsQuery,
-   useGetSpecialistDoctorMutation,
+   useSpecialistDoctorMutation,
    useGetAllDiseasesQuery,
    useGetAppointmentQuery,
    useGetGraphAppointInfoQuery,

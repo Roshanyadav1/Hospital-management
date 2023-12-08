@@ -1,3 +1,4 @@
+
 'use client'
 // import * as React from 'react'
 import Card from '@mui/material/Card'
@@ -9,10 +10,6 @@ import { Box, Chip, CircularProgress, Container, Grid } from '@mui/material'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
    console.log(appointment?.data)
-   // const [expanded, setExpanded] = React.useState(false)
-   // const handleExpandClick = () => {
-   //    setExpanded(!expanded)
-   // }
    if (isLoading) {
       return (
          <div
@@ -79,13 +76,7 @@ function RecipeReviewCard() {
 }
 export default RecipeReviewCard
 
-
-
-
-
-
-
-
+// this is the code(page) which will open when we click on the view button as the route so adjust this code in such a way that the details shown after clicking the view will be of that particular doctor only, don't show all appointments of all doctors
 
 
 

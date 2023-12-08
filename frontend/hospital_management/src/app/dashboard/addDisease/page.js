@@ -1,30 +1,43 @@
 'use client'
-// import { useState } from 'react'
+import { useState } from 'react'
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import { Card } from '@mui/material'
-import { CardActionArea, } from '@mui/material'
-// import CardActions from '@mui/material/CardActions'
-import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong'
+import { CardActionArea, CardMedia } from '@mui/material'
 import { CardContent } from '@mui/material'
 import { Formik, Form } from 'formik'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
-import RadioButtonGroup from '../../../components/RadioButton/RadioButtonGroup'
-import DISEASE_VALIDATION from '../../../components/FormValidation/DiseaseValidation'
-import Text from '../../../components/Textfield/Text'
+import RadioButtonGroup from '@/Components/RadioButton/RadioButtonGroup'
+import DISEASE_VALIDATION from '@/Components/FormValidation/DiseaseValidation'
+import Text from '@/Components/Textfield/Text'
 import { colors } from '@/styles/theme'
 import Divider from '@mui/material/Divider'
-// import Image from 'next/image'
-// import CustomAutocomplete from './Components/AutocompleteDis';
 import { useAddDiseasesMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import CircularProgress from '@mui/material/CircularProgress'
 import CoronavirusTwoToneIcon from '@mui/icons-material/CoronavirusTwoTone';
+import { alpha } from '@mui/material/styles';
+import { green, pink } from '@mui/material/colors';
+import Switch from '@mui/material/Switch';
+
+const GreenSwitch = styled(Switch)(({ theme }) => ({
+   '& .MuiSwitch-switchBase.Mui-checked': {
+     color: green[600],
+     '&:hover': {
+       backgroundColor: alpha(green[600], theme.palette.action.hoverOpacity),
+     },
+   },
+   '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+     backgroundColor: green[600],
+   },
+ }));
+ 
+ const label = { inputProps: { 'aria-label': 'Color switch demo' } };
 import { toast } from 'react-toastify'
 
 const VisuallyHiddenInput = styled('input')({
@@ -197,7 +210,7 @@ const page = () => {
             </Box>
          </Modal>
 
-         <Grid container spacing={5} style={{ marginTop: '20px'}}>
+         <Grid container spacing={5} style={{ marginTop:0.8}}>
            
             {getDisease?.data?.map((e, i) => {
                return (
@@ -206,25 +219,23 @@ const page = () => {
                         <CardActionArea>
                            <CardContent>
                            <div style={{ display: 'flex' }}>
+                              <div>
                              
-                              <Typography >
+                              <Typography sx={{paddingTop:0.3}}>
                                  <CoronavirusTwoToneIcon/>
                               </Typography>
+                              </div>
                               <div>
                               <Typography gutterBottom variant='h6' component='div'>
                                  {e.disease_name}
                               </Typography>
-                              <div style={{ display: 'flex',paddingTop:5 }}>
-                                 <Typography variant='body1' color='#2a9c2e'>
-                                    <CenterFocusStrongIcon />
-                                 </Typography>
-                                 <Typography variant='body1' color='#2a9c2e'>
-                                    {e.disease_status}
-                                    <Button variant="contained" size='small' sx={{width:75,height:20,marginLeft:3}}>Deactive</Button>
-                                 </Typography>
                               </div>
                               </div>
+                              <div  style={{display:'block'}}>
+                                    <Typography sx={{paddingTop:1 , color:"primary"}}>Status</Typography>
+                                    <GreenSwitch {...label} defaultChecked />
                               </div>
+ 
                            </CardContent>
                         </CardActionArea>
                      </Card>
@@ -235,5 +246,7 @@ const page = () => {
       </div>
    )
 }
-
+                              
+                                    
+                                 
 export default page
