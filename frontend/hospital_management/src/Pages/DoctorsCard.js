@@ -59,11 +59,11 @@ function DoctorCard() {
 
          console.log('width', width)
          if (width <= 320) {
-            return 1
+            return 1;
          } else if (width <= 768) {
-            return 2
+            return 2;
          } else {
-            return 3
+            return 3;
          }
       }
    }
@@ -100,7 +100,7 @@ function DoctorCard() {
                {getDname?.data?.results?.map((result, index) => (
                   <Grid key={index} container spacing={1} marginY={1}>
                      <SwiperSlide>
-                        <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
+                        <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={4}>
                            <Link
                               style={{ textDecoration: 'none' }}
                                href="/doctorpage"
@@ -110,7 +110,7 @@ function DoctorCard() {
                                     maxWidth: 350,
                                     border: '1 px solid',
                                     margin: '10px',
-                                    padding: 2,
+                                    padding: 1,
                                     textAlign: 'center',
                                  }}
                               >
