@@ -91,7 +91,7 @@ class UserLoginView(GenericAPIView):
             user = User.objects.get(user_email=email)
             is_verify = request.data.get('is_verify')
 
-            if is_verify == 'true':
+            if is_verify == True:
                 token = get_tokens_for_user(user)
                 Response.status_code = status.HTTP_200_OK
                 return Response(
@@ -148,7 +148,7 @@ class UserLoginView(GenericAPIView):
             return Response(
                 {
                     'status': status.HTTP_404_NOT_FOUND,
-                    'message': "Invalid User Id",
+                    'message': "User With This Email Is Not Registered",
                 },
             )
 
