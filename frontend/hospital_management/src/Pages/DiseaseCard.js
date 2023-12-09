@@ -19,7 +19,7 @@ export default function ShowDidease() {
           {patient.map((result,index) =>(
              <Grid item xs={6} md={3} sm={4} key={index}>
               {/* here the redirection url is not defined when the page is complete than it work */}
-              <Link style={{textDecoration:'none'}} href="/doctorpage">
+              <Link style={{textDecoration:'none'}} href="/doctorpage" >
              <Card sx={{ maxWidth: 300 , borderRadius:3}}>
                <CardActionArea>
                  <CardMedia

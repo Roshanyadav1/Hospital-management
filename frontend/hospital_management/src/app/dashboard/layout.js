@@ -199,17 +199,15 @@ const handleRegister = async (values, { resetForm }) => {
         <DrawerHeader></DrawerHeader>
         <List>
           {[
+      
             { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
             { text: "Employee", path: "/dashboard/employeedata" , icon : <TrackChangesIcon/>},
-            { text: "Add Doctor", path: "/dashboard/adddoctor" , icon : <SettingsAccessibilityIcon/>},
-            { text: "Add Disease", path: "/dashboard/adddisease" , icon : <CoronavirusIcon/>},
-            { text: "Add Hospital", path: "/dashboard/addhospital" , icon : <AddBoxIcon/>},
-            { text: "Add Employee", path: "/dashboard/addemployee" , icon : <GroupAddIcon /> },
-            // { text: "Billing", path: "/dashboard/billing" , icon : <AccountBalanceWalletIcon/>},
-            // { text: "Analytics", path: "/dashboard/analytics" , icon : <AnalyticsIcon/>},
-            // { text: "DocterDetail", path: "/dashboard/docterdetail" , icon : <AddReactionIcon/>},
+            { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},
+            { text: "Add Disease", path: "/dashboard/addDisease" , icon : <CoronavirusIcon/>},
+            { text: "Add Hospital", path: "/dashboard/addHospital" , icon : <AddBoxIcon/>},
+            { text: "Add Employee", path: "/dashboard/addEmployee" , icon : <GroupAddIcon /> },
             { text: "Prescription", path: "/dashboard/precription" , icon : <MedicationIcon/>},
-            // { text: "Discharge", path: "/dashboard/discharge" , icon : <PersonRemoveIcon/> },
+           
           ].map((item) => (
             <ListItem
               key={item.text}

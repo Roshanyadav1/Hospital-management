@@ -97,7 +97,6 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-    
       specialistDoctor: build.mutation({
          query: prop => ({
             url: `doctor/view/?disease_specialist=${prop.disease}&date=${prop.day}`,
@@ -138,13 +137,19 @@ export const queries = createApi({
          })
 
       }),
-      getAppointmentInfo: build.query({
-         query:(appointment_id) => ({
-            url:`/appointment/view/?appointment_id=${appointment_id}`,
-            method:'GET',
+      getDoctorTimes: build.query({ 
+         query:()=>({
+               url:'/doctor/view/?doctor_id=0747267a-5a51-4831-9d31-3dfef1991ccf',
+               method:'Get',
+            })
+         }),
+         getAddAppointment: build.mutation({
+            query: appointmentData => ({
+              url: 'appointment/add/',
+              method: 'POST',
+              body: appointmentData,
+            }),
          })
-
-      })
    }),
 })
 
@@ -164,5 +169,6 @@ export const {
    useGetGraphAppointInfoQuery,
    useGetAppointPatientDoctorDateQuery,
    useGetViewDoctorQuery,
-   useGetAppointmentInfoQuery
+   useGetDoctorTimesQuery,
+   useGetAddAppointmentMutation,
 } = queries

@@ -7,8 +7,6 @@ import Image from 'next/image'
 import { useGetViewDoctorQuery } from '@/services/Query'
 import { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-
-// Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
@@ -17,8 +15,8 @@ import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
 
 function DoctorCard() {
-   const { data: getDname, isLoding } = useGetViewDoctorQuery()
-   console.log('Doctor name', getDname)
+   const {data:getDname,isLoding} = useGetViewDoctorQuery();
+   console.log('Doctor name',getDname);
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
    const showWarningToast = () => {
       toast.warning('Warning Example', { autoClose: false })
@@ -29,8 +27,6 @@ function DoctorCard() {
       const handleResize = () => {
          setScreenSize(getInitialScreenSize())
       }
-
-      // Check if window is defined (i.e., we are in the browser)
       console.log(window, 'window')
       if (typeof window !== 'undefined') {
          // Attach the event listenerb
@@ -128,23 +124,22 @@ function DoctorCard() {
                                        </Typography>
                                     </Typography>
                                  </Typography>
-
-                                 <Link  href={`doctorpage/`}>
-                                    <Button
-                                       size='small'
-                                       sx={{
-                                          border: '1px solid',
-                                          '&:hover': {
-                                             backgroundColor: '#13293d',
-                                             color: '#fff', // Change text color if needed
-                                          },
-                                       }}
-                                    >
-                                       Book Appointment
-                                    </Button>
+                                 <Link href={`/doctorpage`} passHref>
+                                 <Button
+                                    onClick={showWarningToast}
+                                    size='small'
+                                    sx={{
+                                       border: '1px solid',
+                                       '&:hover': {
+                                          backgroundColor: '#13293d',
+                                          color: '#fff', 
+                                       },
+                                    }}
+                                 >
+                                    Book Appointment
+                                 </Button>
                                  </Link>
                               </Card>
-                           </Link>
                         </Grid>
                      </SwiperSlide>
                   </Grid>
