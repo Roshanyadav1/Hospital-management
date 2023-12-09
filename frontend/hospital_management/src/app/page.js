@@ -1,9 +1,9 @@
 "use client"
 
 // import DataGridTable2 from "@/Pages/DataGridTable"
-import FixedContainer from '@/Pages/Container'
+import FixedContainer from '@/Pages/container'
 import { Grid } from '@mui/material' 
-import Cards from '@/Pages/Card'
+import Cards from '@/Pages/card'
 import SwipeableTextMobileStepper from '@/Pages/Steper'
 import DoctorCard from '@/Pages/DoctorsCard'
 import ShowDidease from '@/Pages/DiseaseCard'

@@ -16,7 +16,7 @@ import ResponsiveAppBar from "@/components/Navbar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Toolbar } from "@mui/material";
-
+import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 import MedicationIcon from '@mui/icons-material/Medication';
@@ -199,7 +199,7 @@ const handleRegister = async (values, { resetForm }) => {
         <DrawerHeader></DrawerHeader>
         <List>
           {[
-      
+           { text: "Home", path: "/",icon : <HomeIcon/> },
             { text: "Dashboard", path: "/dashboard" , icon : <DashboardIcon/> },
             { text: "Employee", path: "/dashboard/employeedata" , icon : <TrackChangesIcon/>},
             { text: "Add Doctor", path: "/dashboard/addDoctor" , icon : <SettingsAccessibilityIcon/>},

@@ -1,51 +1,68 @@
 
-
-
-
 "use client"
 import React from 'react';
-import { Grid, Typography, Button, Box } from '@mui/material';
+import { Grid, Typography, Button, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import SchoolIcon from '@mui/icons-material/School';
+import { useGetDoctorTimesQuery } from '@/services/Query';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useState, useEffect } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import Image from 'next/image';
 import Link from "@mui/material/Link";
 import { Container } from '@mui/system';
-import { useState } from 'react';
+// import { useState } from 'react';
 function BookAppoinment() {
-  const [selectedSlot, setSelectedSlot] = useState('');
-  const [appointments, setAppointments] = useState([]);
+  const { data: doctorTimes = [], isLoading, isError, isSuccess } = useGetDoctorTimesQuery();
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [appointmentConfirmed, setAppointmentConfirmed] = useState(false);
+  const [times, setTimes] = useState([]);
 
-  const handleSlotSelection = (slot) => {
-    setSelectedSlot(slot);
+  useEffect(() => {
+    if (doctorTimes && doctorTimes.data && doctorTimes.data[0] && doctorTimes.data[0].times) {
+      setTimes(doctorTimes.data[0].times);
+    }
+  }, [doctorTimes]);
+
+  function formatTime(timeString) {
+    const time = new Date(`2000-01-01T${timeString}`);
+    return time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour24: true });
+  }
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
   };
 
-  const isSlotDisabled = (slot) => {
-    const bookedAppointments = appointments.filter((apt) => apt.slot === slot.slot);
-    return bookedAppointments.length >= slot.maxAppointments || slot.slot === selectedSlot;
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
   };
 
-  const timeSlots = [
-    { id: '09:00 AM' },
-    { id: '09:20 AM' },
-    { id: '9:40 AM' },
-    { id: '10:00 AM' },
-    { id: '10:20 AM' },
-    { id: '01:40 AM' },
-    { id: '11:00 AM' },
-    { id: '03:20 AM' },
-    { id: '05:40 AM' },
-  ];
-  const bookAppointment = (slot) => {
-    if (!isSlotDisabled(slot)) {
-      setAppointments([...appointments, { slot: slot.slot }]);
-      setSelectedSlot('');
+  const handleCloseAppointmentModal = () => {
+    setAppointmentConfirmed(false);
+  };
+
+  const handleSlotSelection = (timeSlot) => {
+    setSelectedSlot(timeSlot);
+  };
+
+  const handleBookAppointment = async () => {
+    handleOpenDialog();
+    if (selectedSlot) {
+
+      console.log('Appointment booked:', selectedSlot);
+    } else {
+      console.log('Please select a time slot.');
     }
   };
-  const remainingSlots = timeSlots.filter((slot) => !isSlotDisabled(slot));
+   
+  const handleConfirmAppointment =()=>{
+    setAppointmentConfirmed(true);
+  }
+  
   return (
     <Container maxWidth="lg" p={2}>
       <Grid container maxWidth="lg" boxShadow={1} spacing={5} display="flex" Direction="column">
@@ -108,46 +125,88 @@ function BookAppoinment() {
 
         {/* 2ND COLUMN */}
         <Grid item sm={5} xs={12}>
+          
           <Grid bgcolor={"#fff"} borderRadius={2} boxShadow={3} margin={2} p={0.1}>
 
             <Box display={"flex"} alignItems="center" justifyContent="space-between" sx={{ paddingBottom: 1 }}>
               <Typography gutterBottom variant="h5" margin={2}>
                 Appointment Time
               </Typography>
-              <Typography gutterBottom variant="body2" margin={2} sx={{ border: "1px solid #13293D", borderRadius: "10px", padding: "1px" }}>
-                {remainingSlots.length} Slots
-              </Typography>
             </Box>
             <hr />
-            <Grid container spacing={0} justifyContent={"center"}>
-              {remainingSlots.map((slot) => (
-                <Grid item p={1} display="flex" key={slot.id} xs={6} sm={6} md={4} >
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      width: "100%",
-                      height: "40px",
-                      borderColor: "#2CD9C5",
-                      borderRadius: "10px",
-                      '&:hover': {
-                        borderColor: "#2CD9C5",
-                        backgroundColor: "#2CD9C5",
-                      },
-                      backgroundColor: isSlotDisabled(slot) ? "#EDF2F7" : null,
-                      cursor: isSlotDisabled(slot) ? "not-allowed" : "pointer",
-                    }}
-                    onClick={() => bookAppointment(slot)}
-                    disabled={isSlotDisabled(slot)}
-                  >
-                    {slot.id}
-                  </Button>
-                </Grid>
-              ))}
-              <Grid item display="flex" justifyItems="center" marginBottom={2} justifyContent="center"  >
-                < Button variant="contained" sx={{ padding: 1, width: 200, backgroundColor: "#2CD9C5", borderRadius: "10px" }} >Book Appoinment</Button>
-              </Grid>
+
+           <Grid container spacing={1} sx={{marginLeft:2}} justifyContent={"center"} alignItems='center'>
+          {times.map((timeSlot, index) => ( 
+            <Grid item key={index} xs={6} sm={6} md={6}>
+              <Button
+                variant="outlined"
+                onClick={() => handleSlotSelection(timeSlot)}
+                sx={{
+                  width: '80%',
+                  borderColor: selectedSlot === timeSlot ? '#2CD9C5' : '#000',
+                  borderRadius: '10px',
+                  backgroundColor: selectedSlot === timeSlot ? '#2CD9C5' : '#fff',
+                  color: selectedSlot === timeSlot ? '#fff' : '#000',
+                  position: 'relative',
+                  '&:hover': {
+                    borderColor: '#2CD9C5',
+                    backgroundColor: '#2CD9C5',
+                    color: '#fff',
+                  },
+                }}
+              >
+                <Typography variant="body2">
+                  {formatTime(timeSlot.start_time)} - {formatTime(timeSlot.end_time)} :
+                </Typography>
+                <Typography variant="body2" sx={{ fontSize: '12px', marginTop: '4px' }}>
+                  {timeSlot.slots}
+                </Typography>
+              </Button>
             </Grid>
+          ))}
+        </Grid>
+        <Box mt={2} marginBottom={1} display="flex" justifyContent="center">
+          <Button variant="contained" onClick={handleBookAppointment}>
+            Book Appointment
+          </Button>
+        </Box>
+         {/* FIRST  Confirmation Dialog MODAL */}
+         <Dialog open={openDialog} onClose={handleCloseDialog}>
+          <DialogTitle>Confirm Appointment Booking</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to book the appointment?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              Cancel
+            </Button>
+            <Button  onClick={handleConfirmAppointment} color="primary" autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* SECOND CONFIRM APPOINTMENT MODAL */}
+        <Dialog open={appointmentConfirmed} onClose={handleCloseAppointmentModal}>
+          <DialogContent>
+            <Typography variant="h5" >
+              Your appointment has been confirmed successfully!
+            </Typography>
+            {appointmentConfirmed && (
+              <CheckCircleIcon sx={{ color: 'green', marginLeft: '43%', marginTop: 4, fontSize: "60px" }} />
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseAppointmentModal} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+
           </Grid>
+
         </Grid>
       </Grid>
     </Container>

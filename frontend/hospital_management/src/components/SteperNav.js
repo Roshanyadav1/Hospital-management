@@ -24,7 +24,6 @@ const drawerWidth = 240;
 const navItems = [
   { label: 'Doctor', route: '/showdoctors' },
   { label: 'Specialities', route: '/Specilist' },
-  { label: 'Contact Us', route: '/contactus' },
   { label: 'Book Appoinment', route: '/bookappointment' },
   { label: 'View Appoinment', route: '/viewappoinment' },
 ];

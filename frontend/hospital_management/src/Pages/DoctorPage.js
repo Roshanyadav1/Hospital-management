@@ -13,7 +13,7 @@ import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import LinearProgress from '@mui/material/LinearProgress'
-
+import Link from 'next/link'
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import { useSpecialistDoctorMutation } from '@/services/Query'
@@ -351,14 +351,17 @@ function DoctorPage() {
                                              style={{ paddingTop:10}}
                                              
                                           >
-                                             <Button variant='contained' size="small"  >
+                                           <Link href={`/bookappointment`} passHref>
+                                           <Button variant='contained' size="small"  >
                                                 Book Appointment
                                              </Button>
+                                           </Link>
+                                             
                                           </div>
                                        </CardContent>
                                     </CardActionArea>
                                  </Card>
-                                 {/* </Link> */}
+                                 
                               </Grid>
                            )
                         })}
