@@ -34,7 +34,7 @@ function DoctorCard() {
       // Check if window is defined (i.e., we are in the browser)
       console.log(window, 'window')
       if (typeof window !== 'undefined') {
-         // Attach the event listener
+         // Attach the event listenerb 
          window.addEventListener('resize', handleResize)
 
          // Detach the event listener on component unmount
@@ -51,11 +51,11 @@ function DoctorCard() {
 
          console.log('width', width)
          if (width <= 320) {
-            return 1
+            return 1;
          } else if (width <= 768) {
-            return 2
+            return 2;
          } else {
-            return 3
+            return 3;
          }
       }
    }
@@ -100,7 +100,7 @@ function DoctorCard() {
                                     maxWidth: 350,
                                     border: '1 px solid',
                                     margin: '10px',
-                                    padding: 2,
+                                    padding: 1,
                                     textAlign: 'center',
                                  }}
                               >
@@ -131,7 +131,7 @@ function DoctorCard() {
                                  </Typography>
 
                                  <Button
-                                 
+                                    
                                     size='small'
                                     sx={{
                                        border: '1px solid',
