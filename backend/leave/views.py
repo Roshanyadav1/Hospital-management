@@ -17,13 +17,48 @@ import jwt
 class LeaveRegister(GenericAPIView):
     serializer_class = LeaveSerializer
     permission_classes = [IsAuthenticated]
-
+    
     def post(self, request, format=None):
         serializer = LeaveSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         response_message = ""
         response_code = ""
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+        
+        if user_role == "Manager":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+        
+        if user_role == "Admin":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+
         try:
             error = Error.objects.get(error_title='ADD_SUCCESS')
             response_message = error.error_message
@@ -53,6 +88,23 @@ class LeaveView(ListAPIView):
             response.data['page_size'] = int(request.GET.get('pageSize'))
         response_message = ""
         response_code = ""
+        
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message

@@ -24,6 +24,32 @@ class DiseaseAdd(GenericAPIView):
                 response_message = error.error_message
                 response_code = error.error_code
                 Response.status_code = error.error_code
+
+                header_value = request.headers['Authorization']
+                token = header_value.split(' ')[1]
+                payload = jwt.decode(token, "secret", algorithms=['HS256'])
+                user_id = payload['user_id']
+                user = User.objects.get(user_id=user_id)
+                user_role = user.user_role
+
+                if user_role == "Patient":
+                    Response.status_code = status.HTTP_401_UNAUTHORIZED
+                    return Response(
+                        {
+                            'status': status.HTTP_401_UNAUTHORIZED,
+                            'message': "Unauthorized Access",
+                        }
+                    )
+
+                if user_role == "Doctor":
+                    Response.status_code = status.HTTP_401_UNAUTHORIZED
+                    return Response(
+                        {
+                            'status': status.HTTP_401_UNAUTHORIZED,
+                            'message': "Unauthorized Access",
+                        }
+                    )
+
             except:
                 response_message = ResponseMessage.ALREADY_REGISTERED
                 response_code = status.HTTP_400_BAD_REQUEST
@@ -68,6 +94,57 @@ class DiseaseUpdate(APIView):
             serializer.save()
             response_message = ""
             response_code = ""
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Patient":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            
+            if user_role == "Doctor":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Patient":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            
+            if user_role == "Doctor":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
             try:
                 error = Error.objects.get(error_title='UPDATE_SUCCESS')
                 response_message = error.error_message
@@ -111,6 +188,32 @@ class DiseaseDelete(APIView):
             disease.delete()
             response_message = ""
             response_code = ""
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Patient":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            
+            if user_role == "Doctor":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
             try:
                 error = Error.objects.get(error_title='DELETE_SUCCESS')
                 response_message = error.error_message
@@ -154,7 +257,7 @@ class DiseaseView(APIView):
                 serializer = DiseaseSerializer(disease)
                 response_message = ""
                 response_code = ""
-                
+
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message
