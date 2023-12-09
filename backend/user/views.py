@@ -190,8 +190,8 @@ class UserUpdate(APIView):
 
     def patch(self, request, input, format=None):
         id = input
-        if User.objects.filter(user_id=id).count() >= 1:
-            doctor = User.objects.get(user_id=id)
+        if User.objects.filter(member_id=id).count() >= 1:
+            doctor = User.objects.get(member_id=id)
             serializer = UserSerializer(
                 doctor, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
