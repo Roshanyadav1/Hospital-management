@@ -125,6 +125,24 @@ class PatientView(ListAPIView):
         response_message = ""
         response_code = ""
 
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            patient_id = user.member_id
+            patient = ""
+            for data in response.data:
+                if data['patient_id'] == str(patient_id):
+                    patient = data
+                else:
+                    pass
+            response.data = list()
+            response.data.append(patient)
+
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message

@@ -11,7 +11,7 @@ class PatientRegisterSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = '__all__'
+        exclude = ('password', )
 
 
 class PatientLoginSerializer(serializers.ModelSerializer):
