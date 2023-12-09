@@ -77,13 +77,13 @@ function Chart() {
     });
 
     const Data = appointmentData?.data?.map((appointment) => {
-        let diseaseSpecialist = "";
-        if (Array.isArray(appointment.doctor.disease_specialist)) {
-            diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
-        } else {
-            diseaseSpecialist = appointment.doctor.disease_specialist || "";
-        }
-        diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
+        // let diseaseSpecialist = "";
+        // if (Array.isArray(appointment.doctor.disease_specialist)) {
+        //     diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
+        // } else {
+        //     diseaseSpecialist = appointment.doctor.disease_specialist || "";
+        // }
+        // diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
 
         return {
             ...appointment,
@@ -134,7 +134,10 @@ function Chart() {
     const visibleDays = 4; // Number of days to show by default
     const chartWidth = 650; // Adjust as needed
 
-   
+    const handleViewClick = (appointment_id) => {
+        console.log('View Clicked for Doctor ID:', appointment_id);
+        // Add logic to navigate to the individual appointment page
+      };
 
 
     return (
@@ -277,8 +280,8 @@ function Chart() {
                                     console.log(item , "item")
                                 }
                                 <Grid xs={12} style={{textAlign:'center'}}>
-                                    <Link href={`dashboard/${item?.doctor?.doctor_id}`} >
-                                    <Button variant="contained" size="small" style={{backgroundColor:'#13293D',width:'5rem',height:'1.4rem',fontSize:'200',cursor:'pointer'}}>
+                                    <Link href={`dashboard/individualappointment/${item?.appointment_id}`} >
+                                    <Button onClick={() => handleViewClick(item?.appointment_id)} variant="contained" size="small" style={{backgroundColor:'#13293D',width:'5rem',height:'1.4rem',fontSize:'200',cursor:'pointer'}}>
                                     View
                                 </Button>
                                     </Link>
@@ -303,7 +306,38 @@ function Chart() {
 export default Chart;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// above are to files first one is Chart.js that contains full dashboard and second one is individualappointment.js that has to be open when the view button is clicked  
 // provide the functionality such that when the user clicks on the view button then the next page dashboard/individualappointment should open through route that is defined in this code through doctor_id show the full information of the doctor and related to it through its id, provide this functionality properly 
+
+// Adjust the code in such a way that there will be a folder in individualappointments named [doctor_id] in which there will be page.js, this [doctor_id] folder you will check it whether it will be good as per the requirement for the dynamic routing through wwhich the the proper routing and doctor_id will be get and the data will be shown as per the requirements, if there will bw the need for api fetching use rtk query because in full project api is fetched through it
 
 
 

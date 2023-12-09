@@ -132,11 +132,19 @@ export const queries = createApi({
          }),
       }),
       getViewDoctor: build.query({
-         query: () => ({
-            url: 'doctor/view/?pageSize=9',
-            method: 'Get',
-         }),
+         query:() => ({
+            url:'/doctor/view/?pageSize=9',
+            method:'Get',
+         })
+
       }),
+      getAppointmentInfo: build.query({
+         query:(appointment_id) => ({
+            url:`/appointment/view/?appointment_id=${appointment_id}`,
+            method:'GET',
+         })
+
+      })
    }),
 })
 
@@ -156,4 +164,5 @@ export const {
    useGetGraphAppointInfoQuery,
    useGetAppointPatientDoctorDateQuery,
    useGetViewDoctorQuery,
+   useGetAppointmentInfoQuery
 } = queries
