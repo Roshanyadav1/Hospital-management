@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { Grid, Button } from "@mui/material"
+import { Grid, Button, CircularProgress } from "@mui/material"
 import List from '@mui/material/List';
 import { useGetAllDoctorsQuery } from '@/services/Query';
 import { useGetAllPatientsQuery } from '@/services/Query';
@@ -17,7 +17,7 @@ import {
     Legend,
     Area
 } from "recharts";
-import '../styles/dashboard.css'
+import '@/styles/dashboard.css'
 import CommonListItem from '../components/CommonListItem';
 import Image from 'next/image'
 import Doc from '../assets/Doc.png'
@@ -26,14 +26,16 @@ import Link from 'next/link';
 function Chart() {
 
     const { data: ViewDoctor, isError: isErrorDoctor, isFetching: isFetchingDoctor } = useGetAllDoctorsQuery();
+    
     const { data: ViewPatient, isError: isErrorPatient, isFetching: isFetchingPatient } = useGetAllPatientsQuery();
 
-    const { data: appointmentData, isError: isErrorAppData, isFetching: isFetchingAppData } = useGetGraphAppointInfoQuery();
+    const { data: appointmentData, isError: isErrorAppData,isloading, isFetching: isFetchingAppData } = useGetGraphAppointInfoQuery();
     const { data: appointmentCount, isError: isErrorAppCount, isFetching: isFetchingAppCount, refetch: refetchAppCount } = useGetAppointPatientDoctorDateQuery();
 
     const [count1, setCount1] = useState(0);
     const [count2, setCount2] = useState(0);
     console.log(count1, count2)
+
 
     useEffect(() => {
         if (ViewDoctor && ViewDoctor.count !== undefined) {
@@ -137,8 +139,32 @@ function Chart() {
     const handleViewClick = (appointment_id) => {
         console.log('View Clicked for Doctor ID:', appointment_id);
         // Add logic to navigate to the individual appointment page
-      };
+    };
+    
 
+    if (isloading) {
+        // Styling for the loader container
+        const loaderContainerStyle = {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh', // Full height of the viewport
+          // backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black background
+        };
+    
+        // Styling for the CircularProgress component
+        const loaderStyle = {
+          color: 'black',
+        };
+    
+        return (
+          <div style={loaderContainerStyle}>
+            <p style={{ color: 'black' }}>Loading...</p>
+            <CircularProgress style={loaderStyle} />
+          </div>
+        );
+      }
 
     return (
         <Grid container >
@@ -277,17 +303,17 @@ function Chart() {
 
                                 />
                                 {
-                                    console.log(item , "item")
+                                    console.log(item, "item")
                                 }
-                                <Grid xs={12} style={{textAlign:'center'}}>
+                                <Grid xs={12} style={{ textAlign: 'center' }}>
                                     <Link href={`dashboard/individualappointment/${item?.appointment_id}`} >
-                                    <Button onClick={() => handleViewClick(item?.appointment_id)} variant="contained" size="small" style={{backgroundColor:'#13293D',width:'5rem',height:'1.4rem',fontSize:'200',cursor:'pointer'}}>
-                                    View
-                                </Button>
+                                        <Button onClick={() => handleViewClick(item?.appointment_id)} variant="contained" size="small" style={{ backgroundColor: '#13293D', width: '5rem', height: '1.4rem', fontSize: '200', cursor: 'pointer' }}>
+                                            View
+                                        </Button>
                                     </Link>
-                               
+
                                 </Grid>
-                                
+
                                 <hr />
                             </div>
                         ))
@@ -332,19 +358,3 @@ export default Chart;
 
 
 
-
-
-// above are to files first one is Chart.js that contains full dashboard and second one is individualappointment.js that has to be open when the view button is clicked  
-// provide the functionality such that when the user clicks on the view button then the next page dashboard/individualappointment should open through route that is defined in this code through doctor_id show the full information of the doctor and related to it through its id, provide this functionality properly 
-
-// Adjust the code in such a way that there will be a folder in individualappointments named [doctor_id] in which there will be page.js, this [doctor_id] folder you will check it whether it will be good as per the requirement for the dynamic routing through wwhich the the proper routing and doctor_id will be get and the data will be shown as per the requirements, if there will bw the need for api fetching use rtk query because in full project api is fetched through it
-
-
-
-
-
-
-// check this code and tell if the scrollbar is added to to x-axis or not for the chart graph if the data exceeds to 5, give the proper ans for this that will it work properly as expected or not
-
-
-{/* add scrollbar to this chart on the x-axis in such a way that the 5 days data should be shown only as default and if the data exceeeds to it then then scrollbar should be added to it and by scrolling the chart all the data will be there */ }

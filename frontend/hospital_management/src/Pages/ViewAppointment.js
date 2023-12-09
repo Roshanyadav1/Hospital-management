@@ -9,10 +9,7 @@ import { Box, Chip, CircularProgress, Container, Grid } from '@mui/material'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
    console.log(appointment?.data)
-   // const [expanded, setExpanded] = React.useState(false)
-   // const handleExpandClick = () => {
-   //    setExpanded(!expanded)
-   // }
+   
    if (isLoading) {
       return (
          <div
