@@ -7,46 +7,47 @@ import { columns } from '@/data/ColumData'
 //////////////////
 function Dashboard() {
    // const router = useRouter()
+
    const [pageState, setPageState] = useState({
-      isLoading: false,
+      isLoding: false,
       data: [],
       total: 0,
       page: 1,
-      pageSize: 10
-    })
-    const [paginationModel, setPaginationModel] = useState({
+      pageSize: 5,
+   })
+ 
+   const [paginationModel, setPaginationModel] = useState({
       page: 1,
       pageSize: 5,
-     });
-    
-
-   const { data: empData } = useGetEmployeeQuery(pageState, {
+   })
+   const { data: empData , isFetching : loadinData } = useGetEmployeeQuery(pageState, {
       refetchOnMountOrArgChange: true,
    })
-   useEffect(() => {
-      if(empData?.data?.results?.length > 0){
-         setPageState({
-            isLoading: pageState?.isLoading,
-            data: empData?.data?.results,
-            total: pageState?.total,
-            page: paginationModel?.page,
-            pageSize: paginationModel?.pageSize
-          })
-      }
 
-   }, [])
+   useEffect(() => {
+      if (paginationModel) {
+         setPageState({
+            isLoding: pageState?.isLoding,
+            data: pageState?.data,
+            total: empData?.data?.count,
+            page: paginationModel?.page,
+            pageSize: paginationModel?.pageSize,
+         })
+      }
+   }, [empData?.data?.count, pageState?.data, pageState?.isLoding, paginationModel])
 
    return (
       <>
-         <DataGridTable 
-         data={empData?.data?.results?.length ? empData?.data?.results : []} 
-         columns={columns} 
-         map_by={row => row.employee_id} 
-         pageInfo={empData?.data}
-         pageState={pageState}
-         setPageState={setPageState}
-         paginationModel={paginationModel}
-         setPaginationModel={setPaginationModel}
+         <DataGridTable
+            data={empData?.data?.results || []}
+            loadinData={loadinData}
+            columns={columns}
+            setPageState={setPageState}
+            map_by={row => row.employee_id}
+            pageState={pageState}
+            setPaginationModel={setPaginationModel}
+            paginationModel={paginationModel}
+            pageInfo={empData?.data}
          />
       </>
    )
