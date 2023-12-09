@@ -6,8 +6,6 @@ import { themeOptions } from "@/styles/theme";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import SteperNav from "@/components/SteperNav";
-import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 const theme = createTheme(themeOptions);

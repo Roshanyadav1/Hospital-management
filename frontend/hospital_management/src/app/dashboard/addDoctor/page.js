@@ -45,7 +45,7 @@ const StyledTypography = styled(Typography)(() => ({
 
 //for the whole form
 const StyledFormWrapper = styled('div')({
-    minHeight: '100vh',
+    minHeight: '100%',
     display: 'grid',
     placeItems: 'center',
     padding: '2rem',
@@ -65,7 +65,7 @@ const INITIAL_FORM_STATE = {
 
 
 
-const dRegister = () => {
+const AddDoctor = () => {
 
     return (
         <StyledFormWrapper>
@@ -158,4 +158,4 @@ const dRegister = () => {
     );
 };
 
-export default dRegister;
+export default AddDoctor;
