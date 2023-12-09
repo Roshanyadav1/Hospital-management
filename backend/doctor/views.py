@@ -180,7 +180,7 @@ class DoctorViewById(APIView):
                      start_time_iso = time.fromisoformat(start_time)
                      end_time_iso = time.fromisoformat(end_time)
                      between_time = appoint.appointment_time
-                     if  between_time> start_time_iso and between_time < end_time_iso:
+                     if  between_time>= start_time_iso and between_time <= end_time_iso:
                              slot = slot-1
                      else:
                          pass
