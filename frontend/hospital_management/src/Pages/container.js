@@ -104,7 +104,7 @@ export default function FixedContainer() {
           >
             <PersonAddIcon sx={{ fontSize: 48 }} />
             <Typography variant="h6" sx={{ padding: 3 }}>
-              Find a Doctor{" "}
+              Find Doctor in Hospital{" "}
             </Typography>
             <Typography variant="body2" sx={{ padding: 2 }}>
               Trust the expert care of our doctors for your health and
