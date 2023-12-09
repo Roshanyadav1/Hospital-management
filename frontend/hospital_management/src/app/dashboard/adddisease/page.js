@@ -10,10 +10,11 @@ import { CardContent } from '@mui/material'
 import { Formik, Form } from 'formik'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
+import { toast } from 'react-toastify'
+import RadioButtonGroup from '@/components/RadioButton/RadioButtonGroup'
+import DISEASE_VALIDATION from '@/components/FormValidation/DiseaseValidation'
+import Text from '@/components/form/Textfield/Text'
 import { styled } from '@mui/material/styles'
-import RadioButtonGroup from '@/Components/RadioButton/RadioButtonGroup'
-import DISEASE_VALIDATION from '@/Components/FormValidation/DiseaseValidation'
-import Text from '@/Components/Textfield/Text'
 import { colors } from '@/styles/theme'
 import Divider from '@mui/material/Divider'
 import { useAddDiseasesMutation } from '@/services/Query'
@@ -37,7 +38,7 @@ const GreenSwitch = styled(Switch)(({ theme }) => ({
 }))
 
 const label = { inputProps: { 'aria-label': 'Color switch demo' } }
-import { toast } from 'react-toastify'
+
 
 const VisuallyHiddenInput = styled('input')({
    clip: 'rect(0 0 0 0)',
