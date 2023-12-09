@@ -83,7 +83,7 @@ function BookAppoinment() {
           >
             <>
               <Typography gutterBottom variant="h4" component="div" >
-                Dr. Anoop Misra
+                Dr. Sumit Jain
                 <Typography variant="body1" color="text.secondary">
                   EXECUTIVE CHAIRMAN FORTIS C DOC | Fortis C-Doc
                 </Typography>

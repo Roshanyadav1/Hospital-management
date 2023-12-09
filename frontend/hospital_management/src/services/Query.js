@@ -50,17 +50,17 @@ export const queries = createApi({
             body: payload,
          }),
       }),
-      // addEmployee: build.mutation({
-      //    query: payload => ({
-      //       url: 'user/login/',
-      //       method: 'POST',
-      //       body: {
-      //          user_email: 'johndoe@gmail.com',
-      //          user_password: 'johndoe@123',
-      //          is_verify: true,
-      //       },
-      //    }),
-      // }),
+      loginUser: build.mutation({
+         query: prop => ({
+            url: 'user/login/',
+            method: 'POST',
+            body: {
+               user_email: prop,
+               user_password: 'hello',
+               is_verify: true,
+            },
+         }),
+      }),
       addDiseases: build.mutation({
          query: payload => ({
             url: 'disease/add/',
@@ -177,6 +177,7 @@ export const {
    useGetAllDiseasesQuery,
    useGetAppointmentQuery,
    useGetGraphAppointInfoQuery,
+   useLoginUserMutation,
    useGetAppointPatientDoctorDateQuery,
    useGetViewDoctorQuery,
    useGetDoctorTimesQuery,

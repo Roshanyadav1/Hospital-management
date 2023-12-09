@@ -15,19 +15,19 @@ import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
 
 function DoctorCard() {
-   const {data:getDname,isLoding} = useGetViewDoctorQuery();
-   console.log('Doctor name',getDname);
+   const { data: getDname, isLoding } = useGetViewDoctorQuery()
+ 
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
+  
    const showWarningToast = () => {
-      toast.warning('Warning Example', { autoClose: false })
+      // show warning when the user not log in
+      toast.warning('User not logged in !', { autoClose: false })
    }
-   console.log('This works', screenSize)
 
    useEffect(() => {
       const handleResize = () => {
          setScreenSize(getInitialScreenSize())
       }
-      console.log(window, 'window')
       if (typeof window !== 'undefined') {
          // Attach the event listenerb
          window.addEventListener('resize', handleResize)
@@ -44,7 +44,6 @@ function DoctorCard() {
       if (typeof window !== 'undefined') {
          const width = window.innerWidth
 
-         console.log('width', width)
          if (width <= 320) {
             return 1
          } else if (width <= 768) {
@@ -54,8 +53,6 @@ function DoctorCard() {
          }
       }
    }
-
-   console.log(getInitialScreenSize(), 'getInitialScreenSize')
 
    // Rest of your code...
 
@@ -86,43 +83,34 @@ function DoctorCard() {
                   <Grid key={index} container spacing={1} marginY={1}>
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
-                          
-                           
-                              <Card
-                                 sx={{
-                                    maxWidth: 350,
-                                    border: '1 px solid',
-                                    margin: '10px',
-                                    padding: 1,
-                                    textAlign: 'center',
-                                 }}
-                              >
-                                 <Image
-                                    height={250}
-                                    width={350}
-                                    src={result.image}
-                                    alt='image'
-                                 />
-                                 <Typography
-                                    gutterBottom
-                                    variant='h5'
-                                    component='div'
-                                 >
-                                    {result.name}
+                           <Card
+                              sx={{
+                                 maxWidth: 350,
+                                 border: '1 px solid',
+                                 margin: '10px',
+                                 padding: 1,
+                                 textAlign: 'center',
+                              }}
+                           >
+                              <Image
+                                 height={250}
+                                 width={350}
+                                 src={result.image}
+                                 alt='image'
+                              />
+                              <Typography gutterBottom variant='h5' component='div'>
+                                 {result.name}
+                                 <Typography variant='body2' color='text.secondary'>
+                                    {result.specialization}
                                     <Typography
-                                       variant='body2'
+                                       variant='body3'
                                        color='text.secondary'
                                     >
-                                       {result.specialization}
-                                       <Typography
-                                          variant='body3'
-                                          color='text.secondary'
-                                       >
-                                          {result.category}
-                                       </Typography>
+                                       {result.category}
                                     </Typography>
                                  </Typography>
-                                 <Link href={`/doctorpage`} passHref>
+                              </Typography>
+                              <Link href={`/doctorpage`} passHref>
                                  <Button
                                     onClick={showWarningToast}
                                     size='small'
@@ -130,14 +118,14 @@ function DoctorCard() {
                                        border: '1px solid',
                                        '&:hover': {
                                           backgroundColor: '#13293d',
-                                          color: '#fff', 
+                                          color: '#fff',
                                        },
                                     }}
                                  >
                                     Book Appointment
                                  </Button>
-                                 </Link>
-                              </Card>
+                              </Link>
+                           </Card>
                         </Grid>
                      </SwiperSlide>
                   </Grid>
