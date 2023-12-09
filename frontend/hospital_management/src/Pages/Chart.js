@@ -79,14 +79,7 @@ function Chart() {
     });
 
     const Data = appointmentData?.data?.map((appointment) => {
-        // let diseaseSpecialist = "";
-        // if (Array.isArray(appointment.doctor.disease_specialist)) {
-        //     diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
-        // } else {
-        //     diseaseSpecialist = appointment.doctor.disease_specialist || "";
-        // }
-        // diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
-
+      
         return {
             ...appointment,
             name: appointment.appointment_date,

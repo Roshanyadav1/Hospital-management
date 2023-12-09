@@ -12,6 +12,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
+import DialogContentText from '@mui/material/DialogContentText';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -26,6 +27,7 @@ function DoctorPage() {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+  const [isFileChosenError, setIsFileChosenError] = useState(false);
 
  
 
@@ -33,20 +35,26 @@ function DoctorPage() {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleDialogClose = () => {
-    setIsSuccessDialogOpen(false);
-    // Reset the file name after successful submission
-    setSelectedFile(null);
-  };
+ 
 
   const handleSubmit = () => {
-    // Perform submission logic here (e.g., API call)
-    // Upon successful submission, open the success dialog
-    setIsSuccessDialogOpen(true);
-    setSelectedFile(null);
+   
+    if (selectedFile) {
+      setIsSuccessDialogOpen(true);
+      setIsFileChosenError(false);
+    } else {
+      setIsFileChosenError(true); 
+    }
 
   };
+  
 
+  const handleDialogClose = () => {
+    setIsSuccessDialogOpen(false);
+    setSelectedFile(null);
+
+    setIsFileChosenError(false);
+  };
   const handleSwitchChange = () => {
     setIsSwitchOn(!isSwitchOn);
   };
@@ -54,14 +62,12 @@ function DoctorPage() {
     return <p>Error:</p>;
   }
   if (isLoading) {
-    // Styling for the loader container
     const loaderContainerStyle = {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      height: '100vh', // Full height of the viewport
-      // backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black background
+      height: '100vh', 
     };
 
     // Styling for the CircularProgress component
@@ -80,6 +86,7 @@ function DoctorPage() {
   if (isError) {
     return <p>Error: {isError.message}</p>;
   }
+  
 
   return (
     <Container maxWidth='md'>
@@ -99,7 +106,7 @@ function DoctorPage() {
               initial='hidden'
               animate='visible'
             >
-            <Card sx={{ backgroundColor: '#C4D0DC' }}>
+           <Card sx={{ backgroundColor: '#C4D0DC' }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: '#13293D' }} aria-label='recipe'>
@@ -126,6 +133,7 @@ function DoctorPage() {
             <Button variant="contained" color="primary" onClick={handleSubmit}>
               Add Prescription
             </Button>
+            {isFileChosenError && <p style={{ color: 'red' }}>Please choose the file.</p>}
           </div>
         ) : (
           <p>Unchecked Message</p>
@@ -136,7 +144,9 @@ function DoctorPage() {
       <Dialog open={isSuccessDialogOpen} onClose={handleDialogClose}>
         <DialogTitle>Prescription Submitted Successfully!</DialogTitle>
         <DialogContent>
-          {/* Additional success message or details can be added here */}
+          <DialogContentText>
+            {isFileChosenError ? 'Error: Please choose the file before closing.' : ''}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose} color="primary">
