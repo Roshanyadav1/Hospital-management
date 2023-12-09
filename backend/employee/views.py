@@ -47,7 +47,6 @@ def get_tokens_for_user(user):
 
 class EmployeeAdd(GenericAPIView):
     serializer_class = EmployeeSerializer
-    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         if User.objects.filter(user_email=request.data.get('employee_email')).count() >= 1:
@@ -90,7 +89,7 @@ class EmployeeAdd(GenericAPIView):
                 doctor_serializer = DoctorSerializer(data=doctor_data)
                 doctor_serializer.is_valid(raise_exception=True)
                 doctor = doctor_serializer.save()
-                member = doctor.doctor_id
+                member = employee.employee_id
             member = employee.employee_id
             user_name = employee.employee_name
             user_email = request.data.get('employee_email')
@@ -132,7 +131,7 @@ class EmployeeView(ListAPIView):
         response_message = ""
         response_code = ""
         response = super().list(request, *args, **kwargs)
-        
+
         header_value = request.headers['Authorization']
         token = header_value.split(' ')[1]
         payload = jwt.decode(token, "secret", algorithms=['HS256'])

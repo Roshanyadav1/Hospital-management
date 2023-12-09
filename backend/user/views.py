@@ -11,6 +11,7 @@ from error.models import Error
 from rest_framework.permissions import IsAuthenticated
 from user.models import User
 import jwt
+from doctor.models import Doctor
 
 
 def get_tokens_for_user(user):
@@ -99,13 +100,18 @@ class UserLoginView(GenericAPIView):
             if is_verify == True:
                 token = get_tokens_for_user(user)
                 Response.status_code = status.HTTP_200_OK
+                id = ""
+                if user.user_role == "Doctor":
+                    id = Doctor.objects.get(employee_id=user.member_id).doctor_id
+                else:
+                    id = user.member_id
                 return Response(
                     {
                         'status': status.HTTP_200_OK,
                         'message': "Logged In As " + user.user_role,
                         'data': {
                             'user_role': user.user_role,
-                            'id': user.member_id,
+                            'id': id,
                             'token': token,
                         }
                     },
@@ -116,13 +122,18 @@ class UserLoginView(GenericAPIView):
                     if user.status == True:
                         token = get_tokens_for_user(user)
                         Response.status_code = status.HTTP_200_OK
+                        id = ""
+                        if user.user_role == "Doctor":
+                            id = Doctor.objects.get(employee_id=user.member_id).doctor_id
+                        else:
+                            id = user.member_id
                         return Response(
                             {
                                 'status': status.HTTP_200_OK,
                                 'message': "Logged In As " + user.user_role,
                                 'data': {
                                     'user_role': user.user_role,
-                                    'id': user.member_id,
+                                    'id': id,
                                     'token': token,
                                 }
                             },
@@ -196,8 +207,8 @@ class UserUpdate(APIView):
 
     def patch(self, request, input, format=None):
         id = input
-        if User.objects.filter(user_id=id).count() >= 1:
-            doctor = User.objects.get(user_id=id)
+        if User.objects.filter(member_id=id).count() >= 1:
+            doctor = User.objects.get(member_id=id)
             serializer = UserSerializer(
                 doctor, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
