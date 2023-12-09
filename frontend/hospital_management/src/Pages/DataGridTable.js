@@ -30,9 +30,6 @@ const customstyles = `
     border-right: 1px solid #89949E !important; // Adjust the color as needed
     padding-right: 8px; // Add padding to separate the text from the line
   }
-  .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
-    display: none;
-  }
   .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation24.MuiDialog-paper.MuiDialog-paperScrollPaper.MuiDialog-paperWidthSm.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
     height: auto;
     border: 1px solid white;
@@ -59,83 +56,45 @@ const customstyles = `
   }
   .css-tdqsw7-MuiDataGrid-root .MuiDataGrid-iconSeparator{
     display: none !important;
-  }
-`
+  }`;
+
 
 export default function DataGridTable(props) {
-   const { data, columns } = props
-
-   const handlePageChange = newPage => {
-      setPageState(prev => ({ ...prev, page: newPage }))
-   }
+   const {
+      data,
+      columns,
+      map_by,
+      pageInfo,
+      paginationModel,
+      setPaginationModel,
+      loadinData,
+   } = props
 
    return (
       <>
          <style>{customstyles}</style>
+
          <DataGrid
-            rows={data?.length > 0 ? data : []}
+            rows={data}
             columns={columns}
-            loading={data?.length > 0 ? false : true}
-            // getRowpageStateId={row => row?.employee_id}
-            getRowId={(row) => row?.employee_id}
-            getRowHeight={() => 'auto'}
+            loading={loadinData}
+            getRowId={map_by}
             pageSizeOptions={[5, 10, 25]}
-            autoHeight={true}
-            checkboxSelection={false}
-            rowHeight={35}
-            sx={{
-               height: 392,
-               display: 'flex',
-               width: '100%',
+            localeText={{
+               MuiTablePagination: {
+                  labelDisplayedRows: () =>
+                     `Showing page ${Math.ceil(
+                        pageInfo?.current_page_number
+                     )} of ${Math.ceil(pageInfo?.total_pages)} pages`,
+               },
             }}
-            columnHeaderHeight={40}
+            checkboxSelection={false}
+            rowCount={pageInfo?.count + pageInfo?.page_size}
+            paginationModel={paginationModel}
+            paginationMode='server'
+            onPaginationModelChange={setPaginationModel}
             disableColumnMenu
          />
       </>
    )
 }
-
-{
-   /* return (
-      <>
-         <style>{customStyles}</style>
-
-         <DataGrid
-            // treeData={getTreeDataPath && true}
-            rows={data?.length > 0 ? data : []}
-            columns={columns}
-            loading={data?.length > 0 ? false : true}
-            getRowId={row => row?.employee_id}
-            getRowHeight={() => 'auto'}
-            autoHeight
-            onFilterModelChange={() => setFilterModelData({ filterModel: filterModel })}
-
-            pageSize={pageState?.pageSize || 10} //on selection change
-            pageSizeOptions={[5, 10, 25]}
-            // pageSizeOptions={[5]}
-            paginationModel={paginationModel}
-            paginationMode="server"
-            onPaginationModelChange={setPaginationModel}
-            pagination
-            keep previous checkboxearlier
-            keepNonExistentRowsSelected
-            initialState={{
-               aggregation: {
-                  model: {
-                     ro_amount: 'sum',
-                     ro_rate: 'avg',
-                     billing_amount: 'sum',
-                     billing_rate: 'avg',
-                     label: '',
-                     insertions: 'sum',
-                  },
-                  label: '',
-               },
-            }}
-         />
-      </>
-   ) */
-}
-// insert the delete insert and view buttons in every row of the data in Actions column
-// fix the size of the table to 8 rows with the pagination in it and when the other page will be opened then the size of the table should renains the same and the left over data should be shown on the rows and the other rows should be displayed wheteher it is fillrf or not
-// below the employee table heading provide one more heading that is 'Employees data is viewed here. You can view, delete & edit ' in h5 with proper allignment

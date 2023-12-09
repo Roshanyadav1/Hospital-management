@@ -101,7 +101,7 @@ export const columns = [
     {
       field: 'Actions',
       headerName: 'Actions',
-      width: 120,
+      width: 150,
       headerClassName: 'headerlast',
       cellClassName: 'column-linelast',
       headerAlign: 'center',
