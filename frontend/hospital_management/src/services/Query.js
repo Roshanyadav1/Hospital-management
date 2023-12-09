@@ -50,6 +50,17 @@ export const queries = createApi({
             body: payload,
          }),
       }),
+      // addEmployee: build.mutation({
+      //    query: payload => ({
+      //       url: 'user/login/',
+      //       method: 'POST',
+      //       body: {
+      //          user_email: 'johndoe@gmail.com',
+      //          user_password: 'johndoe@123',
+      //          is_verify: true,
+      //       },
+      //    }),
+      // }),
       addDiseases: build.mutation({
          query: payload => ({
             url: 'disease/add/',
@@ -66,8 +77,8 @@ export const queries = createApi({
          invalidatesTags: ['EMP'],
       }),
       getEmployee: build.query({
-         query: (arg) => ({
-            url:`employee/view/?employee_role=Manager&pageNo=${arg.page}&pageSize=${arg.pageSize}`,
+         query: arg => ({
+            url: `employee/view/?employee_role=Manager&pageNo=${arg.page}&pageSize=${arg.pageSize}`,
             method: 'GET',
          }),
          providesTags: ['EMP'],
@@ -131,25 +142,24 @@ export const queries = createApi({
          }),
       }),
       getViewDoctor: build.query({
-         query:() => ({
-            url:'/doctor/view/?pageSize=9',
-            method:'Get',
-         })
-
-      }),
-      getDoctorTimes: build.query({ 
-         query:()=>({
-               url:'/doctor/view/?doctor_id=0747267a-5a51-4831-9d31-3dfef1991ccf',
-               method:'Get',
-            })
+         query: () => ({
+            url: '/doctor/view/?pageSize=9',
+            method: 'Get',
          }),
-         getAddAppointment: build.mutation({
-            query: appointmentData => ({
-              url: 'appointment/add/',
-              method: 'POST',
-              body: appointmentData,
-            }),
-         })
+      }),
+      getDoctorTimes: build.query({
+         query: () => ({
+            url: '/doctor/view/?doctor_id=0747267a-5a51-4831-9d31-3dfef1991ccf',
+            method: 'Get',
+         }),
+      }),
+      getAddAppointment: build.mutation({
+         query: appointmentData => ({
+            url: 'appointment/add/',
+            method: 'POST',
+            body: appointmentData,
+         }),
+      }),
    }),
 })
 
