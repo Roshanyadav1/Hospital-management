@@ -27,7 +27,7 @@ function DoctorPage() {
       useSpecialistDoctorMutation()
    // filter use
    const { data: getDisease, isLoading: DiseaseLoading } = useGetAllDiseasesQuery()
-   const { data: getDoctors, isFetching: docListLoading } = useGetAllDoctorsQuery()
+   const { data: getDoctors, isFetching: docListLoading , isLoading:docLoading } = useGetAllDoctorsQuery()
 
    const [data, setData] = useState('')
 
@@ -235,7 +235,7 @@ function DoctorPage() {
                Doctors
             </Typography>
 
-            {filterDocLoading ? (
+            {filterDocLoading || docListLoading || docLoading ? (
                <div style={{ height: '30%' }}>
                   <Box
                      sx={{

@@ -42,7 +42,7 @@ function SteperNav(props) {
 
    // when the user have logged in already !!
    useEffect(() => {
-      if (user && !role) {
+      if (user) {
          const handleSubmit = async () => {
             try {
                let res = await userLogin(user.email).unwrap()
@@ -57,7 +57,6 @@ function SteperNav(props) {
          handleSubmit()
       }
    }, [user])
-
 
    const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
@@ -105,10 +104,12 @@ function SteperNav(props) {
                </div>
 
                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                  {role !== 'Patient' && role !== 'Doctor' && (
-                     <Button href='/dashboard' sx={{ color: '#fff' }}>
-                        Dashboard
-                     </Button>
+                  {role !== 'Patient' && role !== 'Doctor' && user &&(
+                     <Link href='/dashboard'>
+                        <Button sx={{ color: '#fff' }}>
+                           Dashboard
+                        </Button>
+                     </Link>
                   )}
 
                   {navItems.map(item => (

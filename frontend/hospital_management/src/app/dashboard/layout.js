@@ -28,6 +28,7 @@ import AddReactionIcon from '@mui/icons-material/AddReaction'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { Container } from '@mui/system'
+import withRoleRedirect from '@/helpers/withRoleRedirect'
 
 const drawerWidth = 240
 
@@ -294,4 +295,4 @@ function Layout({ children }) {
    )
 }
 
-export default Layout
+export default withRoleRedirect(Layout, ['Admin', 'Manager'])
