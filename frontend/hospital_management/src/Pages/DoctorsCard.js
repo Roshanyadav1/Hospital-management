@@ -19,10 +19,10 @@ function DoctorCard() {
  
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
   
-   const showWarningToast = () => {
-      // show warning when the user not log in
-      toast.warning('User not logged in !', { autoClose: false })
-   }
+   // const showWarningToast = () => {
+   //    // show warning when the user not log in
+   //    toast.warning('User not logged in !', { autoClose: false })
+   // }
 
    useEffect(() => {
       const handleResize = () => {
@@ -110,9 +110,9 @@ function DoctorCard() {
                                     </Typography>
                                  </Typography>
                               </Typography>
-                              <Link href={`/doctorpage`} passHref>
+                              {/* <Link href={`/doctorpage`} passHref> */}
                                  <Button
-                                    onClick={showWarningToast}
+                                    onClick={()=>{navigate(`doctorpage/${doctor_id}`)}}
                                     size='small'
                                     sx={{
                                        border: '1px solid',
@@ -124,7 +124,7 @@ function DoctorCard() {
                                  >
                                     Book Appointment
                                  </Button>
-                              </Link>
+                              {/* </Link> */}
                            </Card>
                         </Grid>
                      </SwiperSlide>

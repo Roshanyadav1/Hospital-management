@@ -25,8 +25,8 @@ const drawerWidth = 240
 const navItems = [
    { label: 'Doctor', route: '/showdoctors' },
    { label: 'Specialities', route: '/Specilist' },
-   { label: 'Book Appoinment', route: '/doctorpage' },
-   { label: 'View Appoinment', route: '/viewappoinment' },
+   { label: 'Book Appointment', route: '/doctorpage' },
+   { label: 'View Appointment', route: '/viewappoinment' },
 ]
 
 function SteperNav(props) {
@@ -38,10 +38,11 @@ function SteperNav(props) {
    const handleDrawerToggle = () => {
       setMobileOpen(prevState => !prevState)
    }
+   let role = localStorage.getItem('user_role')
 
    // when the user have logged in already !!
    useEffect(() => {
-      if (user) {
+      if (user && !role) {
          const handleSubmit = async () => {
             try {
                let res = await userLogin(user.email).unwrap()
@@ -57,7 +58,6 @@ function SteperNav(props) {
       }
    }, [user])
 
-   let role = localStorage.getItem('user_role')
 
    const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>

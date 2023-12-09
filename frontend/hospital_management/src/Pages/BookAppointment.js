@@ -83,15 +83,13 @@ function BookAppoinment() {
           >
             <>
               <Typography gutterBottom variant="h4" component="div" >
-                Dr. Sumit Jain
+               Dr.SK Bhandari
                 <Typography variant="body1" color="text.secondary">
                   EXECUTIVE CHAIRMAN FORTIS C DOC | Fortis C-Doc
                 </Typography>
               </Typography>
             </>
           </Grid>
-
-
         </Grid>
       </Grid>
       <br /> <br />

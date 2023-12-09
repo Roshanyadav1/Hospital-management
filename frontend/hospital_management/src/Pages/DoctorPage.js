@@ -288,7 +288,7 @@ function DoctorPage() {
                                                    component='div'
                                                 >
                                                    Dr.{' '}
-                                                   {result.employee.employee_name}
+                                                   {result?.employee?.employee_name || ''}
                                                 </Typography>
                                              </Grid>
                                           </Grid>
