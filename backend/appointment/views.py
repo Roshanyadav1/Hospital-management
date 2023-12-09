@@ -31,6 +31,39 @@ class AppointmentAdd(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         appointment = serializer.save()
 
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Manager":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+        if user_role == "Admin":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
         send_appointment_email(appointment)
         response_message = ""
         response_code = ""
@@ -61,6 +94,30 @@ class AppointmentCount(ListAPIView):
         response_code = ""
         end_date = timezone.now().date()
         start_date = end_date - timedelta(days=6)
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+        if user_role == "Doctor":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
 
         appointments_in_week = self.queryset.filter(
             appointment_date__range=[start_date, end_date])
@@ -255,6 +312,31 @@ class AppointmentUpdate(APIView):
         if request.data == {}:
             response_message = ""
             response_code = ""
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Manager":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            if user_role == "Admin":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
             try:
                 error = Error.objects.get(error_title='EMPTY_REQUEST')
                 response_message = error.error_message
@@ -321,6 +403,31 @@ class AppointmentDelete(APIView):
             appointment.delete()
             response_message = ""
             response_code = ""
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Manager":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            if user_role == "Doctor":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
             try:
                 error = Error.objects.get(error_title='DELETE_SUCESS')
                 response_message = error.error_message
