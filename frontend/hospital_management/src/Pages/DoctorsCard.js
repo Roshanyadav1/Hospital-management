@@ -33,7 +33,7 @@ function DoctorCard() {
 
       // Check if window is defined (i.e., we are in the browser)
       console.log(window, 'window')
-      if (typeof window !== 'undefined') {j
+      if (typeof window !== 'undefined') {
          // Attach the event listenerb 
          window.addEventListener('resize', handleResize)
 
@@ -131,7 +131,7 @@ function DoctorCard() {
                                  </Typography>
 
                                  <Button
-                                    onClick={showWarningToast}
+                                    
                                     size='small'
                                     sx={{
                                        border: '1px solid',
