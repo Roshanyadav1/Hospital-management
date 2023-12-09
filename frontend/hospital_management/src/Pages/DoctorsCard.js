@@ -1,5 +1,4 @@
-
-"use client"
+'use client'
 import { Grid, Card, Typography, Button } from '@mui/material'
 import Container from '@mui/material/Container'
 import { toast } from 'react-toastify'
@@ -18,8 +17,8 @@ import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
 
 function DoctorCard() {
-   const {data:getDname,isLoding} = useGetViewDoctorQuery();
-   console.log('Doctor name',getDname);
+   const { data: getDname, isLoding } = useGetViewDoctorQuery()
+   console.log('Doctor name', getDname)
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
    const showWarningToast = () => {
       toast.warning('Warning Example', { autoClose: false })
@@ -34,7 +33,7 @@ function DoctorCard() {
       // Check if window is defined (i.e., we are in the browser)
       console.log(window, 'window')
       if (typeof window !== 'undefined') {
-         // Attach the event listenerb 
+         // Attach the event listenerb
          window.addEventListener('resize', handleResize)
 
          // Detach the event listener on component unmount
@@ -51,11 +50,11 @@ function DoctorCard() {
 
          console.log('width', width)
          if (width <= 320) {
-            return 1;
+            return 1
          } else if (width <= 768) {
-            return 2;
+            return 2
          } else {
-            return 3;
+            return 3
          }
       }
    }
@@ -93,7 +92,7 @@ function DoctorCard() {
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
                            <Link
                               style={{ textDecoration: 'none' }}
-                               href="/doctorpage"
+                              href='/doctorpage'
                            >
                               <Card
                                  sx={{
@@ -130,19 +129,20 @@ function DoctorCard() {
                                     </Typography>
                                  </Typography>
 
-                                 <Button
-                                    
-                                    size='small'
-                                    sx={{
-                                       border: '1px solid',
-                                       '&:hover': {
-                                          backgroundColor: '#13293d',
-                                          color: '#fff', // Change text color if needed
-                                       },
-                                    }}
-                                 >
-                                    Book Appointment
-                                 </Button>
+                                 <Link  href={`doctorpage/`}>
+                                    <Button
+                                       size='small'
+                                       sx={{
+                                          border: '1px solid',
+                                          '&:hover': {
+                                             backgroundColor: '#13293d',
+                                             color: '#fff', // Change text color if needed
+                                          },
+                                       }}
+                                    >
+                                       Book Appointment
+                                    </Button>
+                                 </Link>
                               </Card>
                            </Link>
                         </Grid>
