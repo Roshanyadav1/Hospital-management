@@ -105,7 +105,7 @@ class UserLoginView(GenericAPIView):
                         'message': "Logged In As " + user.user_role,
                         'data': {
                             'user_role': user.user_role,
-                            'id': user.user_role,
+                            'id': user.member_id,
                             'token': token,
                         }
                     },
