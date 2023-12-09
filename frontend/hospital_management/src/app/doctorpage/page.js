@@ -1,10 +1,15 @@
 import DoctorPage from '@/Pages/DoctorPage'
-function page() {
-   return (
-      <div>
-         <DoctorPage />
-      </div>
-   )
-}
-
-export default page
+import Footer from '@/components/Footer'
+import SteperNav from '@/components/SteperNav'
+   function page() {
+     return (
+       <div>
+        <SteperNav/>
+         <DoctorPage/>
+         <Footer/>
+       </div>
+     )
+   }
+   
+   export default page
+   

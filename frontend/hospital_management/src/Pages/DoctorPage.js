@@ -80,7 +80,7 @@ function DoctorPage() {
          let res = await filterDoctor(fill).unwrap()
          if (selectedDoctor) {
             setData(
-               res?.data.filter(e => e.employee.employee_name === selectedDoctor)
+               res?.data.filter(e => e?.employee?.employee_name === selectedDoctor)
             )
          } else {
             setData(res?.data)
@@ -98,7 +98,7 @@ function DoctorPage() {
    }
 
    // for filter use
-   const diseases = getDisease?.data?.map(disease => disease.disease_name) || [
+   const diseases = getDisease?.data?.map(disease => disease?.disease_name) || [
       'No Disease Found !',
    ]
    let doctors =
@@ -181,8 +181,8 @@ function DoctorPage() {
                      <Autocomplete
                         freeSolo
                         id='tags-outlined'
-                        options={doctors}
-                        value={selectedDoctor.toString()}
+                        options={doctors || []}
+                        value={selectedDoctor?.toString()}
                         onChange={handleDoctorChange}
                         sx={{
                            background: 'white',
@@ -194,10 +194,10 @@ function DoctorPage() {
                         renderInput={params => (
                            <TextField
                               {...params}
-                              //  label="Search input"
+                               label="Select doctor"
                               InputProps={{
                                  ...params.InputProps,
-                                 placeholder: DocFetch
+                                 placeholder: !!DocFetch
                                     ? 'loading...'
                                     : 'select a doctor',
                                  type: 'search',
@@ -310,7 +310,7 @@ function DoctorPage() {
                                                    <Chip
                                                       key={item}
                                                       size='small'
-                                                      label={item}
+                                                      label={item || "some item"}
                                                       sx={{
                                                          marginRight: 1,
                                                          marginTop: 1,
