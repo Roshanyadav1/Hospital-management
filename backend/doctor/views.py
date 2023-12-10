@@ -94,13 +94,14 @@ class DoctorView(ListAPIView):
             if inputDate is not None:
                 id = data.get('doctor_id')
                 try:
-                    leave = Leave.objects.get(doctor=id)
+                    leave = Leave.objects.filter(doctor=id)
                     if leave is not None:
-                        if str(leave.date) == str(inputDate):
-                            remove_data.append(data)
+                        for leave_obj in leave:
+                            if str(leave_obj.date) == str(inputDate):
+                                remove_data.append(data)
+                                break
                 except:
                     pass
-
         for remove_d in remove_data:
             response_data.remove(remove_d)
 
