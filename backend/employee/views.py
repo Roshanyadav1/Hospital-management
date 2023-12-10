@@ -127,7 +127,7 @@ class EmployeeView(ListAPIView):
         response_message = ""
         response_code = ""
         response = super().list(request, *args, **kwargs)
-        
+
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message
@@ -241,8 +241,14 @@ class EmployeeUpdate(APIView):
         id = input
         if Employee.objects.filter(employee_id=id).count() >= 1:
             employee = Employee.objects.get(employee_id=id)
-            serializer = EmployeeSerializer.save(
+            serializer = EmployeeSerializer(
                 employee, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            user = User.objects.get(member_id=id)
+            user.password = employee.employee_password
+            user.user_password = employee.employee_password
+            user.save()
             response_message = ""
             response_code = ""
             try:

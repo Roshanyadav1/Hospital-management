@@ -16,6 +16,7 @@ from hospital_management.responses import ResponseMessage
 # from hospital_management.email import send_verification_email
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from user.models import User
 
 
 def get_tokens_for_user(user):
@@ -188,11 +189,15 @@ class PatientUpdate(APIView):
     def patch(self, request, input, format=None):
         id = input
         if Patient.objects.filter(patient_id=id).count() >= 1:
-            doctor = Patient.objects.get(patient_id=id)
+            patient = Patient.objects.get(patient_id=id)
             serializer = PatientSerializer(
-                doctor, data=request.data, partial=True)
+                patient, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
+            user = User.objects.get(member_id=id)
+            user.password = patient.password
+            user.user_password = patient.password
+            user.save()
             response_message = ""
             response_code = ""
             try:
