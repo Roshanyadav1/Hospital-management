@@ -20,6 +20,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from user.models import User
 import jwt 
+from employee.models import Employee
 
 
 class DoctorRegister(GenericAPIView):
@@ -160,7 +161,7 @@ class DoctorViewById(APIView):
                     else:
                         doctor.status = "Available"
 
-                serializer = DoctorSerializer(doctor)
+                serializer = DoctorViewSerializer(doctor)
                 serializer_data = serializer.data
                 disease_data = json.loads(
                     serializer_data['disease_specialist'])
