@@ -31,6 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.0.7',
+    '192.168.3.189',
     'hospital-management-six-chi.vercel.app',
     # '192.168.46.147',
 ]
