@@ -38,15 +38,7 @@ class AppointmentAdd(GenericAPIView):
         user = User.objects.get(user_id=user_id)
         user_role = user.user_role
 
-        if user_role == "Manager":
-            Response.status_code = status.HTTP_401_UNAUTHORIZED
-            return Response(
-                {
-                    'status': status.HTTP_401_UNAUTHORIZED,
-                    'message': "Unauthorized Access",
-                }
-            )
-        if user_role == "Admin":
+        if user_role == "Manager" or user_role == "Admin":
             Response.status_code = status.HTTP_401_UNAUTHORIZED
             return Response(
                 {
@@ -224,13 +216,15 @@ class AppointmentView(ListAPIView):
 
         if user_role == "Patient":
             if request.GET.get('patient_id') is None:
-                Response.status_code = status.HTTP_401_UNAUTHORIZED
-                return Response(
-                    {
-                        'status': status.HTTP_401_UNAUTHORIZED,
-                        'message': "Unauthorized Access",
-                    }
-                )
+                patient_id = user.member_id
+                patient = ""
+                for data in response.data:
+                    if data['patient_id'] == str(patient_id):
+                        patient = data
+                    else:
+                        pass
+                response.data = list()
+                response.data.append(patient)
         if user_role == "Doctor":
             if request.GET.get('doctor_id') is None:
                 Response.status_code = status.HTTP_401_UNAUTHORIZED
@@ -411,7 +405,7 @@ class AppointmentDelete(APIView):
             user = User.objects.get(user_id=user_id)
             user_role = user.user_role
 
-            if user_role == "Manager":
+            if user_role == "Manager" or user_role == "Admin":
                 Response.status_code = status.HTTP_401_UNAUTHORIZED
                 return Response(
                     {
