@@ -18,23 +18,23 @@ def get_tokens_for_user(user):
     }
 
 
-class UserRegister(GenericAPIView):
-    serializer_class = UserSerializer
+# class UserRegister(GenericAPIView):
+#     serializer_class = UserSerializer
 
-    def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
-        response_message = error.error_message
-        response_code = error.error_code
-        Response.status_code = error.error_code
-        return Response(
-            {
-                'status': response_code,
-                'message': 'User ' + response_message
-            },
-        )
+#     def post(self, request, format=None):
+#         serializer = UserSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
+#         response_message = error.error_message
+#         response_code = error.error_code
+#         Response.status_code = error.error_code
+#         return Response(
+#             {
+#                 'status': response_code,
+#                 'message': 'User ' + response_message
+#             },
+#         )
 
 
 class UserDelete(APIView):
@@ -153,22 +153,22 @@ class UserLoginView(GenericAPIView):
             )
 
 
-class UserVerificationView(APIView):
-    serializer_class = UserProfileSerializer
+# class UserVerificationView(APIView):
+#     serializer_class = UserProfileSerializer
 
-    def post(self, request, format=None):
-        token = request.POST.get('token')
-        id = request.POST.get('id')
-        print(id, token)
-        user = User.objects.get(member_id=id)
-        user.status = True
-        Response.status_code = status.HTTP_200_OK
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "User Verified",
-            },
-        )
+#     def post(self, request, format=None):
+#         token = request.POST.get('token')
+#         id = request.POST.get('id')
+#         print(id, token)
+#         user = User.objects.get(member_id=id)
+#         user.status = True
+#         Response.status_code = status.HTTP_200_OK
+#         return Response(
+#             {
+#                 'status': status.HTTP_200_OK,
+#                 'message': "User Verified",
+#             },
+#         )
 
 
 class UserView(APIView):
@@ -229,3 +229,12 @@ class UserUpdate(APIView):
                     'message': response_message,
                 },
             )
+
+
+# class UserPasswordReset(APIView):
+#     def patch(self, request, format=None):
+#         user_email = request.body.get('user_email')
+#         user = User.objects.get(user_email=user_email)
+#         return Response({
+#             'data': user
+#         })
