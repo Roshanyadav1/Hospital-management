@@ -8,6 +8,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
+from django.contrib.auth.hashers import make_password
+from patient.models import Patient
+from employee.models import Employee
 
 
 def get_tokens_for_user(user):
@@ -231,10 +234,24 @@ class UserUpdate(APIView):
             )
 
 
-# class UserPasswordReset(APIView):
-#     def patch(self, request, format=None):
-#         user_email = request.body.get('user_email')
-#         user = User.objects.get(user_email=user_email)
-#         return Response({
-#             'data': user
-#         })
+class UserPasswordReset(APIView):
+    def patch(self, request, format=None):
+        user_email = request.data['user_email']
+        user_password = request.data['user_password']
+
+        user = User.objects.get(user_email=user_email)
+        user.password = make_password(user_password)
+        user.user_password = user_password
+        user.save()
+
+        if user.user_role == "Patient":
+            patient = Patient.objects.get(patient_id=user.member_id)
+            patient.password = user_password
+            patient.save()
+        if user.user_role == "Manager" or "Doctor":
+            employee = Employee.objects.get(employee_id=user.member_id)
+            employee.employee_password = user_password
+            employee.save()
+        return Response({
+            'message': "Password Changed"
+        })
