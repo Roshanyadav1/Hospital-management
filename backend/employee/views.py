@@ -86,7 +86,7 @@ class EmployeeAdd(GenericAPIView):
                 doctor_serializer = DoctorSerializer(data=doctor_data)
                 doctor_serializer.is_valid(raise_exception=True)
                 doctor = doctor_serializer.save()
-                member = doctor.doctor_id
+                member = employee.employee_id
             member = employee.employee_id
             user_name = employee.employee_name
             user_email = request.data.get('employee_email')

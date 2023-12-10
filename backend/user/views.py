@@ -8,6 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
+from doctor.models import Doctor
 from django.contrib.auth.hashers import make_password
 from patient.models import Patient
 from employee.models import Employee
@@ -97,13 +98,18 @@ class UserLoginView(GenericAPIView):
             if is_verify == True:
                 token = get_tokens_for_user(user)
                 Response.status_code = status.HTTP_200_OK
+                id = ""
+                if user.user_role == "Doctor":
+                    id = Doctor.objects.get(employee_id=user.member_id).doctor_id
+                else:
+                    id = user.member_id
                 return Response(
                     {
                         'status': status.HTTP_200_OK,
                         'message': "Logged In As " + user.user_role,
                         'data': {
                             'user_role': user.user_role,
-                            'id': user.member_id,
+                            'id': id,
                             'token': token,
                         }
                     },
@@ -114,13 +120,18 @@ class UserLoginView(GenericAPIView):
                     if user.status == True:
                         token = get_tokens_for_user(user)
                         Response.status_code = status.HTTP_200_OK
+                        id = ""
+                        if user.user_role == "Doctor":
+                            id = Doctor.objects.get(employee_id=user.member_id).doctor_id
+                        else:
+                            id = user.member_id
                         return Response(
                             {
                                 'status': status.HTTP_200_OK,
                                 'message': "Logged In As " + user.user_role,
                                 'data': {
                                     'user_role': user.user_role,
-                                    'id': user.member_id,
+                                    'id': id,
                                     'token': token,
                                 }
                             },
