@@ -14,6 +14,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from user.models import User
 import jwt
+from doctor.models import Doctor
 
 
 class CheckUpAdd(GenericAPIView):
@@ -198,22 +199,29 @@ class CheckUpView(ListAPIView):
 
         if user_role == "Patient":
             if request.GET.get('patient_id') is None:
-                Response.status_code = status.HTTP_401_UNAUTHORIZED
-                return Response(
-                    {
-                        'status': status.HTTP_401_UNAUTHORIZED,
-                        'message': "Unauthorized Access",
-                    }
-                )
+                patient_id = user.member_id
+                res = list()
+                print(patient_id)
+                for data in response.data:
+                    if str(data['patient']) == str(patient_id):
+                        res.append(data)
+                    else:
+                        pass
+                response.data = list()
+                response.data = res
+
         if user_role == "Doctor":
             if request.GET.get('doctor_id') is None:
-                Response.status_code = status.HTTP_401_UNAUTHORIZED
-                return Response(
-                    {
-                        'status': status.HTTP_401_UNAUTHORIZED,
-                        'message': "Unauthorized Access",
-                    }
-                )
+                employee_id = user.member_id
+                doctor_id = Doctor.objects.get(employee_id=employee_id).doctor_id
+                res = list()
+                for data in response.data:
+                    if str(data['doctor']) == str(doctor_id):
+                        res.append(data)
+                    else:
+                        pass
+                response.data = list()
+                response.data = res
 
         pagination = CustomPagination()
         if request.GET.get('pageSize') != None:
