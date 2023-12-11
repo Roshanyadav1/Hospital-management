@@ -34,6 +34,7 @@ const nextConfig = {
          'png.pngtree.com',
          '0 , _services_Query__WEBPACK_IMPORTED_MODULE_2__.useGetAddAppointmentMutation ',
          'thumbs.dreamstime.com',
+         "0 , _services_Query__WEBPACK_IMPORTED_MODULE_2__.useGetAppointmentQuery",
       ],
    },
 }
