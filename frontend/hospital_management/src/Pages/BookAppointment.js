@@ -24,6 +24,7 @@ import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
 import moment from 'moment'
+import { images } from '../../next.config'
 
 function BookAppoinment({ id, name }) {
    const { data: doctorTimes , isLoading , refetch } = useGetDoctorTimesQuery(id)
@@ -34,9 +35,7 @@ function BookAppoinment({ id, name }) {
    const[hiddentime , setHiddentime] = useState([])
    const {createTimeSlots} = useTimeSlots()
 
-   // doctorTimes
-
-
+    
    const ProfileCard = ({ icon, title, content }) => (
       <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
          <CardHeader
@@ -131,13 +130,21 @@ function BookAppoinment({ id, name }) {
             Direction='column'
          >
             <Grid item bgcolor={'fff'} display={'flex'} Direction='column'>
-               <Image
-                  priority={true}
-                  // src='https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'
-                  height={150}
-                  width={150}
-                  style={{ borderRadius: '50%' }}
-               />
+               {
+                  isLoading ? (<>
+                     <Skeleton 
+                                sx={{ border: '1px solid #e0e0e0'}}
+                               variant="circular" height={150} width={150} />
+                  </>):(<>
+                     <Image
+                        priority={true}
+                        src={doctorTimes?.data?.doctor_profile_picture ||'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg' } 
+                        height={140}
+                        width={140}
+                        style={{ borderRadius: '50%',padding:10 }}
+                     />
+                  </>)
+               }
                <Grid
                   item
                   xl={8}
@@ -154,7 +161,7 @@ function BookAppoinment({ id, name }) {
                      <Typography gutterBottom variant='h4' component='div'>
                         {name}
                         <Typography variant='body1' color='text.secondary'>
-                           EXECUTIVE CHAIRMAN FORTIS C DOC | Fortis C-Doc
+                           EXECUTIVE DOCTOR FORTIS C DOC | Fortis C-Doc
                         </Typography>
                      </Typography>
                   </>

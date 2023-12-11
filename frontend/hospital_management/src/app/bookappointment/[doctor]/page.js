@@ -11,7 +11,7 @@ const page = () => {
 
    return (
       <div>
-         <BookAppoinment id={id} name={r1} />
+         <BookAppoinment id={id} name={r1}  />
       </div>
    )
 }
