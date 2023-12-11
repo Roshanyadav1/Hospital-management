@@ -11,6 +11,7 @@ class Appointment(models.Model):
     patient = models.ForeignKey(Patient, default = uuid.uuid4, on_delete = models.CASCADE)
     doctor = models.ForeignKey(Doctor, default = uuid.uuid4, on_delete = models.CASCADE)
     disease =  models.ForeignKey(Disease, default = uuid.uuid4, on_delete = models.CASCADE)
+    checked = models.BooleanField(default = False)
     appointment_time = models.TimeField()
     appointment_date = models.DateField()
     created_at = models.DateTimeField(auto_now=True)
