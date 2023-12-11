@@ -5,7 +5,7 @@ import { Grid } from '@mui/material'
  
 import SwipeableTextMobileStepper from '@/Pages/Steper'
 import DoctorCard from '@/Pages/DoctorsCard'
-import ShowDidease from '@/Pages/DiseaseCard'
+import DiseaseCards from '@/Pages/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css'
 import Cards from '@/Pages/Card'
 
@@ -17,7 +17,7 @@ function page() {
             <FixedContainer />
          </Grid>
          <Cards />
-         <ShowDidease />
+         <DiseaseCards />
          <DoctorCard />
       </div>
    )

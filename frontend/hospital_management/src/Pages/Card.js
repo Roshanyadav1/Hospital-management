@@ -4,7 +4,8 @@ import Container from '@mui/material/Container';
 import { CardActionArea} from '@mui/material';
 import {welcome} from '@/helpers/welcome'
 import Image from 'next/image';
-export default function Cards() {
+
+function Cards() {
   const glass={
     background: 'rgba( 19, 41, 61, 0.05 )',
     boxShadow: '-1px 4px 19px -8px rgba(66, 68, 90, 1)',
@@ -42,3 +43,6 @@ export default function Cards() {
     </div>
   );
 }
+
+
+export default Cards;

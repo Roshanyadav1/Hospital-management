@@ -8,6 +8,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
+from doctor.models import Doctor
+from django.contrib.auth.hashers import make_password
+from patient.models import Patient
+from employee.models import Employee
 
 
 def get_tokens_for_user(user):
@@ -18,23 +22,23 @@ def get_tokens_for_user(user):
     }
 
 
-class UserRegister(GenericAPIView):
-    serializer_class = UserSerializer
+# class UserRegister(GenericAPIView):
+#     serializer_class = UserSerializer
 
-    def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
-        response_message = error.error_message
-        response_code = error.error_code
-        Response.status_code = error.error_code
-        return Response(
-            {
-                'status': response_code,
-                'message': 'User ' + response_message
-            },
-        )
+#     def post(self, request, format=None):
+#         serializer = UserSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         error = Error.objects.get(error_title='REGISTRATION_SUCCESS')
+#         response_message = error.error_message
+#         response_code = error.error_code
+#         Response.status_code = error.error_code
+#         return Response(
+#             {
+#                 'status': response_code,
+#                 'message': 'User ' + response_message
+#             },
+#         )
 
 
 class UserDelete(APIView):
@@ -94,13 +98,18 @@ class UserLoginView(GenericAPIView):
             if is_verify == True:
                 token = get_tokens_for_user(user)
                 Response.status_code = status.HTTP_200_OK
+                id = ""
+                if user.user_role == "Doctor":
+                    id = Doctor.objects.get(employee_id=user.member_id).doctor_id
+                else:
+                    id = user.member_id
                 return Response(
                     {
                         'status': status.HTTP_200_OK,
                         'message': "Logged In As " + user.user_role,
                         'data': {
                             'user_role': user.user_role,
-                            'id': user.member_id,
+                            'id': id,
                             'token': token,
                         }
                     },
@@ -111,13 +120,18 @@ class UserLoginView(GenericAPIView):
                     if user.status == True:
                         token = get_tokens_for_user(user)
                         Response.status_code = status.HTTP_200_OK
+                        id = ""
+                        if user.user_role == "Doctor":
+                            id = Doctor.objects.get(employee_id=user.member_id).doctor_id
+                        else:
+                            id = user.member_id
                         return Response(
                             {
                                 'status': status.HTTP_200_OK,
                                 'message': "Logged In As " + user.user_role,
                                 'data': {
                                     'user_role': user.user_role,
-                                    'id': user.member_id,
+                                    'id': id,
                                     'token': token,
                                 }
                             },
@@ -153,22 +167,22 @@ class UserLoginView(GenericAPIView):
             )
 
 
-class UserVerificationView(APIView):
-    serializer_class = UserProfileSerializer
+# class UserVerificationView(APIView):
+#     serializer_class = UserProfileSerializer
 
-    def post(self, request, format=None):
-        token = request.POST.get('token')
-        id = request.POST.get('id')
-        print(id, token)
-        user = User.objects.get(member_id=id)
-        user.status = True
-        Response.status_code = status.HTTP_200_OK
-        return Response(
-            {
-                'status': status.HTTP_200_OK,
-                'message': "User Verified",
-            },
-        )
+#     def post(self, request, format=None):
+#         token = request.POST.get('token')
+#         id = request.POST.get('id')
+#         print(id, token)
+#         user = User.objects.get(member_id=id)
+#         user.status = True
+#         Response.status_code = status.HTTP_200_OK
+#         return Response(
+#             {
+#                 'status': status.HTTP_200_OK,
+#                 'message': "User Verified",
+#             },
+#         )
 
 
 class UserView(APIView):
@@ -229,3 +243,26 @@ class UserUpdate(APIView):
                     'message': response_message,
                 },
             )
+
+
+class UserPasswordReset(APIView):
+    def patch(self, request, format=None):
+        user_email = request.data['user_email']
+        user_password = request.data['user_password']
+
+        user = User.objects.get(user_email=user_email)
+        user.password = make_password(user_password)
+        user.user_password = user_password
+        user.save()
+
+        if user.user_role == "Patient":
+            patient = Patient.objects.get(patient_id=user.member_id)
+            patient.password = user_password
+            patient.save()
+        if user.user_role == "Manager" or "Doctor":
+            employee = Employee.objects.get(employee_id=user.member_id)
+            employee.employee_password = user_password
+            employee.save()
+        return Response({
+            'message': "Password Changed"
+        })

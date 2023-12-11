@@ -17,6 +17,7 @@ from datetime import datetime, timedelta , time
 from appointment.models import Appointment
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from employee.models import Employee
 
 
 class DoctorRegister(GenericAPIView):
@@ -93,13 +94,14 @@ class DoctorView(ListAPIView):
             if inputDate is not None:
                 id = data.get('doctor_id')
                 try:
-                    leave = Leave.objects.get(doctor=id)
+                    leave = Leave.objects.filter(doctor=id)
                     if leave is not None:
-                        if str(leave.date) == str(inputDate):
-                            remove_data.append(data)
+                        for leave_obj in leave:
+                            if str(leave_obj.date) == str(inputDate):
+                                remove_data.append(data)
+                                break
                 except:
                     pass
-
         for remove_d in remove_data:
             response_data.remove(remove_d)
 
@@ -154,7 +156,7 @@ class DoctorViewById(APIView):
                     else:
                         doctor.status = "Available"
 
-                serializer = DoctorSerializer(doctor)
+                serializer = DoctorViewSerializer(doctor)
                 serializer_data = serializer.data
                 disease_data = json.loads(
                     serializer_data['disease_specialist'])
@@ -190,8 +192,6 @@ class DoctorViewById(APIView):
                 doctor.times = slots_data
                 doctor.save()
                 
-                     
-
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message

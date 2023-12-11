@@ -21,6 +21,7 @@ function Dashboard() {
       page: 1,
       pageSize: 5,
    })
+   
    const { data: empData, isFetching: loadinData } = useGetEmployeeQuery(pageState, {
       refetchOnMountOrArgChange: true,
    })

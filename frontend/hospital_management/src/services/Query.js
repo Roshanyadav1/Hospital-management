@@ -76,7 +76,7 @@ export const queries = createApi({
       }),
       getEmployee: build.query({
          query: (arg) => ({
-            url: `employee/view/?employee_role=Manager&pageNo=${arg.page}&pageSize=${arg.pageSize}`,
+            url: `employee/view/?pageNo=${arg.page}&pageSize=${arg.pageSize}`,
             method: 'GET',
          }),
          providesTags: ['EMP'],
@@ -144,7 +144,7 @@ export const queries = createApi({
       }),
       getDoctorTimes: build.query({
          query: (id) => ({
-            url: `/doctor/view/?doctor_id=${id}`,
+            url: `/doctor/view/${id}/`,
             method: 'Get',
          }),
       }),

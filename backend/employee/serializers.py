@@ -10,4 +10,4 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class EmployeeRelation(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = ['employee_name']
+        fields = ['employee_id', 'employee_name']

@@ -86,7 +86,7 @@ class EmployeeAdd(GenericAPIView):
                 doctor_serializer = DoctorSerializer(data=doctor_data)
                 doctor_serializer.is_valid(raise_exception=True)
                 doctor = doctor_serializer.save()
-                member = doctor.doctor_id
+                member = employee.employee_id
             member = employee.employee_id
             user_name = employee.employee_name
             user_email = request.data.get('employee_email')
@@ -193,6 +193,10 @@ class EmployeeDelete(APIView):
         id = input
         if Employee.objects.filter(employee_id=id).count() >= 1:
             employee = Employee.objects.get(employee_id=id)
+            user = ""
+            if employee.employee_role == 'Manager':
+                user = User.objects.get(member_id=id)
+
             if employee.employee_role == 'Doctor':
                 doctor = Doctor.objects.get(employee_id=id)
                 doctor.delete()
