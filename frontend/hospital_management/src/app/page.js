@@ -13,7 +13,7 @@ function page() {
    return (
       <div>
          <SwipeableTextMobileStepper />
-         <Grid container item padding={3}>
+         <Grid container item>
             <FixedContainer />
          </Grid>
          <Cards />

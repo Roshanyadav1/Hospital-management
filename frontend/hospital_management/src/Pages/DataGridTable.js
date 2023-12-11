@@ -1,5 +1,6 @@
 'use client'
 import { DataGrid } from '@mui/x-data-grid'
+import { useEffect, useState } from 'react';
 
 const customstyles = `
 .MuiDataGrid-root .MuiDataGrid-row:nth-child(even) {
@@ -61,18 +62,33 @@ export default function DataGridTable(props) {
       data,
       columns,
       map_by,
-      pageInfo,
-      paginationModel,
-      setPaginationModel,
       loadinData,
-   } = props
+      pageState,
+      setPageState
+   } = props;
+ const [paginationModel, setPaginationModel] = useState({
+    page: 1,
+    pageSize: 5,
+ })
+
+ useEffect(() => {
+  if (paginationModel) {
+     setPageState({
+        isLoding: pageState?.isLoding,
+        data: pageState?.data,
+        total: data?.count,
+        page: paginationModel?.page,
+        pageSize: paginationModel?.pageSize,
+     })
+  }
+}, [data?.count, pageState?.data, pageState?.isLoding, paginationModel])
 
    return (
       <>
          <style>{customstyles}</style>
 
          <DataGrid
-            rows={data}
+            rows={data?.results || []}
             columns={columns}
             loading={loadinData}
             getRowId={map_by}
@@ -81,12 +97,12 @@ export default function DataGridTable(props) {
                MuiTablePagination: {
                   labelDisplayedRows: () =>
                      `Showing page ${Math.ceil(
-                        pageInfo?.current_page_number
-                     )} of ${Math.ceil(pageInfo?.total_pages)} pages`,
+                        data?.current_page_number
+                     )} of ${Math.ceil(data?.total_pages)} pages`,
                },
             }}
             checkboxSelection={false}
-            rowCount={pageInfo?.count + pageInfo?.page_size}
+            rowCount={data?.count + data?.page_size}
             paginationModel={paginationModel}
             paginationMode='server'
             onPaginationModelChange={setPaginationModel}
