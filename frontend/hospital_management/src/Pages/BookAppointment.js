@@ -52,7 +52,6 @@ function BookAppoinment({ id, name }) {
          </CardContent>
       </Card>
    )
-
    useEffect(() => {
       if (
          doctorTimes &&
