@@ -250,7 +250,11 @@ class EmployeeUpdate(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             user = User.objects.get(member_id=id)
-            user.status = employee.employee_status
+            if request.data.get('employee_password') is not None:
+                user.password = employee.employee_password
+                user.user_password = employee.employee_password
+            if request.data.get('employee_status') is not None:
+                user.status = employee.employee_status
             user.save()
             response_message = ""
             response_code = ""
