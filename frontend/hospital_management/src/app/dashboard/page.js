@@ -8,11 +8,14 @@ import Avatar from '@mui/material/Avatar';
 // import { useGetAppointmentQuery } from '@/services/Query';
 import { Chip, Container, Grid } from '@mui/material';
  
-const userRole = 'Admin';
-// const userRole = localStorage.getItem('role');
+let userRole;
+console.log('fgfd', userRole)
+
+  if (typeof window !== 'undefined') {
+   userRole = localStorage.getItem('user-role');
+  }
 
 function FetchData() {
-   // const { data: appointment, isLoading, isError } = useGetAppointmentQuery();
    return (
       <div>
          {userRole === 'Admin' || userRole === 'Manager' ? (
@@ -24,7 +27,6 @@ function FetchData() {
          
                         <Grid
                            item
-                          
                            xs={12}
                            sm={12}
                            md={12}
