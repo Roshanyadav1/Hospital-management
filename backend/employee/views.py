@@ -250,8 +250,6 @@ class EmployeeUpdate(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             user = User.objects.get(member_id=id)
-            user.password = employee.employee_password
-            user.user_password = employee.employee_password
             user.save()
             response_message = ""
             response_code = ""
