@@ -35,9 +35,13 @@ function DoctorPage() {
    const [data, setData] = useState('')
 
    const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
+   const formattedDate = selectedDate.format('YYYY-MM-DD');
    const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
    const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
-
+   const isDateDisabled = (date) => {
+      return date.isBefore(dayjs(), 'day');
+    };
+  
    const {
       data: filterDoc,
       isFetching: DocFetch,
@@ -293,6 +297,8 @@ function DoctorPage() {
                               views={['year', 'month', 'day']}
                               value={selectedDate}
                               onChange={handleDateChange}
+                              shouldDisableDate={isDateDisabled} // Pass the custom validation function
+
                               sx={{ background: 'white', borderRadius: '5px' }}
                            />
                         </DemoItem>
@@ -319,7 +325,7 @@ function DoctorPage() {
                         renderInput={(params) => (
                            <TextField
                               {...params}
-                              label='Select doctor'
+                              // label='Select doctor'
                               InputProps={{
                                  ...params.InputProps,
                                  placeholder: DocFetch
