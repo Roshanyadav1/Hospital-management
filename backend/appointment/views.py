@@ -15,12 +15,16 @@ from hospital_management.custom_paginations import CustomPagination
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from django.http import JsonResponse
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from user.models import User
 import jwt
 from doctor.models import Doctor
+from employee.models import Employee
+from disease.models import Disease
+from prescription.models import Prescription
+from checkup.models import CheckUp
+from datetime import datetime, timedelta
 
 
 class AppointmentAdd(GenericAPIView):
@@ -74,6 +78,68 @@ class AppointmentAdd(GenericAPIView):
                 'message': 'Appointment ' + response_message
             },
         )
+
+
+class AppointmentTab(ListAPIView):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentViewSerializer
+
+    def list(self, request, input, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        id = input
+        lists = []
+        if Appointment.objects.filter(patient_id=id).count() >= 1:
+            appointments = Appointment.objects.filter(patient_id=id)
+            for appointment in appointments:
+                appointment_id = appointment.appointment_id
+                appointment_date = appointment.appointment_date
+                appointment_time = appointment.appointment_time
+                appointment_checkup_status = ""
+                prescription = ""
+                disease_name = ""
+                doctor_name = ""
+                checkups = CheckUp.objects.filter(
+                    appointment=appointment.appointment_id)
+                for checkup in checkups:
+                    appointment_checkup_status = checkup.check_status
+                prescriptions = Prescription.objects.filter(
+                    appointment_id=appointment.appointment_id)
+                for prescription in prescriptions:
+                    prescription = prescription.prescription_photo
+                diseases = Disease.objects.filter(
+                    disease_id=appointment.disease_id)
+                for disease in diseases:
+                    disease_name = disease.disease_name
+                doctors = Doctor.objects.filter(
+                    doctor_id=appointment.doctor_id)
+                for doctor in doctors:
+
+                    employees = Employee.objects.filter(
+                        employee_id=doctor.employee_id)
+                    for employee in employees:
+                        doctor_name = employee.employee_name
+                new_dict = {"appointment_id": appointment_id, "doctor_name": doctor_name, "disease_name": disease_name, "appointment_date": appointment_date,
+                            "appointment_time": appointment_time, "check_status": appointment_checkup_status, "prescription": prescription, "tab": ""}
+                lists.append(new_dict)
+
+            for list in lists:
+                if list['appointment_date'] == datetime.today().date():
+                    list['tab'] = 'todays'
+                if list['appointment_date'] > datetime.today().date():
+                    list['tab'] = 'upcoming'
+                if list['appointment_date'] < datetime.today().date():
+                    list['tab'] = 'previous'
+
+            return Response({
+                'status': status.HTTP_200_OK,
+                'message': ResponseMessage.RETRIEVED_SUCCESS,
+                'data': lists
+            })
+        else:
+            return Response({
+                'status': status.HTTP_400_BAD_REQUEST,
+                'message': ResponseMessage.INVALID_ID
+            })
 
 
 class AppointmentCount(ListAPIView):
@@ -227,11 +293,12 @@ class AppointmentView(ListAPIView):
                         pass
                 response.data = list()
                 response.data = res
-                
+
         if user_role == "Doctor":
             if request.GET.get('doctor_id') is None:
                 employee_id = user.member_id
-                doctor_id = Doctor.objects.get(employee_id=employee_id).doctor_id
+                doctor_id = Doctor.objects.get(
+                    employee_id=employee_id).doctor_id
                 res = list()
                 for data in response.data:
                     if data['doctor']['doctor_id'] == str(doctor_id):
@@ -240,14 +307,6 @@ class AppointmentView(ListAPIView):
                         pass
                 response.data = list()
                 response.data = res
-                # Response.status_code = status.HTTP_401_UNAUTHORIZED
-                # return Response(
-                #     {
-                #         'status': status.HTTP_401_UNAUTHORIZED,
-                #         'message': "Unauthorized Access",
-                #     }
-                # )
-
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message
@@ -436,7 +495,7 @@ class AppointmentDelete(APIView):
                 )
 
             try:
-                error = Error.objects.get(error_title='DELETE_SUCESS')
+                error = Error.objects.get(error_title='DELETE_SUCCESS')
                 response_message = error.error_message
                 response_code = error.error_code
                 Response.status_code = error.error_code
