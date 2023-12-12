@@ -1,13 +1,11 @@
 'use client'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
-
 export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
    }),
-
    keepUnusedDataFor: 30,
    refetchOnReconnect: true,
    refetchOnFocus: true,
@@ -78,7 +76,7 @@ export const queries = createApi({
       }),
       getEmployee: build.query({
          query: (arg) => ({
-            url: `employee/view/?employee_role=Manager&pageNo=${arg.page}&pageSize=${arg.pageSize}`,
+            url: `employee/view/?pageNo=${arg.page}&pageSize=${arg.pageSize}`,
             method: 'GET',
          }),
          providesTags: ['EMP'],
@@ -95,7 +93,6 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-
       getGraphAppointInfo: build.query({
          query: () => ({
             url: 'appointment/view/',
@@ -132,15 +129,22 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      // getViewDoctor: build.query({
+      //    query: (prop) => ({
+      //       url: `doctor/view/?pageSize=${10}&pageNo=${prop}`,
+      //       method: 'Get',
+      //    }),
+      // }),
       getViewDoctor: build.query({
-         query: (prop) => ({
-            url: `doctor/view/?pageSize=${10}&pageNo=${prop}`,
-            method: 'Get',
-         }),
+         query:() => ({
+            url:'/doctor/view/?pageSize=9',
+            method:'Get',
+         })
+
       }),
       getDoctorTimes: build.query({
          query: (id) => ({
-            url: `/doctor/view/?doctor_id=${id}`,
+            url: `/doctor/view/${id}/`,
             method: 'Get',
          }),
       }),
@@ -165,7 +169,6 @@ export const queries = createApi({
       }),
    }),
 })
-
 export const {
    useRegisterHospitalMutation,
    useDoctorUpdateMutation,

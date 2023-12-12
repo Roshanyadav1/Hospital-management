@@ -284,12 +284,10 @@ function Layout({ children }) {
                padding: 1,
             }}
          >
-            <Toolbar />
             <Container maxWidth='100%'>{children}</Container>
          </Box>
       </Box>
    )
 }
 
-export default withRoleRedirect(Layout, ['Admin', 'Manager'])
-// export default Layout
+export default withRoleRedirect(Layout, ['Admin', 'Manager' , 'Doctor'])

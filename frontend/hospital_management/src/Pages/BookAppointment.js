@@ -53,14 +53,14 @@ function BookAppoinment({ id, name }) {
    useEffect(() => {
       if (
          doctorTimes &&
-         doctorTimes.data &&
-         doctorTimes.data[0] &&
-         doctorTimes.data[0].times
-      ) {
-         setTimes(doctorTimes.data[0].times)
-         setHiddentime(createTimeSlots(doctorTimes.data[0].per_patient_time , doctorTimes.data[0].times))
+         doctorTimes.data && !isLoading ) {
+         setTimes(doctorTimes.data.times)
+         setHiddentime(createTimeSlots(doctorTimes.data.per_patient_time , doctorTimes.data.times))
       }
-   }, [doctorTimes])
+   }, [ doctorTimes , isLoading])
+
+   console.log(hiddentime , "hiddentime")
+
 
    function formatTime(timeString) {
       const time = new Date(`2000-01-01T${timeString}`)
@@ -70,6 +70,7 @@ function BookAppoinment({ id, name }) {
          hour24: true,
       })
    }
+
 
    const handleOpenDialog = () => {
       setOpenDialog(true)
@@ -88,25 +89,10 @@ function BookAppoinment({ id, name }) {
    }
   
    const handleAppointment = async () => {
-
      if(!selectedSlot){
          toast.error('Please select a time slot')
       }
-      else if(hiddentime[selectedSlot.index]){
-         console.log('Appointment booked:', hiddentime[selectedSlot.index][0]);
-
-            // {
-   //    "appointment_number": 2147483647,
-   //    "appointment_time": "10:30:00",
-   //    "appointment_date": "2023-12-09",
-
-   //    "patient": "c0e7a5cf-39d9-4fa3-8c7e-8d3b37256bcd",
-   //    "doctor": "a67e89a0-88be-4a9b-80ea-3a3c20b516e2",
-   //    "disease": "72d9291c-f119-46f3-b0ed-44ff32697320"
-   //  }
-
-   // create new date for today 
-   
+      else if(hiddentime[selectedSlot.index-1]){
 
          const payload = {
             appointment_time: hiddentime[selectedSlot.index][0],
@@ -114,7 +100,7 @@ function BookAppoinment({ id, name }) {
             patient: localStorage.getItem('user_id'),
             doctor: id,
             disease: '72d9291c-f119-46f3-b0ed-44ff32697320',
-            appointment_number: 2147483647,
+            appointment_number:( selectedSlot.total_slots - selectedSlot.slots) + 1,
          }
          // addAppointment
 
@@ -238,7 +224,7 @@ function BookAppoinment({ id, name }) {
                            <Button
                               variant='outlined'
                               onClick={() => handleSlotSelection({...timeSlot , index:index+1})}
-                              disabled={timeSlot?.slots === timeSlot?.total_slots}
+                              disabled={!timeSlot?.slots}
                               sx={{ 
                                  width: '100%',
                                  borderColor:selectedSlot?.index === (index +1) ? '#2CD9C5' : '#000',
