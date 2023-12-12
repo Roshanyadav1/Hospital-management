@@ -2,7 +2,7 @@
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import { useAddEmployeeMutation } from '@/services/Query'
+import { useAddEmployeeMutation, useRegisterAuth } from '@/services/Query'
 import Employee_Validation from '@/components/form/EmployeeValidation/employeeValidation'
 import { colors } from '@/styles/theme'
 import AddEmployee from '@/components/AddEmployee'
@@ -56,10 +56,13 @@ const EmpRegister = () => {
    // }
 
    const [addemployee] = useAddEmployeeMutation()
+   const [addAuthEmployee] = useRegisterAuth()
+
 
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addemployee(values)
+         let resAuth = await addAuthEmployee(values)
          console.log(res)
          toast.success(res?.data?.message || ' Employee added successfully')
          resetForm()

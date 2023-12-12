@@ -1,6 +1,23 @@
 'use client'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
+
+export const apiAuth =  createApi({
+   reducerpath: 'apiAuth',
+   baseQuery: fetchBaseQuery({
+      baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
+   }),
+   endpoints: (build) => ({
+      registerAuth: build.mutation({
+        query :(value) => ({
+         url: 'Username-Password-Authentication/signup',
+         method: 'POST',
+         body: value,
+        })
+      })
+   
+   })
+})
 export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
@@ -190,3 +207,7 @@ export const {
    useAddAppointmentMutation,
    useGetAppointmentInfoQuery,
 } = queries
+
+export const {
+   useRegisterAuth,
+} = apiAuth
