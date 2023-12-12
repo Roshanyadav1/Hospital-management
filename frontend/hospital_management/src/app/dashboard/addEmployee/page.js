@@ -83,7 +83,7 @@ const EmpRegister = () => {
             <AddEmployee
                initialState={INITIAL_FORM_STATE}
                validationSchema={Employee_Validation}
-               handleRegister={handleRegister}
+               handleRegister={EmpRegister}
             />
          </StyledPaper>
       </StyledFormWrapper>

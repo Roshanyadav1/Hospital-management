@@ -10,11 +10,12 @@ import {
 import { Delete, Create, Visibility } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import Switch from '@mui/material/Switch';
+import { useEmployeeApproveMutation } from '@/services/Query';
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 
 const GetActionButton = (row) => {
    const [deleteEmployee] = useDeleteEmployeeMutation()
-
+const[ employeeApprove]= useEmployeeApproveMutation()
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
 
@@ -109,6 +110,12 @@ const GetActionButton = (row) => {
    )
 }
 
+
+
+const handleSwitchChange = (id, Status) => {
+   console.log('dfsdf', id, Status)
+   alert('Yes you can do it')
+}
 export const columns = [
    {
       field: 'employee_name',
@@ -164,18 +171,11 @@ export const columns = [
       cellClassName: 'column-line',
       sortable: false,
       flex: 1,
-      renderCell: (params) => (
-         <Switch
-           checked={params.value}
-           // Handle the change event to update the data
-           onChange={(event) => {
-             const newData = [...rows];
-             newData[params.rowIndex].isActive = event.target.checked;
-             // Update your state or data source with the new data
-             // For example, you can use React useState hook
-             // setRows(newData);
-           }}
-         />
+         renderCell: (params) => (
+            <Switch
+              checked={params?.row?.employee_status}
+              onChange={() => handleSwitchChange(params?.row?.employee_id, params?.row?.employee_status)}
+            />
        ),
    },
    // { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },

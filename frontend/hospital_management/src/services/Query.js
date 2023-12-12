@@ -145,12 +145,7 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-      // getViewDoctor: build.query({
-      //    query: (prop) => ({
-      //       url: `doctor/view/?pageSize=${10}&pageNo=${prop}`,
-      //       method: 'Get',
-      //    }),
-      // }),
+      
       getViewDoctor: build.query({
          query:() => ({
             url:'/doctor/view/?pageSize=9',
@@ -183,6 +178,14 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      employeeApprove: build.mutation({
+         query: (value) => ({
+            url: `employee/update/${value}`,
+            method: 'PATCH',
+            body:value
+         }),
+         invalidatesTags: ['EMP'],
+      }),
    }),
 })
 export const {
@@ -205,6 +208,7 @@ export const {
    useGetDoctorTimesQuery,
    useAddAppointmentMutation,
    useGetAppointmentInfoQuery,
+   useEmployeeApproveMutation,
 } = queries
 
 export const {
