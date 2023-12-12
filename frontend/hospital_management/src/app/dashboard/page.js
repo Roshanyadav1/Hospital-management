@@ -5,14 +5,14 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
-import { useGetAppointmentQuery } from '@/services/Query';
+// import { useGetAppointmentQuery } from '@/services/Query';
 import { Chip, Container, Grid } from '@mui/material';
  
-const userRole = 'Doctor';
+const userRole = 'Admin';
 // const userRole = localStorage.getItem('role');
 
 function FetchData() {
-   const { data: appointment, isLoading, isError } = useGetAppointmentQuery();
+   // const { data: appointment, isLoading, isError } = useGetAppointmentQuery();
    return (
       <div>
          {userRole === 'Admin' || userRole === 'Manager' ? (
@@ -24,7 +24,7 @@ function FetchData() {
          
                         <Grid
                            item
-                           key={i}
+                          
                            xs={12}
                            sm={12}
                            md={12}

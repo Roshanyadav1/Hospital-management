@@ -132,13 +132,21 @@ function BookAppoinment({ id, name }) {
             Direction='column'
          >
             <Grid item bgcolor={'fff'} display={'flex'} Direction='column'>
-               <Image
-                  priority={true}
-                  // src='https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'
-                  height={150}
-                  width={150}
-                  style={{ borderRadius: '50%' }}
-               />
+            {
+                  isLoading ? (<>
+                     <Skeleton 
+                                sx={{ border: '1px solid #e0e0e0'}}
+                               variant="circular" height={150} width={150} />
+                  </>):(<>
+                     <Image
+                        priority={true}
+                        src={doctorTimes?.data?.doctor_profile_picture ||'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg' } 
+                        height={140}
+                        width={140}
+                        style={{ borderRadius: '50%',padding:10 }}
+                     />
+                  </>)
+               }
                <Grid
                   item
                   xl={8}
