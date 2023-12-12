@@ -1,4 +1,4 @@
-from employee.serializers import EmployeeSerializer
+from employee.serializers import EmployeeSerializer, EmployeeUpdateSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
@@ -245,11 +245,12 @@ class EmployeeUpdate(APIView):
         id = input
         if Employee.objects.filter(employee_id=id).count() >= 1:
             employee = Employee.objects.get(employee_id=id)
-            serializer = EmployeeSerializer(
+            serializer = EmployeeUpdateSerializer(
                 employee, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             user = User.objects.get(member_id=id)
+            user.status = employee.employee_status
             user.save()
             response_message = ""
             response_code = ""

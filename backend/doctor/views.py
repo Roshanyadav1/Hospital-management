@@ -145,16 +145,16 @@ class DoctorViewById(APIView):
             if Doctor.objects.filter(doctor_id=id).count() >= 1:
                 doctor = Doctor.objects.get(doctor_id=id)
                 inputDate = request.GET.get('date')
-                try:
-                    leave = Leave.objects.get(doctor=id)
-                except:
-                    pass
-                if inputDate is not None:
-                    if str(leave.date) == str(inputDate):
-                        doctor.status = "Unavailable"
-                        print(doctor.status)
-                    else:
-                        doctor.status = "Available"
+                # try:
+                #     leave = Leave.objects.get(doctor=id)
+                # except:
+                #     pass
+                # if inputDate is not None:
+                #     if str(leave.date) == str(inputDate):
+                #         doctor.status = "Unavailable"
+                #         print(doctor.status)
+                #     else:
+                #         doctor.status = "Available"
 
                 serializer = DoctorViewSerializer(doctor)
                 serializer_data = serializer.data
@@ -178,6 +178,7 @@ class DoctorViewById(APIView):
                     slot = diiff/time_deltaa
                     data['total_slots'] = int(slot)
                     appointment = Appointment.objects.filter(doctor_id = id)
+                    appointment = appointment.filter(appointment_date = inputDate)
                     for appoint in appointment:
                      start_time_iso = time.fromisoformat(start_time)
                      end_time_iso = time.fromisoformat(end_time)
