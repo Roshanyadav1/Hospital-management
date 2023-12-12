@@ -19,16 +19,16 @@ import Modal from '@mui/material/Modal'
 import Grid from '@mui/system/Unstable_Grid/Grid'
 import { Formik, Form } from 'formik'
 import { styled } from '@mui/material/styles'
-// import RadioButtonGroup from './form/RadioB/RadioButtonGroup';
 import RadioButtonGroup from '@/components/RadioButton/RadioButtonGroup'
 import CustomAutocomplete from '@/components/Autocomplete/index'
-import Text from '@/components/Textfield/Text'
 import Divider from '@mui/material/Divider'
+import Text from '@/components/Textfield/Text'
 import { useParams } from 'next/navigation'
 import Paper from '@mui/material/Paper'
-import { Employee_Validation } from '@/components/FormValidation/employeeValidation'
+import FORM_VALIDATION from '@/components/FormValidation/EmployeeValidation'
 import { Color } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { useAddEmployeeMutation } from '@/services/Query'
 
 const style = {
    position: 'absolute',
@@ -86,14 +86,16 @@ const INITIAL_FORM_STATE = {
    employee_password: '', // not available
    employee_type: '',
    employee_role: '',
-   employee_status: '',
-   created_by: 'admin',
-   updated_by: 'admin',
+   employee_status: 'Available',
+   // created_by: 'admin',
+   // updated_by: 'admin',
 }
 const Empcategories = ['Part Time', 'Full Time']
 const Role = ['Doctor', 'Manager']
 
 function Dashboard() {
+   const [addemployee] = useAddEmployeeMutation()
+
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addemployee(values)
@@ -126,8 +128,6 @@ function Dashboard() {
       setOpen(false)
    }
 
-
-
    return (
       <div>
          <Grid
@@ -136,7 +136,9 @@ function Dashboard() {
             justifyContent='space-between'
             alignItems='center'
          >
-            <Typography variant="h4" component="h5">Employee</Typography>
+            <Typography variant='h4' component='h5'>
+               Employee
+            </Typography>
             <Button variant='outlined' onClick={handleClickOpen}>
                Add Employee
             </Button>
@@ -170,130 +172,128 @@ function Dashboard() {
                initialValues={{
                   ...INITIAL_FORM_STATE,
                }}
-               validationSchema={Employee_Validation}
-               onSubmit={(values) => {
-                  console.log(values)
-               }}
+               validationSchema={FORM_VALIDATION}
+               onSubmit={handleRegister}
+               // onSubmit={(values) => {
+               //    console.log(values)
+               // }}
             >
                {({ values, handleChange, handleBlur, touched }) => (
-                  <>
+                  <Form>
                      <DialogContent>
-                        <Form>
-                           <Grid container spacing={2}>
-                              <Grid item xs={12} sm={12}>
-                                 <Text
-                                    name='employee_name'
-                                    label='Name'
-                                    autoComplete=''
-                                    InputProps={{
-                                       style: {
-                                          background: 'white',
-                                          border: 'none',
-                                          borderRadius: '20px',
-                                       },
-                                    }}
-                                 />
-                              </Grid>
-                              <Grid item xs={6}>
-                                 <Text
-                                    name='employee_email'
-                                    label='Email'
-                                    autoComplete='off'
-                                    InputProps={{
-                                       style: {
-                                          background: 'white',
-                                          border: 'none',
-                                          borderRadius: '20px',
-                                       },
-                                    }}
-                                 />
-                              </Grid>
-                              <Grid item xs={12} sm={6}>
-                                 <Text
-                                    name='employee_number'
-                                    label='Phone'
-                                    autoComplete='off'
-                                    InputProps={{
-                                       style: {
-                                          background: 'white',
-                                          border: 'none',
-                                          borderRadius: '20px',
-                                       },
-                                    }}
-                                 />
-                              </Grid>
-                              <Grid item xs={12} sm={6}>
-                                 <Text
-                                    name='employee_password'
-                                    label='Password'
-                                    autoComplete='off'
-                                    InputProps={{
-                                       style: {
-                                          background: 'white',
-                                          border: 'none',
-                                          borderRadius: '20px',
-                                       },
-                                    }}
-                                 />
-                              </Grid>
-
-                              <Grid item xs={12} sm={6}>
-                                 <CustomAutocomplete
-                                    name='employee_type'
-                                    label='Employee Type'
-                                    options={Empcategories}
-                                    value={values.employee_type}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    touched={touched.employee_type}
-                                 />
-                              </Grid>
-
-                              <Grid item xs={12} sm={6}>
-                                 <CustomAutocomplete
-                                    name='employee_role'
-                                    label='Employee Role'
-                                    options={Role}
-                                    value={values.employee_role}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    touched={touched.employee_role}
-                                 />
-                              </Grid>
-                              <Grid item xs={12} sm={6}>
-                                 <RadioButtonGroup
-                                    label='Status'
-                                    name='employee_status'
-                                    options={[
-                                       { value: 'Available', label: 'Active' },
-                                       { value: 'Unavailable', label: 'Inactive' },
-                                    ]}
-                                 />
-                              </Grid>
-                              <Divider />
-
-                              <Grid item xs={12} sm={5}>
-                                 <VisuallyHiddenInput
-                                    id='logoInput'
-                                    type='file'
-                                    accept='image/*'
-                                 />
-                              </Grid>
+                        <Grid container spacing={2}>
+                           <Grid item xs={12} sm={12}>
+                              <Text
+                                 name='employee_name'
+                                 label='Name'
+                                 autoComplete=''
+                                 InputProps={{
+                                    style: {
+                                       background: 'white',
+                                       border: 'none',
+                                       borderRadius: '20px',
+                                    },
+                                 }}
+                              />
                            </Grid>
-                        </Form>
-                     </DialogContent>
+                           <Grid item xs={6}>
+                              <Text
+                                 name='employee_email'
+                                 label='Email'
+                                 autoComplete='off'
+                                 InputProps={{
+                                    style: {
+                                       background: 'white',
+                                       border: 'none',
+                                       borderRadius: '20px',
+                                    },
+                                 }}
+                              />
+                           </Grid>
+                           <Grid item xs={12} sm={6}>
+                              <Text
+                                 name='employee_number'
+                                 label='Phone'
+                                 autoComplete='off'
+                                 InputProps={{
+                                    style: {
+                                       background: 'white',
+                                       border: 'none',
+                                       borderRadius: '20px',
+                                    },
+                                 }}
+                              />
+                           </Grid>
+                           <Grid item xs={12} sm={6}>
+                              <Text
+                                 name='employee_password'
+                                 label='Password'
+                                 autoComplete='off'
+                                 InputProps={{
+                                    style: {
+                                       background: 'white',
+                                       border: 'none',
+                                       borderRadius: '20px',
+                                    },
+                                 }}
+                              />
+                           </Grid>
 
-                     <DialogActions>
-                        <Button
-                           variant='contained'
-                           color='primary'
-                           type='submit'
-                           size='large'
-                        >
-                           Submit
-                        </Button>
-                     </DialogActions>
-                  </>
+                           <Grid item xs={12} sm={6}>
+                     <CustomAutocomplete
+                        name='employee_type'
+                        label='Employee Type'
+                        options={Empcategories}
+                        value={values.employee_type}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        touched={touched.employee_type}
+                     />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                     <CustomAutocomplete
+                        name='employee_role'
+                        label='Employee Role'
+                        options={Role}
+                        value={values.employee_role}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        touched={touched.employee_role}
+                     />
+                  </Grid>
+                           <Grid item xs={12} sm={6}>
+                              <RadioButtonGroup
+                                 label='Status'
+                                 name='employee_status'
+                                 options={[
+                                    { value: 'Available', label: 'Active' },
+                                    { value: 'Unavailable', label: 'Inactive' },
+                                 ]}
+                              />
+                           </Grid>
+                           <Divider />
+
+                           <Grid item xs={12} sm={5}>
+                              <VisuallyHiddenInput
+                                 id='logoInput'
+                                 type='file'
+                                 accept='image/*'
+                              />
+                           </Grid>
+                        </Grid>
+                        <DialogActions>
+                           <Button
+                              variant='contained'
+                              color='primary'
+                              type='submit'
+                              size='large'
+                           >
+                              Submit
+                           </Button>
+                        </DialogActions>
+                     </DialogContent>
+                  </Form>
                )}
             </Formik>
          </Dialog>

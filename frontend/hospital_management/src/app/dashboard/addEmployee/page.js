@@ -42,8 +42,8 @@ const INITIAL_FORM_STATE = {
    employee_type: '',
    employee_role: '',
    employee_status: '',
-   created_by: 'admin',
-   updated_by: 'admin',
+   // created_by: 'admin',
+   // updated_by: 'admin',
 }
 
 const EmpRegister = () => {

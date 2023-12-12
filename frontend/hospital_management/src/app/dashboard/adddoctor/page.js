@@ -67,11 +67,11 @@ const StyledFormWrapper = styled('div')({
 })
 
 const INITIAL_FORM_STATE = {
-   doc_Id: '',
+   // doc_Id: '',
    disease_Specialist: '',
    doc_Type: '',
-   Created_At: '',
-   Updated_At: '',
+   // Created_At: '',
+   // Updated_At: '',
 }
 
 const AddDoctor = () => {
@@ -112,7 +112,7 @@ const AddDoctor = () => {
                         {() => (
                            <Form>
                               <Grid container spacing={2}>
-                                 <Grid item xs={12} sm={12}>
+                                 {/* <Grid item xs={12} sm={12}>
                                     <Text
                                        name='doc_Id'
                                        label='Doctor Id'
@@ -127,7 +127,7 @@ const AddDoctor = () => {
                                           readOnly: true,
                                        }}
                                     />
-                                 </Grid>
+                                 </Grid> */}
                                  <Grid item xs={12} sm={6}>
                                     <Text
                                        name='disease_Specialist'
@@ -153,7 +153,7 @@ const AddDoctor = () => {
                                     />
                                  </Grid>
                                  <Divider />
-                                 <Grid item xs={12} sm={6}>
+                                 {/* <Grid item xs={12} sm={6}>
                                     <Text
                                        name='Created_At'
                                        label='Created At'
@@ -180,7 +180,7 @@ const AddDoctor = () => {
                                           },
                                        }}
                                     />
-                                 </Grid>
+                                 </Grid> */}
                                  <Grid item xs={12} sm={5}>
                                     <VisuallyHiddenInput
                                        id='logoInput'

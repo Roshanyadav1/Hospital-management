@@ -6,6 +6,7 @@ import {
    DialogContent,
    DialogTitle,
    IconButton,
+   Switch,
 } from '@mui/material'
 import { Delete, Create, Visibility } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
@@ -159,10 +160,23 @@ export const columns = [
       minWidth: 120,
       headerClassName: 'header',
       headerAlign: 'center',
-      align: 'left',
+      align: 'center',
       cellClassName: 'column-line',
       sortable: false,
       flex: 1,
+      renderCell: (params) => (
+         <Switch
+           checked={params.value}
+           // Handle the change event to update the data
+           onChange={(event) => {
+             const newData = [...rows];
+             newData[params.rowIndex].isActive = event.target.checked;
+             // Update your state or data source with the new data
+             // For example, you can use React useState hook
+             // setRows(newData);
+           }}
+         />
+       ),
    },
    // { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
    // { field: 'employee_type', headerName: 'Type', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
