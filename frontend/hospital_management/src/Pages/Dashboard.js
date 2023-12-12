@@ -86,7 +86,7 @@ const INITIAL_FORM_STATE = {
    employee_password: '', // not available
    employee_type: '',
    employee_role: '',
-   employee_status: 'Available',
+   employee_status: true,
    // created_by: 'admin',
    // updated_by: 'admin',
 }
@@ -267,8 +267,8 @@ function Dashboard() {
                                  label='Status'
                                  name='employee_status'
                                  options={[
-                                    { value: 'Available', label: 'Active' },
-                                    { value: 'Unavailable', label: 'Inactive' },
+                                    { value: true, label: 'Active' },
+                                    { value: false, label: 'Inactive' },
                                  ]}
                               />
                            </Grid>
