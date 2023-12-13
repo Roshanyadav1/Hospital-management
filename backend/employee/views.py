@@ -193,16 +193,12 @@ class EmployeeDelete(APIView):
         id = input
         if Employee.objects.filter(employee_id=id).count() >= 1:
             employee = Employee.objects.get(employee_id=id)
-            # user = ""
-            # if employee.employee_role == 'Manager':
-            #     user = User.objects.get(member_id=id)
-
-            # if employee.employee_role == 'Doctor':
-            #     doctor = Doctor.objects.get(employee_id=id)
-            #     doctor.delete()
-            #     user = User.objects.get(member_id=doctor.doctor_id)
-            #     user.delete()
-            # user.delete()
+            user = ""
+            try:
+                user = User.objects.get(member_id=id)
+                user.delete()
+            except:
+                pass
             employee.delete()
             response_message = ""
             response_code = ""
