@@ -193,18 +193,66 @@ function Chart() {
    }
 
    return (
-      <Grid container>
-         <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
-            <Grid container item xs={12}>
-               <Grid container item mt={1} xs={12}>
-                  <Grid item xs={6} style={{ transition: 'box-shadow 0.3s' }}>
-                     <div className='hov'>
+      <div style={{marginTop:'5%'}}>
+         <Grid container>
+            <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
+               <Grid container item xs={12}>
+                  <Grid container item mt={1} xs={12}>
+                     <Grid item xs={6} style={{ transition: 'box-shadow 0.3s' }}>
+                        <div className='hov'>
+                           <div
+                              style={{
+                                 background:
+                                    'linear-gradient(135deg,#006494,#35CFF4)',
+                                 height: '10rem',
+                                 boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                                 marginRight: '1rem',
+                                 borderRadius: '10px',
+                              }}
+                           >
+                              <Grid style={{ display: 'flex' }} item xs={12}>
+                                 <Grid itme xs={6}>
+                                    <h4
+                                       style={{
+                                          color: 'white',
+                                          marginBottom: '0',
+                                          paddingLeft: '2rem',
+                                          fontSize: '2rem',
+                                          fontFamily: 'mainlux',
+                                       }}
+                                    >
+                                       Patients
+                                    </h4>
+                                    <span
+                                       style={{
+                                          paddingLeft: '2rem',
+                                          color: 'white',
+                                          fontSize: '1.52rem',
+                                       }}
+                                       id='count2'
+                                    ></span>
+                                    <span
+                                       style={{
+                                          color: 'white',
+                                          fontSize: '1.52rem',
+                                       }}
+                                    >
+                                       +
+                                    </span>
+                                 </Grid>
+                                 <Grid item xs={6}>
+                                    {/* <div style={{backgroundColor:'white', borderTopLeftRadius:'50%',maxWidth:'5rem',height:'100px'}}></div> */}
+                                 </Grid>
+                              </Grid>
+                           </div>
+                        </div>
+                     </Grid>
+                     <Grid className='hov' item xs={6}>
                         <div
                            style={{
-                              background: 'linear-gradient(135deg,#006494,#35CFF4)',
+                              background: 'linear-gradient(-35deg, #35CFF4,#006494)',
                               height: '10rem',
                               boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                              marginRight: '1rem',
                               borderRadius: '10px',
                            }}
                         >
@@ -213,21 +261,21 @@ function Chart() {
                                  <h4
                                     style={{
                                        color: 'white',
-                                       marginBottom: '0',
                                        paddingLeft: '2rem',
+                                       marginBottom: '0',
                                        fontSize: '2rem',
                                        fontFamily: 'mainlux',
                                     }}
                                  >
-                                    Patients
+                                    Doctors
                                  </h4>
                                  <span
                                     style={{
-                                       paddingLeft: '2rem',
+                                       paddingLeft: '2.5rem',
                                        color: 'white',
                                        fontSize: '1.52rem',
                                     }}
-                                    id='count2'
+                                    id='count1'
                                  ></span>
                                  <span
                                     style={{ color: 'white', fontSize: '1.52rem' }}
@@ -236,324 +284,288 @@ function Chart() {
                                  </span>
                               </Grid>
                               <Grid item xs={6}>
-                                 {/* <div style={{backgroundColor:'white', borderTopLeftRadius:'50%',maxWidth:'5rem',height:'100px'}}></div> */}
+                                 <div
+                                    style={{
+                                       width: '80%',
+                                       height: '100%',
+                                       marginTop: '8%',
+                                       marginLeft: '10%',
+                                       backgroundColor: 'white',
+                                       paddingTop: '10px',
+                                       borderRadius: '50%',
+                                       position: 'relative',
+                                    }}
+                                 >
+                                    <Image
+                                       style={{
+                                          position: 'absolute',
+                                          transform: 'translate(15%)',
+                                       }}
+                                       height={100}
+                                       width={100}
+                                       src={Doc}
+                                    />
+                                 </div>
                               </Grid>
                            </Grid>
                         </div>
-                     </div>
-                  </Grid>
-                  <Grid className='hov' item xs={6}>
-                     <div
-                        style={{
-                           background: 'linear-gradient(-35deg, #35CFF4,#006494)',
-                           height: '10rem',
-                           boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                           borderRadius: '10px',
-                        }}
-                     >
-                        <Grid style={{ display: 'flex' }} item xs={12}>
-                           <Grid itme xs={6}>
-                              <h4
-                                 style={{
-                                    color: 'white',
-                                    paddingLeft: '2rem',
-                                    marginBottom: '0',
-                                    fontSize: '2rem',
-                                    fontFamily: 'mainlux',
-                                 }}
-                              >
-                                 Doctors
-                              </h4>
-                              <span
-                                 style={{
-                                    paddingLeft: '2.5rem',
-                                    color: 'white',
-                                    fontSize: '1.52rem',
-                                 }}
-                                 id='count1'
-                              ></span>
-                              <span style={{ color: 'white', fontSize: '1.52rem' }}>
-                                 +
-                              </span>
-                           </Grid>
-                           <Grid item xs={6}>
-                              <div
-                                 style={{
-                                    width: '80%',
-                                    height: '100%',
-                                    marginTop: '8%',
-                                    marginLeft: '10%',
-                                    backgroundColor: 'white',
-                                    paddingTop: '10px',
-                                    borderRadius: '50%',
-                                    position: 'relative',
-                                 }}
-                              >
-                                 <Image
-                                    style={{
-                                       position: 'absolute',
-                                       transform: 'translate(15%)',
-                                    }}
-                                    height={100}
-                                    width={100}
-                                    src={Doc}
-                                 />
-                              </div>
-                           </Grid>
-                        </Grid>
-                     </div>
+                     </Grid>
                   </Grid>
                </Grid>
-            </Grid>
 
-            <Grid
-               pt={3}
-               mt={2}
-               item
-               xs={12}
-               style={{
-                  display: 'flex',
-                  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                  borderRadius: '5px',
-               }}
-            >
-               {showServerError && (
-                  <div>
-                     <h2>Error fetching data from the server</h2>
-                     {showReloadButton && (
-                        <Button onClick={() => refetchAppCount()}>Reload</Button>
-                     )}
-                  </div>
-               )}
-               {!showServerError && (
-                  <div onScroll={handleChartScroll}>
-                     <ComposedChart
-                        width={650}
-                        height={355}
-                        data={weeklyData}
-                        margin={{
-                           top: 20,
-                           right: 80,
-                           bottom: 20,
-                           left: 20,
-                        }}
-                     >
-                        <CartesianGrid stroke='#f5f5f5' />
-                        <XAxis
-                           dataKey='name'
-                           label={{
-                              value: 'Date',
-                              position: 'insideBottomRight',
-                              offset: -10,
-                           }}
-                           // scale="band"
-                        />
-                        <YAxis
-                           label={{
-                              value: 'Quantity',
-                              angle: -90,
-                              position: 'insideLeft',
-                           }}
-                        />
-                        <Tooltip />
-                        <Legend />
-                        <Area
-                           type='monotone'
-                           dataKey='Appoints'
-                           fill='#AEE3F0'
-                           stroke='#AEE3F0'
-                        />
-                        <Bar dataKey='Patients' barSize={20} fill='#006494' />
-                        <Line type='monotone' dataKey='Doctors' stroke='#ff7300' />
-                     </ComposedChart>
-                  </div>
-               )}
-            </Grid>
-         </Grid>
-         <Grid item xs={4} pl={4}>
-            <List
-               className='Colo'
-               sx={{
-                  width: '100%',
-                  maxWidth: 385,
-                  paddingY: '0px',
-               }}
-               style={{
-                  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                  borderRadius: '5px',
-                  marginTop: '2.5%',
-                  overflowY: 'scroll',
-                  height: 'calc(100vh - 95px)',
-                  backgroundColor: '#244C73',
-                  scrollbarColor: '#244C73 #0F1C2B',
-               }}
-            >
-               <div
+               <Grid
+                  pt={3}
+                  mt={2}
+                  item
+                  xs={12}
                   style={{
-                     position: 'sticky',
-                     top: 0,
-                     backgroundColor: '#244C73',
-                     zIndex: 1,
-                     padding: '3%',
+                     display: 'flex',
+                     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                     borderRadius: '5px',
                   }}
                >
-                  <h2
-                     className='Colo'
-                     style={{ textAlign: 'center', color: 'white' }}
-                  >
-                     Appointments
-                  </h2>
-                  <Grid
-                     mb={2}
-                     ml={1}
-                     mr={1}
-                     p={1}
-                     xs={12}
-                     style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        backgroundColor: 'white',
-                        borderRadius: '8px',
-                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                     }}
-                  >
-                     <Grid xs={2}>
-                        {filteredCount > 0 && (
-                           <span
-                              style={{
-                                 color: 'black',
-                                 textAlign: 'center',
-                                 paddingLeft: '0.5rem',
-                                 fontWeight: 'bold',
-                                 fontSize: '1rem',
-                              }}
-                           >
-                              {filteredCount}
-                           </span>
+                  {showServerError && (
+                     <div>
+                        <h2>Error fetching data from the server</h2>
+                        {showReloadButton && (
+                           <Button onClick={() => refetchAppCount()}>Reload</Button>
                         )}
-                     </Grid>
-                     <Grid xs={10} style={{ textAlign: 'center' }}>
-                        <div
-                           style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              width: '100%',
+                     </div>
+                  )}
+                  {!showServerError && (
+                     <div onScroll={handleChartScroll}>
+                        <ComposedChart
+                           width={650}
+                           height={355}
+                           data={weeklyData}
+                           margin={{
+                              top: 20,
+                              right: 80,
+                              bottom: 20,
+                              left: 20,
                            }}
                         >
-                           <input
-                              type='text'
-                              placeholder='Search by Doctor Name'
-                              value={searchTerm}
-                              onChange={(e) => setSearchTerm(e.target.value)}
-                              style={{
-                                 width: '100%',
-                                 border: 'none',
-                                 padding: '0.25rem',
-                                 borderRadius: '5px',
-                                 marginRight: '0.25rem',
-                                 outline: 'none',
-                                 fontSize: '.8rem',
-                                 fontWeight: 'bold',
+                           <CartesianGrid stroke='#f5f5f5' />
+                           <XAxis
+                              dataKey='name'
+                              label={{
+                                 value: 'Date',
+                                 position: 'insideBottomRight',
+                                 offset: -10,
+                              }}
+                              // scale="band"
+                           />
+                           <YAxis
+                              label={{
+                                 value: 'Quantity',
+                                 angle: -90,
+                                 position: 'insideLeft',
                               }}
                            />
-                        </div>
-                     </Grid>
-                  </Grid>
-               </div>
-               <hr />
-
-               {displayedData && displayedData.length > 0 ? (
-                  displayedData.map((item, index) => (
-                     <div style={{ borderRadius: '50px' }} key={index}>
-                        <CommonListItem
-                           avatarSrc={item.avatarSrc}
-                           primaryText={
-                              <span
-                                 style={{
-                                    color: 'white',
-                                    fontSize: '1rem',
-                                    fontWeight: '525',
-                                    fontFamily: 'verdana',
-                                 }}
-                              >
-                                 {item.primaryText}
-                              </span>
-                           }
-                           secondaryText={
-                              <span
-                                 style={{
-                                    color: 'lightgreen',
-                                    fontSize: '.7rem',
-                                    fontFamily: 'verdana',
-                                 }}
-                              >
-                                 {item.secondaryText}
-                              </span>
-                           }
-                           disease_names={
-                              <span
-                                 style={{
-                                    color: 'lightgreen',
-                                    fontSize: '.7rem',
-                                    fontFamily: 'verdana',
-                                 }}
-                              >
-                                 {item.disease_names}
-                              </span>
-                           }
-                           patient_name={
-                              <span
-                                 style={{
-                                    color: 'lightgreen',
-                                    fontSize: '.7rem',
-                                    fontFamily: 'verdana',
-                                 }}
-                              >
-                                 {item.patient_name}
-                              </span>
-                           }
-                        />
-                        {console.log(item, 'item')}
-                        <Grid xs={12} style={{ textAlign: 'center' }}>
-                           <Link
-                              href={`dashboard/individualappointment/${item?.appointment_id}`}
-                           >
-                              <Button
-                                 onClick={() =>
-                                    handleViewClick(item?.appointment_id)
-                                 }
-                                 variant='contained'
-                                 size='small'
-                                 style={{
-                                    backgroundColor: '#13293D',
-                                    width: '5rem',
-                                    height: '1.4rem',
-                                    fontSize: '200',
-                                    cursor: 'pointer',
-                                 }}
-                              >
-                                 View
-                              </Button>
-                           </Link>
-                        </Grid>
-
-                        <hr />
+                           <Tooltip />
+                           <Legend />
+                           <Area
+                              type='monotone'
+                              dataKey='Appoints'
+                              fill='#AEE3F0'
+                              stroke='#AEE3F0'
+                           />
+                           <Bar dataKey='Patients' barSize={20} fill='#006494' />
+                           <Line
+                              type='monotone'
+                              dataKey='Doctors'
+                              stroke='#ff7300'
+                           />
+                        </ComposedChart>
                      </div>
-                  ))
-               ) : (
+                  )}
+               </Grid>
+            </Grid>
+            <Grid item xs={4} pl={4}>
+               <List
+                  className='Colo'
+                  sx={{
+                     width: '100%',
+                     maxWidth: 385,
+                     paddingY: '0px',
+                  }}
+                  style={{
+                     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                     borderRadius: '5px',
+                     marginTop: '2.5%',
+                     overflowY: 'scroll',
+                     height: 'calc(100vh - 95px)',
+                     backgroundColor: '#244C73',
+                     scrollbarColor: '#244C73 #0F1C2B',
+                  }}
+               >
                   <div
                      style={{
-                        textAlign: 'center',
-                        color: 'white',
-                        marginTop: '20px',
+                        position: 'sticky',
+                        top: 0,
+                        backgroundColor: '#244C73',
+                        zIndex: 1,
+                        padding: '3%',
                      }}
                   >
-                     No Data Found
+                     <h2
+                        className='Colo'
+                        style={{ textAlign: 'center', color: 'white' }}
+                     >
+                        Appointments
+                     </h2>
+                     <Grid
+                        mb={2}
+                        ml={1}
+                        mr={1}
+                        p={1}
+                        xs={12}
+                        style={{
+                           display: 'flex',
+                           alignItems: 'center',
+                           backgroundColor: 'white',
+                           borderRadius: '8px',
+                           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                        }}
+                     >
+                        <Grid xs={2}>
+                           {filteredCount > 0 && (
+                              <span
+                                 style={{
+                                    color: 'black',
+                                    textAlign: 'center',
+                                    paddingLeft: '0.5rem',
+                                    fontWeight: 'bold',
+                                    fontSize: '1rem',
+                                 }}
+                              >
+                                 {filteredCount}
+                              </span>
+                           )}
+                        </Grid>
+                        <Grid xs={10} style={{ textAlign: 'center' }}>
+                           <div
+                              style={{
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 width: '100%',
+                              }}
+                           >
+                              <input
+                                 type='text'
+                                 placeholder='Search by Doctor Name'
+                                 value={searchTerm}
+                                 onChange={(e) => setSearchTerm(e.target.value)}
+                                 style={{
+                                    width: '100%',
+                                    border: 'none',
+                                    padding: '0.25rem',
+                                    borderRadius: '5px',
+                                    marginRight: '0.25rem',
+                                    outline: 'none',
+                                    fontSize: '.8rem',
+                                    fontWeight: 'bold',
+                                 }}
+                              />
+                           </div>
+                        </Grid>
+                     </Grid>
                   </div>
-               )}
-            </List>
+                  <hr />
+
+                  {displayedData && displayedData.length > 0 ? (
+                     displayedData.map((item, index) => (
+                        <div style={{ borderRadius: '50px' }} key={index}>
+                           <CommonListItem
+                              avatarSrc={item.avatarSrc}
+                              primaryText={
+                                 <span
+                                    style={{
+                                       color: 'white',
+                                       fontSize: '1rem',
+                                       fontWeight: '525',
+                                       fontFamily: 'verdana',
+                                    }}
+                                 >
+                                    {item.primaryText}
+                                 </span>
+                              }
+                              secondaryText={
+                                 <span
+                                    style={{
+                                       color: 'lightgreen',
+                                       fontSize: '.7rem',
+                                       fontFamily: 'verdana',
+                                    }}
+                                 >
+                                    {item.secondaryText}
+                                 </span>
+                              }
+                              disease_names={
+                                 <span
+                                    style={{
+                                       color: 'lightgreen',
+                                       fontSize: '.7rem',
+                                       fontFamily: 'verdana',
+                                    }}
+                                 >
+                                    {item.disease_names}
+                                 </span>
+                              }
+                              patient_name={
+                                 <span
+                                    style={{
+                                       color: 'lightgreen',
+                                       fontSize: '.7rem',
+                                       fontFamily: 'verdana',
+                                    }}
+                                 >
+                                    {item.patient_name}
+                                 </span>
+                              }
+                           />
+                           {console.log(item, 'item')}
+                           <Grid xs={12} style={{ textAlign: 'center' }}>
+                              <Link
+                                 href={`dashboard/individualappointment/${item?.appointment_id}`}
+                              >
+                                 <Button
+                                    onClick={() =>
+                                       handleViewClick(item?.appointment_id)
+                                    }
+                                    variant='contained'
+                                    size='small'
+                                    style={{
+                                       backgroundColor: '#13293D',
+                                       width: '5rem',
+                                       height: '1.4rem',
+                                       fontSize: '200',
+                                       cursor: 'pointer',
+                                    }}
+                                 >
+                                    View
+                                 </Button>
+                              </Link>
+                           </Grid>
+
+                           <hr />
+                        </div>
+                     ))
+                  ) : (
+                     <div
+                        style={{
+                           textAlign: 'center',
+                           color: 'white',
+                           marginTop: '20px',
+                        }}
+                     >
+                        No Data Found
+                     </div>
+                  )}
+               </List>
+            </Grid>
          </Grid>
-      </Grid>
+      </div>
    )
 }
 

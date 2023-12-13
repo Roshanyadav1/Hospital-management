@@ -85,7 +85,7 @@ const StyledFormWrapper = styled('div')({
 const INITIAL_FORM_STATE = {
    // disease_id: '',
    disease_name: '',
-   disease_status: '',
+   disease_status: true,
    created_by: 'admin',
 }
 
@@ -183,8 +183,8 @@ const page = () => {
                                        label='Disease Status'
                                        name='disease_status'
                                        options={[
-                                          { value: 'Active', label: 'Active' },
-                                          { value: 'Inactive', label: 'Inactive' },
+                                          { value: 'true', label: 'Active' },
+                                          { value: 'false', label: 'Inactive' },
                                        ]}
                                     />
                                  </Grid>

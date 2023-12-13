@@ -2,19 +2,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
 
-export const Authapi = createApi({
-   reducerpath: 'authApi',
+export const apiAuth =  createApi({
+   reducerpath: 'apiAuth',
    baseQuery: fetchBaseQuery({
-      baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com'
+      baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
    }),
-   endpoints : (build) => ({
-      registerEmployeeAuth: build.mutation({
-         query: (value) => ({
-            url: '/Username-Password-Authentication/signup',
-            method: 'POST',
-            body:value
-         })
+   endpoints: (build) => ({
+      registerAuth: build.mutation({
+        query :(value) => ({
+         url: 'Username-Password-Authentication/signup',
+         method: 'POST',
+         body: value,
+        })
       })
+   
    })
 })
 export const queries = createApi({
@@ -178,14 +179,16 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-      employeeApprove: build.mutation({
-         query: (value) => ({
-            url: `employee/update/${value}`,
-            method: 'PATCH',
-            body:value
-         }),
+      changeStatus: build.mutation({
+          query: (p) => ({
+             url: '/employee/update/'+ p.id+'/',
+              method: 'PATCH', 
+             body: p.pro,
+             }),
          invalidatesTags: ['EMP'],
-      }),
+             
+             }),
+
    }),
 })
 export const {
@@ -208,10 +211,9 @@ export const {
    useGetDoctorTimesQuery,
    useAddAppointmentMutation,
    useGetAppointmentInfoQuery,
-   useEmployeeApproveMutation,
+   useChangeStatusMutation,
 } = queries
 
 export const {
-   registerEmployeeAuthMutation
-
-} = Authapi
+   useRegisterAuth,
+} = apiAuth
