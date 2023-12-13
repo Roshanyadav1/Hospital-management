@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import DataGridTable from './DataGridTable'
 import { useGetEmployeeQuery } from '@/services/Query'
-import { columns } from '@/data/ColumData'
+import { columns } from '@/data/EmployeeTableData'
 import {
    Container,
    Dialog,
@@ -242,7 +242,7 @@ function Dashboard() {
                            <Grid item xs={12} sm={6}>
                      <CustomAutocomplete
                         name='employee_type'
-                        label='Employee Type'
+                        label='Employment Type'
                         options={Empcategories}
                         value={values.employee_type}
                         onChange={handleChange}

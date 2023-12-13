@@ -2,7 +2,7 @@
 // import React from 'react'
 import Datagrid from './Datagrid'
 // import { DataGrid } from '@mui/x-data-grid';
-import { columns } from '../../data/ColumData'
+import { columns } from '../../data/EmployeeTableData'
 import { useGetEmployeeQuery } from '@/services/Query'
 
 function page() {
