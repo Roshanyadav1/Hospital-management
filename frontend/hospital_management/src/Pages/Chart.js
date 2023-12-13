@@ -193,7 +193,7 @@ function Chart() {
    }
 
    return (
-      <div style={{marginTop:'4rem'}}>
+      <div style={{marginTop:'5%'}}>
          <Grid container>
             <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
                <Grid container item xs={12}>

@@ -184,6 +184,16 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      changeStatus: build.mutation({
+          query: (p) => ({
+             url: '/employee/update/'+ p.id+'/',
+              method: 'PATCH', 
+             body: p.pro,
+             }),
+         invalidatesTags: ['EMP'],
+             
+             }),
+
    }),
 })
 export const {
@@ -206,6 +216,7 @@ export const {
    useGetDoctorTimesQuery,
    useAddAppointmentMutation,
    useGetAppointmentInfoQuery,
+   useChangeStatusMutation,
 } = queries
 
 export const {
