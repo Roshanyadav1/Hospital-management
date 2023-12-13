@@ -25,7 +25,7 @@ import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 
-function BookAppoinment({ id, name }) {
+function BookAppoinment({ id, name, date }) {
    const { data: doctorTimes , isLoading , refetch } = useGetDoctorTimesQuery(id)
    const[addAppointment] = useAddAppointmentMutation()
    const [selectedSlot, setSelectedSlot] = useState(null)
@@ -99,7 +99,8 @@ function BookAppoinment({ id, name }) {
 
          const payload = {
             appointment_time: hiddentime[selectedSlot.index][0],
-            appointment_date: moment().format('YYYY-MM-DD'),
+            // appointment_date: moment().format('YYYY-MM-DD'),
+            appointment_date: date,
             patient: localStorage.getItem('user_id'),
             doctor: id,
             disease: '72d9291c-f119-46f3-b0ed-44ff32697320',
