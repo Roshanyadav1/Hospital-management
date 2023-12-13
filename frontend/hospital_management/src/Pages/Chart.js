@@ -193,7 +193,7 @@ function Chart() {
    }
 
    return (
-      <div style={{marginTop:'5%'}}>
+      <div style={{marginTop:'7%'}}>
          <Grid container>
             <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
                <Grid container item xs={12}>
@@ -336,7 +336,7 @@ function Chart() {
                      <div onScroll={handleChartScroll}>
                         <ComposedChart
                            width={650}
-                           height={355}
+                           height={360}
                            data={weeklyData}
                            margin={{
                               top: 20,
