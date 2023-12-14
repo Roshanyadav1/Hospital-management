@@ -19,31 +19,33 @@ const GetStatusButton = (row) => {
    const [updateStatus] = useChangeStatusMutation()
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
-   
- 
+
+   const handleStatus = async () => {
+      try {
+         const newStatus = !openModal // Toggle the status
+         await updateStatus(newStatus ? 'active' : 'inactive')
+         
+         setOpenModal(newStatus) // Update the status using the setState function
+      } catch (error) {
+         console.error('Failed to change status:', error)
+      }
+
+      setSelectedRow(row.params.row)
+      setOpenModal(true)
+   }
+
    const handleCloseModal = () => {
       setOpenModal(false)
-   } 
- 
-      const ChangeStatus = async () => {
-         try {
-     
-            // Assuming your API expects an employee ID for deletion
-            let obj = {
-               id :row?.params?.row?.employee_id ,
-               pro :{
-                  'employee_status' : !row?.params?.row?.employee_status 
-               }
-            }
-            const result = await updateStatus(obj)
- 
-            // Log the result to the console
-            console.log('Result of updateStatus mutation:', result)
-                        handleCloseModal()
-            // Perform any additional logic after successful deletion
-         } catch (error) {
-            // Handle error
-            console.error('Error changing status:', error)
+   }
+
+   const ChangeStatus = async () => {
+      try {
+         // Assuming your API expects an employee ID for deletion
+         let obj = {
+            id: row?.params?.row?.employee_id,
+            pro: {
+               employee_status: !row?.params?.row?.employee_status,
+            },
          }
          const result = await updateStatus(obj)
 
