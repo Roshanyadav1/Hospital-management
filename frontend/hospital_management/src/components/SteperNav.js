@@ -106,7 +106,7 @@ function SteperNav(props) {
                </Link>
 
                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                  {role !== 'Patient' && role !== 'Doctor' && user && (
+                  {role !== 'Patient' && user && (
                      <Link href='/dashboard' prefetch>
                         <Button sx={{ color: '#fff' }}>Dashboard</Button>
                      </Link>

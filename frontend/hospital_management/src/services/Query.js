@@ -30,7 +30,7 @@ export const queries = createApi({
    endpoints: (build) => ({
       registerHospital: build.mutation({
          query: (value) => ({
-            url: 'hospital/register/',
+            url: 'hospital/register',
             method: 'POST',
             body: value,
          }),
@@ -45,7 +45,7 @@ export const queries = createApi({
       }),
       doctorUpdate: build.mutation({
          query: (value) => ({
-            url: 'doctor/update/',
+            url: 'doctor/update',
             method: 'POST',
             body: value,
          }),
@@ -68,7 +68,7 @@ export const queries = createApi({
       }),
       loginUser: build.mutation({
          query: (prop) => ({
-            url: 'user/login/',
+            url: 'user/login',
             method: 'POST',
             body: {
                user_email: prop,
@@ -79,14 +79,14 @@ export const queries = createApi({
       }),
       addDiseases: build.mutation({
          query: (payload) => ({
-            url: 'disease/add/',
+            url: 'disease/add',
             method: 'POST',
             body: payload,
          }),
       }),
       deleteEmployee: build.mutation({
          query: (value) => ({
-            url: 'employee/delete/' + value + '/',
+            url: 'employee/delete/' + value ,
             method: 'DELETE',
             // body:value
          }),
@@ -163,7 +163,7 @@ export const queries = createApi({
       }),
       addAppointment: build.mutation({
          query: (appointmentData) => ({
-            url: 'appointment/add/',
+            url: 'appointment/add',
             method: 'POST',
             body: appointmentData,
          }),
@@ -176,13 +176,13 @@ export const queries = createApi({
       }),
       getDoctorId: build.query({
          query: (doctor_id) => ({
-            url: `/doctor/view/?doctor_id=${doctor_id}`,
+            url: `/appointment/view/?doctor_id=${doctor_id}`,
             method: 'GET',
          }),
       }),
       changeStatus: build.mutation({
           query: (p) => ({
-             url: '/employee/update/'+ p.id+'/',
+             url: '/employee/update/'+ p.id,
               method: 'PATCH', 
              body: p.pro,
              }),
@@ -211,6 +211,7 @@ export const {
    useGetViewDoctorQuery,
    useGetDoctorTimesQuery,
    useAddAppointmentMutation,
+   useGetDoctorIdQuery,
    useGetAppointmentInfoQuery,
    useChangeStatusMutation,
 } = queries
