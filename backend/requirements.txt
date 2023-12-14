@@ -80,3 +80,4 @@ virtualenv==20.24.5
 virtualenvwrapper-win==1.2.7
 Werkzeug==3.0.1
 whitenoise==6.6.0
+python-jose==3.3.0
