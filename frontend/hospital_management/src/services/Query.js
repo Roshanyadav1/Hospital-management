@@ -60,10 +60,11 @@ export const queries = createApi({
       }),
       addEmployee: build.mutation({
          query: (payload) => ({
-            url: 'employee/add/',
+            url: 'employee/add',
             method: 'POST',
             body: payload,
          }),
+         
       }),
       loginUser: build.mutation({
          query: (prop) => ({
