@@ -25,6 +25,7 @@ const customstyles = `
     font-size: 0.8rem;
     font-family: Verdana;
   }
+  
   .column-line {
     border-right: 1px solid #89949E !important; // Adjust the color as needed
     padding-right: 8px; // Add padding to separate the text from the line

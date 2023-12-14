@@ -50,7 +50,7 @@ function DoctorPage() {
    console.log(filterDoc)
    let fill = {
       disease: selectedDiseases,
-      day: selectedDate,
+      day: formattedDate,
       doctor: selectedDoctor,
    }
 
