@@ -23,7 +23,9 @@ from employee.models import Employee
 from disease.models import Disease
 from prescription.models import Prescription
 from checkup.models import CheckUp
-from datetime import datetime,time,timedelta
+from datetime import datetime, time, timedelta
+from patient.models import Patient
+from disease.models import Disease
 
 
 class AppointmentAdd(GenericAPIView):
@@ -52,72 +54,75 @@ class AppointmentAdd(GenericAPIView):
             },
         )
 
+
 class AppointmentTab(ListAPIView):
     queryset = Appointment.objects.all()
-    serializer_class = AppointmentViewSerializer
-    def list(self, request, input , *args, **kwargs):
-     response = super().list(request, *args, **kwargs)
-     id = input
-     lists = []
-     if Appointment.objects.filter(patient_id=id).count()>=1:
-        appointments = Appointment.objects.filter(patient_id  = id)
-        for appointment in appointments:
-            appointment_id = appointment.appointment_id
-            appointment_date = appointment.appointment_date
-            appointment_time = appointment.appointment_time
-            appointment_checkup_status =""
-            prescription = ""
-            disease_name = ""
-            doctor_name = ""
-            checkups = CheckUp.objects.filter(appointment = appointment.appointment_id)
-            for checkup in checkups:
-                appointment_checkup_status = checkup.check_status
-            prescriptions = Prescription.objects.filter(appointment_id = appointment.appointment_id)
-            for prescription in prescriptions:
-                prescription = prescription.prescription_photo
-            diseases = Disease.objects.filter(disease_id = appointment.disease_id)
-            for disease in diseases:
-                 disease_name =disease.disease_name
-            doctors = Doctor.objects.filter(doctor_id = appointment.doctor_id)
-            for doctor in doctors:
-                
-                employees = Employee.objects.filter(employee_id = doctor.employee_id)
-                for employee in employees:
-                    doctor_name =employee.employee_name
-            new_dict = {"appointment_id": appointment_id,"doctor_name":doctor_name,"disease_name":disease_name,"appointment_date": appointment_date,"appointment_time": appointment_time,"check_status":appointment_checkup_status,"prescription":prescription ,"tab":""}
-            lists.append(new_dict)
+    serializer_class = AppointmentSerializer
+
+    def list(self, request, input, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        id = input
+        lists = []
+        if Appointment.objects.filter(patient_id=id).count() >= 1:
+            appointments = Appointment.objects.filter(patient_id=id)
+            for appointment in appointments:
+                appointment_id = appointment.appointment_id
+                appointment_date = appointment.appointment_date
+                appointment_time = appointment.appointment_time
+                appointment_checkup_status = ""
+                prescription = ""
+                disease_name = ""
+                doctor_name = ""
+                checkups = CheckUp.objects.filter(
+                    appointment=appointment.appointment_id)
+                for checkup in checkups:
+                    appointment_checkup_status = checkup.check_status
+                prescriptions = Prescription.objects.filter(
+                    appointment_id=appointment.appointment_id)
+                for prescription in prescriptions:
+                    prescription = prescription.prescription_photo
+                diseases = Disease.objects.filter(
+                    disease_id=appointment.disease_id)
+                for disease in diseases:
+                    disease_name = disease.disease_name
+                doctors = Doctor.objects.filter(
+                    doctor_id=appointment.doctor_id)
+                for doctor in doctors:
+
+                    employees = Employee.objects.filter(
+                        employee_id=doctor.employee_id)
+                    for employee in employees:
+                        doctor_name = employee.employee_name
+                new_dict = {"appointment_id": appointment_id, "doctor_name": doctor_name, "disease_name": disease_name, "appointment_date": appointment_date,
+                            "appointment_time": appointment_time, "check_status": appointment_checkup_status, "prescription": prescription, "tab": ""}
+                lists.append(new_dict)
+
+            for list in lists:
+                if list['appointment_date'] == datetime.today().date():
+                    list['tab'] = 'todays'
+                if list['appointment_date'] > datetime.today().date():
+                    list['tab'] = 'upcoming'
+                if list['appointment_date'] < datetime.today().date():
+                    list['tab'] = 'previous'
+
+            return Response({
+                'status': status.HTTP_200_OK,
+                'message': ResponseMessage.RETRIEVED_SUCCESS,
+                'data': lists
+
+            })
+        else:
+            return Response({
+                'status': status.HTTP_400_BAD_REQUEST,
+                'message': ResponseMessage.INVALID_ID
 
 
-        for list in lists:
-           if list['appointment_date'] == datetime.today().date():
-               list['tab'] = 'todays'
-           if list['appointment_date'] > datetime.today().date():
-               list['tab'] = 'upcoming'
-           if list['appointment_date'] < datetime.today().date():
-               list['tab'] = 'previous'
-         
-        
-        return Response({
-            'status':status.HTTP_200_OK,
-            'message': ResponseMessage.RETRIEVED_SUCCESS,
-            'data':lists
-
-        })
-     else:
-         return Response({
-            'status':status.HTTP_400_BAD_REQUEST,
-            'message': ResponseMessage.INVALID_ID
-            
-
-        })
-     
+            })
 
 
-    
-               
 class AppointmentCount(ListAPIView):
     queryset = Appointment.objects.all()
-    serializer_class = AppointmentViewSerializer
+    serializer_class = AppointmentSerializer
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -156,7 +161,7 @@ class AppointmentCount(ListAPIView):
             appointment_detail = Appointment.objects.filter(
                 appointment_date=date)
             for appointment in appointment_detail:
-                
+
                 appointment_count += 1
                 duplicate_doctor.add(appointment.doctor_id)
                 duplicate_patient.add(appointment.patient_id)
@@ -206,7 +211,7 @@ class AppointmentCount(ListAPIView):
 
 class AppointmentView(ListAPIView):
     queryset = Appointment.objects.all().order_by('created_at')
-    serializer_class = AppointmentViewSerializer
+    serializer_class = AppointmentSerializer
     filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
     filterset_fields = ['appointment_id', 'doctor_id', 'appointment_time',
@@ -218,7 +223,34 @@ class AppointmentView(ListAPIView):
         response = super().list(request, *args, **kwargs)
         response_message = ""
         response_code = ""
-
+        for data in response.data:
+            try:
+                doctor = Doctor.objects.get(doctor_id=data['doctor'])
+                employee = Employee.objects.get(employee_id=doctor.employee_id)
+                patient = Patient.objects.get(patient_id=data['patient'])
+                disease = Disease.objects.get(disease_id=data['disease'])
+                doctor_dict = {}
+                doctor_dict['doctor_id'] = doctor.doctor_id
+                doctor_dict['employee'] = {
+                    'employee_id': employee.employee_id,
+                    'employee_name': employee.employee_name
+                }
+                data['doctor'] = doctor_dict
+                patient_dict = {}
+                patient_dict['patient_id'] = patient.patient_id
+                patient_dict['patient_name'] = patient.patient_name
+                data['patient'] = patient_dict
+                disease_dict = {}
+                disease_dict['disease_id'] = disease.disease_id
+                disease_dict['disease_name'] = disease.disease_name
+                data['disease'] = disease_dict
+            except:
+                return Response(
+                    {
+                        'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        'message': "Internal Server Error",
+                    }
+                )
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message

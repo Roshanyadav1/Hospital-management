@@ -5,7 +5,7 @@ from employee.models import Employee
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        exclude = ('employee_type', 'employee_status')
+        exclude = ('employee_type',)
 
 class EmployeeRelation(serializers.ModelSerializer):
     class Meta:
