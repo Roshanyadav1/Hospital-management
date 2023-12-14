@@ -180,7 +180,7 @@ export const queries = createApi({
       }),
       getDoctorId: build.query({
          query: (doctor_id) => ({
-            url: `/doctor/view/?doctor_id=${doctor_id}`,
+            url: `/appointment/view/?doctor_id=${doctor_id}`,
             method: 'GET',
          }),
       }),
@@ -215,6 +215,7 @@ export const {
    useGetViewDoctorQuery,
    useGetDoctorTimesQuery,
    useAddAppointmentMutation,
+   useGetDoctorIdQuery,
    useGetAppointmentInfoQuery,
    useChangeStatusMutation,
 } = queries

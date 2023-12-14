@@ -169,7 +169,7 @@ function DoctorPage() {
                      </Box>
 
                      <Link
-                        href={`/bookappointment/${result?.doctor_id}+${result?.employee?.employee_name}`}
+                        href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`}
                         prefetch
                      >
                         <Button variant='contained' size='small'>
@@ -181,6 +181,7 @@ function DoctorPage() {
             </Card>
          </Grid>
       )
+      
    }
 
    const DoctorCardSkeleton = () => (
