@@ -26,6 +26,7 @@ function ShowDoctors() {
    })
 
    const totalPages = doctorList?.data?.total_pages
+   const formattedDate = currentDate.format('YYYY-MM-DD');
 
    const handlePageChange = (event, value) => {
       setCurrentPage(value)
@@ -120,7 +121,7 @@ function ShowDoctors() {
                                 </Typography>
                              </Typography>
                              <Link
-                        href={`/bookappointment/${doctor?.doctor_id}+${doctor?.employee?.employee_name}`}
+                        href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`}
                         prefetch
                      >
 
