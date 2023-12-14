@@ -26,7 +26,7 @@ function ShowDoctors() {
    })
 
    const totalPages = doctorList?.data?.total_pages
-   const formattedDate = currentDate.format('YYYY-MM-DD');
+   const formattedDate = '';
 
    const handlePageChange = (event, value) => {
       setCurrentPage(value)

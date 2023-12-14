@@ -9,13 +9,7 @@ import {
    Switch,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import Grid from '@mui/system/Unstable_Grid/Grid'
-import { Formik, Form } from 'formik'
 import { styled } from '@mui/material/styles'
-import RadioButtonGroup from '@/components/RadioButton/RadioButtonGroup'
-import CustomAutocomplete from '@/components/Autocomplete/index'
-import Divider from '@mui/material/Divider'
-import Text from '@/components/Textfield/Text'
 import FORM_VALIDATION from '@/components/FormValidation/employeeValidation'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
@@ -27,6 +21,9 @@ import { Delete, Create, Visibility, DisabledByDefault } from '@mui/icons-materi
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import AddEmployee from '@/components/AddEmployee'
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
+
+
+
 
 const style = {
    position: 'absolute',
@@ -326,7 +323,7 @@ const GetActionButton = (row) => {
                sx={{
                   position: 'absolute',
                   left: '12rem',
-                  bottom: 1,
+                  bottom: 0.5,
                }}
                onClick={handleCloseEditModal}
                size='large'

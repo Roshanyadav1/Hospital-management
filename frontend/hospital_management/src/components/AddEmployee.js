@@ -37,7 +37,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
          validationSchema={validationSchema}
          onSubmit={handleRegister}
       >
-         {({ values, handleChange, handleBlur, touched }) => (
+         {({ values, handleChange, handleBlur, touched ,  isSubmitting }) => (
             <Form>
                <Grid container spacing={2}>
                   <Grid item xs={12} sm={12}>
@@ -170,8 +170,11 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                         color='primary'
                         type='submit'
                         size='large'
+                        disabled={isSubmitting}
+
                      >
-                        Submit
+                                            {isSubmitting ? 'Submitting...' : 'Submit'}
+
                      </Button>
                   </Grid>
                </Grid>
