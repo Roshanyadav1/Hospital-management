@@ -88,7 +88,9 @@ const GetStatusButton = (row) =>{
    const [openModal, setOpenModal] = useState(false)
    
  
-  
+   const handleCloseModal = () => {
+      setOpenModal(false)
+   } 
  
       const ChangeStatus = async () => {
          try {
