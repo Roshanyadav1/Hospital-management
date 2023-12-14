@@ -10,6 +10,7 @@ import NextTopLoader from 'nextjs-toploader'
 import SteperNav from '@/components/SteperNav'
 import Footer from '@/components/Footer'
 import { usePathname } from 'next/navigation'
+import { Auth0Provider } from '@auth0/auth0-react'
 
 const inter = Inter({ subsets: ['latin'] })
 const theme = createTheme(themeOptions)
@@ -22,25 +23,35 @@ export default function RootLayout({ children }) {
       <html lang='en'>
          <body className={inter.className}>
             <UserProvider>
-               <ToastContainer
-                  position={'top-right'}
-                  close
-                  on
-                  click={true}
-                  pauseOnHover={false}
-                  pauseOnFocusLoss={false}
-                  autoClose={2000}
-                  draggable={true}
-                  closeButton={<p>Close</p>}
-               />
-               <CustomProvider>
-                  <ThemeProvider theme={theme}>
-                     <NextTopLoader />
-                     {isShow ? null : <SteperNav />}
-                     {children}
-                     {isShow ? null : <Footer />}
-                  </ThemeProvider>
-               </CustomProvider>
+               <Auth0Provider
+                  domain='dev-wk502078emf2n02u.us.auth0.com'
+                  clientId='8DYRjBXQPhFEU32hGiiBTwBszzpIRRnf'
+                  authorizationParams={{
+                     redirect_uri: window.location.origin,
+                     audience: 'https://dev-wk502078emf2n02u.us.auth0.com/api/v2/',
+                     scope: 'read:current_user update:current_user_metadata',
+                  }}
+               >
+                  <ToastContainer
+                     position={'top-right'}
+                     close
+                     on
+                     click={true}
+                     pauseOnHover={false}
+                     pauseOnFocusLoss={false}
+                     autoClose={2000}
+                     draggable={true}
+                     closeButton={<p>Close</p>}
+                  />
+                  <CustomProvider>
+                     <ThemeProvider theme={theme}>
+                        <NextTopLoader />
+                        {isShow ? null : <SteperNav />}
+                        {children}
+                        {isShow ? null : <Footer />}
+                     </ThemeProvider>
+                  </CustomProvider>
+               </Auth0Provider>
             </UserProvider>
          </body>
       </html>

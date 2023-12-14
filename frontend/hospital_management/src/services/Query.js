@@ -52,7 +52,7 @@ export const queries = createApi({
       }),
       loginUser: build.mutation({
          query: (prop) => ({
-            url: 'user/login/',
+            url: 'user/login',
             method: 'POST',
             body: {
                user_email: prop,

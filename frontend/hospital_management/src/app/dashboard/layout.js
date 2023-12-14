@@ -291,4 +291,4 @@ function Layout({ children }) {
    )
 }
 
-export default withRoleRedirect(Layout, ['Admin', 'Manager' , 'Doctor'])
+export default withRoleRedirect(Layout, ['Admin', 'Manager', 'Doctor'])

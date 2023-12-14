@@ -21,6 +21,8 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useLoginUserMutation } from '@/services/Query'
 
+import { useAuth0 } from '@auth0/auth0-react'
+
 const drawerWidth = 240
 const navItems = [
    { label: 'Doctor', route: '/showdoctors' },
@@ -31,8 +33,12 @@ const navItems = [
 function SteperNav(props) {
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
+   const { loginWithRedirect } = useAuth0()
    const [userLogin] = useLoginUserMutation()
    const { user } = useUser()
+
+   const { user: asdf } = useAuth0()
+   console.log(asdf, 'user')
 
    const handleDrawerToggle = () => {
       setMobileOpen((prevState) => !prevState)
@@ -63,7 +69,7 @@ function SteperNav(props) {
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
          <Divider />
          <List>
-            <Button href='/api/auth/login' sx={{ color: '#fff' }}>
+            <Button onClick={() => loginWithRedirect()} sx={{ color: '#fff' }}>
                Login
             </Button>
             {navItems.map((item) => (
@@ -119,7 +125,10 @@ function SteperNav(props) {
                   {user && <Button sx={{ color: '#fff' }}>{user.name}</Button>}
 
                   {!user && (
-                     <Button href='/api/auth/login' sx={{ color: '#fff' }}>
+                     <Button
+                        onClick={() => loginWithRedirect()}
+                        sx={{ color: '#fff' }}
+                     >
                         Login
                      </Button>
                   )}

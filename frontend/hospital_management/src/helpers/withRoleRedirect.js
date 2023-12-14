@@ -14,7 +14,6 @@ const withRoleRedirect = (WrappedComponent, allowedRoles) => {
          }
       }, [router])
 
-
       if (userRole && allowedRoles.includes(userRole)) {
          return <WrappedComponent {...props} />
       } else {
