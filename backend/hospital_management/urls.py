@@ -22,6 +22,7 @@ urlpatterns = [
                  template_name='docs.html',
                  extra_context={'schema_url': 'api_schema'}
              ), name='docs'),
+             path('auth0/', include('auth0verify.urls'), name='auth0'),
              path('patient/', include('patient.urls'), name='Patient'),
              path('doctor/', include('doctor.urls'), name='Doctor'),
              path('disease/', include('disease.urls')),
