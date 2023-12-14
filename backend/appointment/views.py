@@ -57,7 +57,7 @@ class AppointmentAdd(GenericAPIView):
 
 class AppointmentTab(ListAPIView):
     queryset = Appointment.objects.all()
-    serializer_class = AppointmentViewSerializer
+    serializer_class = AppointmentSerializer
 
     def list(self, request, input, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -122,7 +122,7 @@ class AppointmentTab(ListAPIView):
 
 class AppointmentCount(ListAPIView):
     queryset = Appointment.objects.all()
-    serializer_class = AppointmentViewSerializer
+    serializer_class = AppointmentSerializer
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
