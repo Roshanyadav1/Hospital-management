@@ -87,24 +87,8 @@ const GetStatusButton = (row) =>{
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
    
-
-   const handleStatus =async()=> {
-      try {
-         const newStatus = !openModal; // Toggle the status
-         await updateStatus(newStatus ? 'active' : 'inactive');
-         setOpenModal(newStatus); // Update the status using the setState function
-       } catch (error) {
-         console.error('Failed to change status:', error);
-       }
-
-      setSelectedRow(row.params.row)
-      setOpenModal(true)
-   }
-
-   const handleCloseModal = () => {
-      setOpenModal(false)
-   }
-
+ 
+  
  
       const ChangeStatus = async () => {
          try {
