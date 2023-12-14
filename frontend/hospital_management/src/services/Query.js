@@ -143,7 +143,7 @@ export const queries = createApi({
       }),
       getAppointPatientDoctorDate: build.query({
          query: () => ({
-            url: 'appointment/appointmentCount/',
+            url: 'appointment/appointmentCount',
             method: 'GET',
          }),
       }),
