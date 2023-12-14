@@ -25,11 +25,6 @@ import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 
-<<<<<<< HEAD
-function BookAppoinment({ id, name }) {
-   const { data: doctorTimes, isLoading, refetch } = useGetDoctorTimesQuery(id)
-   const [addAppointment] = useAddAppointmentMutation()
-=======
 function BookAppoinment({ id, name, date }) {
    let data = {
       id: id,
@@ -37,7 +32,6 @@ function BookAppoinment({ id, name, date }) {
    }
    const { data: doctorTimes , isLoading , refetch } = useGetDoctorTimesQuery(data)
    const[addAppointment] = useAddAppointmentMutation()
->>>>>>> 212d1375c0d0464b80168155c706cb6cd9e8e765
    const [selectedSlot, setSelectedSlot] = useState(null)
    const [openDialog, setOpenDialog] = useState(false)
    const [times, setTimes] = useState([])
