@@ -191,11 +191,19 @@ export const queries = createApi({
              body: p.pro,
              }),
          invalidatesTags: ['EMP'],
-             
-             }),
+      }),
+      changeEmpData: build.mutation({
+         query: (p) => ({
+            url: '/employee/update/'+ p.id,
+             method: 'PATCH', 
+            body: p.pro,
+            }),
+        invalidatesTags: ['EMP'],
+     }),  
 
-   }),
-})
+            }),
+         })
+
 export const {
    useRegisterHospitalMutation,
    useDoctorUpdateMutation,
@@ -218,6 +226,7 @@ export const {
    useGetDoctorIdQuery,
    useGetAppointmentInfoQuery,
    useChangeStatusMutation,
+   useChangeEmpDataMutation,
 } = queries
 
 export const {

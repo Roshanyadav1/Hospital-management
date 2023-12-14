@@ -21,14 +21,12 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { useAddEmployeeMutation } from '@/services/Query'
 import { useGetEmployeeQuery } from '@/services/Query'
-
+import { useChangeEmpDataMutation } from '@/services/Query'
 import { useChangeStatusMutation } from '@/services/Query'
 import { Delete, Create, Visibility, DisabledByDefault } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import AddEmployee from '@/components/AddEmployee'
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
-
-
 
 const style = {
    position: 'absolute',
@@ -82,39 +80,36 @@ const StyledFormWrapper = styled('div')({
 const Empcategories = ['Part Time', 'Full Time']
 const Role = ['Doctor', 'Manager']
 
-const GetStatusButton = (row) =>{
+const GetStatusButton = (row) => {
    const [updateStatus] = useChangeStatusMutation()
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
-   
- 
+
    const handleCloseModal = () => {
       setOpenModal(false)
-   } 
- 
-      const ChangeStatus = async () => {
-         try {
-     
-            // Assuming your API expects an employee ID for deletion
-            let obj = {
-               id :row?.params?.row?.employee_id ,
-               pro :{
-                  'employee_status' : !row?.params?.row?.employee_status 
-               }
-            }
-            const result = await updateStatus(obj)
- 
-            // Log the result to the console
-            console.log('Result of updateStatus mutation:', result)
-                        handleCloseModal()
-            // Perform any additional logic after successful deletion
-         } catch (error) {
-            // Handle error
-            console.error('Error changing status:', error)
-         }
-      }
+   }
 
-  
+   const ChangeStatus = async () => {
+      try {
+         // Assuming your API expects an employee ID for deletion
+         let obj = {
+            id: row?.params?.row?.employee_id,
+            pro: {
+               employee_status: !row?.params?.row?.employee_status,
+            },
+         }
+         const result = await updateStatus(obj)
+
+         // Log the result to the console
+         console.log('Result of updateStatus mutation:', result)
+         handleCloseModal()
+         // Perform any additional logic after successful deletion
+      } catch (error) {
+         // Handle error
+         console.error('Error changing status:', error)
+      }
+   }
+
    return (
       <div
          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
@@ -129,7 +124,7 @@ const GetStatusButton = (row) =>{
                   fontSize: '1rem',
                }}
             >
-                Confirmation for Changing Status
+               Confirmation for Changing Status
             </DialogTitle>
             <DialogContent>
                <p>
@@ -141,45 +136,66 @@ const GetStatusButton = (row) =>{
                <Button onClick={handleCloseModal} color='primary' className='No'>
                   No
                </Button>
-               <Button onClick={ChangeStatus} color='primary' className='Yes'>
+               <Button onClick={ChangeStatus} color='primary' className='No'>
                   Yes
                </Button>
             </DialogActions>
          </Dialog>
 
-         <Switch checked={row?.params?.row?.employee_status} onClick={()=>setOpenModal(true)} color='primary' size='small' />
+         <Switch
+            checked={row?.params?.row?.employee_status}
+            onClick={() => setOpenModal(true)}
+            color='primary'
+            size='small'
+         />
       </div>
    )
-
-
 }
 /////////////////////////////////////////////////////////////////////////
 const GetActionButton = (row) => {
    const [deleteEmployee] = useDeleteEmployeeMutation()
+   const [updateEmployee] = useChangeEmpDataMutation()
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
-   const [openEditModal , setOpenEditModal] = useState(false)
-
+   const [openEditModal, setOpenEditModal] = useState(false)
 
    const INITIAL_FORM_STATE = {
-      employee_name: row?.params?.row?.employee_name ,
-      employee_email: row?.params?.row?.employee_email ,
-      employee_number: row?.params?.row?.employee_number ,
-      employee_password: row?.params?.row?.employee_password , // not available
+      employee_name: row?.params?.row?.employee_name,
+      employee_email: row?.params?.row?.employee_email,
+      employee_number: row?.params?.row?.employee_number,
+      employee_password: row?.params?.row?.employee_password, // not available
       employee_type: row?.params?.row?.employee_type,
       employee_role: row?.params?.row?.employee_role,
       employee_status: row?.params?.row?.employee_status,
       // created_by: 'admin',
       // updated_by: 'admin',
    }
-   const [addemployee] = useAddEmployeeMutation()
+   const [addemployee] = useAddEmployeeMutation() //for add employee form
 
    const handleRegister = async (values, { resetForm }) => {
       try {
-         console.log(values , "asdf")
+         // Assuming your API expects an employee ID for deletion
+         let obj = {
+            id: row?.params?.row?.employee_id,
+            pro: {
+               'employee_name': values.employee_name,
+               'employee_email': values.employee_email,
+               'employee_number': values.employee_number,
+               'employee_password': values.employee_password, // not available
+               'employee_type': values.employee_type,
+               'employee_role': values.employee_role,
+               'employee_status': values.employee_status,
+            },
+         }
+         const result = await updateEmployee(obj)
+
+         // Log the result to the console
+         console.log('Result of updateStatus mutation:', result)
+         handleCloseModal()
+         // Perform any additional logic after successful deletion
       } catch (error) {
          // Handle error
-         // console.error('Error submitting form:', error);
+         console.error('Error changing status:', error)
       }
    }
    const [pageState, setPageState] = useState({
@@ -278,14 +294,14 @@ const GetActionButton = (row) => {
                <Button onClick={handleCloseModal} color='primary' className='No'>
                   No
                </Button>
-               <Button onClick={handleConfirmDelete} color='primary' className='Yes'>
+               <Button onClick={handleConfirmDelete} color='primary' className='No'>
                   Yes
                </Button>
             </DialogActions>
          </Dialog>
 
          <Dialog open={openEditModal} onClose={handleCloseEditModal} padding={3}>
-         <DialogTitle>Edit Employee</DialogTitle>
+            <DialogTitle>Edit Employee</DialogTitle>
             <IconButton
                aria-label='close'
                onClick={handleCloseEditModal}
@@ -298,26 +314,25 @@ const GetActionButton = (row) => {
             >
                <CloseIcon />
             </IconButton>
-               <AddEmployee
+            <AddEmployee
                initialState={INITIAL_FORM_STATE}
                validationSchema={FORM_VALIDATION}
                handleRegister={handleRegister}
                disableEmail={true}
             />
             <Button
-                        variant='contained'
-                        color='primary'
-                        sx={{
-                           position: 'absolute',
-                           left: "12rem",
-                           bottom: 1,
-                           
-                        }}
-                        onClick={handleCloseEditModal}
-                        size='large'
-                     >
-                       cancel
-                     </Button>
+               variant='contained'
+               color='primary'
+               sx={{
+                  position: 'absolute',
+                  left: '12rem',
+                  bottom: 1,
+               }}
+               onClick={handleCloseEditModal}
+               size='large'
+            >
+               cancel
+            </Button>
          </Dialog>
 
          <IconButton onClick={handleDelete} color='error' size='small'>
@@ -372,7 +387,7 @@ export const columns = [
       field: 'employee_role',
       headerName: 'Role',
       minWidth: 80,
-      maxWidth:120,
+      maxWidth: 120,
       headerClassName: 'header',
       headerAlign: 'center',
       align: 'left',
@@ -404,7 +419,7 @@ export const columns = [
    //       />
    //     ),
    // },
- 
+
    {
       field: 'Status',
       headerName: 'Status',
@@ -416,7 +431,6 @@ export const columns = [
       sortable: false,
       renderCell: (params) => <GetStatusButton params={params} />,
    },
-
 
    // { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
    // { field: 'employee_type', headerName: 'Type', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },

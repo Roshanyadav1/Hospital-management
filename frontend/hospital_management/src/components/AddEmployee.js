@@ -126,8 +126,8 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                         label='Status'
                         name='employee_status'
                         options={[
-                           { value: 'Available', label: 'Active' },
-                           { value: 'Unavailable', label: 'Inactive' },
+                           { value: true, label: 'Active' },
+                           { value: false, label: 'Inactive' },
                         ]}
                      />
                   </Grid>
