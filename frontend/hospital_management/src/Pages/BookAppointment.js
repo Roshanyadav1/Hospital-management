@@ -26,11 +26,7 @@ import { toast } from 'react-toastify'
 import moment from 'moment'
 
 function BookAppoinment({ id, name, date }) {
-   let data = {
-      id: id,
-      date: date
-   }
-   const { data: doctorTimes , isLoading , refetch } = useGetDoctorTimesQuery(data)
+   const { data: doctorTimes , isLoading , refetch } = useGetDoctorTimesQuery(id)
    const[addAppointment] = useAddAppointmentMutation()
    const [selectedSlot, setSelectedSlot] = useState(null)
    const [openDialog, setOpenDialog] = useState(false)
