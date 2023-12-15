@@ -272,23 +272,24 @@ function Layout({ children }) {
                </List>
             </div>
          </Drawer>
-         <Container maxWidth={'100%'}>
+
+         {/* <Box maxWidth={'100%'}> */}
             <Box 
                component='main'
                sx={{
-                  // width: { sm: `calc(100% - ${drawerWidth}px)` },
+                  width: { sm: `calc(100% - ${drawerWidth}px)` },
                   // height: {
                   //    sm: `calc(100vh - 64px)`,
                   // },
-                  flexGrow: 1,
-                  padding: 1,
+                  // flexGrow: 1,
+                  // padding: 1,
                }}
             >
-               <Toolbar />
-               <Box>{children}</Box>
+               {/* <Toolbar /> */}
+               <Container>{children}</Container>
             </Box>
-         </Container>
-      </Box>
+         </Box>
+      // </Box>
    )
 }
 

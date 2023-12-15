@@ -239,13 +239,8 @@ const page = () => {
                                        label='Disease Status'
                                        name='disease_status'
                                        options={[
-<<<<<<< HEAD
                                           { value: true, label: 'Active' },
                                           { value: false, label: 'Inactive' },
-=======
-                                          { value: 'true', label: 'Active' },
-                                          { value: 'false', label: 'Inactive' },
->>>>>>> origin/HM_New
                                        ]}
                                     />
                                  </Grid>
