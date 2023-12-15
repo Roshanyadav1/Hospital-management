@@ -14,6 +14,7 @@ import {
 import docImage from '../assets/Doctorrrr.jpg'
 import Image from 'next/image'
 import Link from 'next/link'
+import moment from 'moment'
 
 function ShowDoctors() {
    const [currentPage, setCurrentPage] = useState(1)
@@ -26,7 +27,8 @@ function ShowDoctors() {
    })
 
    const totalPages = doctorList?.data?.total_pages
-   const formattedDate = '';
+   let currentDate=moment()
+   const formattedDate = currentDate.format('YYYY-MM-DD');
 
    const handlePageChange = (event, value) => {
       setCurrentPage(value)
