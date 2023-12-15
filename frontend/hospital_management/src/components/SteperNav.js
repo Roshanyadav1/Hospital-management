@@ -1,3 +1,4 @@
+
 'use client'
 
 import AppBar from '@mui/material/AppBar'
@@ -39,9 +40,74 @@ function SteperNav(props) {
       setMobileOpen((prevState) => !prevState)
    }
 
-   let role = localStorage.getItem('user_role')
+   
 
-   // when the user have logged in already !!
+   const getNavigationItems = () => {
+      let role = localStorage.getItem('user_role')
+      switch (role) {
+         case "Admin":
+            return (
+               <>
+                  <Link href='/dashboard' prefetch>
+                     <Button sx={{ color: '#fff' }}>Dashboard</Button>
+                  </Link>
+                  {navItems.map((item) => (
+                     <Link key={item.label} href={item.route} prefetch passHref>
+                        <Button sx={{ color: '#fff' }}>{item.label}</Button>
+                     </Link>
+                  ))}
+                  {user && (
+                     <Button href='/api/auth/logout' sx={{ color: '#fff' }}>
+                        Logout
+                     </Button>
+                  )}
+               </>
+            );
+
+         case "Doctor":
+            return (
+               <>
+                  <Link href='/dashboard' prefetch>
+                     <Button sx={{ color: '#fff' }}>Dashboard</Button>
+                  </Link>
+                  {user && (
+                     <Button href='/api/auth/logout' sx={{ color: '#fff' }}  >
+                        Logout
+                     </Button>
+                  )}
+               </>
+            );
+         case "Patient":
+            return (
+               <>
+                  {navItems.map((item) => (
+                     <Link key={item.label} href={item.route} prefetch passHref>
+                        <Button sx={{ color: '#fff' }}>{item.label}</Button>
+                     </Link>
+                  ))}
+                  {user && (
+                     <Button sx={{ color: '#fff' }}>{user.name || 'User'}</Button>
+                  )}
+                  {user && (
+                     <Button href='/api/auth/logout' sx={{ color: '#fff' }}>
+                        Logout
+                     </Button>
+                  )}
+               </>
+            );
+         default:
+             return (
+              
+               <Button href='/api/auth/login' sx={{ color: '#fff' }}>
+                  Login
+               </Button>
+            );
+            
+           
+      }
+   };
+
+
    useEffect(() => {
       if (user) {
          const handleSubmit = async () => {
@@ -57,7 +123,7 @@ function SteperNav(props) {
          }
          handleSubmit()
       }
-      // eslint-disable-next-line
+
    }, [user])
 
    const drawer = (
@@ -85,7 +151,6 @@ function SteperNav(props) {
          </List>
       </Box>
    )
-
    const container = window !== undefined ? () => window().document.body : undefined
    return (
       <div>
@@ -105,33 +170,15 @@ function SteperNav(props) {
                   <Image width={120} height={40} src={Logo} />
                </Link>
 
+
                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                  {role !== 'Patient' && user && (
-                     <Link href='/dashboard' prefetch>
-                        <Button sx={{ color: '#fff' }}>Dashboard</Button>
-                     </Link>
-                  )}
+                  {getNavigationItems()}
 
-                  {navItems.map((item) => (
-                     <Link key={item.label} href={item.route} prefetch passHref>
-                        <Button sx={{ color: '#fff' }}>{item.label}</Button>
-                     </Link>
-                  ))}
-                  {user && <Button sx={{ color: '#fff' }}>{user.name}</Button>}
-
-                  {!user && (
-                     <Button href='/api/auth/login' sx={{ color: '#fff' }}>
-                        Login
-                     </Button>
-                  )}
-                  {user && (
-                     <Button href='/api/auth/logout' sx={{ color: '#fff' }}>
-                        Logout
-                     </Button>
-                  )}
                </Box>
             </Toolbar>
          </AppBar>
+
+
          <nav>
             <Drawer
                container={container}
@@ -139,7 +186,7 @@ function SteperNav(props) {
                open={mobileOpen}
                onClose={handleDrawerToggle}
                ModalProps={{
-                  keepMounted: true, // Better open performance on mobile.
+                  keepMounted: true,
                }}
                sx={{
                   display: { xs: 'block', sm: 'none' },
@@ -157,7 +204,7 @@ function SteperNav(props) {
             <Typography></Typography>
          </Box>
       </div>
-   )
+   );
 }
 
-export default SteperNav
+export default SteperNav;

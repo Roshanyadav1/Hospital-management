@@ -11,8 +11,10 @@ import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
 import Logo from '../assets/blueSga.png'
 import Image from 'next/image'
-import { Grid } from '@mui/material'
-const settings = ['Profile', 'Account']
+import { Grid, Link } from '@mui/material'
+const settings = [
+   { label: 'Profile', route: '/dashboard/profile' },
+   { label: 'Account', route: '/dashboard/account' },]
 
 function ResponsiveAppBar({ sidebarChanges }) {
    const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -75,8 +77,10 @@ function ResponsiveAppBar({ sidebarChanges }) {
                         onClose={handleCloseUserMenu}
                      >
                         {settings.map((setting) => (
-                           <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                              <Typography textAlign='center'>{setting}</Typography>
+                           <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                              <Link href={setting.route} passHref>
+                                 <Typography component='a' textAlign='center'>{setting.label}</Typography>
+                              </Link>
                            </MenuItem>
                         ))}
                         <MenuItem

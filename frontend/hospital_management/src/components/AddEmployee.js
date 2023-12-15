@@ -132,29 +132,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                      />
                   </Grid>
                   <Divider />
-                  {/* <Grid item xs={12} sm={8} >
-                  <Text name="created_by" label="Created By" autoComplete=""
-                    InputProps={{
-                      style: {
-                        background: 'white', border: 'none', borderRadius: '20px',
-                      },
-                    }}
-                  />
-                </Grid> */}
-
-                  {/* <Grid item xs={12} sm={6}>
-                  <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />
-                </Grid>
-
-                <Grid item xs={12} sm={8} >
-                  <Text name="updated_by" label="Updated By" autoComplete=""
-                    InputProps={{
-                      style: {
-                        background: 'white', border: 'none', borderRadius: '20px',
-                      },
-                    }}
-                  />
-                </Grid> */}
+            
 
                   <Grid item xs={12} sm={6}>
                      <VisuallyHiddenInput

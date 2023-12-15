@@ -169,17 +169,7 @@ function Layout({ children }) {
          return disableStyle
       }
    }
-   // const handleRegister = async (values, { resetForm }) => {
-   //    try {
-   //       let res = await addDisease(values)
-   //       console.log(res)
-   //       toast.success(res?.data?.message || 'Doctor added successfully')
-   //       resetForm()
-   //    } catch (error) {
-   //       // Handle error
-   //       // console.error('Error submitting form:', error);
-   //    }
-   // }
+
 
    return (
       <Box sx={{ display: 'flex' }}>
@@ -213,16 +203,7 @@ function Layout({ children }) {
                         path: '/dashboard/adddisease',
                         icon: <CoronavirusIcon />,
                      },
-                     // {
-                     //    text: 'Add Hospital',
-                     //    path: '/dashboard/addhospital',
-                     //    icon: <AddBoxIcon />,
-                     // },
-                     // {
-                     //    text: 'Add Employee',
-                     //    path: '/dashboard/addEmployee',
-                     //    icon: <GroupAddIcon />,
-                     // },
+         
                      {
                         text: 'Prescription',
                         path: '/dashboard/precription',
@@ -274,24 +255,30 @@ function Layout({ children }) {
          </Drawer>
 
          {/* <Box maxWidth={'100%'}> */}
-            <Box 
-               component='main'
-               sx={{
-                  width: { sm: `calc(100% - ${drawerWidth}px)` },
-                  // height: {
-                  //    sm: `calc(100vh - 64px)`,
-                  // },
-                  // flexGrow: 1,
-                  // padding: 1,
-               }}
-            >
-               {/* <Toolbar /> */}
-               <Container>{children}</Container>
-            </Box>
+         <Box
+            component='main'
+            sx={{
+               width: { sm: `calc(100% - ${drawerWidth}px)` },
+               // height: {
+               //    sm: `calc(100vh - 64px)`,
+               // },
+               // flexGrow: 1,
+               // padding: 1,
+            }}
+         >
+            {/* <Toolbar /> */}
+            <Container>{children}</Container>
          </Box>
+      </Box>
       // </Box>
    )
 }
 
 export default withRoleRedirect(Layout, ['Admin', 'Manager', 'Doctor'])
+
+
+
+
+
+
 
