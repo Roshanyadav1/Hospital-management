@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import docImage from '../assets/Doctorrrr.jpg'
 import Image from 'next/image'
+import Link from 'next/link'
 
 function ShowDoctors() {
    const [currentPage, setCurrentPage] = useState(1)
@@ -25,6 +26,7 @@ function ShowDoctors() {
    })
 
    const totalPages = doctorList?.data?.total_pages
+   const formattedDate = currentDate.format('YYYY-MM-DD');
 
    const handlePageChange = (event, value) => {
       setCurrentPage(value)
@@ -118,7 +120,12 @@ function ShowDoctors() {
                                    {doctor.disease_specialist.join(', ')}
                                 </Typography>
                              </Typography>
-                             <Button
+                             <Link
+                        href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`}
+                        prefetch
+                     >
+
+                             <Button 
                                 size='small'
                                 sx={{
                                    border: '1px solid',
@@ -130,6 +137,8 @@ function ShowDoctors() {
                              >
                                 Book Appointment
                              </Button>
+                     </Link>
+
                           </Card>
                        </Grid>
                     )

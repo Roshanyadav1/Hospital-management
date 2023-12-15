@@ -7,15 +7,102 @@ import {
    DialogTitle,
    IconButton,
 } from '@mui/material'
+import { useChangeStatusMutation } from '@/services/Query'
 import { Delete, Create, Visibility } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
-import Switch from '@mui/material/Switch';
-import { useEmployeeApproveMutation } from '@/services/Query';
+import Switch from '@mui/material/Switch'
+
+
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
+
+const GetStatusButton = (row) => {
+   const [updateStatus] = useChangeStatusMutation()
+   const [selectedRow, setSelectedRow] = useState(null)
+   const [openModal, setOpenModal] = useState(false)
+
+   const handleStatus = async () => {
+      try {
+         const newStatus = !openModal // Toggle the status
+         await updateStatus(newStatus ? 'active' : 'inactive')
+         
+         setOpenModal(newStatus) // Update the status using the setState function
+      } catch (error) {
+         console.error('Failed to change status:', error)
+      }
+
+      setSelectedRow(row.params.row)
+      setOpenModal(true)
+   }
+
+   const handleCloseModal = () => {
+      setOpenModal(false)
+   }
+
+   const ChangeStatus = async () => {
+      try {
+         // Assuming your API expects an employee ID for deletion
+         let obj = {
+            id: row?.params?.row?.employee_id,
+            pro: {
+               employee_status: !row?.params?.row?.employee_status,
+            },
+         }
+         const result = await updateStatus(obj)
+
+         // Log the result to the console
+         console.log('Result of updateStatus mutation:', result)
+         handleCloseModal()
+         // Perform any additional logic after successful deletion
+      } catch (error) {
+         // Handle error
+         console.error('Error changing status:', error)
+      }
+   }
+
+   return (
+      <div
+         style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      >
+         <Dialog open={openModal} onClose={handleCloseModal}>
+            <DialogTitle
+               style={{
+                  border: '1px solid white',
+                  borderRadius: '10px',
+                  boxShadow: 'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                  fontWeight: 'bolder',
+                  fontSize: '1rem',
+               }}
+            >
+               Confirmation for Changing Status
+            </DialogTitle>
+            <DialogContent>
+               <p>
+                  Do you want to Change the Status for{' '}
+                  <span className='Data'>{selectedRow?.employee_name}</span>
+               </p>
+            </DialogContent>
+            <DialogActions>
+               <Button onClick={handleCloseModal} color='primary' className='No'>
+                  No
+               </Button>
+               <Button onClick={ChangeStatus} color='primary' className='Yes'>
+                  Yes
+               </Button>
+            </DialogActions>
+         </Dialog>
+
+         <Switch
+            checked={row?.params?.row?.employee_status}
+            onClick={() => setOpenModal(true)}
+            color='primary'
+            size='small'
+         />
+      </div>
+   )
+}
 
 const GetActionButton = (row) => {
    const [deleteEmployee] = useDeleteEmployeeMutation()
-const[ employeeApprove]= useEmployeeApproveMutation()
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
 
@@ -63,7 +150,6 @@ const[ employeeApprove]= useEmployeeApproveMutation()
       handleCloseModal()
    }
 
-
    return (
       <div
          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
@@ -110,8 +196,6 @@ const[ employeeApprove]= useEmployeeApproveMutation()
    )
 }
 
-
-
 const handleSwitchChange = (id, Status) => {
    console.log('dfsdf', id, Status)
    alert('Yes you can do it')
@@ -154,7 +238,7 @@ export const columns = [
       field: 'employee_role',
       headerName: 'Role',
       minWidth: 80,
-      maxWidth:120,
+      maxWidth: 120,
       headerClassName: 'header',
       headerAlign: 'center',
       align: 'left',
@@ -162,24 +246,41 @@ export const columns = [
       sortable: false,
       flex: 1,
    },
+   // {
+   //    field: 'employee_status',
+   //    headerName: 'Status',
+   //    minWidth: 120,
+   //    headerClassName: 'header',
+   //    headerAlign: 'center',
+   //    align: 'center',
+   //    cellClassName: 'column-line',
+   //    sortable: false,
+   //    flex: 1,
+   //    renderCell: (params) => (
+   //       <Switch
+   //         checked={params.value}
+   //         // Handle the change event to update the data
+   //         onChange={(event) => {
+   //           const newData = [...rows];
+   //           newData[params.rowIndex].isActive = event.target.checked;
+   //           // Update your state or data source with the new data
+   //           // For example, you can use React useState hook
+   //           // setRows(newData);
+   //         }}
+   //       />
+   //     ),
+   // },
+
    {
+      field: 'Status',
       headerName: 'Status',
-      minWidth: 120,
       headerClassName: 'header',
-      headerAlign: 'center',
-      align: 'center',
       cellClassName: 'column-line',
-      sortable: false,
+      headerAlign: 'center',
       flex: 1,
-         renderCell: (params) => (
-            <Switch
-              checked={params?.row?.employee_status}
-              onChange={() => handleSwitchChange(params?.row?.employee_id, params?.row?.employee_status)}
-            />
-       ),
+      sortable: false,
+      renderCell: (params) => <GetStatusButton params={params} />,
    },
-   // { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-   // { field: 'employee_type', headerName: 'Type', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
    {
       field: 'Actions',
       headerName: 'Actions',
@@ -192,4 +293,4 @@ export const columns = [
    },
 ]
 
-// how can I find out the particular row's data from this table when i click on the delete button
+// how can I find out the particular row's data from this table when i click on the delete button             

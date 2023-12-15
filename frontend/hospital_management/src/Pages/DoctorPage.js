@@ -50,7 +50,7 @@ function DoctorPage() {
    console.log(filterDoc)
    let fill = {
       disease: selectedDiseases,
-      day: selectedDate,
+      day: formattedDate,
       doctor: selectedDoctor,
    }
 
@@ -169,7 +169,7 @@ function DoctorPage() {
                      </Box>
 
                      <Link
-                        href={`/bookappointment/${result?.doctor_id}+${result?.employee?.employee_name}`}
+                        href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`}
                         prefetch
                      >
                         <Button variant='contained' size='small'>
@@ -181,6 +181,7 @@ function DoctorPage() {
             </Card>
          </Grid>
       )
+      
    }
 
    const DoctorCardSkeleton = () => (

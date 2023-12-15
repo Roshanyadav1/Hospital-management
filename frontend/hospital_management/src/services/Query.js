@@ -2,21 +2,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
 
-export const apiAuth =  createApi({
+export const apiAuth = createApi({
    reducerpath: 'apiAuth',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
    }),
    endpoints: (build) => ({
       registerAuth: build.mutation({
-        query :(value) => ({
-         url: 'Username-Password-Authentication/signup',
-         method: 'POST',
-         body: value,
-        })
-      })
-   
-   })
+         query: (value) => ({
+            url: 'Username-Password-Authentication/signup',
+            method: 'POST',
+            body: value,
+         }),
+      }),
+   }),
 })
 export const queries = createApi({
    reducerpath: 'queries',
@@ -146,13 +145,12 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-      
-      getViewDoctor: build.query({
-         query:() => ({
-            url:'/doctor/view/?pageSize=9',
-            method:'Get',
-         })
 
+      getViewDoctor: build.query({
+         query: () => ({
+            url: '/doctor/view/?pageSize=9',
+            method: 'Get',
+         }),
       }),
       getDoctorTimes: build.query({
          query: (id) => ({
@@ -175,7 +173,7 @@ export const queries = createApi({
       }),
       getDoctorId: build.query({
          query: (doctor_id) => ({
-            url: `/doctor/view/?doctor_id=${doctor_id}`,
+            url: `/appointment/view/?doctor_id=${doctor_id}`,
             method: 'GET',
          }),
       }),
@@ -186,9 +184,16 @@ export const queries = createApi({
              body: p.pro,
              }),
          invalidatesTags: ['EMP'],
-             
-             }),
-
+      }),
+      diseaseStatus: build.mutation({
+         query: (p) => ({
+            url: `/disease/update/${p.disease_id}`,
+            method: 'PATCH',
+            body: {
+               disease_status: !p.disease_status,
+            },
+         }),
+      }),
    }),
 })
 export const {
@@ -210,10 +215,10 @@ export const {
    useGetViewDoctorQuery,
    useGetDoctorTimesQuery,
    useAddAppointmentMutation,
+   useGetDoctorIdQuery,
    useGetAppointmentInfoQuery,
    useChangeStatusMutation,
+   useDiseaseStatusMutation,
 } = queries
 
-export const {
-   useRegisterAuth,
-} = apiAuth
+export const { useRegisterAuth } = apiAuth

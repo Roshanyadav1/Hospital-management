@@ -59,20 +59,7 @@ const EmpRegister = () => {
    const [addAuthEmployee] = useRegisterAuth()
 
 
-   const handleRegister = async (values, { resetForm }) => {
-      try {
-         let res = await addemployee(values)
-         let resAuth = await addAuthEmployee(values)
-         console.log(res)
-         console.log(authRes)
-         toast.success(res?.data?.message || ' Employee added successfully')
-         resetForm()
-      } catch (error) {
-         // Handle error
-         // console.error('Error submitting form:', error);
-      }
-   }
-
+   
    return (
       <StyledFormWrapper>
          <StyledPaper elevation={3}>

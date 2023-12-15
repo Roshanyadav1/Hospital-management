@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 // import RadioButtonGroup from './form/RadioB/RadioButtonGroup';
 import RadioButtonGroup from '@/components/RadioButton/RadioButtonGroup'
-import CustomAutocomplete from './form/autocomplete'
-import Text from './form/Textfield/Text'
+import CustomAutocomplete from '@/components/Autocomplete/index'
+import Text from '@/components/Textfield/Text'
 import Divider from '@mui/material/Divider'
 import { useParams } from 'next/navigation'
 
@@ -25,7 +25,7 @@ const VisuallyHiddenInput = styled('input')({
 const Empcategories = ['Part Time', 'Full Time']
 const Role = ['Doctor', 'Manager']
 
-const AddEmployee = ({ initialState, validationSchema, handleRegister }) => {
+const AddEmployee = ({ initialState, validationSchema, handleRegister , disableEmail = false }) => {
    const router = useParams()
    console.log(router, 'param')
 
@@ -59,6 +59,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister }) => {
                         name='employee_email'
                         label='Email'
                         autoComplete='off'
+                         disabled={disableEmail}
                         InputProps={{
                            style: {
                               background: 'white',
@@ -100,7 +101,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister }) => {
                   <Grid item xs={12} sm={6}>
                      <CustomAutocomplete
                         name='employee_type'
-                        label='Employee Type'
+                        label='Employment Type'
                         options={Empcategories}
                         value={values.employee_type}
                         onChange={handleChange}
@@ -155,7 +156,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister }) => {
                   />
                 </Grid> */}
 
-                  <Grid item xs={12} sm={5}>
+                  <Grid item xs={12} sm={6}>
                      <VisuallyHiddenInput
                         id='logoInput'
                         type='file'

@@ -25,14 +25,17 @@ import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 
-function BookAppoinment({ id, name }) {
+function BookAppoinment({ id, name, date }) {
    const { data: doctorTimes , isLoading , refetch } = useGetDoctorTimesQuery(id)
    const[addAppointment] = useAddAppointmentMutation()
    const [selectedSlot, setSelectedSlot] = useState(null)
    const [openDialog, setOpenDialog] = useState(false)
    const [times, setTimes] = useState([])
-   const[hiddentime , setHiddentime] = useState([])
-   const {createTimeSlots} = useTimeSlots()
+   const [hiddentime, setHiddentime] = useState([])
+   const { createTimeSlots } = useTimeSlots()
+
+   // doctorTimes
+
 
    const ProfileCard = ({ icon, title, content }) => (
       <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
@@ -53,13 +56,13 @@ function BookAppoinment({ id, name }) {
    useEffect(() => {
       if (
          doctorTimes &&
-         doctorTimes.data && !isLoading ) {
+         doctorTimes.data && !isLoading) {
          setTimes(doctorTimes.data.times)
-         setHiddentime(createTimeSlots(doctorTimes.data.per_patient_time , doctorTimes.data.times))
+         setHiddentime(createTimeSlots(doctorTimes.data.per_patient_time, doctorTimes.data.times))
       }
-   }, [ doctorTimes , isLoading])
+   }, [doctorTimes, isLoading])
 
-   console.log(hiddentime , "hiddentime")
+   console.log(hiddentime, "hiddentime")
 
 
    function formatTime(timeString) {
@@ -87,20 +90,21 @@ function BookAppoinment({ id, name }) {
    const handleBookAppointment = async () => {
       handleOpenDialog()
    }
-  
+
    const handleAppointment = async () => {
-     if(!selectedSlot){
+      if (!selectedSlot) {
          toast.error('Please select a time slot')
       }
-      else if(hiddentime[selectedSlot.index-1]){
+      else if (hiddentime[selectedSlot.index - 1]) {
 
          const payload = {
             appointment_time: hiddentime[selectedSlot.index][0],
-            appointment_date: moment().format('YYYY-MM-DD'),
+            // appointment_date: moment().format('YYYY-MM-DD'),
+            appointment_date: date,
             patient: localStorage.getItem('user_id'),
             doctor: id,
             disease: '72d9291c-f119-46f3-b0ed-44ff32697320',
-            appointment_number:( selectedSlot.total_slots - selectedSlot.slots) + 1,
+            appointment_number: (selectedSlot.total_slots - selectedSlot.slots) + 1,
          }
          // addAppointment
 
@@ -129,13 +133,21 @@ function BookAppoinment({ id, name }) {
             Direction='column'
          >
             <Grid item bgcolor={'fff'} display={'flex'} Direction='column'>
-               <Image
-                  priority={true}
-                  src='https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'
-                  height={150}
-                  width={150}
-                  style={{ borderRadius: '50%' }}
-               />
+               {
+                  isLoading ? (<>
+                     <Skeleton
+                        sx={{ border: '1px solid #e0e0e0' }}
+                        variant="circular" height={150} width={150} />
+                  </>) : (<>
+                     <Image
+                        priority={true}
+                        src={doctorTimes?.data?.doctor_profile_picture || 'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'}
+                        height={140}
+                        width={140}
+                        style={{ borderRadius: '50%', padding: 10 }}
+                     />
+                  </>)
+               }
                <Grid
                   item
                   xl={8}
@@ -211,47 +223,47 @@ function BookAppoinment({ id, name }) {
                      }}
                   >
                      {isLoading ? (
-                           Array.from({ length: 4 }).map((_, index) => (
-                             <Grid item key={index} xs={6} sm={6} md={6}>
-                               <Skeleton 
-                                sx={{ border: '1px solid #e0e0e0', borderRadius: '10px' }}
-                               variant="rectangular" height={60} />
-                             </Grid>
-                           ))
-                         ) : 
-                     times.map((timeSlot, index) => (
-                        <Grid item key={index} xs={12} sm={8} md={6}>
-                           <Button
-                              variant='outlined'
-                              onClick={() => handleSlotSelection({...timeSlot , index:index+1})}
-                              disabled={!timeSlot?.slots}
-                              sx={{ 
-                                 width: '100%',
-                                 borderColor:selectedSlot?.index === (index +1) ? '#2CD9C5' : '#000',
-                                 borderRadius: '10px',
-                                 backgroundColor: selectedSlot?.index === (index +1)  ? '#2CD9C5' : '#fff',
-                                 color: selectedSlot?.index === (index +1)  ? '#fff' : '#000',
-                                 position: 'relative',
-                                 '&:hover': {
-                                    borderColor: '#2CD9C5',
-                                    backgroundColor: '#2CD9C5',
-                                    color: '#fff',
-                                 },
-                              }}
-                           >
-                              <Typography variant='body2'>
-                                 {formatTime(timeSlot.start_time)} -{' '}
-                                 {formatTime(timeSlot.end_time)} :
-                              </Typography>
-                              <Typography
-                                 variant='body2'
-                                 sx={{ fontSize: '12px', marginTop: '4px' }}
+                        Array.from({ length: 4 }).map((_, index) => (
+                           <Grid item key={index} xs={6} sm={6} md={6}>
+                              <Skeleton
+                                 sx={{ border: '1px solid #e0e0e0', borderRadius: '10px' }}
+                                 variant="rectangular" height={60} />
+                           </Grid>
+                        ))
+                     ) :
+                        times.map((timeSlot, index) => (
+                           <Grid item key={index} xs={12} sm={8} md={6}>
+                              <Button
+                                 variant='outlined'
+                                 onClick={() => handleSlotSelection({ ...timeSlot, index: index + 1 })}
+                                 disabled={!timeSlot?.slots}
+                                 sx={{
+                                    width: '100%',
+                                    borderColor: selectedSlot?.index === (index + 1) ? '#2CD9C5' : '#000',
+                                    borderRadius: '10px',
+                                    backgroundColor: selectedSlot?.index === (index + 1) ? '#2CD9C5' : '#fff',
+                                    color: selectedSlot?.index === (index + 1) ? '#fff' : '#000',
+                                    position: 'relative',
+                                    '&:hover': {
+                                       borderColor: '#2CD9C5',
+                                       backgroundColor: '#2CD9C5',
+                                       color: '#fff',
+                                    },
+                                 }}
                               >
-                                 {timeSlot.slots} slots available
-                              </Typography>
-                           </Button>
-                        </Grid>
-                     ))}
+                                 <Typography variant='body2'>
+                                    {formatTime(timeSlot.start_time)} -{' '}
+                                    {formatTime(timeSlot.end_time)} :
+                                 </Typography>
+                                 <Typography
+                                    variant='body2'
+                                    sx={{ fontSize: '12px', marginTop: '4px' }}
+                                 >
+                                    {timeSlot.slots} slots available
+                                 </Typography>
+                              </Button>
+                           </Grid>
+                        ))}
                   </Grid>
 
                   <Grid
@@ -270,8 +282,8 @@ function BookAppoinment({ id, name }) {
                      <DialogTitle>Confirm Appointment Booking</DialogTitle>
                      <DialogContent>
                         <DialogContentText>
-                        Are you sure you want to book the appointment?
-                        An email confirmation will be sent to you shortly.
+                           Are you sure you want to book the appointment?
+                           An email confirmation will be sent to you shortly.
                         </DialogContentText>
                      </DialogContent>
                      <DialogActions>
@@ -279,7 +291,7 @@ function BookAppoinment({ id, name }) {
                            Cancel
                         </Button>
                         <Button
-                        /////////////
+                           /////////////
                            onClick={handleAppointment}
                            color='primary'
                            autoFocus
@@ -289,7 +301,7 @@ function BookAppoinment({ id, name }) {
                      </DialogActions>
                   </Dialog>
 
-                
+
                </Paper>
             </Grid>
          </Grid>
