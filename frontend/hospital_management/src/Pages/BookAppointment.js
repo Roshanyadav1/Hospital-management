@@ -24,6 +24,10 @@ import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
 import moment from 'moment'
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/HM_New
 function BookAppoinment({ id, name, date }) {
    let data = {
       id: id,

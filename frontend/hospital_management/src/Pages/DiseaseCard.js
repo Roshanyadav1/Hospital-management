@@ -8,7 +8,7 @@ import Link from 'next/link'
 // import {patientPageTwo} from '@/components/patientPageTwo.js'
 // import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
 
-export default function ShowDidease() {
+export default function DiseaseCard() {
    return (
       <div>
          <Container maxWidth='lg'>

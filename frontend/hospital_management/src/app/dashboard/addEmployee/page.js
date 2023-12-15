@@ -2,7 +2,7 @@
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import { useAddEmployeeMutation } from '@/services/Query'
+import { useAddEmployeeMutation, useRegisterAuth } from '@/services/Query'
 import Employee_Validation from '@/components/form/EmployeeValidation/employeeValidation'
 import { colors } from '@/styles/theme'
 import AddEmployee from '@/components/AddEmployee'
@@ -42,8 +42,8 @@ const INITIAL_FORM_STATE = {
    employee_type: '',
    employee_role: '',
    employee_status: '',
-   created_by: 'admin',
-   updated_by: 'admin',
+   // created_by: 'admin',
+   // updated_by: 'admin',
 }
 
 const EmpRegister = () => {
@@ -56,19 +56,10 @@ const EmpRegister = () => {
    // }
 
    const [addemployee] = useAddEmployeeMutation()
+   const [addAuthEmployee] = useRegisterAuth()
 
-   const handleRegister = async (values, { resetForm }) => {
-      try {
-         let res = await addemployee(values)
-         console.log(res)
-         toast.success(res?.data?.message || ' Employee added successfully')
-         resetForm()
-      } catch (error) {
-         // Handle error
-         // console.error('Error submitting form:', error);
-      }
-   }
 
+   
    return (
       <StyledFormWrapper>
          <StyledPaper elevation={3}>
@@ -80,7 +71,7 @@ const EmpRegister = () => {
             <AddEmployee
                initialState={INITIAL_FORM_STATE}
                validationSchema={Employee_Validation}
-               handleRegister={handleRegister}
+               handleRegister={EmpRegister}
             />
          </StyledPaper>
       </StyledFormWrapper>

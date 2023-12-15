@@ -32,9 +32,9 @@ const nextConfig = {
          'media.istockphoto.com',
          'cdn.create.vista.com',
          'png.pngtree.com',
-         '0 , _services_Query__WEBPACK_IMPORTED_MODULE_2__.useGetAddAppointmentMutation ',
+         '0 , _services_Query__WEBPACK_IMPORTED_MODULE_6__.useLoginUserMutation',
          'thumbs.dreamstime.com',
-         "0 , _services_Query__WEBPACK_IMPORTED_MODULE_2__.useGetAppointmentQuery",
+         '0 , _services_Query__WEBPACK_IMPORTED_MODULE_1__.useGetDoctorTimesQuery'
       ],
    },
 }

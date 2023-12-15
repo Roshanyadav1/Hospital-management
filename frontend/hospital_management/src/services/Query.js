@@ -2,12 +2,26 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
 
+// export const apiAuth = createApi({
+//    reducerpath: 'apiAuth',
+//    baseQuery: fetchBaseQuery({
+//       baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
+//    }),
+//    endpoints: (build) => ({
+//       registerAuth: build.mutation({
+//          query: (value) => ({
+//             url: 'Username-Password-Authentication/signup',
+//             method: 'POST',
+//             body: value,
+//          }),
+//       }),
+//    }),
+// })
 export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
    }),
-
    keepUnusedDataFor: 30,
    refetchOnReconnect: true,
    refetchOnFocus: true,
@@ -30,7 +44,7 @@ export const queries = createApi({
       }),
       doctorUpdate: build.mutation({
          query: (value) => ({
-            url: 'doctor/update/',
+            url: 'doctor/update',
             method: 'POST',
             body: value,
          }),
@@ -95,7 +109,6 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-
       getGraphAppointInfo: build.query({
          query: () => ({
             url: 'appointment/view/',
@@ -132,9 +145,10 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+
       getViewDoctor: build.query({
-         query: (prop) => ({
-            url: `doctor/view/?pageSize=${10}&pageNo=${prop}`,
+         query: () => ({
+            url: '/doctor/view/?pageSize=9',
             method: 'Get',
          }),
       }),
@@ -163,6 +177,31 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      changeStatus: build.mutation({
+         query: (p) => ({
+            url: '/employee/update/' + p.id,
+            method: 'PATCH',
+            body: p.pro,
+         }),
+         invalidatesTags: ['EMP'],
+      }),
+      changeEmpData: build.mutation({
+         query: (p) => ({
+            url: '/employee/update/' + p.id,
+            method: 'PATCH',
+            body: p.pro,
+         }),
+         invalidatesTags: ['EMP'],
+      }),
+      diseaseStatus: build.mutation({
+         query: (p) => ({
+            url: `/disease/update/${p.disease_id}`,
+            method: 'PATCH',
+            body: {
+               disease_status: !p.disease_status,
+            },
+         }),
+      }),
    }),
 })
 
@@ -187,4 +226,9 @@ export const {
    useAddAppointmentMutation,
    useGetDoctorIdQuery,
    useGetAppointmentInfoQuery,
+   useChangeStatusMutation,
+   useDiseaseStatusMutation,
+   useChangeEmpDataMutation,
 } = queries
+
+// export const { useRegisterAuth } = apiAuth

@@ -219,9 +219,7 @@ const Register = () => {
             >
                {({ values, handleChange, handleBlur, touched }) => (
                   <Form>
-                     {
-                        // console.log(values, "the values are ")
-                     }
+                     
                      <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                            <Text

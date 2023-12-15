@@ -21,6 +21,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useLoginUserMutation } from '@/services/Query'
 
+
 const drawerWidth = 240
 const navItems = [
    { label: 'Doctor', route: '/showdoctors' },
@@ -31,7 +32,7 @@ const navItems = [
 function SteperNav(props) {
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
-   const [userLogin] = useLoginUserMutation()
+   const [userLogin] = useLoginUserMutation();
    const { user } = useUser()
 
    const handleDrawerToggle = () => {

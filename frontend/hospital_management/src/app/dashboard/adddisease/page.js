@@ -4,7 +4,13 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
-import { Card } from '@mui/material'
+import {
+   Card,
+   Dialog,
+   DialogActions,
+   DialogContent,
+   DialogTitle,
+} from '@mui/material'
 import { CardActionArea } from '@mui/material'
 import { CardContent } from '@mui/material'
 import { Formik, Form } from 'formik'
@@ -13,7 +19,7 @@ import Grid from '@mui/material/Grid'
 import { toast } from 'react-toastify'
 import RadioButtonGroup from '@/components/RadioButton/RadioButtonGroup'
 import DISEASE_VALIDATION from '@/components/FormValidation/DiseaseValidation'
-import Text from '@/components/form/Textfield/Text'
+import Text from '@/components/Textfield/Text'
 import { styled } from '@mui/material/styles'
 import { colors } from '@/styles/theme'
 import Divider from '@mui/material/Divider'
@@ -24,6 +30,7 @@ import CoronavirusTwoToneIcon from '@mui/icons-material/CoronavirusTwoTone'
 import { alpha } from '@mui/material/styles'
 import { green } from '@mui/material/colors'
 import Switch from '@mui/material/Switch'
+import { useDiseaseStatusMutation } from '../../../services/Query'
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
    '& .MuiSwitch-switchBase.Mui-checked': {
@@ -38,7 +45,6 @@ const GreenSwitch = styled(Switch)(({ theme }) => ({
 }))
 
 const label = { inputProps: { 'aria-label': 'Color switch demo' } }
-
 
 const VisuallyHiddenInput = styled('input')({
    clip: 'rect(0 0 0 0)',
@@ -85,17 +91,26 @@ const StyledFormWrapper = styled('div')({
 const INITIAL_FORM_STATE = {
    // disease_id: '',
    disease_name: '',
-   disease_status: '',
+   disease_status: true,
    created_by: 'admin',
 }
 
 const page = () => {
+   const { data: getDisease, isLoading , refetch } = useGetAllDiseasesQuery()
+   const [updateStatus] = useDiseaseStatusMutation();
+   const [addDisease] = useAddDiseasesMutation();
+
+   const [openModal, setOpenModal] = useState(false)
    const [open, setOpen] = useState(false)
+   const [disease, setDisease] = useState()
+
    const handleOpen = () => setOpen(true)
    const handleClose = () => setOpen(false)
 
-   const [addDisease] = useAddDiseasesMutation()
-   const { data: getDisease, isLoading } = useGetAllDiseasesQuery()
+
+   const handleCloseModal = () => {
+      setOpenModal(false)
+   }
 
    if (isLoading)
       return (
@@ -112,7 +127,6 @@ const page = () => {
             </Box>
          </div>
       )
-   console.log('getting diseases', getDisease?.data)
 
    const style = {
       position: 'absolute',
@@ -120,13 +134,12 @@ const page = () => {
       left: '50%',
       padding: 0,
       transform: 'translate(-50%, -50%)',
-      // width: 600,
-      // height: 325,
       bgcolor: 'background.paper',
       boxShadow: 24,
       borderRadius: '20px',
    }
 
+   // add disease
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addDisease(values)
@@ -138,8 +151,51 @@ const page = () => {
       }
    }
 
+   // change status 
+   const ChangeStatus = async () => {
+      try {
+         // Assuming your API expects an employee ID for deletion
+         const result = await updateStatus(disease)
+         refetch()
+         // Log the result to the console
+         console.log('Result of updateStatus mutation:', result)
+         handleCloseModal()
+         // Perform any additional logic after successful deletion
+      } catch (error) {
+         // Handle error
+         console.error('Error changing status:', error)
+      }
+   }
+
    return (
       <div>
+         <Dialog open={openModal} onClose={handleCloseModal}>
+            <DialogTitle
+               style={{
+                  border: '1px solid white',
+                  borderRadius: '10px',
+                  boxShadow: 'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                  fontWeight: 'bolder',
+                  fontSize: '1rem',
+               }}
+            >
+               Confirmation
+            </DialogTitle>
+            <DialogContent>
+               <p>
+                  Are you sure you want to change the status of 
+                  <span className='Data'>{disease?.disease_name}</span>
+               </p>
+            </DialogContent>
+            <DialogActions>
+               <Button onClick={handleCloseModal} color='primary' className='No'>
+                  No
+               </Button>
+               <Button onClick={ChangeStatus} color='primary' className='Yes'>
+                  Yes
+               </Button>
+            </DialogActions>
+         </Dialog>
          <Button onClick={handleOpen} variant='outlined'>
             Add Disease +
          </Button>
@@ -183,8 +239,13 @@ const page = () => {
                                        label='Disease Status'
                                        name='disease_status'
                                        options={[
+<<<<<<< HEAD
                                           { value: true, label: 'Active' },
                                           { value: false, label: 'Inactive' },
+=======
+                                          { value: 'true', label: 'Active' },
+                                          { value: 'false', label: 'Inactive' },
+>>>>>>> origin/HM_New
                                        ]}
                                     />
                                  </Grid>
@@ -218,6 +279,7 @@ const page = () => {
 
          <Grid container spacing={5} style={{ marginTop: 0.8 }}>
             {getDisease?.data?.map((e, i) => {
+               let status = e.disease_status
                return (
                   <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
                      <Card sx={{ maxWidth: 250 }}>
@@ -245,7 +307,27 @@ const page = () => {
                                  >
                                     Status
                                  </Typography>
-                                 <GreenSwitch {...label} defaultChecked />
+
+                                 {/* <GreenSwitch {...label} defaultChecked /> */}
+                                 {/* toggle code///////////////////////////////////////////////////////////////////////////////////////// */}
+
+                                 <div
+                                    style={{
+                                       display: 'flex',
+                                       justifyContent: 'left',
+                                       alignItems: 'left',
+                                    }}
+                                 >
+                                    <Switch
+                                       checked={status}
+                                       onClick={() => {
+                                          setDisease(e)
+                                          setOpenModal(true)
+                                       }}
+                                       color='primary'
+                                       size='small'
+                                    />
+                                 </div>
                               </div>
                            </CardContent>
                         </CardActionArea>

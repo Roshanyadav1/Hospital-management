@@ -69,7 +69,7 @@ function RecipeReviewCard() {
             </Container>
       )
    } else if (isError) {
-      return <p>Error: {isError}</p>
+      return <p> No Appointment Here {isError}</p>
    } else {
       return (
          <Container maxWidth='sm'>

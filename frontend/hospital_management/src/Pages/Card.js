@@ -1,10 +1,10 @@
-
 "use client"
 import { Grid, Card, CardContent, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { CardActionArea} from '@mui/material';
 import {welcome} from '@/helpers/welcome'
 import Image from 'next/image';
+
 export default function Cards() {
   const glass={
     background: 'rgba( 19, 41, 61, 0.05 )',
