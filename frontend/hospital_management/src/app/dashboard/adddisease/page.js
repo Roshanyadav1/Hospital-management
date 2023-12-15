@@ -9,9 +9,7 @@ import {
    Dialog,
    DialogActions,
    DialogContent,
-   DialogContentText,
    DialogTitle,
-   row,
 } from '@mui/material'
 import { CardActionArea } from '@mui/material'
 import { CardContent } from '@mui/material'
@@ -32,8 +30,6 @@ import CoronavirusTwoToneIcon from '@mui/icons-material/CoronavirusTwoTone'
 import { alpha } from '@mui/material/styles'
 import { green } from '@mui/material/colors'
 import Switch from '@mui/material/Switch'
-import { OpenModal } from '@mui/material'
-import { selectedRow } from '@mui/material'
 import { useDiseaseStatusMutation } from '../../../services/Query'
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
@@ -101,8 +97,8 @@ const INITIAL_FORM_STATE = {
 
 const page = () => {
    const { data: getDisease, isLoading , refetch } = useGetAllDiseasesQuery()
-   const [updateStatus] = useDiseaseStatusMutation()
-   const [addDisease] = useAddDiseasesMutation()
+   const [updateStatus] = useDiseaseStatusMutation();
+   const [addDisease] = useAddDiseasesMutation();
 
    const [openModal, setOpenModal] = useState(false)
    const [open, setOpen] = useState(false)

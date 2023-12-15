@@ -2,21 +2,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
 
-export const apiAuth = createApi({
-   reducerpath: 'apiAuth',
-   baseQuery: fetchBaseQuery({
-      baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
-   }),
-   endpoints: (build) => ({
-      registerAuth: build.mutation({
-         query: (value) => ({
-            url: 'Username-Password-Authentication/signup',
-            method: 'POST',
-            body: value,
-         }),
-      }),
-   }),
-})
+// export const apiAuth = createApi({
+//    reducerpath: 'apiAuth',
+//    baseQuery: fetchBaseQuery({
+//       baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
+//    }),
+//    endpoints: (build) => ({
+//       registerAuth: build.mutation({
+//          query: (value) => ({
+//             url: 'Username-Password-Authentication/signup',
+//             method: 'POST',
+//             body: value,
+//          }),
+//       }),
+//    }),
+// })
 export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
@@ -84,7 +84,7 @@ export const queries = createApi({
       }),
       deleteEmployee: build.mutation({
          query: (value) => ({
-            url: 'employee/delete/' + value ,
+            url: 'employee/delete/' + value,
             method: 'DELETE',
             // body:value
          }),
@@ -178,24 +178,32 @@ export const queries = createApi({
          }),
       }),
       changeStatus: build.mutation({
-          query: (p) => ({
-             url: '/employee/update/'+ p.id,
-              method: 'PATCH', 
-             body: p.pro,
-             }),
+         query: (p) => ({
+            url: '/employee/update/' + p.id,
+            method: 'PATCH',
+            body: p.pro,
+         }),
          invalidatesTags: ['EMP'],
       }),
       changeEmpData: build.mutation({
          query: (p) => ({
-            url: '/employee/update/'+ p.id,
-             method: 'PATCH', 
+            url: '/employee/update/' + p.id,
+            method: 'PATCH',
             body: p.pro,
-            }),
-        invalidatesTags: ['EMP'],
-     }),  
-
-            }),
-         })
+         }),
+         invalidatesTags: ['EMP'],
+      }),
+      diseaseStatus: build.mutation({
+         query: (p) => ({
+            url: `/disease/update/${p.disease_id}`,
+            method: 'PATCH',
+            body: {
+               disease_status: !p.disease_status,
+            },
+         }),
+      }),
+   }),
+})
 
 export const {
    useRegisterHospitalMutation,
@@ -223,4 +231,4 @@ export const {
    useChangeEmpDataMutation,
 } = queries
 
-export const { useRegisterAuth } = apiAuth
+// export const { useRegisterAuth } = apiAuth
