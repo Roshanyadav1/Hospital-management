@@ -16,6 +16,8 @@ const theme = createTheme(themeOptions)
 export default function RootLayout({ children }) {
    const path = usePathname()
 
+
+
    let isShow = ['/dashboard', '/dashboard/'].includes(path)
 
    return (

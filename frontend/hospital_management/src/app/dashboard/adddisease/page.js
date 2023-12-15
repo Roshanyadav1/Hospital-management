@@ -183,8 +183,8 @@ const page = () => {
                                        label='Disease Status'
                                        name='disease_status'
                                        options={[
-                                          { value: 'Active', label: 'Active' },
-                                          { value: 'Inactive', label: 'Inactive' },
+                                          { value: true, label: 'Active' },
+                                          { value: false, label: 'Inactive' },
                                        ]}
                                     />
                                  </Grid>

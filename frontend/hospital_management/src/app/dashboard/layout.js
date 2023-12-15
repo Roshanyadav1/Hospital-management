@@ -11,7 +11,6 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ResponsiveAppBar from '@/components/Navbar'
-// import Footer from '@/components/Footer';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Toolbar } from '@mui/material'
@@ -25,7 +24,7 @@ import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { Container } from '@mui/system'
 import withRoleRedirect from '@/helpers/withRoleRedirect'
-
+import Footer from '../../components/Footer'
 const drawerWidth = 240
 
 const openedMixin = (theme) => ({
@@ -214,16 +213,16 @@ function Layout({ children }) {
                         path: '/dashboard/adddisease',
                         icon: <CoronavirusIcon />,
                      },
-                     {
-                        text: 'Add Hospital',
-                        path: '/dashboard/addhospital',
-                        icon: <AddBoxIcon />,
-                     },
-                     {
-                        text: 'Add Employee',
-                        path: '/dashboard/addemployee',
-                        icon: <GroupAddIcon />,
-                     },
+                     // {
+                     //    text: 'Add Hospital',
+                     //    path: '/dashboard/addhospital',
+                     //    icon: <AddBoxIcon />,
+                     // },
+                     // {
+                     //    text: 'Add Employee',
+                     //    path: '/dashboard/addEmployee',
+                     //    icon: <GroupAddIcon />,
+                     // },
                      {
                         text: 'Prescription',
                         path: '/dashboard/precription',
@@ -273,20 +272,25 @@ function Layout({ children }) {
                </List>
             </div>
          </Drawer>
+
+
+
          <Box
             component='main'
-            sx={{
-               width: { sm: `calc(100% - ${drawerWidth}px)` },
-               height: {
-                  sm: `calc(100vh - 64px)`,
-               },
-               flexGrow: 1,
-               padding: 1,
-            }}
+            // sx={{
+            //    width: { sm: `calc(100% - ${drawerWidth}px)` },
+            //    height: {
+            //       sm: `calc(100vh - 64px)`,
+            //    },
+            //    flexGrow: 1,
+            //    padding: 1,
+            // }}
          >
-            <Toolbar />
-            <Container maxWidth='100%'>{children}</Container>
+            <Toolbar/>
+            <Container 
+              maxWidth='100%'>{children}</Container>
          </Box>
+
       </Box>
    )
 }
