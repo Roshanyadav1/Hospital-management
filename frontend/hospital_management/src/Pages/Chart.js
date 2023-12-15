@@ -151,6 +151,7 @@ function Chart() {
       !isFetchingAppCount
 
    const [visibleData, setVisibleData] = useState(weeklyData?.slice(0, 4))
+   console.log(visibleData)
 
    const handleChartScroll = (event) => {
       const scrollLeft = event.target.scrollLeft
