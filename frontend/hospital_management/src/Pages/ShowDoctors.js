@@ -27,7 +27,7 @@ function ShowDoctors() {
    })
 
    const totalPages = doctorList?.data?.total_pages
-   let currentDate = moment();
+   let currentDate=moment()
    const formattedDate = currentDate.format('YYYY-MM-DD');
 
    const handlePageChange = (event, value) => {
