@@ -99,7 +99,7 @@ function BookAppoinment({ id, name, date }) {
       if (!selectedSlot) {
          toast.error('Please select a time slot')
       }
-      else if (hiddentime[selectedSlot.index - 1]) {
+      else if (hiddentime[selectedSlot.index]) {
 
          const payload = {
             appointment_time: hiddentime[selectedSlot.index][0],
