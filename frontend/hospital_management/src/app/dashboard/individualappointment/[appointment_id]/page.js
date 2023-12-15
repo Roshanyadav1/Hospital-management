@@ -14,16 +14,15 @@ import {
 import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
-import { motion } from 'framer-motion' // Import motion from framer-motion for animations
+import { motion } from 'framer-motion'
 import '@/styles/container.css'
 import CircularProgress from '@mui/material/CircularProgress'
-// import Button from '@mui/material/Button';
-// import Input from '@mui/material/Input';
-import Dialog from '@mui/material/Dialog'
+ import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
+// import fetch from 'isomorphic-fetch';
 
 const fadeInUp = {
    hidden: { opacity: 0, y: 20 },
@@ -48,14 +47,33 @@ function DoctorPage() {
       setSelectedFile(event.target.files[0])
    }
 
-   const handleSubmit = () => {
+   const handleSubmit = async () => {
       if (selectedFile) {
-         setIsSuccessDialogOpen(true)
-         setIsFileChosenError(false)
+         const formData = new FormData();
+         formData.append('file', selectedFile);
+
+         try {
+            const response = await fetch('/api/s3-upload', {
+               method: 'POST',
+               body: formData,
+            });
+
+            if (response.ok) {
+               setIsSuccessDialogOpen(true);
+               setIsFileChosenError(false);
+            } else {
+               // Handle the error case here
+               console.error('Failed to upload image');
+            }
+         } catch (error) {
+            // Handle the error case here
+            console.error('Error uploading image:', error);
+         }
       } else {
-         setIsFileChosenError(true)
+         setIsFileChosenError(true);
       }
-   }
+   };
+   
 
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false)
@@ -90,8 +108,7 @@ function DoctorPage() {
          </div>
       )
    }
-   // add the live loader symbol when the loading hits
-   if (isError) {
+    if (isError) {
       return <p>Error: {isError.message}</p>
    }
 
@@ -203,3 +220,8 @@ function DoctorPage() {
 }
 
 export default DoctorPage
+
+
+
+
+// add  the functionality to the Add prescription button in such a way that when the button is clicked the image will be stored in s3-upload in AWS  to this above route .js file, provide the code perfectly that send the image to the bucket perfectly
