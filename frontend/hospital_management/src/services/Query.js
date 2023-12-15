@@ -219,11 +219,8 @@ export const {
    useGetDoctorIdQuery,
    useGetAppointmentInfoQuery,
    useChangeStatusMutation,
-<<<<<<< HEAD
    useDiseaseStatusMutation,
-=======
    useChangeEmpDataMutation,
->>>>>>> 7fb06af279aa6f518b943ede050e76233b035a09
 } = queries
 
 export const { useRegisterAuth } = apiAuth
