@@ -445,4 +445,3 @@ export const columns = [
    },
 ]
 
-// how can I find out the particular row's data from this table when i click on the delete button
