@@ -272,6 +272,7 @@ function Layout({ children }) {
                </List>
             </div>
          </Drawer>
+<<<<<<< HEAD
 
 
 
@@ -291,9 +292,27 @@ function Layout({ children }) {
               maxWidth='100%'>{children}</Container>
          </Box>
 
+=======
+         <Container maxWidth={'100%'}>
+            <Box 
+               component='main'
+               sx={{
+                  // width: { sm: `calc(100% - ${drawerWidth}px)` },
+                  // height: {
+                  //    sm: `calc(100vh - 64px)`,
+                  // },
+                  flexGrow: 1,
+                  padding: 1,
+               }}
+            >
+               <Toolbar />
+               <Box>{children}</Box>
+            </Box>
+         </Container>
+>>>>>>> 7455607046a1fded48468cc89c957e559387bbfd
       </Box>
    )
 }
 
-export default withRoleRedirect(Layout, ['Admin', 'Manager' , 'Doctor'])
+export default withRoleRedirect(Layout, ['Admin', 'Manager', 'Doctor'])
 
