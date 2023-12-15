@@ -86,6 +86,10 @@ function BookAppoinment({ id, name, date }) {
          toast.error('Please select a time slot')
       }
       else if (hiddentime[selectedSlot.index]) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 49c33809a12e373e22e851c6f8fced74fcacaf36
          const payload = {
             appointment_time: hiddentime[selectedSlot.index][0],
             // appointment_date: moment().format('YYYY-MM-DD'),
