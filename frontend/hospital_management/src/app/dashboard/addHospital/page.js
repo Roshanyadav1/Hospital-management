@@ -329,6 +329,9 @@ const handleRegister = async (values,{resetForm}) => {
                     }}
                   />
                 </Grid>
+
+
+
                 <Grid item xs={12} sm={6}>
                    <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                     Hospital's logo
@@ -348,6 +351,9 @@ const handleRegister = async (values,{resetForm}) => {
                     )}
                   </Box> 
                 </Grid>
+
+
+
 
                 <Grid item xs={12} sm={6}>
                   <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />

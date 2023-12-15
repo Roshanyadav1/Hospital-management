@@ -22,7 +22,7 @@ export const queries = createApi({
    endpoints: build => ({
       registerHospital: build.mutation({
          query: (value) => ({
-            url: 'hospital/register/',
+            url: 'hospital/register',
             method: 'POST',
             body:value
          }),
