@@ -192,6 +192,16 @@ export const queries = createApi({
              }),
          invalidatesTags: ['EMP'],
       }),
+
+      appointmentUpdate: build.mutation({
+         query: (p) => ({
+            url: '/appointment/update/'+ p.id,
+             method: 'PATCH', 
+            body: p.pro,
+            }),
+        invalidatesTags: ['APP'],
+     }),
+     
       changeEmpData: build.mutation({
          query: (p) => ({
             url: '/employee/update/'+ p.id,
@@ -227,6 +237,7 @@ export const {
    useGetAppointmentInfoQuery,
    useChangeStatusMutation,
    useChangeEmpDataMutation,
+   useAppointmentUpdateMutation
 } = queries
 
 export const {

@@ -47,6 +47,3 @@ export async function POST(request) {
       return NextResponse.json({ error: 'error uploading file' })
    }
 }
-
-// add the functionality n this route that the image's url will also get in this ,
-// adjust this code and provide the url as you mentioned in the above soultion that the viewimage is gettting the url of the image
