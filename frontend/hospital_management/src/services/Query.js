@@ -199,7 +199,7 @@ export const queries = createApi({
              method: 'PATCH', 
             body: p.pro,
             }),
-        invalidatesTags: ['EMP'],
+        invalidatesTags: ['APP'],
      }),
      
       changeEmpData: build.mutation({
@@ -237,6 +237,7 @@ export const {
    useGetAppointmentInfoQuery,
    useChangeStatusMutation,
    useChangeEmpDataMutation,
+   useAppointmentUpdateMutation
 } = queries
 
 export const {

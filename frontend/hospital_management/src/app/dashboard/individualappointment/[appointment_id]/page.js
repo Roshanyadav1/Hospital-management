@@ -16,13 +16,12 @@ import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import '@/styles/container.css'
-import CircularProgress from '@mui/material/CircularProgress'
  import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
-// import fetch from 'isomorphic-fetch';
+import { useAppointmentUpdateMutation } from '@/services/Query'
 
 const fadeInUp = {
    hidden: { opacity: 0, y: 20 },
@@ -30,23 +29,24 @@ const fadeInUp = {
 }
 
 function DoctorPage() {
-   const { appointment_id } = useParams()
+   const { appointment_id } = useParams();
    const {
       data: appointmentInfo,
-      isLoading,
-      isError,
-   } = useGetAppointmentInfoQuery(appointment_id)
-   const label = { inputProps: { 'aria-label': 'Size switch demo' } }
+      // isLoading,
+      // isError,
+   } = useGetAppointmentInfoQuery(appointment_id);
+   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
-   const [isSwitchOn, setIsSwitchOn] = useState(false)
-   const [selectedFile, setSelectedFile] = useState(null)
-   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false)
-   const [isFileChosenError, setIsFileChosenError] = useState(false)
+   const [isSwitchOn, setIsSwitchOn] = useState(false);
+   const [selectedFile, setSelectedFile] = useState(null);
+   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+   const [isFileChosenError, setIsFileChosenError] = useState(false);
+
+   const [appointmentUpdate] = useAppointmentUpdateMutation(); 
 
    const handleFileChange = (event) => {
-      setSelectedFile(event.target.files[0])
-   }
-
+      setSelectedFile(event.target.files[0]);
+   };
    const handleSubmit = async () => {
       if (selectedFile) {
          const formData = new FormData();
@@ -62,55 +62,43 @@ function DoctorPage() {
                setIsSuccessDialogOpen(true);
                setIsFileChosenError(false);
             } else {
-               // Handle the error case here
                console.error('Failed to upload image');
             }
          } catch (error) {
-            // Handle the error case here
             console.error('Error uploading image:', error);
          }
       } else {
          setIsFileChosenError(true);
       }
    };
-   
 
    const handleDialogClose = () => {
-      setIsSuccessDialogOpen(false)
-      setSelectedFile(null)
+      setIsSuccessDialogOpen(false);
+      setSelectedFile(null);
+      setIsFileChosenError(false);
+   };
 
-      setIsFileChosenError(false)
-   }
-   const handleSwitchChange = () => {
-      setIsSwitchOn(!isSwitchOn)
-   }
-   if (appointment_id === undefined) {
-      return <p>Error:</p>
-   }
-   if (isLoading) {
-      const loaderContainerStyle = {
-         display: 'flex',
-         flexDirection: 'column',
-         alignItems: 'center',
-         justifyContent: 'center',
-         height: '100vh',
+   const handleSwitchChange = async () => {
+      try {
+         const obj = {
+            id: appointmentInfo?.data?.[0]?.appointment_id,
+            pro: {
+               checked: !isSwitchOn,
+            },
+         };
+
+         const result = await appointmentUpdate(obj);
+
+         console.log('Result of updateStatus mutation:', result);
+
+
+      } catch (error) {
+         console.error('Error changing status:', error);
       }
 
-      // Styling for the CircularProgress component
-      const loaderStyle = {
-         color: 'black',
-      }
+      setIsSwitchOn(!isSwitchOn);
+   };
 
-      return (
-         <div style={loaderContainerStyle}>
-            <p style={{ color: 'black' }}>Loading...</p>
-            <CircularProgress style={loaderStyle} />
-         </div>
-      )
-   }
-    if (isError) {
-      return <p>Error: {isError.message}</p>
-   }
 
    return (
       <Container maxWidth='md'>
@@ -168,6 +156,9 @@ function DoctorPage() {
                               {...label}
                               checked={isSwitchOn}
                               onChange={handleSwitchChange}
+                              color='primary'
+                              size='small'
+                              disabled={isSwitchOn} 
                            />
                            {isSwitchOn ? (
                               <div>
@@ -190,7 +181,6 @@ function DoctorPage() {
                            )}
                         </CardContent>
 
-                        {/* Success Dialog */}
                         <Dialog
                            open={isSuccessDialogOpen}
                            onClose={handleDialogClose}
@@ -221,7 +211,20 @@ function DoctorPage() {
 
 export default DoctorPage
 
+// check this code and specify that will the checked field that is boolean in api and by default false will be turned to true after clicking on the toggle switch button or not
 
+// appointmentUpdate: build.mutation({
+//    query: (p) => ({
+//       url: '/appointment/update/' + p.id,
+//       method: 'PATCH',
+//       body: p.pro,
+//    }),
+//    invalidatesTags: ['APP'],
+// }),
+// provide the functionality in this code in such a way that when the toggle button is clicked on as by default it is off then the api should fetched through the useAppointmentUpdateMutation() hook and the checked field that is boolean in api should be turned true with the proper use of the function i have declared above, or you can update it for proper requirement
+
+
+// provide the functionality in this code in such a way that when the doctor will click on the switch button and check it the api will be patched through the useAppointmentUpdateMutation() hook as given above in such a way that the appointment status will turn true in the api through this and also add one functionality in this that once the switch button will be checked it will set disabled  and doctore have to add prescription after that, as
 
 
 // add  the functionality to the Add prescription button in such a way that when the button is clicked the image will be stored in s3-upload in AWS  to this above route .js file, provide the code perfectly that send the image to the bucket perfectly
