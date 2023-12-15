@@ -14,14 +14,12 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { useUser } from '@auth0/nextjs-auth0/client'
 import Logo from '../assets/navbarimages/whiteSga.png'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { useLoginUserMutation } from '@/services/Query'
-
+import { useState, useLayoutEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
+import useLogin from '@/hooks/useLogin'
 
 const drawerWidth = 240
 const navItems = [
@@ -33,38 +31,48 @@ const navItems = [
 function SteperNav(props) {
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
-   const { loginWithRedirect } = useAuth0()
-   const [userLogin] = useLoginUserMutation()
-   const { user } = useUser()
-
-   const { user: asdf } = useAuth0()
-   console.log(asdf, 'user')
+   const {loginWithRedirect , getAccessTokenSilently , loginWithPopup } = useAuth0()
+   const { user : loggerUser , getUser } = useLogin() // my backend api
 
    const handleDrawerToggle = () => {
       setMobileOpen((prevState) => !prevState)
    }
 
-   let role = localStorage.getItem('user_role')
+   // console.log(user , "the auth0 user is ")
+   console.log(loggerUser , "the logger user is ")
+   let role = ''
 
-   // when the user have logged in already !!
-   useEffect(() => {
-      if (user) {
-         const handleSubmit = async () => {
-            try {
-               let res = await userLogin(user.email).unwrap()
-               localStorage.setItem('user_id', res.data.id)
-               localStorage.setItem('access_token', res.data.token.access)
-               localStorage.setItem('user_role', res.data.user_role)
-               localStorage.setItem('refresh_token', res.data.token.refresh)
-            } catch (err) {
-               console.warn(err)
+ 
+   useLayoutEffect(() => {
+   const getUserMetadata = async () => {
+      try {
+         // https://hospital-management-six-chi.vercel.app/api/appointment/view/
+         console.log("this works")
+         
+         const accessToken = await getAccessTokenSilently({
+            authorizationParams :{
+               audience: 'https://dev-wk502078emf2n02u.us.auth0.com/api/v2/',
+               scope: 'read:current_user',
+               cacheMode: 'off',
             }
-         }
-         handleSubmit()
-      }
-      // eslint-disable-next-line
-   }, [user])
+         })
+         console.log("+++++++++++++++++++++", accessToken)
 
+       
+          user && localStorage.setItem('token', accessToken)
+         const userDetail = await getUser(accessToken)
+
+         console.log(userDetail , "My database user is : -")
+
+
+      } catch (error) {
+         console.log("something went wrong")
+         console.warn(error)
+      }
+   }
+   getUserMetadata()
+}, []);
+   
    const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
          <Divider />
@@ -111,7 +119,7 @@ function SteperNav(props) {
                </Link>
 
                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                  {role !== 'Patient' && role !== 'Doctor' && user && (
+                  {role !== 'Patient' && role !== 'Doctor' && loggerUser && (
                      <Link href='/dashboard' prefetch>
                         <Button sx={{ color: '#fff' }}>Dashboard</Button>
                      </Link>
@@ -122,9 +130,9 @@ function SteperNav(props) {
                         <Button sx={{ color: '#fff' }}>{item.label}</Button>
                      </Link>
                   ))}
-                  {user && <Button sx={{ color: '#fff' }}>{user.name}</Button>}
+                  {loggerUser && <Button sx={{ color: '#fff' }}>{loggerUser.name}</Button>}
 
-                  {!user && (
+                  {!loggerUser && (
                      <Button
                         onClick={() => loginWithRedirect()}
                         sx={{ color: '#fff' }}
@@ -132,8 +140,8 @@ function SteperNav(props) {
                         Login
                      </Button>
                   )}
-                  {user && (
-                     <Button href='/api/auth/logout' sx={{ color: '#fff' }}>
+                  {loggerUser && (
+                     <Button onClick={()=>loginWithPopup()} sx={{ color: '#fff' }}>
                         Logout
                      </Button>
                   )}

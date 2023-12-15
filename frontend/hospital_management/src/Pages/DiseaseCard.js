@@ -25,7 +25,6 @@ export default function DiseaseCard() {
                               <CardMedia
                                  sx={{ height: 140 }}
                                  component='img'
-                                 SSSSS
                                  image={result.image}
                               />
                               <CardContent>

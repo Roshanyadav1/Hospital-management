@@ -3,8 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CustomProvider from '@/redux/CustomProvider'
 import { Inter } from 'next/font/google'
 import { themeOptions } from '@/styles/theme'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
-import { ToastContainer } from 'react-toastify'
+ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import NextTopLoader from 'nextjs-toploader'
 import SteperNav from '@/components/SteperNav'
@@ -22,16 +21,17 @@ export default function RootLayout({ children }) {
    return (
       <html lang='en'>
          <body className={inter.className}>
-            <UserProvider>
+         
                <Auth0Provider
                   domain='dev-wk502078emf2n02u.us.auth0.com'
                   clientId='8DYRjBXQPhFEU32hGiiBTwBszzpIRRnf'
                   authorizationParams={{
-                     redirect_uri: window.location.origin,
+                     redirect_uri: 'http://localhost:3000',
                      audience: 'https://dev-wk502078emf2n02u.us.auth0.com/api/v2/',
-                     scope: 'read:current_user update:current_user_metadata',
+                     scope: 'openid profile email offline_access read:current_user update:current_user_metadata',
                   }}
-               >
+                  >
+                  {/* // refresh_token: true,  */}
                   <ToastContainer
                      position={'top-right'}
                      close
@@ -52,7 +52,7 @@ export default function RootLayout({ children }) {
                      </ThemeProvider>
                   </CustomProvider>
                </Auth0Provider>
-            </UserProvider>
+          
          </body>
       </html>
    )
