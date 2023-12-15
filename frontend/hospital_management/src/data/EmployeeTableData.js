@@ -185,7 +185,7 @@ const GetActionButton = (row) => {
             },
          }
          const result = await updateEmployee(obj)
-
+         resetForm()
          // Log the result to the console
          console.log('Result of updateStatus mutation:', result)
          handleCloseModal()

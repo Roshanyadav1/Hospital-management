@@ -283,7 +283,7 @@ function BookAppoinment({ id, name, date }) {
                      <DialogContent>
                         <DialogContentText>
                            Are you sure you want to book the appointment?
-                           An email confirmation will be sent to you shortly.
+                           A confirmation email  will be sent to you shortly.
                         </DialogContentText>
                      </DialogContent>
                      <DialogActions>

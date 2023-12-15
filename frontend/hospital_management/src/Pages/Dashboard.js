@@ -178,7 +178,7 @@ function Dashboard() {
                //    console.log(values)
                // }}
             >
-               {({ values, handleChange, handleBlur, touched }) => (
+               {({ values, handleChange, handleBlur, touched ,isSubmitting }) => (
                   <Form>
                      <DialogContent>
                         <Grid container spacing={2}>
@@ -288,8 +288,9 @@ function Dashboard() {
                               color='primary'
                               type='submit'
                               size='large'
+                              disabled={isSubmitting}
                            >
-                              Submit
+                              {isSubmitting ? 'Submitting...' : 'Submit'}
                            </Button>
                         </DialogActions>
                      </DialogContent>

@@ -170,10 +170,8 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                         color='primary'
                         type='submit'
                         size='large'
-                        disabled={isSubmitting}
-
-                     >
-                                            {isSubmitting ? 'Submitting...' : 'Submit'}
+                        disabled={isSubmitting}>
+                         {isSubmitting ? 'Submitting...' : 'Submit'}
 
                      </Button>
                   </Grid>

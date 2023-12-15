@@ -3,6 +3,7 @@ import { Grid, CardHeader, Divider } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 import { Container } from '@mui/material'
+import Badge from '@mui/material/Badge';
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -15,6 +16,9 @@ import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Chip from '@mui/material/Chip';
+import HistoryIcon from '@mui/icons-material/History';
+import { display } from '@mui/system'
 
 const Profile = () => {
    const ProfileCard = ({ icon, title, content }) => (
@@ -82,7 +86,9 @@ const Profile = () => {
          <Grid container marginTop={2} spacing={2}>
             <Grid xs={12} sm={6}>
                <ProfileCard
+               
                   icon={<PersonIcon sx={{ marginRight: 1 }} />}
+                  
                   title={
                      <Typography gutterBottom variant='h6'>
                         {' '}
@@ -109,28 +115,44 @@ const Profile = () => {
                />
             </Grid>
             <Grid item xs={12} sm={6} >
-               <Typography variant='h3' sx={{ textAlign: 'center' }}>
+               <div style={{display:'flex',textAlign: 'center'}} >
+                  <HistoryIcon/>
+               <Typography variant='h6' sx={{  }}>
                   History
                </Typography>
+               </div>
                <Accordion>
                   <AccordionSummary
-                     expandIcon={<ExpandMoreIcon />}
+                     expandIcon={<Badge badgeContent={4} color="primary"><ExpandMoreIcon /></Badge>}
                      aria-controls='panel1a-content'
                      id='panel1a-header'
                   >
                      <Typography variant='h6' >Date - 12/12/2023</Typography>
                   </AccordionSummary>
                   <AccordionDetails sx={{marginLeft:1}}>
-                     <div display='flex'>
-                     <Typography>
-                       Number of Appointments conducted - 
+                     <div style={{display:'flex',paddingBottom:10}}>
+                     <Typography variant='body2'>
+                       Number of Appointments conducted =  
                      </Typography>
-                     <Typography>
+                     <Typography variant='body2'>
                         4 
                      </Typography>
                      </div>
-                     <Typography>Patient Details</Typography>
-                     <Typography></Typography>
+                     <Typography variant='h6' paddingY={1}>Patient Details -</Typography>
+                    <Grid container  >
+                     <Grid item xs={4} sm={4}>
+                        <Typography variant='b1' component='h5'>Name</Typography>
+                        <Typography variant='body2' >Kapil Dubey</Typography>
+                     </Grid>
+                     <Grid item xs={4} sm={4}>
+                     <Typography variant='b1' component='h5'>Disease</Typography>
+                     <Typography variant='body2' >Dengue</Typography>
+                     </Grid>
+                     <Grid item xs={4} sm={4}>
+                     <Typography variant='b1' component='h5'>Status</Typography>
+                     <Chip label="Attended" color="success" size="small"/>
+                     </Grid>
+                    </Grid>
                   </AccordionDetails>
                </Accordion>
             </Grid>
