@@ -10,6 +10,7 @@ import {
    DialogActions,
    DialogContent,
    DialogTitle,
+   Skeleton,
 } from '@mui/material'
 import { CardActionArea } from '@mui/material'
 import { CardContent } from '@mui/material'
@@ -96,9 +97,9 @@ const INITIAL_FORM_STATE = {
 }
 
 const page = () => {
-   const { data: getDisease, isLoading , refetch } = useGetAllDiseasesQuery()
-   const [updateStatus] = useDiseaseStatusMutation();
-   const [addDisease] = useAddDiseasesMutation();
+   const { data: getDisease, isLoading, refetch } = useGetAllDiseasesQuery()
+   const [updateStatus] = useDiseaseStatusMutation()
+   const [addDisease] = useAddDiseasesMutation()
 
    const [openModal, setOpenModal] = useState(false)
    const [open, setOpen] = useState(false)
@@ -107,26 +108,9 @@ const page = () => {
    const handleOpen = () => setOpen(true)
    const handleClose = () => setOpen(false)
 
-
    const handleCloseModal = () => {
       setOpenModal(false)
    }
-
-   if (isLoading)
-      return (
-         <div
-            style={{
-               height: '100vh',
-               display: 'flex',
-               alignItems: 'center',
-               justifyContent: 'center',
-            }}
-         >
-            <Box sx={{ display: 'flex' }}>
-               <CircularProgress />
-            </Box>
-         </div>
-      )
 
    const style = {
       position: 'absolute',
@@ -151,8 +135,8 @@ const page = () => {
       }
    }
 
-   // change status 
-   const ChangeStatus = async () => {
+   // change status
+   const ChangeStatus = async (isSubmitting) => {
       try {
          // Assuming your API expects an employee ID for deletion
          const result = await updateStatus(disease)
@@ -183,7 +167,7 @@ const page = () => {
             </DialogTitle>
             <DialogContent>
                <p>
-                  Are you sure you want to change the status of 
+                  Are you sure you want to change the status of
                   <span className='Data'>{disease?.disease_name}</span>
                </p>
             </DialogContent>
@@ -216,7 +200,7 @@ const page = () => {
                         validationSchema={DISEASE_VALIDATION}
                         onSubmit={handleRegister}
                      >
-                        {({ errors }) => (
+                        {({ errors, isSubmitting }) => (
                            <Form>
                               {console.log(errors, 'here')}
                               <Grid container spacing={2}>
@@ -259,8 +243,9 @@ const page = () => {
                                        color='primary'
                                        type='submit'
                                        size='large'
+                                       disabled={isSubmitting}
                                     >
-                                       Submit
+                                       {isSubmitting ? 'Submitting...' : 'Submit'}
                                     </Button>
                                  </Grid>
                               </Grid>
@@ -272,60 +257,80 @@ const page = () => {
             </Box>
          </Modal>
 
+         {isLoading && (
+            <>
+               <Grid container alignItems='center' spacing={2} p={2}>
+                  {Array.from({ length: 8 }).map((_, i) => (
+                     <>
+                        <Grid container item key={i} xs={12} sm={6} md={4} lg={3}>
+                           <Grid item>
+                              <Skeleton variant='rect' width={50} height={50} />
+                           </Grid>
+                           <Grid item sx={{ paddingLeft: 2, flex: 1 }}>
+                              <Typography variant='body2' sx={{ fontWeight: 700 }}>
+                                 <Skeleton width={120} />
+                              </Typography>
+                              <Typography gutterBottom variant='h6' component='div'>
+                                 <Skeleton height={50} width={50} />
+                              </Typography>
+                           </Grid>
+                        </Grid>
+                     </>
+                  ))}
+               </Grid>
+            </>
+         )}
+
          <Grid container spacing={5} style={{ marginTop: 0.8 }}>
             {getDisease?.data?.map((e, i) => {
                let status = e.disease_status
                return (
                   <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
                      <Card sx={{ maxWidth: 250 }}>
-                        <CardActionArea>
-                           <CardContent>
-                              <div style={{ display: 'flex' }}>
-                                 <div>
-                                    <Typography sx={{ paddingTop: 0.3 }}>
-                                       <CoronavirusTwoToneIcon />
-                                    </Typography>
-                                 </div>
-                                 <div>
-                                    <Typography
-                                       gutterBottom
-                                       variant='h6'
-                                       component='div'
-                                    >
-                                       {e.disease_name}
-                                    </Typography>
-                                 </div>
-                              </div>
-                              <div style={{ display: 'block' }}>
-                                 <Typography
-                                    sx={{ paddingTop: 1, color: 'primary' }}
-                                 >
-                                    Status
+                        <CardContent>
+                           <div style={{ display: 'flex' }}>
+                              <div>
+                                 <Typography sx={{ paddingTop: 0.3 }}>
+                                    <CoronavirusTwoToneIcon />
                                  </Typography>
-
-                                 {/* <GreenSwitch {...label} defaultChecked /> */}
-                                 {/* toggle code///////////////////////////////////////////////////////////////////////////////////////// */}
-
-                                 <div
-                                    style={{
-                                       display: 'flex',
-                                       justifyContent: 'left',
-                                       alignItems: 'left',
-                                    }}
-                                 >
-                                    <Switch
-                                       checked={status}
-                                       onClick={() => {
-                                          setDisease(e)
-                                          setOpenModal(true)
-                                       }}
-                                       color='primary'
-                                       size='small'
-                                    />
-                                 </div>
                               </div>
-                           </CardContent>
-                        </CardActionArea>
+                              <div>
+                                 <Typography
+                                    gutterBottom
+                                    variant='h6'
+                                    component='div'
+                                 >
+                                    {e.disease_name}
+                                 </Typography>
+                              </div>
+                           </div>
+                           <div style={{ display: 'block' }}>
+                              <Typography sx={{ paddingTop: 1, color: 'primary' }}>
+                                 Status
+                              </Typography>
+
+                              {/* <GreenSwitch {...label} defaultChecked /> */}
+                              {/* toggle code///////////////////////////////////////////////////////////////////////////////////////// */}
+
+                              <div
+                                 style={{
+                                    display: 'flex',
+                                    justifyContent: 'left',
+                                    alignItems: 'left',
+                                 }}
+                              >
+                                 <Switch
+                                    checked={status}
+                                    onClick={() => {
+                                       setDisease(e)
+                                       setOpenModal(true)
+                                    }}
+                                    color='primary'
+                                    size='small'
+                                 />
+                              </div>
+                           </div>
+                        </CardContent>
                      </Card>
                   </Grid>
                )
