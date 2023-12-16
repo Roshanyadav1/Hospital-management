@@ -258,7 +258,7 @@ class AppointmentCount(ListAPIView):
 
 class AppointmentView(ListAPIView):
     queryset = Appointment.objects.all().order_by('created_at')
-    serializer_class = AppointmentSerializer
+    serializer_class = AppointmentViewSerializer
     filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
     filterset_fields = ['appointment_id', 'doctor_id', 'appointment_time',
@@ -306,34 +306,34 @@ class AppointmentView(ListAPIView):
                 response.data = list()
                 response.data = res
 
-        for data in response.data:
-            try:
-                doctor = Doctor.objects.get(doctor_id=data['doctor'])
-                employee = Employee.objects.get(employee_id=doctor.employee_id)
-                patient = Patient.objects.get(patient_id=data['patient'])
-                disease = Disease.objects.get(disease_id=data['disease'])
-                doctor_dict = {}
-                doctor_dict['doctor_id'] = doctor.doctor_id
-                doctor_dict['employee'] = {
-                    'employee_id': employee.employee_id,
-                    'employee_name': employee.employee_name
-                }
-                data['doctor'] = doctor_dict
-                patient_dict = {}
-                patient_dict['patient_id'] = patient.patient_id
-                patient_dict['patient_name'] = patient.patient_name
-                data['patient'] = patient_dict
-                disease_dict = {}
-                disease_dict['disease_id'] = disease.disease_id
-                disease_dict['disease_name'] = disease.disease_name
-                data['disease'] = disease_dict
-            except:
-                return Response(
-                    {
-                        'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                        'message': "Internal Server Error",
-                    }
-                )
+        # for data in response.data:
+        #     try:
+        #         doctor = Doctor.objects.get(doctor_id=data['doctor'])
+        #         employee = Employee.objects.get(employee_id=doctor.employee_id)
+        #         patient = Patient.objects.get(patient_id=data['patient'])
+        #         disease = Disease.objects.get(disease_id=data['disease'])
+        #         doctor_dict = {}
+        #         doctor_dict['doctor_id'] = doctor.doctor_id
+        #         doctor_dict['employee'] = {
+        #             'employee_id': employee.employee_id,
+        #             'employee_name': employee.employee_name
+        #         }
+        #         data['doctor'] = doctor_dict
+        #         patient_dict = {}
+        #         patient_dict['patient_id'] = patient.patient_id
+        #         patient_dict['patient_name'] = patient.patient_name
+        #         data['patient'] = patient_dict
+        #         disease_dict = {}
+        #         disease_dict['disease_id'] = disease.disease_id
+        #         disease_dict['disease_name'] = disease.disease_name
+        #         data['disease'] = disease_dict
+        #     except:
+        #         return Response(
+        #             {
+        #                 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+        #                 'message': "Internal Server Error",
+        #             }
+        #         )
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message
