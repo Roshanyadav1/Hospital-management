@@ -81,90 +81,80 @@ function FetchData() {
             {userRole === 'Admin' || userRole === 'Manager' ? (
                <Chart />
             ) : userRole === 'Doctor' ? (
-               <Container maxWidth='sm'>
-                  <Grid mt={10} container spacing={2}>
-                     {Array.isArray(appointment?.data) &&
-                        appointment?.data?.map((e, i) => (
-                           <Grid
-                              item
-                              key={i}
-                              xs={12}
-                              sm={12}
-                              md={12}
-                              lg={12}
-                              sx={{ paddingBottom: '1rem' }}
+               <Container maxWidth='md'>
+                  <Grid mt={10} container spacing={3}>
+                     {Array.isArray(appointment?.data) && appointment.data.map((appointmentItem, index) => (
+                        <Grid item key={index} xs={12} sm={6} md={4}>
+                           <Card
+                              sx={{
+                                 backgroundColor: '#336699',
+                                 borderRadius: 2,
+                                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                              }}
                            >
-                              <Card sx={{ backgroundColor: '#336699', borderRadius: 2, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                                 <CardHeader
-                                    avatar={
-                                       <Avatar
-                                          alt='Avatar'
-                                          src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU'}
-                                          sx={{ width: 60, height: 60, border: '2px solid white' }}
-                                       />
-                                    }
-                                    title={
-                                       <Typography
-                                          sx={{ display: 'inline', fontSize: '1.2rem', color: 'white', fontWeight: 'bold' }}
-                                          component='h4'
-                                          variant='body1'
-                                       >
-                                          {e?.doctor?.employee?.employee_name}
-                                       </Typography>
-                                    }
-                                    subheader={
-                                       <Typography sx={{ color: 'white' }}>
-                                          {e?.appointment_time} {e?.appointment_date}
-                                       </Typography>
-                                    }
-                                 />
+                              <CardHeader
+                                 avatar={
+                                    <Avatar
+                                       alt='Avatar'
+                                       src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU'
+                                       sx={{ width: 60, height: 60, border: '2px solid white' }}
+                                    />
+                                 }
+                                 title={
+                                    <Typography
+                                       sx={{
+                                          display: 'inline',
+                                          fontSize: '1.2rem',
+                                          color: 'white',
+                                          fontWeight: 'bold',
+                                       }}
+                                       component='h4'
+                                       variant='body1'
+                                    >
+                                       {appointmentItem?.doctor?.employee?.employee_name}
+                                    </Typography>
+                                 }
+                                 subheader={
+                                    <Typography sx={{ color: 'white' }}>
+                                       {`${appointmentItem?.appointment_time} ${appointmentItem?.appointment_date}`}
+                                    </Typography>
+                                 }
+                              />
 
-                                 <CardContent>
-                                    <Grid container spacing={1} alignItems='center' justifyContent='space-between'>
-                                       <Grid item xs={12}>
-                                          <Typography sx={{ color: 'white', marginTop: '0.5rem' }}>
-                                             Patient Name : {e?.patient?.patient_name}
-                                          </Typography>
-                                       </Grid>
-                                       <Grid item xs={12}>
-                                          <Typography sx={{ color: 'white' }}>
-                                             Appointment Number : {e?.appointment_number}
-                                          </Typography>
-                                       </Grid>
-                                       <Grid item>
-                                          <Typography sx={{ color: 'white' }}>
-                                             Disease Name : {e?.disease?.disease_name}
-                                          </Typography>
-                                       </Grid>
-                                       <Grid item>
-                                          <Link
-                                             href={`dashboard/individualappointment/${e?.appointment_id}`}
-                                          >
-                                             <Button
-                                                variant='contained'
-                                                size='small'
-                                                style={{
-                                                   backgroundColor: '#13293D',
-                                                   width: '6rem',
-                                                   height: '2rem',
-                                                   fontSize: '200',
-                                                   cursor: 'pointer',
-                                                }}
-                                             >
-                                                View
-                                             </Button>
-                                          </Link>
-                                       </Grid>
-                                    </Grid>
-                                 </CardContent>
-                              </Card>
-
-                           </Grid>
-                        ))}
+                              <CardContent>
+                                 <Typography sx={{ color: 'white', marginTop: '0.5rem' }}>
+                                    {`Patient Name: ${appointmentItem?.patient?.patient_name}`}
+                                 </Typography>
+                                 <Typography sx={{ color: 'white' }}>
+                                    {`Appointment Number: ${appointmentItem?.appointment_number}`}
+                                 </Typography>
+                                 <Typography sx={{ color: 'white' }}>
+                                    {`Disease Name: ${appointmentItem?.disease?.disease_name}`}
+                                 </Typography>
+                                 <Link href={`dashboard/individualappointment/${appointmentItem?.appointment_id}`}>
+                                    <Button
+                                       variant='contained'
+                                       size='small'
+                                       sx={{
+                                          backgroundColor: '#13293D',
+                                          width: '6rem',
+                                          height: '2rem',
+                                          fontSize: '200',
+                                          cursor: 'pointer',
+                                          marginTop: '1rem',
+                                       }}
+                                    >
+                                       View
+                                    </Button>
+                                 </Link>
+                              </CardContent>
+                           </Card>
+                        </Grid>
+                     ))}
                   </Grid>
                </Container>
             ) : null}
-         </div >
+         </div>
       );
    }
 }
