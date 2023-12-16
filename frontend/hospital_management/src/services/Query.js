@@ -202,6 +202,27 @@ export const queries = createApi({
             },
          }),
       }),
+
+     
+      appointmentUpdate: build.mutation({
+         query: (p) => ({
+            url: '/appointment/update/'+ p.id,
+             method: 'PATCH', 
+            body: p.pro,
+            }),
+        invalidatesTags: ['APP'],
+     }),
+     
+      // eslint-disable-next-line no-dupe-keys
+      changeEmpData: build.mutation({
+         query: (p) => ({
+            url: '/employee/update/'+ p.id,
+             method: 'PATCH', 
+            body: p.pro,
+            }),
+        invalidatesTags: ['EMP'],
+     }),  
+
    }),
 })
 
@@ -229,6 +250,7 @@ export const {
    useChangeStatusMutation,
    useDiseaseStatusMutation,
    useChangeEmpDataMutation,
+   useAppointmentUpdateMutation
 } = queries
 
 // export const { useRegisterAuth } = apiAuth

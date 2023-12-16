@@ -14,16 +14,14 @@ import {
 import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
-import { motion } from 'framer-motion' // Import motion from framer-motion for animations
+import { motion } from 'framer-motion'
 import '@/styles/container.css'
-import CircularProgress from '@mui/material/CircularProgress'
-// import Button from '@mui/material/Button';
-// import Input from '@mui/material/Input';
-import Dialog from '@mui/material/Dialog'
+ import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
+import { useAppointmentUpdateMutation } from '@/services/Query'
 
 const fadeInUp = {
    hidden: { opacity: 0, y: 20 },
@@ -31,69 +29,76 @@ const fadeInUp = {
 }
 
 function DoctorPage() {
-   const { appointment_id } = useParams()
+   const { appointment_id } = useParams();
    const {
       data: appointmentInfo,
-      isLoading,
-      isError,
-   } = useGetAppointmentInfoQuery(appointment_id)
-   const label = { inputProps: { 'aria-label': 'Size switch demo' } }
+      // isLoading,
+      // isError,
+   } = useGetAppointmentInfoQuery(appointment_id);
+   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
-   const [isSwitchOn, setIsSwitchOn] = useState(false)
-   const [selectedFile, setSelectedFile] = useState(null)
-   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false)
-   const [isFileChosenError, setIsFileChosenError] = useState(false)
+   const [isSwitchOn, setIsSwitchOn] = useState(false);
+   const [selectedFile, setSelectedFile] = useState(null);
+   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+   const [isFileChosenError, setIsFileChosenError] = useState(false);
+
+   const [appointmentUpdate] = useAppointmentUpdateMutation(); 
 
    const handleFileChange = (event) => {
-      setSelectedFile(event.target.files[0])
-   }
-
-   const handleSubmit = () => {
+      setSelectedFile(event.target.files[0]);
+   };
+   const handleSubmit = async () => {
       if (selectedFile) {
-         setIsSuccessDialogOpen(true)
-         setIsFileChosenError(false)
+         const formData = new FormData();
+         formData.append('file', selectedFile);
+
+         try {
+            const response = await fetch('/api/s3-upload', {
+               method: 'POST',
+               body: formData,
+            });
+
+            if (response.ok) {
+               setIsSuccessDialogOpen(true);
+               setIsFileChosenError(false);
+            } else {
+               console.error('Failed to upload image');
+            }
+         } catch (error) {
+            console.error('Error uploading image:', error);
+         }
       } else {
-         setIsFileChosenError(true)
+         setIsFileChosenError(true);
       }
-   }
+   };
 
    const handleDialogClose = () => {
-      setIsSuccessDialogOpen(false)
-      setSelectedFile(null)
+      setIsSuccessDialogOpen(false);
+      setSelectedFile(null);
+      setIsFileChosenError(false);
+   };
 
-      setIsFileChosenError(false)
-   }
-   const handleSwitchChange = () => {
-      setIsSwitchOn(!isSwitchOn)
-   }
-   if (appointment_id === undefined) {
-      return <p>Error:</p>
-   }
-   if (isLoading) {
-      const loaderContainerStyle = {
-         display: 'flex',
-         flexDirection: 'column',
-         alignItems: 'center',
-         justifyContent: 'center',
-         height: '100vh',
+   const handleSwitchChange = async () => {
+      try {
+         const obj = {
+            id: appointmentInfo?.data?.[0]?.appointment_id,
+            pro: {
+               checked: !isSwitchOn,
+            },
+         };
+
+         const result = await appointmentUpdate(obj);
+
+         console.log('Result of updateStatus mutation:', result);
+
+
+      } catch (error) {
+         console.error('Error changing status:', error);
       }
 
-      // Styling for the CircularProgress component
-      const loaderStyle = {
-         color: 'black',
-      }
+      setIsSwitchOn(!isSwitchOn);
+   };
 
-      return (
-         <div style={loaderContainerStyle}>
-            <p style={{ color: 'black' }}>Loading...</p>
-            <CircularProgress style={loaderStyle} />
-         </div>
-      )
-   }
-   // add the live loader symbol when the loading hits
-   if (isError) {
-      return <p>Error: {isError.message}</p>
-   }
 
    return (
       <Container maxWidth='md'>
@@ -151,6 +156,9 @@ function DoctorPage() {
                               {...label}
                               checked={isSwitchOn}
                               onChange={handleSwitchChange}
+                              color='primary'
+                              size='small'
+                              disabled={isSwitchOn} 
                            />
                            {isSwitchOn ? (
                               <div>
@@ -173,7 +181,6 @@ function DoctorPage() {
                            )}
                         </CardContent>
 
-                        {/* Success Dialog */}
                         <Dialog
                            open={isSuccessDialogOpen}
                            onClose={handleDialogClose}

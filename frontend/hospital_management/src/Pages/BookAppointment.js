@@ -24,10 +24,6 @@ import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
 import moment from 'moment'
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/HM_New
 function BookAppoinment({ id, name, date }) {
    let data = {
       id: id,
@@ -155,7 +151,7 @@ function BookAppoinment({ id, name, date }) {
                      <Typography gutterBottom variant='h4' component='div'>
                         {name}
                         <Typography variant='body1' color='text.secondary'>
-                           EXECUTIVE CHAIRMAN FORTIS C DOC | Fortis C-Doc
+                           EXECUTIVE DOCTORS FORTIS C DOC | Fortis C-Doc
                         </Typography>
                      </Typography>
                   </>
@@ -183,6 +179,10 @@ function BookAppoinment({ id, name, date }) {
         Fellowship (USA), Skull Base& Vascular Fellowship (USA)...'
                />
             </Grid>
+
+              
+
+
             {/* 2ND COLUMN */}
             <Grid item sm={6} xs={12}>
                <Paper
@@ -276,7 +276,7 @@ function BookAppoinment({ id, name, date }) {
                            Cancel
                         </Button>
                         <Button
-                           /////////////
+                        
                            onClick={handleAppointment}
                            color='primary'
                            autoFocus
@@ -287,6 +287,7 @@ function BookAppoinment({ id, name, date }) {
                   </Dialog>
                </Paper>
             </Grid>
+
          </Grid>
       </Container>
    )

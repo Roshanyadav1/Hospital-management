@@ -126,6 +126,9 @@ function SteperNav(props) {
 
    }, [user])
 
+
+   
+
    const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
          <Divider />

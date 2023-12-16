@@ -1,4 +1,5 @@
-'use client'
+
+"use client"
 import Chart from '@/Pages/Chart';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
