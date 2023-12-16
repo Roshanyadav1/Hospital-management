@@ -86,10 +86,13 @@ function RecipeReviewCard() {
                      sx={{ paddingBottom: '1rem' }}
                   >
                      <Card sx={{ backgroundColor: '#C4D0DC' }}>
+                        <Grid container justifyContent='space-between'>
+                        <Grid item>
+
                         <CardHeader
                            avatar={
                               <Avatar
-                                 sx={{ bgcolor: '#13293D' }}
+                              sx={{ bgcolor: '#13293D' }}
                                  aria-label='recipe'
                               >
                                  {e?.doctor?.employee?.employee_name.split('')[0]}
@@ -99,7 +102,15 @@ function RecipeReviewCard() {
                            subheader={
                               e?.appointment_time + '   ' + e?.appointment_date
                            }
-                        />
+                           />
+                              </Grid>
+                              <Grid item p={3}>
+                                 <Chip
+                                    label={e?.checked ? 'Checked' : 'Not Checked'}
+                                    sx={{ backgroundColor:e?.checked ? '#39cef5' : 'gray'  , marginRight: 1 }}
+                                 />
+                              </Grid>
+                           </Grid>
                         <CardContent>
                            <Grid
                               container
