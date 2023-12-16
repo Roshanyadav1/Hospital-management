@@ -11,6 +11,7 @@ import {
 import { Delete, Create, Visibility } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 
@@ -40,17 +41,11 @@ const GetActionButton = (row) => {
    const handleConfirmDelete = () => {
       const DltEmployee = async () => {
          try {
-            // Assuming your API expects an employee ID for deletion
-            const result = await deleteEmployee(selectedRow.employee_id)
-            alert('Employee Deleted Successfully')
-
-            // Log the result to the console
-            console.log('Result of deleteEmployee mutation:', result)
-
-            // Perform any additional logic after successful deletion
+            await deleteEmployee(selectedRow.employee_id)
+            toast.error('Employee Deleted Successfully')
          } catch (error) {
             // Handle error
-            console.error('Error deleting employee:', error)
+            toast.error(JSON.stringify(error))
          }
       }
 

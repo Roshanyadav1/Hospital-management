@@ -198,11 +198,11 @@ function Layout({ children }) {
                         path: '/dashboard/employeedata',
                         icon: <TrackChangesIcon />,
                      },
-                     {
-                        text: 'Add Doctor',
-                        path: '/dashboard/adddoctor',
-                        icon: <SettingsAccessibilityIcon />,
-                     },
+                     // {
+                     //    text: 'Add Doctor',
+                     //    path: '/dashboard/adddoctor',
+                     //    icon: <SettingsAccessibilityIcon />,
+                     // },
                      {
                         text: 'Add Disease',
                         path: '/dashboard/adddisease',

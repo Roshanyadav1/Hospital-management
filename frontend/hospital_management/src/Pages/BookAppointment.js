@@ -29,7 +29,8 @@ function BookAppoinment({ id, name, date }) {
       id: id,
       date: date
    }
-   const { data: doctorTimes , isLoading , refetch } = useGetDoctorTimesQuery(data)
+   const { data: doctorTimes , refetch , isFetching : isLoading } = useGetDoctorTimesQuery(data)
+   const [isBooking, setIsBooking] = useState(false)
    const[addAppointment] = useAddAppointmentMutation()
    const [selectedSlot, setSelectedSlot] = useState(null)
    const [openDialog, setOpenDialog] = useState(false)
@@ -82,6 +83,7 @@ function BookAppoinment({ id, name, date }) {
       handleOpenDialog()
    }
    const handleAppointment = async () => {
+      setIsBooking((prev)=> !prev)
       if (!selectedSlot) {
          toast.error('Please select a time slot')
       }
@@ -100,11 +102,12 @@ function BookAppoinment({ id, name, date }) {
          try {
             await addAppointment(payload).unwrap()
             refetch()
-            setSelectedSlot(null)
-            toast.success('Appointment booked successfully')
+            toast.success('Appointment Booked Successfully')
+            setIsBooking((prev)=> !prev)
             handleCloseDialog()
+            setSelectedSlot(null)
          } catch (e) {
-            console.log(e)
+            setIsBooking((prev)=> !prev)
             toast.error('Something went wrong')
          }
       }
@@ -272,11 +275,13 @@ function BookAppoinment({ id, name, date }) {
                         </DialogContentText>
                      </DialogContent>
                      <DialogActions>
-                        <Button onClick={handleCloseDialog} color='primary'>
+                        <Button
+                        disabled={isBooking}
+                        onClick={handleCloseDialog} color='primary'>
                            Cancel
                         </Button>
                         <Button
-                        
+                        disabled={isBooking}
                            onClick={handleAppointment}
                            color='primary'
                            autoFocus

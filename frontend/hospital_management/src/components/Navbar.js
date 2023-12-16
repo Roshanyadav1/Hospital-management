@@ -77,7 +77,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
                         onClose={handleCloseUserMenu}
                      >
                         {settings.map((setting) => (
-                           <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                           <MenuItem key={setting.label}>
                               <Link href={setting.route} prefetch >
                                  <Typography component='a' textAlign='center'>{setting.label}</Typography>
                               </Link>

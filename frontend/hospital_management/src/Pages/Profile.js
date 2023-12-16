@@ -2,7 +2,6 @@
 import { Grid, CardHeader, Divider } from '@mui/material'
 import Image from 'next/image'
 import { Container } from '@mui/material'
-import Badge from '@mui/material/Badge';
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
@@ -118,7 +117,7 @@ const Profile = () => {
                </div>
                <Accordion>
                   <AccordionSummary
-                     expandIcon={<Badge badgeContent={4} color="primary"><ExpandMoreIcon /></Badge>}
+                     expandIcon={<ExpandMoreIcon />}
                      aria-controls='panel1a-content'
                      id='panel1a-header'
                   >

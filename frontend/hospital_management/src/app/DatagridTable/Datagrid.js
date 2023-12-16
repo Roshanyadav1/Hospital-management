@@ -69,12 +69,7 @@ export default function Datagrid(props) {
 
    return (
       <div style={{ overflow: 'hidden', margin: '0' }}>
-         {/* <Button variant="contained" color="primary"  style={{ marginRight: '20px', marginTop: '20px',float:'right',width:'130px',fontSize:'0.7rem', }}>
-          Add Employee
-        </Button> */}
-         {/* <h2 style={{ textAlign: 'left', marginLeft: '20px', marginTop: '20px',marginBottom:'.5rem' }}>Employee Table</h2> */}
-         {/* <h5 style={{ textAlign: 'left', marginLeft: '20px', marginBottom:'2rem' }}>Employees data is viewed here. You can view, delete & edit.</h5> */}
-
+        
          <div
             style={{
                transform: 'translate(-50%, -50%)',
@@ -99,7 +94,4 @@ export default function Datagrid(props) {
       </div>
    )
 }
-
-// insert the delete insert and view buttons in every row of the data in Actions column
-// fix the size of the table to 8 rows with the pagination in it and when the other page will be opened then the size of the table should renains the same and the left over data should be shown on the rows and the other rows should be displayed wheteher it is fillrf or not
-// below the employee table heading provide one more heading that is 'Employees data is viewed here. You can view, delete & edit ' in h5 with proper allignment
+ 

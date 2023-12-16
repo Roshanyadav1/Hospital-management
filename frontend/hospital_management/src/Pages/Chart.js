@@ -282,7 +282,7 @@ function Chart() {
                                     +
                                  </span>
                               </Grid>
-                              <Grid item xs={6}>
+                              {/* <Grid item xs={6}>
                                  <div
                                     style={{
                                        width: '80%',
@@ -305,7 +305,7 @@ function Chart() {
                                        src={Doc}
                                     />
                                  </div>
-                              </Grid>
+                              </Grid> */}
                            </Grid>
                         </div>
                      </Grid>

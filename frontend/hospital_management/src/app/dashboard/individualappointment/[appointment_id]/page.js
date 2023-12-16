@@ -10,6 +10,7 @@ import {
    Switch,
    Button,
    Input,
+   Skeleton,
 } from '@mui/material'
 import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { useParams } from 'next/navigation'
@@ -33,8 +34,7 @@ function DoctorPage() {
    const { appointment_id } = useParams();
    const {
       data: appointmentInfo,
-      // isLoading,
-      // isError,
+      isLoading,
    } = useGetAppointmentInfoQuery(appointment_id);
    const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
@@ -98,7 +98,23 @@ function DoctorPage() {
 
    return (
       <Container maxWidth='lg'>
-         <Grid container spacing={2} justifyContent='center'>
+
+<Grid container spacing={2}>
+
+{isLoading && (
+   <>
+ {
+    [1, 2, 3].map((e) => (
+      <Grid  key={e} item xs={12} sm={12} md={6} lg={4} sx={{ paddingBottom: '1rem' }} component={motion.div} variants={fadeInUp} initial='hidden' animate='visible'>
+       <Skeleton  variant="rectangular" width={300} height={400} animation="wave" />
+      </Grid>
+       ))
+      }
+ </>
+)}
+</Grid>
+
+         <Grid container spacing={2}>
             {Array.isArray(appointmentInfo?.data) &&
                appointmentInfo?.data?.map((e, i) => (
                   <Grid
