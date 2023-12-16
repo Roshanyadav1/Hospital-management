@@ -138,7 +138,7 @@ class EmployeeView(ListAPIView):
         user = User.objects.get(user_id=user_id)
         user_role = user.user_role
 
-        if user_role == "Patient" or user_role == "Doctor" or user_role == "Manager":
+        if user_role == "Patient" or user_role == "Doctor":
             Response.status_code = status.HTTP_401_UNAUTHORIZED
             return Response(
                 {
