@@ -239,3 +239,4 @@
 {"asctime": "2023-12-10 14:31:12,257", "levelname": "INFO", "name": "django.utils.autoreload", "message": "C:\\Users\\KeshavAgrawal\\Desktop\\Code Olympics\\Hospital-management\\backend\\checkup\\views.py changed, reloading.", "taskName": null}
 {"asctime": "2023-12-10 14:31:14,118", "levelname": "INFO", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
 {"asctime": "2023-12-10 14:31:17,791", "levelname": "INFO", "name": "django.server", "message": "\"GET /api/checkup/view/ HTTP/1.1\" 200 516", "taskName": null, "request": "<socket.socket fd=1768, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000), raddr=('127.0.0.1', 1381)>", "server_time": "10/Dec/2023 14:31:17", "status_code": 200}
+{"asctime": "2023-12-16 10:46:57,028", "levelname": "INFO", "name": "django.utils.autoreload", "message": "Watching for file changes with StatReloader", "taskName": null}
