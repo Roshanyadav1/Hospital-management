@@ -171,6 +171,11 @@ function Layout({ children }) {
    }
 
 
+   let userRole = localStorage.getItem('user_role')
+   let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false;
+
+
+
    return (
       <Box sx={{ display: 'flex' }}>
          <CssBaseline />
@@ -209,7 +214,9 @@ function Layout({ children }) {
                         path: '/dashboard/precription',
                         icon: <MedicationIcon />,
                      },
-                  ].map((item) => (
+                  ].map((item , index) => {
+                     if ( index >= 2 && !isAdmin) return null;
+                  return (
                      <ListItem
                         key={item.text}
                         disablePadding
@@ -245,7 +252,8 @@ function Layout({ children }) {
                            </ListItemButton>
                         </Link>
                      </ListItem>
-                  ))}
+                  )}  
+                  )}
                </List>
             </div>
          </Drawer>

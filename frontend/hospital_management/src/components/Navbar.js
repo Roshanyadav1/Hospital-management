@@ -85,6 +85,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
                         ))}
                         <MenuItem
                            onClick={() => {
+                              localStorage.clear()
                               const a = document.createElement('a')
                               a.href = '/api/auth/logout'
                               a.click()

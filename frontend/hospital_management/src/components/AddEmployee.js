@@ -25,7 +25,7 @@ const VisuallyHiddenInput = styled('input')({
 const Empcategories = ['Part Time', 'Full Time']
 const Role = ['Doctor', 'Manager']
 
-const AddEmployee = ({ initialState, validationSchema, handleRegister , disableEmail = false }) => {
+const AddEmployee = ({ initialState, validationSchema, handleRegister , disableEmail = false , disablePass = false, closeButton = '' }) => {
    const router = useParams()
    console.log(router, 'param')
 
@@ -83,6 +83,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                         }}
                      />
                   </Grid>
+                  {!disablePass && (
                   <Grid item xs={12} sm={6}>
                      <Text
                         name='employee_password'
@@ -95,8 +96,9 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                               borderRadius: '20px',
                            },
                         }}
-                     />
+                        />
                   </Grid>
+                        )}
 
                   <Grid item xs={12} sm={6}>
                      <CustomAutocomplete
@@ -142,7 +144,8 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                      />
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} display='flex' justifyContent='end'>
+                     {closeButton}
                      <Button
                         variant='contained'
                         color='primary'
@@ -151,8 +154,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                         disabled={isSubmitting}
 
                      >
-                                            {isSubmitting ? 'Submitting...' : 'Submit'}
-
+                     {isSubmitting ? 'Submitting...' : 'Submit'}
                      </Button>
                   </Grid>
                </Grid>

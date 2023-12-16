@@ -431,6 +431,7 @@ import {
    DialogActions,
    DialogContent,
    DialogTitle,
+   Grid,
    IconButton,
    Switch,
 } from '@mui/material'
@@ -706,25 +707,27 @@ const GetActionButton = (row) => {
             >
                <CloseIcon />
             </IconButton>
+            <Grid p={2}>
             <AddEmployee
                initialState={INITIAL_FORM_STATE}
                validationSchema={FORM_VALIDATION}
                handleRegister={handleRegister}
                disableEmail={true}
-            />
-            <Button
+               disablePass={true}
+               closeButton={<Button
                variant='contained'
                color='primary'
-               sx={{
-                  position: 'absolute',
-                  left: '12rem',
-                  bottom: 0.5,
-               }}
                onClick={handleCloseEditModal}
                size='large'
+               sx={{
+                 mr: 2,
+               }}
             >
                cancel
-            </Button>
+            </Button>}
+               />
+               </Grid>
+    
          </Dialog>
          <IconButton onClick={handleDelete} color='error' size='small'>
             <Delete />

@@ -139,7 +139,6 @@ function Chart() {
 
    const filteredCount = filteredData ? filteredData.length : 0
    // it is still showing the error in filteredData.length
-   console.log('Data for Chart:', Data)
 
    const showServerError =
       isErrorDoctor || isErrorPatient || isErrorAppData || isErrorAppCount

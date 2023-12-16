@@ -22,6 +22,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import { useAppointmentUpdateMutation } from '@/services/Query'
+import { toast } from 'react-toastify'
 
 const fadeInUp = {
    hidden: { opacity: 0, y: 20 },
@@ -86,22 +87,17 @@ function DoctorPage() {
                checked: !isSwitchOn,
             },
          };
-
-         const result = await appointmentUpdate(obj);
-
-         console.log('Result of updateStatus mutation:', result);
-
-
+         await appointmentUpdate(obj);
+         toast.success('Status Changed Successfully');
       } catch (error) {
-         console.error('Error changing status:', error);
+         toast.error(JSON.stringify(error));
       }
-
       setIsSwitchOn(!isSwitchOn);
    };
 
 
    return (
-      <Container maxWidth='md'>
+      <Container maxWidth='lg'>
          <Grid container spacing={2} justifyContent='center'>
             {Array.isArray(appointmentInfo?.data) &&
                appointmentInfo?.data?.map((e, i) => (
