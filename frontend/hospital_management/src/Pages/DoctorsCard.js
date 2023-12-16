@@ -87,10 +87,7 @@ function DoctorCard() {
                   <Grid key={index} container spacing={1} marginY={1}>
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
-                           <Link
-                              style={{ textDecoration: 'none' }}
-                               href="/doctorpage"
-                           >
+                          
                               <Card
                                  sx={{
                                     maxWidth: 350,
@@ -126,21 +123,22 @@ function DoctorCard() {
                                        </Typography>
                                     </Typography>
                                  </Typography>
+                                 <Link  style={{ textDecoration: 'none' }}
+                               href="/doctorpage">
                                  <Button
-                                    // onClick={showWarningToast}
-                                    // size='small'
                                     sx={{
                                        border: '1px solid',
                                        '&:hover': {
                                           backgroundColor: '#13293D',
-                                          color: '#fff', // Change text color if needed
+                                          color: '#fff', 
                                        },
                                     }}
                                  >
                                     Book Appointment
                                  </Button>
+                                 </Link>
+                                 
                               </Card>
-                           </Link>
                         </Grid>
                      </SwiperSlide>
                   </Grid>
