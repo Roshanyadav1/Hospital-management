@@ -26,12 +26,11 @@ export default function RootLayout({ children }) {
                   domain='dev-wk502078emf2n02u.us.auth0.com'
                   clientId='8DYRjBXQPhFEU32hGiiBTwBszzpIRRnf'
                   authorizationParams={{
-                     redirect_uri: 'http://localhost:3000',
+                     redirect_uri: window.location.origin || 'http://localhost:3000',
                      audience: 'https://dev-wk502078emf2n02u.us.auth0.com/api/v2/',
                      scope: 'openid profile email offline_access read:current_user update:current_user_metadata',
                   }}
-                  >
-                  {/* // refresh_token: true,  */}
+                  >  
                   <ToastContainer
                      position={'top-right'}
                      close
