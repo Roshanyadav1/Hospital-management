@@ -9,12 +9,29 @@ from rest_framework import status
 from error.models import Error
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
+from auth0verify.views import get_auth0_user_profile
+
 
 class LeaveRegister(GenericAPIView):
     serializer_class = LeaveSerializer
 
     def post(self, request, format = None):
         serializer = LeaveSerializer(data = request.data)
+
+        res = get_auth0_user_profile(request)
+
+        if res['status'] == False:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': res['message']
+                }
+            )
+        user_email = res['payload']['email']
+        user_role = res['payload']['roles']
+        user = User.objects.get(user_email=user_email)
+        member_id = user.member_id
+
         serializer.is_valid(raise_exception = True)
         serializer.save()
         response_message = ""
@@ -42,6 +59,21 @@ class LeaveView(ListAPIView):
     def list(self, request, *args, **kwargs):
 
          response = super().list(request, *args, **kwargs)
+
+         res = get_auth0_user_profile(request)
+
+         if res['status'] == False:
+             return Response(
+                 {
+                     'status': status.HTTP_400_BAD_REQUEST,
+                     'message': res['message']
+                 }
+             )
+         user_email = res['payload']['email']
+         user_role = res['payload']['roles']
+         user = User.objects.get(user_email=user_email)
+         member_id = user.member_id
+
          if request.GET.get('pageSize') != None:
             response.data['page_size'] = int(request.GET.get('pageSize'))
          response_message = ""
@@ -72,6 +104,21 @@ class LeaveViewById(APIView):
                 serializer = LeaveSerializer(leave)
                 response_message = ""
                 response_code = ""
+
+                res = get_auth0_user_profile(request)
+
+                if res['status'] == False:
+                    return Response(
+                        {
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': res['message']
+                        }
+                    )
+                user_email = res['payload']['email']
+                user_role = res['payload']['roles']
+                user = User.objects.get(user_email=user_email)
+                member_id = user.member_id
+
                 try:
                  error = Error.objects.get(error_title = 'RETRIEVED_SUCCESS')
                  response_message = error.error_message
@@ -112,6 +159,20 @@ class LeaveUpdate(GenericAPIView):
     def patch(self, request, input, format = None):
         id = input
         if Leave.objects.filter(leave_id = id).count() >= 1:
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             leave = Leave.objects.get(leave_id = id)
             serializer = LeaveSerializer(leave, data = request.data, partial = True)
             serializer.is_valid(raise_exception = True)
@@ -154,6 +215,21 @@ class LeaveDelete(APIView):
     def delete(self, request, input, format = None):
         id = input
         if Leave.objects.filter(leave_id = id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             leave = Leave.objects.get(leave_id = id)
             leave.delete()
             response_message = ""

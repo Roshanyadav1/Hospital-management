@@ -1,4 +1,3 @@
-
 from doctor.serializers import *
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
@@ -15,9 +14,7 @@ from leave.models import Leave
 import json
 from datetime import datetime, timedelta , time
 from appointment.models import Appointment
-from rest_framework.filters import OrderingFilter
-from django_filters.rest_framework import DjangoFilterBackend
-from employee.models import Employee
+from auth0verify.views import get_auth0_user_profile
 
 
 class DoctorRegister(GenericAPIView):
@@ -233,6 +230,21 @@ class DoctorUpdate(GenericAPIView):
     def patch(self, request, input, format=None):
         id = input
         if Doctor.objects.filter(doctor_id=id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             doctor = Doctor.objects.get(doctor_id=id)
             serializer = DoctorSerializer(
                 doctor, data=request.data, partial=True)
@@ -278,6 +290,21 @@ class DoctorDelete(APIView):
         id = input
         if Doctor.objects.filter(doctor_id=id).count() >= 1:
             doctor = Doctor.objects.get(doctor_id=id)
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             doctor.delete()
             response_message = ""
             response_code = ""

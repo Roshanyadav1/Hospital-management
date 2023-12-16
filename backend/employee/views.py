@@ -10,7 +10,6 @@ from doctor.serializers import DoctorSerializer
 from error.models import Error
 from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
-from doctor.models import Doctor
 import json
 from rest_framework_simplejwt.tokens import RefreshToken
 # from rest_framework.permissions import IsAuthenticated
@@ -19,6 +18,7 @@ from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from user.models import User
 from rest_framework.filters import SearchFilter
+from auth0verify.views import get_auth0_user_profile
 
 
 def get_tokens_for_user(user):
@@ -120,13 +120,33 @@ class EmployeeView(ListAPIView):
     filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
     filterset_fields = ['employee_role', 'employee_name']
-    ordering_fields = ['employee_name']
     search_fields = ['employee_name', 'employee_role']
 
     def list(self, request, *args, **kwargs):
         response_message = ""
         response_code = ""
         response = super().list(request, *args, **kwargs)
+
+        res = get_auth0_user_profile(request)
+
+        if res['status'] == False:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': res['message']
+                }
+            )
+
+        user_email = res['payload']['email']
+        user_role = res['payload']['roles']
+        user = User.objects.get(user_email=user_email)
+        member_id = user.member_id
+
+        if user_role == "Patient" or user_role == "Doctor":
+            return Response({
+                'status': status.HTTP_401_UNAUTHORIZED,
+                'message': 'Unauthorized User'
+            })
 
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
@@ -155,6 +175,28 @@ class EmployeeViewById(APIView):
                 serializer = EmployeeSerializer(employee)
                 response_message = ""
                 response_code = ""
+
+                res = get_auth0_user_profile(request)
+
+                if res['status'] == False:
+                    return Response(
+                        {
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': res['message']
+                        }
+                    )
+
+                user_email = res['payload']['email']
+                user_role = res['payload']['roles']
+                user = User.objects.get(user_email=user_email)
+                member_id = user.member_id
+
+                if user_role == "Patient" or user_role == "Doctor":
+                    return Response({
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': 'Unauthorized User'
+                    })
+
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message
@@ -194,6 +236,28 @@ class EmployeeDelete(APIView):
         if Employee.objects.filter(employee_id=id).count() >= 1:
             employee = Employee.objects.get(employee_id=id)
             user = ""
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
+            if user_role == "Patient" or user_role == "Doctor":
+                return Response({
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': 'Unauthorized User'
+                })
+
             try:
                 user = User.objects.get(member_id=id)
                 user.delete()
@@ -240,6 +304,28 @@ class EmployeeUpdate(APIView):
     def patch(self, request, input=None, format=None):
         id = input
         if Employee.objects.filter(employee_id=id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+    
+            if user_role == "Patient" or user_role == "Doctor":
+                return Response({
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': 'Unauthorized User'
+                })
+
             employee = Employee.objects.get(employee_id=id)
             serializer = EmployeeUpdateSerializer(
                 employee, data=request.data, partial=True)

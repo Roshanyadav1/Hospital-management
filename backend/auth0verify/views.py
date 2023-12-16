@@ -5,8 +5,9 @@ from django.http import JsonResponse
 from jose import jwt
 import requests
 
+
 def validate_auth0_token(request):
-    id_token  = request.headers.get('Authorization', '').split('Bearer ')[1]
+    id_token = request.headers.get('Authorization', '').split('Bearer ')[1]
 
     # Replace 'YOUR_AUTH0_DOMAIN' and 'YOUR_AUTH0_CLIENT_ID' with your Auth0 domain and client ID
     audience = 'https://dev-wk502078emf2n02u.us.auth0.com/api/v2/'
@@ -30,7 +31,7 @@ def validate_auth0_token(request):
 
     try:
         payload = jwt.decode(
-             id_token,
+            id_token,
             rsa_key,
             algorithms=['RS256'],
             audience=audience,
@@ -56,15 +57,10 @@ def validate_auth0_token(request):
 
 
 def get_auth0_user_profile(request):
-  
-  
-    # Get the access token from the Authorization header
+    if request.headers.get('Authorization') is None:
+        return {'status': False, 'message': 'Authorization Token Is Required'}
     access_token = request.headers.get('Authorization', '').split('Bearer ')[1]
-
-    # Replace 'YOUR_AUTH0_DOMAIN' with your Auth0 domain
     auth0_domain = 'dev-wk502078emf2n02u.us.auth0.com'
-
-    # Make a request to the Auth0 /userinfo endpoint
     userinfo_url = f'https://{auth0_domain}/userinfo'
     headers = {'Authorization': f'Bearer {access_token}'}
 
@@ -73,17 +69,14 @@ def get_auth0_user_profile(request):
         response.raise_for_status()
 
         user_profile = response.json()
-        user_metadata_url = f'https://{auth0_domain}/api/v2/users/{user_profile["sub"]}'
-        user_metadata_response = requests.get(user_metadata_url, headers=headers)
+        user_metadata_url = f'https://{
+            auth0_domain}/api/v2/users/{user_profile["sub"]}'
+        user_metadata_response = requests.get(
+            user_metadata_url, headers=headers)
         user_metadata_response.raise_for_status()
 
         user_metadata = user_metadata_response.json().get('user_metadata', {})
-
-        # Merge user metadata into the user profile
         user_profile.update(user_metadata)
-
-        # You can now access user details from the 'user_profile' variable
-        return JsonResponse(user_profile)
+        return {'status': True, 'message': 'Token Is Validated', 'payload': user_profile}
     except requests.exceptions.HTTPError as err:
-        return JsonResponse({'error': f'Error fetching user details: {err}'}, status=500)        
-
+        return {'status': False, 'message': 'Invalid Token'}

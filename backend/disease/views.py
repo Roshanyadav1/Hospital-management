@@ -14,6 +14,21 @@ class DiseaseAdd(GenericAPIView):
     def post(self, request, format=None):
         disease_name = request.data.get('disease_name')
         if Disease.objects.filter(disease_name=disease_name).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             try:
                 error = Error.objects.get(error_title='ALREADY_REGISTERED')
                 response_message = error.error_message
@@ -55,6 +70,21 @@ class DiseaseUpdate(APIView):
     def patch(self, request, input, format=None):
         id = input
         if Disease.objects.filter(disease_id=id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             disease = Disease.objects.get(disease_id=id)
             serializer = DiseaseSerializer(
                 disease, data=request.data, partial=True)
@@ -100,6 +130,21 @@ class DiseaseDelete(APIView):
         id = input
         if Disease.objects.filter(disease_id=id).count() >= 1:
             disease = Disease.objects.get(disease_id=id)
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             disease.delete()
             response_message = ""
             response_code = ""

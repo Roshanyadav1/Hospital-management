@@ -17,6 +17,7 @@ from hospital_management.responses import ResponseMessage
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from user.models import User
+from auth0verify.views import get_auth0_user_profile
 
 
 def get_tokens_for_user(user):
@@ -189,6 +190,21 @@ class PatientUpdate(APIView):
     def patch(self, request, input, format=None):
         id = input
         if Patient.objects.filter(patient_id=id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             patient = Patient.objects.get(patient_id=id)
             serializer = PatientSerializer(
                 patient, data=request.data, partial=True)
@@ -228,6 +244,21 @@ class PatientDelete(APIView):
     def delete(self, request, input, format=None):
         id = input
         if Patient.objects.filter(patient_id=id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             doctor = Patient.objects.get(patient_id=id)
             doctor.delete()
             response_message = ""

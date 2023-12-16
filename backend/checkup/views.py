@@ -11,6 +11,7 @@ from hospital_management.custom_paginations import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
+from auth0verify.views import get_auth0_user_profile
 
 
 class CheckUpAdd(GenericAPIView):
@@ -22,6 +23,21 @@ class CheckUpAdd(GenericAPIView):
         serializer.save()
         response_message = ""
         response_code = ""
+
+        res = get_auth0_user_profile(request)
+
+        if res['status'] == False:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': res['message']
+                }
+            )
+        user_email = res['payload']['email']
+        user_role = res['payload']['roles']
+        user = User.objects.get(user_email=user_email)
+        member_id = user.member_id
+
         try:
             error = Error.objects.get(error_title='ADD_SUCCESS')
             response_message = error.error_message
@@ -43,6 +59,22 @@ class CheckUpDelete(APIView):
         id = input
         if CheckUp.objects.filter(checkup_id=id).count() >= 1:
             checkup = CheckUp.objects.get(checkup_id=id)
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             checkup.delete()
             response_message = ""
             response_code = ""
@@ -85,6 +117,22 @@ class CheckUpUpdate(APIView):
         id = input
         if CheckUp.objects.filter(checkup_id=id).count() >= 1:
             checkup = CheckUp.objects.get(checkup_id=id)
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             serializer = CheckupSerializer.save(
                 checkup, data=request.data, partial=True)
             response_message = ""
@@ -130,6 +178,22 @@ class CheckUpViewById(APIView):
             if CheckUp.objects.filter(checkup_id=id).count() >= 1:
                 checkup = CheckUp.objects.get(checkup_id=id)
                 serializer = CheckupSerializer(checkup)
+
+                res = get_auth0_user_profile(request)
+
+                if res['status'] == False:
+                    return Response(
+                        {
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': res['message']
+                        }
+                    )
+
+                user_email = res['payload']['email']
+                user_role = res['payload']['roles']
+                user = User.objects.get(user_email=user_email)
+                member_id = user.member_id
+
                 response_message = ""
                 response_code = ""
                 try:
@@ -179,6 +243,20 @@ class CheckUpView(ListAPIView):
         response = super().list(request, *args, **kwargs)
         response_message = ""
         response_code = ""
+
+        res = get_auth0_user_profile(request)
+
+        if res['status'] == False:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': res['message']
+                }
+            )
+        user_email = res['payload']['email']
+        user_role = res['payload']['roles']
+        user = User.objects.get(user_email=user_email)
+        member_id = user.member_id
 
         pagination = CustomPagination()
         if request.GET.get('pageSize') != None:

@@ -1,4 +1,3 @@
-
 from appointment.serializers import *
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
@@ -16,16 +15,16 @@ from hospital_management.custom_paginations import CustomPagination
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from django.http import JsonResponse
 from rest_framework.filters import SearchFilter
 from doctor.models import Doctor
 from employee.models import Employee
 from disease.models import Disease
 from prescription.models import Prescription
 from checkup.models import CheckUp
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 from patient.models import Patient
 from disease.models import Disease
+from auth0verify.views import get_auth0_user_profile
 
 
 class AppointmentAdd(GenericAPIView):
@@ -137,8 +136,6 @@ class AppointmentCount(ListAPIView):
             'appointment_date'), doctor_count=Count('doctor', distinct=True), patient_count=Count('patient')).order_by('appointment_date')
 
         if not appointments_per_day:
-
-            # Return a JsonResponse with 'Data Not Found' message
             return Response({
                 'status': 404,
                 'message': "Data not found"
@@ -154,8 +151,6 @@ class AppointmentCount(ListAPIView):
         appointment_datee = Appointment.objects.order_by('appointment_date')
         for date in appointment_datee:
             appointment_date_list.append(date.appointment_date)
-        # appointment_date_set = set(appointment_date_list)
-        # appointment_date_list_2 = [appointment_date_set]
         for date in appointment_date_list:
             print(date)
             appointment_detail = Appointment.objects.filter(
@@ -204,7 +199,6 @@ class AppointmentCount(ListAPIView):
                 'message': "Appointment " + response_message,
                 # 'appointement_per_week': list(appointments_per_day),
                 "appointments_per_day": appointment_list
-
             }
         )
 
@@ -223,6 +217,35 @@ class AppointmentView(ListAPIView):
         response = super().list(request, *args, **kwargs)
         response_message = ""
         response_code = ""
+
+        res = get_auth0_user_profile(request)
+        if res['status'] == False:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': res['message']
+                }
+            )
+        
+        user_email = res['payload']['email']
+        user_role = res['payload']['roles']
+        user = User.objects.get(user_email=user_email)
+        member_id = user.member_id
+
+        if user_role == "Patient":
+            if request.GET.get('patient_id') is None:
+                return Response({
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': 'Unauthorized User'
+                })
+
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
+                return Response({
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': 'Unauthorized User'
+                })
+
         for data in response.data:
             try:
                 doctor = Doctor.objects.get(doctor_id=data['doctor'])
@@ -277,6 +300,22 @@ class AppointmentViewById(APIView):
                 serializer = AppointmentSerializer(appointment)
                 response_message = ""
                 response_code = ""
+
+                res = get_auth0_user_profile(request)
+
+                if res['status'] == False:
+                    return Response(
+                        {
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': res['message']
+                        }
+                    )
+
+                user_email = res['payload']['email']
+                user_role = res['payload']['roles']
+                user = User.objects.get(user_email=user_email)
+                member_id = user.member_id
+
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message
@@ -319,6 +358,22 @@ class AppointmentUpdate(APIView):
         if request.data == {}:
             response_message = ""
             response_code = ""
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             try:
                 error = Error.objects.get(error_title='EMPTY_REQUEST')
                 response_message = error.error_message
@@ -380,6 +435,22 @@ class AppointmentDelete(APIView):
         id = input
         if Appointment.objects.filter(appointment_id=id).count() >= 1:
             appointment = Appointment.objects.get(appointment_id=id)
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             appointment.delete()
             response_message = ""
             response_code = ""

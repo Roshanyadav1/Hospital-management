@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+from auth0verify.views import get_auth0_user_profile
 
 
 class PrescriptionAdd(GenericAPIView):
@@ -13,6 +14,21 @@ class PrescriptionAdd(GenericAPIView):
 
     def post(self, request, format=None):
         serializer = PrescriptionSerializer(data=request.data)
+
+        res = get_auth0_user_profile(request)
+
+        if res['status'] == False:
+            return Response(
+                {
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'message': res['message']
+                }
+            )
+        user_email = res['payload']['email']
+        user_role = res['payload']['roles']
+        user = User.objects.get(user_email=user_email)
+        member_id = user.member_id
+
         serializer.is_valid(raise_exception=True)
         serializer.save()
         response_message = ''
@@ -38,6 +54,21 @@ class PrescriptionView(APIView):
         id = input
         if id is not None:
             if Prescription.objects.filter(prescription_id=id).count() >= 1:
+
+                res = get_auth0_user_profile(request)
+
+                if res['status'] == False:
+                    return Response(
+                        {
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': res['message']
+                        }
+                    )
+                user_email = res['payload']['email']
+                user_role = res['payload']['roles']
+                user = User.objects.get(user_email=user_email)
+                member_id = user.member_id
+
                 prescription = Prescription.objects.get(prescription_id=id)
                 serializer = PrescriptionSerializer(prescription)
                 response_message = ""
@@ -100,6 +131,21 @@ class PrescriptionUpdate(APIView):
     def put(self, request, input, format=None):
         id = input
         if Prescription.objects.filter(prescription_id=id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             prescription = Prescription.objects.get(prescription_id=id)
             serializer = PrescriptionSerializer(
                 prescription, data=request.data)
@@ -142,6 +188,21 @@ class PrescriptionUpdate(APIView):
     def patch(self, request, input, format=None):
         id = input
         if Prescription.objects.filter(prescription_id=id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             prescription = Prescription.objects.get(prescription_id=id)
             serializer = PrescriptionSerializer(
                 prescription, data=request.data, partial=True)
@@ -186,6 +247,21 @@ class PrescriptionDelete(APIView):
     def delete(self, request, input, format=None):
         id = input
         if Prescription.objects.filter(prescription_id=id).count() >= 1:
+
+            res = get_auth0_user_profile(request)
+
+            if res['status'] == False:
+                return Response(
+                    {
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': res['message']
+                    }
+                )
+            user_email = res['payload']['email']
+            user_role = res['payload']['roles']
+            user = User.objects.get(user_email=user_email)
+            member_id = user.member_id
+
             prescripton = Prescription.objects.get(prescription_id=id)
             prescripton.delete()
             response_message = ""
