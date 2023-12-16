@@ -125,7 +125,7 @@ const GetStatusButton = (row) => {
             </DialogTitle>
             <DialogContent>
                <p>
-                  Do you want to Change the Status for{' '}
+                  Do you want to Change the Status for{selectedRow?.employee_name}
                   <span className='Data'>{selectedRow?.employee_name}</span>
                </p>
             </DialogContent>

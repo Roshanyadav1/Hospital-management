@@ -209,7 +209,13 @@ export const queries = createApi({
             body: p.pro,
             }),
         invalidatesTags: ['EMP'],
-     }),  
+     }), 
+     appointmentHistory: build.query({
+      query: () => ({
+         url: `/appointment/view/?doctor_id=e5e6f8c6-3c66-4de5-b7df-d5e2bcff7ba5`,
+         method: 'GET',
+      }),
+   }), 
 
             }),
          })
