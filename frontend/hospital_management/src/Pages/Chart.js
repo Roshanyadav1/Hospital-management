@@ -194,7 +194,7 @@ function Chart() {
    }
 
    return (
-      <div style={{marginTop:'7%'}}>
+      <div>
          <Grid container>
             <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
                <Grid container item xs={12}>
@@ -203,8 +203,7 @@ function Chart() {
                         <div className='hov'>
                            <div
                               style={{
-                                 background:
-                                    'linear-gradient(135deg,#006494,#35CFF4)',
+                                 background:'linear-gradient(135deg,#006494,#35CFF4)',
                                  height: '10rem',
                                  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                                  marginRight: '1rem',

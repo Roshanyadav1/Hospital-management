@@ -21,7 +21,15 @@ export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
+      prepareHeaders: (headers) => {
+         const token = localStorage.getItem('access_token')
+         if (token) {
+            headers.set('Authorization', `Bearer ${token}`)
+         }
+         return headers
+      }
    }),
+
    keepUnusedDataFor: 30,
    refetchOnReconnect: true,
    refetchOnFocus: true,

@@ -12,7 +12,11 @@ import Link from 'next/link';
 function FetchData() {
    const userRole = localStorage.getItem('user_role')
    const doctorId = localStorage.getItem('user_id');
-   const { data: appointment = [], error, isLoading } = useGetDoctorIdQuery(doctorId);
+   const { data: appointment = [], error, isLoading } = useGetDoctorIdQuery(doctorId , {
+      skip : userRole === 'Doctor' ? false : true
+   });
+
+   let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false;
 
    if (isLoading) {
       return (
@@ -78,7 +82,7 @@ function FetchData() {
    } else {
       return (
          <div>
-            {userRole === 'Admin' || userRole === 'Manager' ? (
+            {isAdmin ? (
                <Chart />
             ) : userRole === 'Doctor' ? (
                <Container maxWidth='md'>

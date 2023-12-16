@@ -43,71 +43,93 @@ function SteperNav(props) {
    
 
    const getNavigationItems = () => {
-      let role = localStorage.getItem('user_role')
+      const role = localStorage.getItem('user_role');    
       switch (role) {
-         case "Admin":
-            return (
-               <>
-                  <Link href='/dashboard' prefetch>
-                     <Button sx={{ color: '#fff' }}>Dashboard</Button>
-                  </Link>
-                  {navItems.map((item) => (
-                     <Link key={item.label} href={item.route} prefetch passHref>
-                        <Button sx={{ color: '#fff' }}>{item.label}</Button>
-                     </Link>
-                  ))}
-                  {user && (
-                     <Button href='/api/auth/logout' sx={{ color: '#fff' }}>
-                        Logout
-                     </Button>
-                  )}
-               </>
-            );
-
-         case "Doctor":
-            return (
-               <>
-                  <Link href='/dashboard' prefetch>
-                     <Button sx={{ color: '#fff' }}>Dashboard</Button>
-                  </Link>
-                  {user && (
-                     <Button href='/api/auth/logout' sx={{ color: '#fff' }}  >
-                        Logout
-                     </Button>
-                  )}
-               </>
-            );
-         case "Patient":
-            return (
-               <>
-                  {navItems.map((item) => (
-                     <Link key={item.label} href={item.route} prefetch passHref>
-                        <Button sx={{ color: '#fff' }}>{item.label}</Button>
-                     </Link>
-                  ))}
-                  {user && (
-                     <Button sx={{ color: '#fff' }}>{user.name || 'User'}</Button>
-                  )}
-                  {user && (
-                     <Button href='/api/auth/logout' sx={{ color: '#fff' }}>
-                        Logout
-                     </Button>
-                  )}
-               </>
-            );
-         default:
-             return (
-              
-               <Button href='/api/auth/login' sx={{ color: '#fff' }}>
-                  Login
-               </Button>
-            );
-            
-           
+        case 'Admin':
+        case 'Manager':
+          return (
+            <>
+              <Link href="/dashboard" prefetch>
+                <Button sx={{ color: '#fff' }}>Dashboard</Button>
+              </Link>
+              {navItems.map((item) => (
+                <Link key={item.label} href={item.route} prefetch passHref>
+                  <Button sx={{ color: '#fff' }}>{item.label}</Button>
+                </Link>
+              ))}
+              {user && (
+                <Button
+                  onClick={() => {
+                    localStorage.clear();
+                    let a = document.createElement('a');
+                    a.href = '/api/auth/logout';
+                    a.click();
+                  }}
+                  sx={{ color: '#fff' }}
+                >
+                  Logout
+                </Button>
+              )}
+            </>
+          );
+    
+        case 'Doctor':
+          return (
+            <>
+              <Link href="/dashboard" prefetch>
+                <Button sx={{ color: '#fff' }}>Dashboard</Button>
+              </Link>
+              {user && (
+                <Button
+                  onClick={() => {
+                    localStorage.clear();
+                    let a = document.createElement('a');
+                    a.href = '/api/auth/logout';
+                    a.click();
+                  }}
+                  sx={{ color: '#fff' }}
+                >
+                  Logout
+                </Button>
+              )}
+            </>
+          );
+    
+        case 'Patient':
+          return (
+            <>
+              {navItems.map((item) => (
+                <Link key={item.label} href={item.route} prefetch passHref>
+                  <Button sx={{ color: '#fff' }}>{item.label}</Button>
+                </Link>
+              ))}
+              {user && (
+                <Button sx={{ color: '#fff' }}>{user.name || 'User'}</Button>
+              )}
+              {user && (
+                <Button
+                  onClick={() => {
+                    localStorage.clear();
+                    let a = document.createElement('a');
+                    a.href = '/api/auth/logout';
+                    a.click();
+                  }}
+                  sx={{ color: '#fff' }}
+                >
+                  Logout
+                </Button>
+              )}
+            </>
+          );
+    
+        default:
+          return (
+            <Link href="/api/auth/login" passHref>
+              <Button sx={{ color: '#fff' }}>Login</Button>
+            </Link>
+          );
       }
-   };
-
-
+    };
    useEffect(() => {
       if (user) {
          const handleSubmit = async () => {
@@ -123,11 +145,7 @@ function SteperNav(props) {
          }
          handleSubmit()
       }
-
    }, [user])
-
-
-   
 
    const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
@@ -173,10 +191,8 @@ function SteperNav(props) {
                   <Image width={120} height={40} src={Logo} />
                </Link>
 
-
                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                   {getNavigationItems()}
-
                </Box>
             </Toolbar>
          </AppBar>

@@ -223,11 +223,7 @@ function Layout({ children }) {
                               textDecoration: 'none',
                            }}
                            prefetch={true}
-                           href={{
-                              pathname: item.path,
-
-                              query: { ...INITIAL_FORM_STATE },
-                           }}
+                           href={item.path}
                         >
                            <ListItemButton
                               component='a'
@@ -259,14 +255,10 @@ function Layout({ children }) {
             component='main'
             sx={{
                width: { sm: `calc(100% - ${drawerWidth}px)` },
-               // height: {
-               //    sm: `calc(100vh - 64px)`,
-               // },
-               // flexGrow: 1,
-               // padding: 1,
+               p: 3,
             }}
          >
-            {/* <Toolbar /> */}
+            <Toolbar />
             <Container>{children}</Container>
          </Box>
       </Box>

@@ -60,7 +60,7 @@ function BookAppoinment({ id, name, date }) {
          setHiddentime(createTimeSlots(doctorTimes.data.per_patient_time, doctorTimes.data.times))
       }
    }, [doctorTimes, isLoading])
-   console.log(hiddentime, "hiddentime")
+   
    function formatTime(timeString) {
       const time = new Date(`2000-01-01T${timeString}`)
       return time.toLocaleString('en-US', {
