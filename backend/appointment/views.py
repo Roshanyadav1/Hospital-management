@@ -1,4 +1,3 @@
-
 from appointment.serializers import *
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView
@@ -26,7 +25,7 @@ from disease.models import Disease
 from prescription.models import Prescription
 from checkup.models import CheckUp
 from datetime import datetime, timedelta
-
+from patient.models import Patient
 
 class AppointmentAdd(GenericAPIView):
     serializer_class = AppointmentAddSerializer
@@ -306,6 +305,35 @@ class AppointmentView(ListAPIView):
                         pass
                 response.data = list()
                 response.data = res
+
+        for data in response.data:
+            try:
+                doctor = Doctor.objects.get(doctor_id=data['doctor'])
+                employee = Employee.objects.get(employee_id=doctor.employee_id)
+                patient = Patient.objects.get(patient_id=data['patient'])
+                disease = Disease.objects.get(disease_id=data['disease'])
+                doctor_dict = {}
+                doctor_dict['doctor_id'] = doctor.doctor_id
+                doctor_dict['employee'] = {
+                    'employee_id': employee.employee_id,
+                    'employee_name': employee.employee_name
+                }
+                data['doctor'] = doctor_dict
+                patient_dict = {}
+                patient_dict['patient_id'] = patient.patient_id
+                patient_dict['patient_name'] = patient.patient_name
+                data['patient'] = patient_dict
+                disease_dict = {}
+                disease_dict['disease_id'] = disease.disease_id
+                disease_dict['disease_name'] = disease.disease_name
+                data['disease'] = disease_dict
+            except:
+                return Response(
+                    {
+                        'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        'message': "Internal Server Error",
+                    }
+                )
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message

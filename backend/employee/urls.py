@@ -1,5 +1,5 @@
 from django.urls import path
-from employee.views import *
+from employee.views import EmployeeAdd, EmployeeView, EmployeeViewById, EmployeeUpdate, EmployeeDelete
 
 urlpatterns= [
     path('add', EmployeeAdd.as_view(), name='employee add'),
