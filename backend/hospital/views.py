@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from .serializers import HospitalSerializer
 from rest_framework import status
-from user.serializers import UserRegisterSerializer
+# from user.serializers import UserRegisterSerializer
 from rest_framework.views import APIView
 from .models import Hospital
 from user.models import User
@@ -9,6 +9,10 @@ from rest_framework.generics import GenericAPIView
 from hospital_management.responses import ResponseMessage
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
+
 
 class HospitalRegister(GenericAPIView):
    serializer_class = HospitalSerializer
@@ -77,6 +81,8 @@ class HospitalRegister(GenericAPIView):
             )
    
 class HospitalView(APIView):
+   permission_classes = [IsAuthenticated]
+
    def get(self, request, input = None, format = None):
       id = input
       print(id)
@@ -141,6 +147,8 @@ class HospitalView(APIView):
          )
       
 class HospitalUpdate(APIView):
+   permission_classes = [IsAuthenticated]
+
    def patch(self, request, input, format = None):
       id = input
       if Hospital.objects.filter(hospital_id = id).count() >= 1:
@@ -183,6 +191,8 @@ class HospitalUpdate(APIView):
           )  
    
 class HospitalDelete(APIView):
+   permission_classes = [IsAuthenticated]
+
    def delete(self, request, input, format = None):
       id = input
       if Hospital.objects.filter(hospital_id = id).count() >= 1:

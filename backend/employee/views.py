@@ -13,18 +13,21 @@ from hospital_management.responses import ResponseMessage
 from doctor.models import Doctor
 import json
 from rest_framework_simplejwt.tokens import RefreshToken
-# from rest_framework.permissions import IsAuthenticated
 # from hospital_management.email import send_verification_email
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from user.models import User
 from rest_framework.filters import SearchFilter
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return {
         'access': str(refresh.access_token),
+        'refresh': str(refresh)
     }
 
 
@@ -122,11 +125,28 @@ class EmployeeView(ListAPIView):
     filterset_fields = ['employee_role', 'employee_name']
     ordering_fields = ['employee_name']
     search_fields = ['employee_name', 'employee_role']
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response_message = ""
         response_code = ""
         response = super().list(request, *args, **kwargs)
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient" or user_role == "Doctor" or user_role == "Manager":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
 
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
@@ -147,6 +167,8 @@ class EmployeeView(ListAPIView):
 
 
 class EmployeeViewById(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -189,6 +211,8 @@ class EmployeeViewById(APIView):
 
 
 class EmployeeDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input=None, format=None):
         id = input
         if Employee.objects.filter(employee_id=id).count() >= 1:
@@ -236,6 +260,7 @@ class EmployeeDelete(APIView):
 
 
 class EmployeeUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input=None, format=None):
         id = input

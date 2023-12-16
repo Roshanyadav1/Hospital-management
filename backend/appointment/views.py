@@ -16,25 +16,51 @@ from hospital_management.custom_paginations import CustomPagination
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from django.http import JsonResponse
 from rest_framework.filters import SearchFilter
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 from doctor.models import Doctor
 from employee.models import Employee
 from disease.models import Disease
 from prescription.models import Prescription
 from checkup.models import CheckUp
-from datetime import datetime, time, timedelta
-from patient.models import Patient
-from disease.models import Disease
+from datetime import datetime, timedelta
 
 
 class AppointmentAdd(GenericAPIView):
     serializer_class = AppointmentAddSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = AppointmentAddSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         appointment = serializer.save()
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Manager" or user_role == "Admin":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
 
         send_appointment_email(appointment)
         response_message = ""
@@ -57,7 +83,7 @@ class AppointmentAdd(GenericAPIView):
 
 class AppointmentTab(ListAPIView):
     queryset = Appointment.objects.all()
-    serializer_class = AppointmentSerializer
+    serializer_class = AppointmentViewSerializer
 
     def list(self, request, input, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -109,20 +135,18 @@ class AppointmentTab(ListAPIView):
                 'status': status.HTTP_200_OK,
                 'message': ResponseMessage.RETRIEVED_SUCCESS,
                 'data': lists
-
             })
         else:
             return Response({
                 'status': status.HTTP_400_BAD_REQUEST,
                 'message': ResponseMessage.INVALID_ID
-
-
             })
 
 
 class AppointmentCount(ListAPIView):
     queryset = Appointment.objects.all()
-    serializer_class = AppointmentSerializer
+    serializer_class = AppointmentViewSerializer
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -130,6 +154,30 @@ class AppointmentCount(ListAPIView):
         response_code = ""
         end_date = timezone.now().date()
         start_date = end_date - timedelta(days=6)
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
+        if user_role == "Doctor":
+            Response.status_code = status.HTTP_401_UNAUTHORIZED
+            return Response(
+                {
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                }
+            )
 
         appointments_in_week = self.queryset.filter(
             appointment_date__range=[start_date, end_date])
@@ -218,39 +266,46 @@ class AppointmentView(ListAPIView):
                         'patient_id', 'appointment_date', 'appointment_time']
     ordering_fields = ['appointment_number', 'appointment_date']
     search_fields = ['appointment_number', 'appointment_date']
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response_message = ""
         response_code = ""
-        for data in response.data:
-            try:
-                doctor = Doctor.objects.get(doctor_id=data['doctor'])
-                employee = Employee.objects.get(employee_id=doctor.employee_id)
-                patient = Patient.objects.get(patient_id=data['patient'])
-                disease = Disease.objects.get(disease_id=data['disease'])
-                doctor_dict = {}
-                doctor_dict['doctor_id'] = doctor.doctor_id
-                doctor_dict['employee'] = {
-                    'employee_id': employee.employee_id,
-                    'employee_name': employee.employee_name
-                }
-                data['doctor'] = doctor_dict
-                patient_dict = {}
-                patient_dict['patient_id'] = patient.patient_id
-                patient_dict['patient_name'] = patient.patient_name
-                data['patient'] = patient_dict
-                disease_dict = {}
-                disease_dict['disease_id'] = disease.disease_id
-                disease_dict['disease_name'] = disease.disease_name
-                data['disease'] = disease_dict
-            except:
-                return Response(
-                    {
-                        'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                        'message': "Internal Server Error",
-                    }
-                )
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            if request.GET.get('patient_id') is None:
+                patient_id = user.member_id
+                patient = ""
+                res = list()
+                for data in response.data:
+                    if data['patient']['patient_id'] == str(patient_id):
+                        res.append(data)
+                    else:
+                        pass
+                response.data = list()
+                response.data = res
+
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
+                employee_id = user.member_id
+                doctor_id = Doctor.objects.get(
+                    employee_id=employee_id).doctor_id
+                res = list()
+                for data in response.data:
+                    if data['doctor']['doctor_id'] == str(doctor_id):
+                        res.append(data)
+                    else:
+                        pass
+                response.data = list()
+                response.data = res
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message
@@ -269,6 +324,8 @@ class AppointmentView(ListAPIView):
 
 
 class AppointmentViewById(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -313,12 +370,38 @@ class AppointmentViewById(APIView):
 
 
 class AppointmentUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
         if request.data == {}:
             response_message = ""
             response_code = ""
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Manager":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            if user_role == "Admin":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
             try:
                 error = Error.objects.get(error_title='EMPTY_REQUEST')
                 response_message = error.error_message
@@ -376,6 +459,8 @@ class AppointmentUpdate(APIView):
 
 
 class AppointmentDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if Appointment.objects.filter(appointment_id=id).count() >= 1:
@@ -383,8 +468,33 @@ class AppointmentDelete(APIView):
             appointment.delete()
             response_message = ""
             response_code = ""
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Manager" or user_role == "Admin":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            if user_role == "Doctor":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
             try:
-                error = Error.objects.get(error_title='DELETE_SUCESS')
+                error = Error.objects.get(error_title='DELETE_SUCCESS')
                 response_message = error.error_message
                 response_code = error.error_code
                 Response.status_code = error.error_code

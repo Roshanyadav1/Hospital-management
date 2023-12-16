@@ -11,10 +11,15 @@ from hospital_management.custom_paginations import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
+from doctor.models import Doctor
 
 
 class CheckUpAdd(GenericAPIView):
     serializer_class = CheckupSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = CheckupSerializer(data=request.data)
@@ -39,6 +44,8 @@ class CheckUpAdd(GenericAPIView):
 
 
 class CheckUpDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input=None, format=None):
         id = input
         if CheckUp.objects.filter(checkup_id=id).count() >= 1:
@@ -80,6 +87,7 @@ class CheckUpDelete(APIView):
 
 
 class CheckUpUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input=None, format=None):
         id = input
@@ -123,6 +131,7 @@ class CheckUpUpdate(APIView):
 
 
 class CheckUpViewById(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, input=None, format=None):
         id = input
@@ -174,11 +183,45 @@ class CheckUpView(ListAPIView):
     filterset_fields = ['doctor_id', 'patient_id', 'appointment_id']
     ordering_fields = ['next_appointment_date']
     search_fields = ['doctor_id']
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response_message = ""
         response_code = ""
+
+        header_value = request.headers['Authorization']
+        token = header_value.split(' ')[1]
+        payload = jwt.decode(token, "secret", algorithms=['HS256'])
+        user_id = payload['user_id']
+        user = User.objects.get(user_id=user_id)
+        user_role = user.user_role
+
+        if user_role == "Patient":
+            if request.GET.get('patient_id') is None:
+                patient_id = user.member_id
+                res = list()
+                print(patient_id)
+                for data in response.data:
+                    if str(data['patient']) == str(patient_id):
+                        res.append(data)
+                    else:
+                        pass
+                response.data = list()
+                response.data = res
+
+        if user_role == "Doctor":
+            if request.GET.get('doctor_id') is None:
+                employee_id = user.member_id
+                doctor_id = Doctor.objects.get(employee_id=employee_id).doctor_id
+                res = list()
+                for data in response.data:
+                    if str(data['doctor']) == str(doctor_id):
+                        res.append(data)
+                    else:
+                        pass
+                response.data = list()
+                response.data = res
 
         pagination = CustomPagination()
         if request.GET.get('pageSize') != None:

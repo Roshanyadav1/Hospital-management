@@ -8,6 +8,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from error.models import Error
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
 from doctor.models import Doctor
 from django.contrib.auth.hashers import make_password
 from patient.models import Patient
@@ -42,6 +45,8 @@ def get_tokens_for_user(user):
 
 
 class UserDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if User.objects.filter(user_id=id).count() >= 1:
@@ -201,6 +206,7 @@ class UserView(APIView):
 
 
 class UserUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input

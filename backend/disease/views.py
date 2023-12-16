@@ -6,10 +6,15 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from error.models import Error
 from hospital_management.responses import ResponseMessage
+from rest_framework.permissions import IsAuthenticated
+from user.models import User
+import jwt
+from drf_yasg.utils import swagger_auto_schema
 
 
 class DiseaseAdd(GenericAPIView):
     serializer_class = DiseaseSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         disease_name = request.data.get('disease_name')
@@ -19,6 +24,32 @@ class DiseaseAdd(GenericAPIView):
                 response_message = error.error_message
                 response_code = error.error_code
                 Response.status_code = error.error_code
+
+                header_value = request.headers['Authorization']
+                token = header_value.split(' ')[1]
+                payload = jwt.decode(token, "secret", algorithms=['HS256'])
+                user_id = payload['user_id']
+                user = User.objects.get(user_id=user_id)
+                user_role = user.user_role
+
+                if user_role == "Patient":
+                    Response.status_code = status.HTTP_401_UNAUTHORIZED
+                    return Response(
+                        {
+                            'status': status.HTTP_401_UNAUTHORIZED,
+                            'message': "Unauthorized Access",
+                        }
+                    )
+
+                if user_role == "Doctor":
+                    Response.status_code = status.HTTP_401_UNAUTHORIZED
+                    return Response(
+                        {
+                            'status': status.HTTP_401_UNAUTHORIZED,
+                            'message': "Unauthorized Access",
+                        }
+                    )
+
             except:
                 response_message = ResponseMessage.ALREADY_REGISTERED
                 response_code = status.HTTP_400_BAD_REQUEST
@@ -51,6 +82,7 @@ class DiseaseAdd(GenericAPIView):
 
 
 class DiseaseUpdate(APIView):
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, input, format=None):
         id = input
@@ -62,6 +94,57 @@ class DiseaseUpdate(APIView):
             serializer.save()
             response_message = ""
             response_code = ""
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Patient":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            
+            if user_role == "Doctor":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Patient":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            
+            if user_role == "Doctor":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
             try:
                 error = Error.objects.get(error_title='UPDATE_SUCCESS')
                 response_message = error.error_message
@@ -96,6 +179,8 @@ class DiseaseUpdate(APIView):
 
 
 class DiseaseDelete(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request, input, format=None):
         id = input
         if Disease.objects.filter(disease_id=id).count() >= 1:
@@ -103,6 +188,32 @@ class DiseaseDelete(APIView):
             disease.delete()
             response_message = ""
             response_code = ""
+
+            header_value = request.headers['Authorization']
+            token = header_value.split(' ')[1]
+            payload = jwt.decode(token, "secret", algorithms=['HS256'])
+            user_id = payload['user_id']
+            user = User.objects.get(user_id=user_id)
+            user_role = user.user_role
+
+            if user_role == "Patient":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+            
+            if user_role == "Doctor":
+                Response.status_code = status.HTTP_401_UNAUTHORIZED
+                return Response(
+                    {
+                        'status': status.HTTP_401_UNAUTHORIZED,
+                        'message': "Unauthorized Access",
+                    }
+                )
+
             try:
                 error = Error.objects.get(error_title='DELETE_SUCCESS')
                 response_message = error.error_message
@@ -137,6 +248,7 @@ class DiseaseDelete(APIView):
 
 
 class DiseaseView(APIView):
+    @swagger_auto_schema(security=[])
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -145,7 +257,7 @@ class DiseaseView(APIView):
                 serializer = DiseaseSerializer(disease)
                 response_message = ""
                 response_code = ""
-                
+
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message
