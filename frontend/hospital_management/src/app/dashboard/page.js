@@ -12,8 +12,8 @@ import Link from 'next/link';
 function FetchData() {
    const userRole = localStorage.getItem('user_role')
    const doctorId = localStorage.getItem('user_id');
-   const { data: appointment = [], error, isLoading } = useGetDoctorIdQuery(doctorId , {
-      skip : userRole === 'Doctor' ? false : true
+   const { data: appointment = [], error, isLoading } = useGetDoctorIdQuery(doctorId, {
+      skip: userRole === 'Doctor' ? false : true
    });
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false;
@@ -22,7 +22,7 @@ function FetchData() {
       return (
          <Container maxWidth='lg'>
             <Grid mt={3} container spacing={2}>
-               {[1, 2, 3 , 4 , 5 ].map((_, i) => (
+               {[1, 2, 3, 4, 5].map((_, i) => (
                   <Grid
                      item
                      key={i}
@@ -32,7 +32,7 @@ function FetchData() {
                      sx={{ paddingBottom: '1rem' }}
                   >
                      <Card sx={{ backgroundColor: '#C4D0DC' }}>
-                     <Skeleton variant="rectangular" width="100%" height={250} animation="wave" />
+                        <Skeleton variant="rectangular" width="100%" height={250} animation="wave" />
                      </Card>
                   </Grid>
                ))}
@@ -53,7 +53,7 @@ function FetchData() {
                         <Grid item key={index} xs={12} sm={6} md={4}>
                            <Card
                               sx={{
-                                 backgroundColor: '#336699',
+                                 backgroundColor: '#13293D',
                                  borderRadius: 2,
                                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                               }}
@@ -102,7 +102,7 @@ function FetchData() {
                                        variant='contained'
                                        size='small'
                                        sx={{
-                                          backgroundColor: '#13293D',
+                                          backgroundColor: '#A7AFB7', '&:hover': { backgroundColor: '#A7AFB7' },
                                           width: '6rem',
                                           height: '2rem',
                                           fontSize: '200',
