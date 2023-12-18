@@ -27,8 +27,8 @@ function ShowDoctors() {
    })
 
    const totalPages = doctorList?.data?.total_pages
-   let currentDate=moment()
-   const formattedDate = currentDate.format('YYYY-MM-DD');
+   let currentDate = moment()
+   const formattedDate = currentDate.format('YYYY-MM-DD')
 
    const handlePageChange = (event, value) => {
       setCurrentPage(value)
@@ -123,24 +123,21 @@ function ShowDoctors() {
                                 </Typography>
                              </Typography>
                              <Link
-                        href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`}
-                        prefetch
-                     >
-
-                             <Button 
-                                size='small'
-                                sx={{
-                                   border: '1px solid',
-                                   '&:hover': {
-                                      backgroundColor: '#13293d',
-                                      color: '#fff',
-                                   },
-                                }}
-                             >
-                                Book Appointment
-                             </Button>
-                     </Link>
-
+                                href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`}
+                                prefetch>
+                                <Button
+                                   size='small'
+                                   sx={{
+                                      border: '1px solid',
+                                      '&:hover': {
+                                         backgroundColor: '#13293d',
+                                         color: '#fff',
+                                      },
+                                   }}
+                                >
+                                   Book Appointment
+                                </Button>
+                             </Link>
                           </Card>
                        </Grid>
                     )
