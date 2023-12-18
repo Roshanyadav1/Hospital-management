@@ -1,10 +1,10 @@
 
 import React from 'react'
-import  Profile from '../../../Pages/Profile'
+import  DoctorProfile from '../../../Pages/Profile'
 function page() {
   return (
     <div>
-      <Profile/>
+      <DoctorProfile/>
     </div>
   )
 }
