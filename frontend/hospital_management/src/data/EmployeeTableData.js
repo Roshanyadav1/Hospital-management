@@ -729,7 +729,7 @@ const GetActionButton = (row) => {
                </Grid>
     
          </Dialog>
-         <IconButton onClick={handleDelete} color='error' size='small'>
+         <IconButton onClick={handleDelete} color='primary' size='small'>
             <Delete />
          </IconButton>
          {/* dont fill the color in the delete button just outlineit */}

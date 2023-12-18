@@ -216,7 +216,7 @@ function BookAppoinment({ id, name, date }) {
                         Array.from({ length: 4 }).map((_, index) => (
                            <Grid item key={index} xs={6} sm={6} md={6}>
                               <Skeleton
-                                 sx={{ border: '1px solid #E0E0E0', borderRadius: '10px' }}
+                                 sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
                                  variant="rectangular" height={60} />
                            </Grid>
                         ))
@@ -285,6 +285,7 @@ function BookAppoinment({ id, name, date }) {
                            onClick={handleAppointment}
                            color='primary'
                            autoFocus
+                          
                         >
                            Confirm
                         </Button>

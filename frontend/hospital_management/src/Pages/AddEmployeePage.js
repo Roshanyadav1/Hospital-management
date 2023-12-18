@@ -133,9 +133,9 @@ function Dashboard() {
             justifyContent='space-between'
             alignItems='center'
          >
-            <Typography variant='h4' component='h5'>
+            {/* <Typography variant='h4' component='h5'>
                Employee
-            </Typography>
+            </Typography> */}
             <Button variant='outlined' onClick={handleClickOpen}>
                Add Employee
             </Button>
@@ -285,8 +285,9 @@ function Dashboard() {
                               color='primary'
                               type='submit'
                               size='large'
+                              disabled={isSubmitting}
                            >
-                              Submit
+                             {isSubmitting ? "Submitting ..." : "Submit"}
                            </Button>
                         </DialogActions>
                      </DialogContent>
