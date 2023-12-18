@@ -112,7 +112,7 @@ const appointmentsByDate = arr.reduce((acc =[], appointment =[]) => {
 }, {});
 console.log(appointmentsByDate);   
 
-const Profile = () => {
+const DoctorProfile = () => {
    const ProfileCard = ({ icon, title, content }) => (
       <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
          <CardHeader
@@ -266,4 +266,4 @@ const Profile = () => {
    )
 }
 
-export default Profile
+export default DoctorProfile
