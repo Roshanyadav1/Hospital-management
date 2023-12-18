@@ -22,19 +22,14 @@ import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
 import { useGetViewDoctorQuery } from '@/services/Query'
 function DoctorCard() {
-   const {data:getDname,isLoding} = useGetViewDoctorQuery();
-   console.log('Doctor name',getDname);
+   const {data:getDname} = useGetViewDoctorQuery();
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
-   const showWarningToast = () => {
-      toast.warning('Warning Example', { autoClose: false })
-   }
-   console.log('This works', screenSize)
+
    useEffect(() => {
       const handleResize = () => {
          setScreenSize(getInitialScreenSize())
       }
       // Check if window is defined (i.e., we are in the browser)
-      console.log(window, 'window')
       if (typeof window !== 'undefined') {
          // Attach the event listenerb
          window.addEventListener('resize', handleResize)
@@ -48,7 +43,6 @@ function DoctorCard() {
       // Check if window is defined (i.e., we are in the browser)
       if (typeof window !== 'undefined') {
          const width = window.innerWidth
-         console.log('width', width)
          if (width <= 320) {
             return 1;
          } else if (width <= 768) {
@@ -58,7 +52,7 @@ function DoctorCard() {
          }
       }
    }
-   console.log(getInitialScreenSize(), 'getInitialScreenSize')
+
    // Rest of your code...
    const settings = {
       dots: true,
@@ -87,10 +81,7 @@ function DoctorCard() {
                   <Grid key={index} container spacing={1} marginY={1}>
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
-                           <Link
-                              style={{ textDecoration: 'none' }}
-                               href="/doctorpage"
-                           >
+                          
                               <Card
                                  sx={{
                                     maxWidth: 350,
@@ -126,21 +117,22 @@ function DoctorCard() {
                                        </Typography>
                                     </Typography>
                                  </Typography>
+                                 <Link  style={{ textDecoration: 'none' }}
+                               href="/doctorpage">
                                  <Button
-                                    // onClick={showWarningToast}
-                                    // size='small'
                                     sx={{
                                        border: '1px solid',
                                        '&:hover': {
                                           backgroundColor: '#13293D',
-                                          color: '#fff', // Change text color if needed
+                                          color: '#fff', 
                                        },
                                     }}
                                  >
                                     Book Appointment
                                  </Button>
+                                 </Link>
+                                 
                               </Card>
-                           </Link>
                         </Grid>
                      </SwiperSlide>
                   </Grid>

@@ -15,6 +15,7 @@ import docImage from '../assets/Doctorrrr.jpg'
 import Image from 'next/image'
 import Link from 'next/link'
 import moment from 'moment'
+import {colors} from '../styles/theme'
 
 function ShowDoctors() {
    const [currentPage, setCurrentPage] = useState(1)
@@ -37,8 +38,8 @@ function ShowDoctors() {
    return (
       <>
          <LinearProgress style={{ visibility: isFetching ? 'visible' : 'hidden' }} />
-         <Typography p={2} variant='h3' align='center'>
-            Our Doctors
+         <Typography p={2} variant='h4' align='center' sx={{color:'#13293D'}}  >
+           FIND DOCTOR
          </Typography>
 
          <Grid container spacing={2}>
@@ -49,7 +50,7 @@ function ShowDoctors() {
                           sx={{
                              maxWidth: 350,
                              height: '100%',
-                             border: '1px solid',
+                             border: '1px solid #13293D',
                              margin: '10px',
                              padding: 1,
                              textAlign: 'center',
@@ -84,12 +85,12 @@ function ShowDoctors() {
                : doctorList?.data?.results.map((doctor, index) => {
                     let image = doctor.doctor_profile_picture || docImage
                     return (
-                       <Grid key={index} item xs={12} sm={6} md={4} xl={3}>
+                       <Grid key={index} display={'flex'} justifyContent={'center'} item xs={12} sm={6} md={4} xl={3}>
                           <Card
                              sx={{
                                 maxWidth: 350,
                                 height: '100%',
-                                border: '1px solid',
+                                border: '1px solid #13293D',
                                 margin: '10px',
                                 padding: 1,
                                 textAlign: 'center',
@@ -100,7 +101,7 @@ function ShowDoctors() {
                              }}
                           >
                              <Image
-                                width={350}
+                                width={300}
                                 height={250}
                                 // style={{ maxHeight: 250, objectFit: 'cover', borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
                                 src={image}

@@ -2,27 +2,34 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
 
-export const apiAuth =  createApi({
-   reducerpath: 'apiAuth',
-   baseQuery: fetchBaseQuery({
-      baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
-   }),
-   endpoints: (build) => ({
-      registerAuth: build.mutation({
-        query :(value) => ({
-         url: 'Username-Password-Authentication/signup',
-         method: 'POST',
-         body: value,
-        })
-      })
-   
-   })
-})
+// export const apiAuth = createApi({
+//    reducerpath: 'apiAuth',
+//    baseQuery: fetchBaseQuery({
+//       baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
+//    }),
+//    endpoints: (build) => ({
+//       registerAuth: build.mutation({
+//          query: (value) => ({
+//             url: 'Username-Password-Authentication/signup',
+//             method: 'POST',
+//             body: value,
+//          }),
+//       }),
+//    }),
+// })
 export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
+      prepareHeaders: (headers) => {
+         const token = localStorage.getItem('access_token')
+         if (token) {
+            headers.set('Authorization', `Bearer ${token}`)
+         }
+         return headers
+      }
    }),
+
    keepUnusedDataFor: 30,
    refetchOnReconnect: true,
    refetchOnFocus: true,
@@ -85,7 +92,7 @@ export const queries = createApi({
       }),
       deleteEmployee: build.mutation({
          query: (value) => ({
-            url: 'employee/delete/' + value ,
+            url: 'employee/delete/' + value,
             method: 'DELETE',
             // body:value
          }),
@@ -146,22 +153,16 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
-      // getViewDoctor: build.query({
-      //    query: (prop) => ({
-      //       url: `doctor/view/?pageSize=${10}&pageNo=${prop}`,
-      //       method: 'Get',
-      //    }),
-      // }),
-      getViewDoctor: build.query({
-         query:() => ({
-            url:'/doctor/view/?pageSize=9',
-            method:'Get',
-         })
 
+      getViewDoctor: build.query({
+         query: () => ({
+            url: '/doctor/view/?pageSize=9',
+            method: 'Get',
+         }),
       }),
       getDoctorTimes: build.query({
-         query: (id) => ({
-            url: `/doctor/view/${id}/`,
+         query: (data) => ({
+            url: `/doctor/view/${data.id}/?date=${data.date}`,
             method: 'Get',
          }),
       }),
@@ -185,11 +186,11 @@ export const queries = createApi({
          }),
       }),
       changeStatus: build.mutation({
-          query: (p) => ({
-             url: '/employee/update/'+ p.id,
-              method: 'PATCH', 
-             body: p.pro,
-             }),
+         query: (p) => ({
+            url: '/employee/update/' + p.id,
+            method: 'PATCH',
+            body: p.pro,
+         }),
          invalidatesTags: ['EMP'],
       }),
 
@@ -202,6 +203,35 @@ export const queries = createApi({
         invalidatesTags: ['APP'],
      }),
      
+      changeEmpData: build.mutation({
+         query: (p) => ({
+            url: '/employee/update/' + p.id,
+            method: 'PATCH',
+            body: p.pro,
+         }),
+         invalidatesTags: ['EMP'],
+      }),
+      diseaseStatus: build.mutation({
+         query: (p) => ({
+            url: `/disease/update/${p.disease_id}`,
+            method: 'PATCH',
+            body: {
+               disease_status: !p.disease_status,
+            },
+         }),
+      }),
+
+     
+      appointmentUpdate: build.mutation({
+         query: (p) => ({
+            url: '/appointment/update/'+ p.id,
+             method: 'PATCH', 
+            body: p.pro,
+            }),
+        invalidatesTags: ['APP'],
+     }),
+     
+      // eslint-disable-next-line no-dupe-keys
       changeEmpData: build.mutation({
          query: (p) => ({
             url: '/employee/update/'+ p.id,
@@ -217,8 +247,8 @@ export const queries = createApi({
       }),
    }), 
 
-            }),
-         })
+   }),
+})
 
 export const {
    useRegisterHospitalMutation,
@@ -242,10 +272,9 @@ export const {
    useGetDoctorIdQuery,
    useGetAppointmentInfoQuery,
    useChangeStatusMutation,
+   useDiseaseStatusMutation,
    useChangeEmpDataMutation,
    useAppointmentUpdateMutation
 } = queries
 
-export const {
-   useRegisterAuth,
-} = apiAuth
+// export const { useRegisterAuth } = apiAuth

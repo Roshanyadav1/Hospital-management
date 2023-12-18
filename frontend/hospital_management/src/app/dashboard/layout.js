@@ -11,7 +11,6 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ResponsiveAppBar from '@/components/Navbar'
-// import Footer from '@/components/Footer';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Toolbar } from '@mui/material'
@@ -25,7 +24,7 @@ import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { Container } from '@mui/system'
 import withRoleRedirect from '@/helpers/withRoleRedirect'
-
+import Footer from '../../components/Footer'
 const drawerWidth = 240
 
 const openedMixin = (theme) => ({
@@ -170,17 +169,12 @@ function Layout({ children }) {
          return disableStyle
       }
    }
-   // const handleRegister = async (values, { resetForm }) => {
-   //    try {
-   //       let res = await addDisease(values)
-   //       console.log(res)
-   //       toast.success(res?.data?.message || 'Doctor added successfully')
-   //       resetForm()
-   //    } catch (error) {
-   //       // Handle error
-   //       // console.error('Error submitting form:', error);
-   //    }
-   // }
+
+
+   let userRole = localStorage.getItem('user_role')
+   let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false;
+
+
 
    return (
       <Box sx={{ display: 'flex' }}>
@@ -204,32 +198,25 @@ function Layout({ children }) {
                         path: '/dashboard/employeedata',
                         icon: <TrackChangesIcon />,
                      },
-                     {
-                        text: 'Add Doctor',
-                        path: '/dashboard/adddoctor',
-                        icon: <SettingsAccessibilityIcon />,
-                     },
+                     // {
+                     //    text: 'Add Doctor',
+                     //    path: '/dashboard/adddoctor',
+                     //    icon: <SettingsAccessibilityIcon />,
+                     // },
                      {
                         text: 'Add Disease',
                         path: '/dashboard/adddisease',
                         icon: <CoronavirusIcon />,
                      },
-                     {
-                        text: 'Add Hospital',
-                        path: '/dashboard/addhospital',
-                        icon: <AddBoxIcon />,
-                     },
-                     {
-                        text: 'Add Employee',
-                        path: '/dashboard/addemployee',
-                        icon: <GroupAddIcon />,
-                     },
+         
                      {
                         text: 'Prescription',
                         path: '/dashboard/precription',
                         icon: <MedicationIcon />,
                      },
-                  ].map((item) => (
+                  ].map((item , index) => {
+                     if ( index >= 2 && !isAdmin) return null;
+                  return (
                      <ListItem
                         key={item.text}
                         disablePadding
@@ -243,11 +230,7 @@ function Layout({ children }) {
                               textDecoration: 'none',
                            }}
                            prefetch={true}
-                           href={{
-                              pathname: item.path,
-
-                              query: { ...INITIAL_FORM_STATE },
-                           }}
+                           href={item.path}
                         >
                            <ListItemButton
                               component='a'
@@ -269,25 +252,33 @@ function Layout({ children }) {
                            </ListItemButton>
                         </Link>
                      </ListItem>
-                  ))}
+                  )}  
+                  )}
                </List>
             </div>
          </Drawer>
+
+         {/* <Box maxWidth={'100%'}> */}
          <Box
             component='main'
             sx={{
                width: { sm: `calc(100% - ${drawerWidth}px)` },
-               height: {
-                  sm: `calc(100vh - 64px)`,
-               },
-               flexGrow: 1,
-               padding: 1,
+               p: 3,
             }}
          >
-            <Container maxWidth='100%'>{children}</Container>
+            <Toolbar />
+            <Container>{children}</Container>
          </Box>
       </Box>
+      // </Box>
    )
 }
 
-export default withRoleRedirect(Layout, ['Admin', 'Manager' , 'Doctor'])
+export default withRoleRedirect(Layout, ['Admin', 'Manager', 'Doctor'])
+
+
+
+
+
+
+

@@ -25,7 +25,7 @@ const VisuallyHiddenInput = styled('input')({
 const Empcategories = ['Part Time', 'Full Time']
 const Role = ['Doctor', 'Manager']
 
-const AddEmployee = ({ initialState, validationSchema, handleRegister , disableEmail = false }) => {
+const AddEmployee = ({ initialState, validationSchema, handleRegister , disableEmail = false , disablePass = false, closeButton = '' }) => {
    const router = useParams()
    console.log(router, 'param')
 
@@ -83,6 +83,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                         }}
                      />
                   </Grid>
+                  {!disablePass && (
                   <Grid item xs={12} sm={6}>
                      <Text
                         name='employee_password'
@@ -95,8 +96,9 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                               borderRadius: '20px',
                            },
                         }}
-                     />
+                        />
                   </Grid>
+                        )}
 
                   <Grid item xs={12} sm={6}>
                      <CustomAutocomplete
@@ -132,29 +134,7 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                      />
                   </Grid>
                   <Divider />
-                  {/* <Grid item xs={12} sm={8} >
-                  <Text name="created_by" label="Created By" autoComplete=""
-                    InputProps={{
-                      style: {
-                        background: 'white', border: 'none', borderRadius: '20px',
-                      },
-                    }}
-                  />
-                </Grid> */}
-
-                  {/* <Grid item xs={12} sm={6}>
-                  <VisuallyHiddenInput id="logoInput" type='file' accept='image/*' />
-                </Grid>
-
-                <Grid item xs={12} sm={8} >
-                  <Text name="updated_by" label="Updated By" autoComplete=""
-                    InputProps={{
-                      style: {
-                        background: 'white', border: 'none', borderRadius: '20px',
-                      },
-                    }}
-                  />
-                </Grid> */}
+            
 
                   <Grid item xs={12} sm={6}>
                      <VisuallyHiddenInput
@@ -164,15 +144,17 @@ const AddEmployee = ({ initialState, validationSchema, handleRegister , disableE
                      />
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} display='flex' justifyContent='end'>
+                     {closeButton}
                      <Button
                         variant='contained'
                         color='primary'
                         type='submit'
                         size='large'
-                        disabled={isSubmitting}>
-                         {isSubmitting ? 'Submitting...' : 'Submit'}
+                        disabled={isSubmitting}
 
+                     >
+                     {isSubmitting ? 'Submitting...' : 'Submit'}
                      </Button>
                   </Grid>
                </Grid>

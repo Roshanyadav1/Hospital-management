@@ -4,7 +4,6 @@ import DataGridTable from './DataGridTable'
 import { useGetEmployeeQuery } from '@/services/Query'
 import { columns } from '@/data/EmployeeTableData'
 import {
-   Container,
    Dialog,
    DialogActions,
    DialogContent,
@@ -29,6 +28,8 @@ import FORM_VALIDATION from '@/components/FormValidation/EmployeeValidation'
 import { Color } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAddEmployeeMutation } from '@/services/Query'
+
+import { toast } from 'react-toastify'
 
 const style = {
    position: 'absolute',
@@ -87,8 +88,6 @@ const INITIAL_FORM_STATE = {
    employee_type: '',
    employee_role: '',
    employee_status: true,
-   // created_by: 'admin',
-   // updated_by: 'admin',
 }
 const Empcategories = ['Part Time', 'Full Time']
 const Role = ['Doctor', 'Manager']
@@ -99,12 +98,21 @@ function Dashboard() {
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addemployee(values)
-         console.log(res)
-         toast.success(res?.data?.message || ' Employee added successfully')
-         resetForm()
+         console.log(res.error.message)
+         // toast.success(res?.data?.message || ' Employee added successfully')
+         // resetForm()
+         if (res.data && res.data.status === 200) {
+            toast.success(res.data.message || 'Employee added successfully');
+            resetForm();
+          } else {
+            toast.warn(res.error.message || 'Already exists');
+            resetForm();
+          }
       } catch (error) {
          // Handle error
          // console.error('Error submitting form:', error);
+         console.error('Error submitting form:', error);
+         toast.error('An error occurred while submitting the form');
       }
    }
 
@@ -136,9 +144,9 @@ function Dashboard() {
             justifyContent='space-between'
             alignItems='center'
          >
-            <Typography variant='h4' component='h5'>
+            {/* <Typography variant='h4' component='h5'>
                Employee
-            </Typography>
+            </Typography> */}
             <Button variant='outlined' onClick={handleClickOpen}>
                Add Employee
             </Button>
@@ -178,7 +186,7 @@ function Dashboard() {
                //    console.log(values)
                // }}
             >
-               {({ values, handleChange, handleBlur, touched ,isSubmitting }) => (
+               {({ values, handleChange, handleBlur, touched ,isSubmitting  }) => (
                   <Form>
                      <DialogContent>
                         <Grid container spacing={2}>
@@ -290,7 +298,7 @@ function Dashboard() {
                               size='large'
                               disabled={isSubmitting}
                            >
-                              {isSubmitting ? 'Submitting...' : 'Submit'}
+                             {isSubmitting ? "Submitting ..." : "Submit"}
                            </Button>
                         </DialogActions>
                      </DialogContent>

@@ -20,6 +20,7 @@ import { useSpecialistDoctorMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import Image from 'next/image'
+import { colors } from '../styles/theme'
 
 function DoctorPage() {
    const [filterDoctor, { isLoading: filterDocLoading, isError }] =
@@ -56,11 +57,11 @@ function DoctorPage() {
 
    const styles = {
       container: {
-         backgroundImage: `url(${'https://e0.pxfuel.com/wallpapers/597/471/desktop-wallpaper-hospital-medical-care.jpg'})`,
+         backgroundImage: `url(${'https://www.carehospitals.com/indore/assets/images/banners/doctorlist-banner.jpg'})`,
          backgroundSize: 'cover',
          backgroundRepeat: 'no-repeat',
          backgroundPosition: 'center',
-         color: 'white', // Adjust text color based on your background
+         color: 'white', 
          padding: '2rem',
          display: 'flex',
          alignItems: 'center',
@@ -130,7 +131,7 @@ function DoctorPage() {
                   <CardContent>
                      <Grid container alignItems='center' spacing={2}>
                         <Grid item>
-                           <Image height={50} width={50} src={image} />
+                           <Image height={50} width={50} src={image} style={{borderRadius:'50%'}} />
                         </Grid>
                         <Grid item sx={{ paddingLeft: 2, flex: 1 }}>
                            <Typography
@@ -148,8 +149,8 @@ function DoctorPage() {
 
                      <Typography
                         variant='body2'
-                        color='#2CD9C5'
-                        sx={{ fontWeight: 700, marginTop: 1.5 }}
+                        // color='#35CFF4'
+                        sx={{ fontWeight: 700, marginTop: 1.5, color:colors.secondary }}
                      >
                         Disease Specialist
                      </Typography>
@@ -280,9 +281,9 @@ function DoctorPage() {
                               InputProps={{
                                  ...params.InputProps,
                                  placeholder: DiseaseLoading
-                                    ? 'loading...'
-                                    : 'disease',
-                                 type: 'search',
+                                    ? 'Loading...'
+                                    : 'Disease',
+                                 type: 'Search',
                               }}
                            />
                         )}
@@ -330,9 +331,9 @@ function DoctorPage() {
                               InputProps={{
                                  ...params.InputProps,
                                  placeholder: DocFetch
-                                    ? 'loading...'
-                                    : 'select a doctor',
-                                 type: 'search',
+                                    ? 'Loading...'
+                                    : 'Select a doctor',
+                                 type: 'Search',
                               }}
                            />
                         )}
@@ -363,8 +364,8 @@ function DoctorPage() {
          </div>
          {/* // all doctor view  */}
          <Container maxWidth='xl'>
-            <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
-               Doctors
+            <Typography variant='h4' align='center' style={{ marginTop: '50px', color:'#13293D' }}>
+              FIND DOCTOR
             </Typography>
 
             {filterDocLoading || docListLoading || docLoading ? (

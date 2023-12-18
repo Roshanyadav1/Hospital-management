@@ -10,6 +10,7 @@ import {
    Switch,
    Button,
    Input,
+   Skeleton,
 } from '@mui/material'
 import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { useParams } from 'next/navigation'
@@ -22,6 +23,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import { useAppointmentUpdateMutation } from '@/services/Query'
+import { toast } from 'react-toastify'
 
 const fadeInUp = {
    hidden: { opacity: 0, y: 20 },
@@ -32,8 +34,7 @@ function DoctorPage() {
    const { appointment_id } = useParams();
    const {
       data: appointmentInfo,
-      // isLoading,
-      // isError,
+      isLoading,
    } = useGetAppointmentInfoQuery(appointment_id);
    const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
@@ -86,23 +87,34 @@ function DoctorPage() {
                checked: !isSwitchOn,
             },
          };
-
-         const result = await appointmentUpdate(obj);
-
-         console.log('Result of updateStatus mutation:', result);
-
-
+         await appointmentUpdate(obj);
+         toast.success('Status Changed Successfully');
       } catch (error) {
-         console.error('Error changing status:', error);
+         toast.error(JSON.stringify(error));
       }
-
       setIsSwitchOn(!isSwitchOn);
    };
 
 
    return (
-      <Container maxWidth='md'>
-         <Grid container spacing={2} justifyContent='center'>
+      <Container maxWidth='lg'>
+
+<Grid container spacing={2}>
+
+{isLoading && (
+   <>
+ {
+    [1, 2, 3].map((e) => (
+      <Grid  key={e} item xs={12} sm={12} md={6} lg={4} sx={{ paddingBottom: '1rem' }} component={motion.div} variants={fadeInUp} initial='hidden' animate='visible'>
+       <Skeleton  variant="rectangular" width={300} height={400} animation="wave" />
+      </Grid>
+       ))
+      }
+ </>
+)}
+</Grid>
+
+         <Grid container spacing={2}>
             {Array.isArray(appointmentInfo?.data) &&
                appointmentInfo?.data?.map((e, i) => (
                   <Grid

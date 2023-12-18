@@ -5,6 +5,7 @@ import {
    DialogActions,
    DialogContent,
    DialogTitle,
+   Grid,
    IconButton,
    Switch,
 } from '@mui/material'
@@ -21,10 +22,6 @@ import { Delete, Create, Visibility, DisabledByDefault } from '@mui/icons-materi
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import AddEmployee from '@/components/AddEmployee'
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
-
-
-
-
 const style = {
    position: 'absolute',
    top: '50%',
@@ -35,7 +32,6 @@ const style = {
    bgcolor: 'background.paper',
    border: '2px solid #000',
 }
-
 const VisuallyHiddenInput = styled('input')({
    clip: 'rect(0 0 0 0)',
    clipPath: 'inset(50%)',
@@ -47,7 +43,6 @@ const VisuallyHiddenInput = styled('input')({
    whiteSpace: 'nowrap',
    width: 1,
 })
-
 const StyledPaper = styled(Paper)(({ theme }) => ({
    maxWidth: '650px',
    boxShadow: theme.shadows[3],
@@ -55,14 +50,12 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
    borderRadius: '20px',
    padding: '2rem',
 }))
-
 //for the heading
 const StyledTypography = styled(Typography)(() => ({
    fontWeight: 'bold',
    paddingBottom: '1rem',
    color: colors.primary,
 }))
-
 //for the whole form
 const StyledFormWrapper = styled('div')({
    minHeight: '100vh',
@@ -73,19 +66,15 @@ const StyledFormWrapper = styled('div')({
       padding: '0rem',
    },
 })
-
 const Empcategories = ['Part Time', 'Full Time']
 const Role = ['Doctor', 'Manager']
-
 const GetStatusButton = (row) => {
    const [updateStatus] = useChangeStatusMutation()
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
-
    const handleCloseModal = () => {
       setOpenModal(false)
    }
-
    const ChangeStatus = async () => {
       try {
          // Assuming your API expects an employee ID for deletion
@@ -96,7 +85,6 @@ const GetStatusButton = (row) => {
             },
          }
          const result = await updateStatus(obj)
-
          // Log the result to the console
          console.log('Result of updateStatus mutation:', result)
          handleCloseModal()
@@ -106,7 +94,6 @@ const GetStatusButton = (row) => {
          console.error('Error changing status:', error)
       }
    }
-
    return (
       <div
          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
@@ -138,7 +125,6 @@ const GetStatusButton = (row) => {
                </Button>
             </DialogActions>
          </Dialog>
-
          <Switch
             checked={row?.params?.row?.employee_status}
             onClick={() => setOpenModal(true)}
@@ -155,7 +141,6 @@ const GetActionButton = (row) => {
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
    const [openEditModal, setOpenEditModal] = useState(false)
-
    const INITIAL_FORM_STATE = {
       employee_name: row?.params?.row?.employee_name,
       employee_email: row?.params?.row?.employee_email,
@@ -168,7 +153,6 @@ const GetActionButton = (row) => {
       // updated_by: 'admin',
    }
    const [addemployee] = useAddEmployeeMutation() //for add employee form
-
    const handleRegister = async (values, { resetForm }) => {
       try {
          // Assuming your API expects an employee ID for deletion
@@ -189,7 +173,7 @@ const GetActionButton = (row) => {
          // Log the result to the console
          console.log('Result of updateStatus mutation:', result)
          handleCloseModal()
-         // Perform any additional logic after successful deletion
+      
       } catch (error) {
          // Handle error
          console.error('Error changing status:', error)
@@ -206,65 +190,53 @@ const GetActionButton = (row) => {
       refetchOnMountOrArgChange: true,
    })
    const [open, setOpen] = useState(false)
-
    const handleClickOpen = () => {
       setOpen(true)
    }
-
    const handleClose = () => {
       setOpen(false)
    }
-
    // console.log(row.params , "ok")
    const handleDelete = () => {
       setSelectedRow(row.params.row)
       setOpenModal(true)
    }
    // console.log('Delete :', selectedRow);
-
    const handleEdit = () => {
       // Handle edit logic here
       setSelectedRow(row.params.row)
       setOpenEditModal(true)
       console.log('Edit:', row)
    }
-
    const handleView = () => {
       // Handle view logic here
       console.log('View:', row)
    }
-
    const handleCloseModal = () => {
       setOpenModal(false)
    }
-
    const handleCloseEditModal = () => {
       setOpenEditModal(false)
    }
-
    const handleConfirmDelete = () => {
       const DltEmployee = async () => {
          try {
             // Assuming your API expects an employee ID for deletion
             const result = await deleteEmployee(selectedRow.employee_id)
             alert('Employee Deleted Successfully')
-
             // Log the result to the console
             console.log('Result of deleteEmployee mutation:', result)
-
             // Perform any additional logic after successful deletion
          } catch (error) {
             // Handle error
             console.error('Error deleting employee:', error)
          }
       }
-
       // Perform delete logic here
       console.log('Deleting:', selectedRow)
       DltEmployee() // Call the delete function
       handleCloseModal()
    }
-
    return (
       <div
          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
@@ -296,7 +268,6 @@ const GetActionButton = (row) => {
                </Button>
             </DialogActions>
          </Dialog>
-
          <Dialog open={openEditModal} onClose={handleCloseEditModal} padding={3}>
             <DialogTitle>Edit Employee</DialogTitle>
             <IconButton
@@ -311,28 +282,29 @@ const GetActionButton = (row) => {
             >
                <CloseIcon />
             </IconButton>
+            <Grid p={2}>
             <AddEmployee
                initialState={INITIAL_FORM_STATE}
                validationSchema={FORM_VALIDATION}
                handleRegister={handleRegister}
                disableEmail={true}
-            />
-            <Button
+               disablePass={true}
+               closeButton={<Button
                variant='contained'
                color='primary'
-               sx={{
-                  position: 'absolute',
-                  left: '12rem',
-                  bottom: 0.5,
-               }}
                onClick={handleCloseEditModal}
                size='large'
+               sx={{
+                 mr: 2,
+               }}
             >
                cancel
-            </Button>
+            </Button>}
+               />
+               </Grid>
+    
          </Dialog>
-
-         <IconButton onClick={handleDelete} color='error' size='small'>
+         <IconButton onClick={handleDelete} color='primary' size='small'>
             <Delete />
          </IconButton>
          {/* dont fill the color in the delete button just outlineit */}
@@ -345,7 +317,6 @@ const GetActionButton = (row) => {
       </div>
    )
 }
-
 export const columns = [
    {
       field: 'employee_name',
@@ -416,7 +387,6 @@ export const columns = [
    //       />
    //     ),
    // },
-
    {
       field: 'Status',
       headerName: 'Status',
@@ -428,7 +398,6 @@ export const columns = [
       sortable: false,
       renderCell: (params) => <GetStatusButton params={params} />,
    },
-
    // { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
    // { field: 'employee_type', headerName: 'Type', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
    {
@@ -436,7 +405,6 @@ export const columns = [
       headerName: 'Actions',
       headerClassName: 'headerlast',
       align: 'center',
-
       cellClassName: 'column-linelast',
       headerAlign: 'center',
       flex: 1,
@@ -444,4 +412,10 @@ export const columns = [
       renderCell: (params) => <GetActionButton params={params} />,
    },
 ]
+// how can I find out the particular row's data from this table when i click on the delete button
+
+
+
+
+
 

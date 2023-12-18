@@ -139,7 +139,6 @@ function Chart() {
 
    const filteredCount = filteredData ? filteredData.length : 0
    // it is still showing the error in filteredData.length
-   console.log('Data for Chart:', Data)
 
    const showServerError =
       isErrorDoctor || isErrorPatient || isErrorAppData || isErrorAppCount
@@ -151,6 +150,7 @@ function Chart() {
       !isFetchingAppCount
 
    const [visibleData, setVisibleData] = useState(weeklyData?.slice(0, 4))
+   console.log(visibleData)
 
    const handleChartScroll = (event) => {
       const scrollLeft = event.target.scrollLeft
@@ -193,7 +193,7 @@ function Chart() {
    }
 
    return (
-      <div style={{marginTop:'5%'}}>
+      <div>
          <Grid container>
             <Grid item xs={8} style={{ flexWrap: 'wrap' }}>
                <Grid container item xs={12}>
@@ -202,8 +202,7 @@ function Chart() {
                         <div className='hov'>
                            <div
                               style={{
-                                 background:
-                                    'linear-gradient(135deg,#006494,#35CFF4)',
+                                 background:'linear-gradient(135deg,#006494,#35CFF4)',
                                  height: '10rem',
                                  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                                  marginRight: '1rem',
@@ -283,7 +282,7 @@ function Chart() {
                                     +
                                  </span>
                               </Grid>
-                              <Grid item xs={6}>
+                              {/* <Grid item xs={6}>
                                  <div
                                     style={{
                                        width: '80%',
@@ -306,7 +305,7 @@ function Chart() {
                                        src={Doc}
                                     />
                                  </div>
-                              </Grid>
+                              </Grid> */}
                            </Grid>
                         </div>
                      </Grid>
@@ -336,7 +335,7 @@ function Chart() {
                      <div onScroll={handleChartScroll}>
                         <ComposedChart
                            width={650}
-                           height={355}
+                           height={360}
                            data={weeklyData}
                            margin={{
                               top: 20,

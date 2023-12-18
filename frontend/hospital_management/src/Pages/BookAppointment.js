@@ -24,19 +24,20 @@ import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
 import moment from 'moment'
-
 function BookAppoinment({ id, name, date }) {
-   const { data: doctorTimes , isLoading , refetch } = useGetDoctorTimesQuery(id)
+   let data = {
+      id: id,
+      date: date
+   }
+   const { data: doctorTimes , refetch , isFetching : isLoading } = useGetDoctorTimesQuery(data)
+   const [isBooking, setIsBooking] = useState(false)
    const[addAppointment] = useAddAppointmentMutation()
    const [selectedSlot, setSelectedSlot] = useState(null)
    const [openDialog, setOpenDialog] = useState(false)
    const [times, setTimes] = useState([])
    const [hiddentime, setHiddentime] = useState([])
    const { createTimeSlots } = useTimeSlots()
-
    // doctorTimes
-
-
    const ProfileCard = ({ icon, title, content }) => (
       <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
          <CardHeader
@@ -52,7 +53,6 @@ function BookAppoinment({ id, name, date }) {
          </CardContent>
       </Card>
    )
-
    useEffect(() => {
       if (
          doctorTimes &&
@@ -61,10 +61,7 @@ function BookAppoinment({ id, name, date }) {
          setHiddentime(createTimeSlots(doctorTimes.data.per_patient_time, doctorTimes.data.times))
       }
    }, [doctorTimes, isLoading])
-
-   console.log(hiddentime, "hiddentime")
-
-
+   
    function formatTime(timeString) {
       const time = new Date(`2000-01-01T${timeString}`)
       return time.toLocaleString('en-US', {
@@ -73,29 +70,24 @@ function BookAppoinment({ id, name, date }) {
          hour24: true,
       })
    }
-
-
    const handleOpenDialog = () => {
       setOpenDialog(true)
    }
-
    const handleCloseDialog = () => {
       setOpenDialog(false)
    }
-
    const handleSlotSelection = (timeSlot) => {
       setSelectedSlot(timeSlot)
    }
-
    const handleBookAppointment = async () => {
       handleOpenDialog()
    }
-
    const handleAppointment = async () => {
+      setIsBooking((prev)=> !prev)
       if (!selectedSlot) {
          toast.error('Please select a time slot')
       }
-      else if (hiddentime[selectedSlot.index - 1]) {
+      else if (hiddentime[selectedSlot.index]) {
 
          const payload = {
             appointment_time: hiddentime[selectedSlot.index][0],
@@ -107,21 +99,19 @@ function BookAppoinment({ id, name, date }) {
             appointment_number: (selectedSlot.total_slots - selectedSlot.slots) + 1,
          }
          // addAppointment
-
          try {
             await addAppointment(payload).unwrap()
             refetch()
-            setSelectedSlot(null)
-            toast.success('Appointment booked successfully')
+            toast.success('Appointment Booked Successfully')
+            setIsBooking((prev)=> !prev)
             handleCloseDialog()
+            setSelectedSlot(null)
          } catch (e) {
-            console.log(e)
+            setIsBooking((prev)=> !prev)
             toast.error('Something went wrong')
          }
-
       }
    }
-
    return (
       <Container maxWidth='lg' p={2}>
          <Grid
@@ -136,7 +126,7 @@ function BookAppoinment({ id, name, date }) {
                {
                   isLoading ? (<>
                      <Skeleton
-                        sx={{ border: '1px solid #e0e0e0' }}
+                        sx={{ border: '1px solid #E0E0E0' }}
                         variant="circular" height={150} width={150} />
                   </>) : (<>
                      <Image
@@ -164,7 +154,7 @@ function BookAppoinment({ id, name, date }) {
                      <Typography gutterBottom variant='h4' component='div'>
                         {name}
                         <Typography variant='body1' color='text.secondary'>
-                           EXECUTIVE CHAIRMAN FORTIS C DOC | Fortis C-Doc
+                           EXECUTIVE DOCTORS FORTIS C DOC | Fortis C-Doc
                         </Typography>
                      </Typography>
                   </>
@@ -185,8 +175,6 @@ function BookAppoinment({ id, name, date }) {
         microvascular decompression surger...`}
                />
                <br />
-
-
                <ProfileCard
                   icon={<SchoolIcon sx={{ marginRight: 1 }} />}
                   title={<Typography gutterBottom variant='h6'>Education</Typography>}
@@ -194,6 +182,9 @@ function BookAppoinment({ id, name, date }) {
         Fellowship (USA), Skull Base& Vascular Fellowship (USA)...'
                />
             </Grid>
+
+              
+
 
             {/* 2ND COLUMN */}
             <Grid item sm={6} xs={12}>
@@ -211,7 +202,6 @@ function BookAppoinment({ id, name, date }) {
                      Appointment Time
                   </Typography>
                   <hr />
-
                   <Grid
                      container
                      spacing={1}
@@ -226,7 +216,7 @@ function BookAppoinment({ id, name, date }) {
                         Array.from({ length: 4 }).map((_, index) => (
                            <Grid item key={index} xs={6} sm={6} md={6}>
                               <Skeleton
-                                 sx={{ border: '1px solid #e0e0e0', borderRadius: '10px' }}
+                                 sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
                                  variant="rectangular" height={60} />
                            </Grid>
                         ))
@@ -265,7 +255,6 @@ function BookAppoinment({ id, name, date }) {
                            </Grid>
                         ))}
                   </Grid>
-
                   <Grid
                      mt={2}
                      marginBottom={1}
@@ -276,7 +265,6 @@ function BookAppoinment({ id, name, date }) {
                         Book Appointment
                      </Button>
                   </Grid>
-
                   {/* FIRST Confirmation Dialog MODAL */}
                   <Dialog open={openDialog} onClose={handleCloseDialog}>
                      <DialogTitle>Confirm Appointment Booking</DialogTitle>
@@ -287,25 +275,35 @@ function BookAppoinment({ id, name, date }) {
                         </DialogContentText>
                      </DialogContent>
                      <DialogActions>
-                        <Button onClick={handleCloseDialog} color='primary'>
+                        <Button
+                        disabled={isBooking}
+                        onClick={handleCloseDialog} color='primary'>
                            Cancel
                         </Button>
                         <Button
-                           /////////////
+                        disabled={isBooking}
                            onClick={handleAppointment}
                            color='primary'
                            autoFocus
+                          
                         >
                            Confirm
                         </Button>
                      </DialogActions>
                   </Dialog>
-
-
                </Paper>
             </Grid>
+
          </Grid>
       </Container>
    )
 }
 export default BookAppoinment
+
+
+
+
+
+
+
+

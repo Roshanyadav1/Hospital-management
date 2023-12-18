@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 import { useAddEmployeeMutation, useRegisterAuth } from '@/services/Query'
-import Employee_Validation from '@/components/form/EmployeeValidation/employeeValidation'
+import Employee_Validation from '../../../components/FormValidation/employeeValidation'
 import { colors } from '@/styles/theme'
 import AddEmployee from '@/components/AddEmployee'
 import { toast } from 'react-toastify'
@@ -59,19 +59,7 @@ const EmpRegister = () => {
    const [addAuthEmployee] = useRegisterAuth()
 
 
-   const handleRegister = async (values, { resetForm }) => {
-      try {
-         let res = await addemployee(values)
-         let resAuth = await addAuthEmployee(values)
-         console.log(res)
-         toast.success(res?.data?.message || ' Employee added successfully')
-         resetForm()
-      } catch (error) {
-         // Handle error
-         // console.error('Error submitting form:', error);
-      }
-   }
-
+   
    return (
       <StyledFormWrapper>
          <StyledPaper elevation={3}>
@@ -83,7 +71,7 @@ const EmpRegister = () => {
             <AddEmployee
                initialState={INITIAL_FORM_STATE}
                validationSchema={Employee_Validation}
-               handleRegister={handleRegister}
+               handleRegister={EmpRegister}
             />
          </StyledPaper>
       </StyledFormWrapper>

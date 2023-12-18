@@ -13,10 +13,14 @@ import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 const theme = createTheme(themeOptions)
+
 export default function RootLayout({ children }) {
    const path = usePathname()
 
-   let isShow = ['/dashboard', '/dashboard/'].includes(path)
+   let isShow = false
+   if (path.includes('dashboard')) {
+      isShow = true
+   }
 
    return (
       <html lang='en'>
