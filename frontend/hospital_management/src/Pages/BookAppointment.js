@@ -154,7 +154,7 @@ function BookAppoinment({ id, name, date }) {
                      <Typography gutterBottom variant='h4' component='div'>
                         {name}
                         <Typography variant='body1' color='text.secondary'>
-                           EXECUTIVE DOCTORS FORTIS C DOC | Fortis C-Doc
+                           EXECUTIVE DOCTOR FORTIS C DOC | Fortis C-Doc
                         </Typography>
                      </Typography>
                   </>
@@ -270,7 +270,7 @@ function BookAppoinment({ id, name, date }) {
                      <DialogTitle>Confirm Appointment Booking</DialogTitle>
                      <DialogContent>
                         <DialogContentText>
-                           Are you sure you want to book the appointment?
+                           Are you sure you want to book the appointment ?
                            An email confirmation will be sent to you shortly.
                         </DialogContentText>
                      </DialogContent>

@@ -21,7 +21,7 @@ export default function Cards() {
   return (
     <div>
       <Container maxWidth="lg">
-        <Typography variant='h3' align='center' style={{ marginTop: "50px" }}>
+        <Typography variant='h3' align='center' color='primary' style={{ marginTop: "50px" }}>
           Centre of Excellence
         </Typography>
         <Grid container spacing={5}  style={{ marginTop: "20px" }}>
