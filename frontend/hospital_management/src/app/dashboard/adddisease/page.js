@@ -10,8 +10,10 @@ import {
    DialogActions,
    DialogContent,
    DialogTitle,
-   Skeleton,
+   Skeleton,  
+   IconButton,
 } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 import { CardActionArea } from '@mui/material'
 import { CardContent } from '@mui/material'
 import { Formik, Form } from 'formik'
@@ -192,6 +194,19 @@ const page = () => {
          >
             <Box sx={style}>
                <StyledFormWrapper>
+               <IconButton
+               aria-label='close'
+               onClick={handleClose}
+               sx={{
+                  position: 'absolute',
+                  right: 0,
+                  top: -12,
+                  color: (theme) => theme.palette.grey[500],
+                  // margin: 3
+               }}
+            >
+               <CloseIcon />
+            </IconButton>
                   <StyledPaper elevation={3}>
                      <Formik
                         initialValues={{
