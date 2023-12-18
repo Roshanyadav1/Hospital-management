@@ -168,7 +168,7 @@ const page = () => {
             <DialogContent>
                <p>
                   Are you sure you want to change the status of
-                  <span className='Data'>{disease?.disease_name}</span>
+                  <span className='Data'> <b> {disease?.disease_name}</b></span>
                </p>
             </DialogContent>
             <DialogActions>
