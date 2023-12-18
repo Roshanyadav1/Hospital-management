@@ -29,6 +29,8 @@ import { Color } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAddEmployeeMutation } from '@/services/Query'
 
+import { toast } from 'react-toastify'
+
 const style = {
    position: 'absolute',
    top: '50%',
@@ -96,12 +98,21 @@ function Dashboard() {
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addemployee(values)
-         console.log(res)
-         toast.success(res?.data?.message || ' Employee added successfully')
-         resetForm()
+         console.log(res.error.message)
+         // toast.success(res?.data?.message || ' Employee added successfully')
+         // resetForm()
+         if (res.data && res.data.status === 200) {
+            toast.success(res.data.message || 'Employee added successfully');
+            resetForm();
+          } else {
+            toast.warn(res.error.message || 'Already exists');
+            resetForm();
+          }
       } catch (error) {
          // Handle error
          // console.error('Error submitting form:', error);
+         console.error('Error submitting form:', error);
+         toast.error('An error occurred while submitting the form');
       }
    }
 
