@@ -20,6 +20,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Chip from '@mui/material/Chip'
 import HistoryIcon from '@mui/icons-material/History'
 import { display } from '@mui/system'
+import { useGetAppointmentHistoryQuery } from '@/services/Query'
 let arr =  [
  {
      appointment_id: "a0600720-09c4-4d99-a6ef-1416b433e977",
@@ -107,7 +108,7 @@ const appointmentsByDate = arr.reduce((acc =[], appointment =[]) => {
  return acc;
 }, {});
 console.log(appointmentsByDate);
-const DoctorProfile = () => {
+const DoctorProfile = ({id}) => {
  const ProfileCard = ({ icon, title, content }) => (
     <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
        <CardHeader
@@ -123,6 +124,32 @@ const DoctorProfile = () => {
        </CardContent>
     </Card>
  )
+
+ const {data: appointmentHistory,isLoading,} = useGetAppointmentHistoryQuery(id);
+
+ if(isLoading){
+   return "loading"
+}
+
+ const appointmentsByDate = Array.isArray(appointmentHistory?.data )
+     ? appointmentHistory?.data.reduce((acc = [], appointment = []) => {
+   const date = appointment.appointment_date;
+   if (!acc[date]) {
+       acc[date] = [];
+   }
+   acc[date].push({
+       patient_id: appointment.patient.patient_id,
+       patient_name: appointment.patient.patient_name,
+       doctor_name: appointment.doctor.employee.employee_name,
+       disease_name: appointment.disease.disease_name,
+       appointment_time: appointment.appointment_time,
+       checked: appointment.checked,
+   });
+   return acc;
+}, {}): [];
+
+console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
+ 
  return (
     <Container maxWidth='lg' p={2}>
        <Grid container boxShadow={1} spacing={2}>
@@ -202,7 +229,7 @@ const DoctorProfile = () => {
                       History
                    </Typography>
                 }
-                content={arr.map((appointment) =>(
+                content={appointmentsByDate?.map((appointment) =>(
                    // eslint-disable-next-line react/jsx-key
                    <Accordion sx={{ boxShadow: '0px 2px 1px rgba(0, 0, 0, 0.2)'}}>
                    <AccordionSummary

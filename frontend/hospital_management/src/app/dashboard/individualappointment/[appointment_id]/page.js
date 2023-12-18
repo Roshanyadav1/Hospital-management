@@ -82,7 +82,7 @@ function DoctorPage() {
    const handleSwitchChange = async () => {
       try {
          const obj = {
-            id: appointmentInfo?.data?.[0]?.appointment_id,
+            id: appointmentInfo?.data[0]?.appointment_id,
             pro: {
                checked: !isSwitchOn,
             },

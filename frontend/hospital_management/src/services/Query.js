@@ -246,7 +246,12 @@ export const queries = createApi({
          method: 'GET',
       }),
    }), 
-
+   getAppointmentHistory: build.query({
+      query: (doctor_id) => ({
+         url: `/appointment/view/?doctor_id=${doctor_id}`,
+         method: 'GET',
+      }),
+   }),
    }),
 })
 
@@ -274,7 +279,8 @@ export const {
    useChangeStatusMutation,
    useDiseaseStatusMutation,
    useChangeEmpDataMutation,
-   useAppointmentUpdateMutation
+   useAppointmentUpdateMutation,
+   useGetAppointmentHistoryQuery,
 } = queries
 
 // export const { useRegisterAuth } = apiAuth
