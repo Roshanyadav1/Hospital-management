@@ -167,7 +167,7 @@ const page = () => {
             </DialogTitle>
             <DialogContent>
                <p>
-                  Are you sure you want to change the status of
+                  Are you sure you want to change the status of   ?
                   <span className='Data'>{disease?.disease_name}</span>
                </p>
             </DialogContent>
@@ -257,7 +257,7 @@ const page = () => {
             </Box>
          </Modal>
 
-         {isLoading && (
+         { isLoading && (
             <>
                <Grid container alignItems='center' spacing={2} p={2}>
                   {Array.from({ length: 8 }).map((_, i) => (

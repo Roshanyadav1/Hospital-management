@@ -29,6 +29,7 @@ import FORM_VALIDATION from '@/components/FormValidation/EmployeeValidation'
 import { Color } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAddEmployeeMutation } from '@/services/Query'
+import { toast } from 'react-toastify'
 
 const style = {
    position: 'absolute',
@@ -100,11 +101,31 @@ function Dashboard() {
       try {
          let res = await addemployee(values)
          console.log(res)
-         toast.success(res?.data?.message || ' Employee added successfully')
-         resetForm()
+         console.log(res.error.data.status)
+      // if(res.error.data.status === 400){
+      //    toast.warn("Already exist")
+      //    resetForm()
+        
+      // }else{
+      //    toast.success(res?.data?.message || 'Employee added successfully')
+      //    resetForm()
+       
+      // }
+         // toast.success(res?.data?.message || ' Employee added successfully')
+         // resetForm()
+
+         if (res.data && res.data.status >= 200 && res.data.status < 300) {
+            // toast.success(res.data.message || 'Employee added successfully');
+            // resetForm();
+         } else {
+            toast.warn('Already exists');
+         }
       } catch (error) {
          // Handle error
          // console.error('Error submitting form:', error);
+         console.error('Error submitting form:', error);
+         // Handle error (e.g., display an error message)
+         toast.error('An error occurred while submitting the form');
       }
    }
 

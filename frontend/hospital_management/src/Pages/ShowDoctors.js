@@ -15,6 +15,7 @@ import docImage from '../assets/Doctorrrr.jpg'
 import Image from 'next/image'
 import Link from 'next/link'
 
+
 function ShowDoctors() {
    const [currentPage, setCurrentPage] = useState(1)
    const {
