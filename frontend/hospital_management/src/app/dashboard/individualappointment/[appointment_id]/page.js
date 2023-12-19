@@ -159,7 +159,7 @@ function DoctorPage() {
                         </CardContent>
                         <CardContent>
                            <Chip
-                              label={'Appointment No. : ' + e?.appointment_number}
+                              label={'Appointment No : ' + e?.appointment_number}
                               sx={{ backgroundColor: '#7F8FA45B' }}
                            />
                         </CardContent>

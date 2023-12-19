@@ -74,7 +74,6 @@ const StyledFormWrapper = styled('div')({
    minHeight: '100vh',
    display: 'grid',
    placeItems: 'center',
-   // padding: '2rem',
    '@media (max-width: 450px)': {
       padding: '0rem',
    },
@@ -84,7 +83,7 @@ const INITIAL_FORM_STATE = {
    employee_name: '',
    employee_email: '',
    employee_number: '',
-   employee_password: '', // not available
+   employee_password: '', 
    employee_type: '',
    employee_role: '',
    employee_status: true,
@@ -99,8 +98,6 @@ function Dashboard() {
       try {
          let res = await addemployee(values)
          console.log(res.error.message)
-         // toast.success(res?.data?.message || ' Employee added successfully')
-         // resetForm()
          if (res.data && res.data.status === 200) {
             toast.success(res.data.message || 'Employee added successfully');
             resetForm();
@@ -109,8 +106,6 @@ function Dashboard() {
             resetForm();
           }
       } catch (error) {
-         // Handle error
-         // console.error('Error submitting form:', error);
          console.error('Error submitting form:', error);
          toast.error('An error occurred while submitting the form');
       }
@@ -144,9 +139,6 @@ function Dashboard() {
             justifyContent='space-between'
             alignItems='center'
          >
-            {/* <Typography variant='h4' component='h5'>
-               Employee
-            </Typography> */}
             <Button variant='outlined' onClick={handleClickOpen}>
                Add Employee
             </Button>
@@ -182,9 +174,6 @@ function Dashboard() {
                }}
                validationSchema={FORM_VALIDATION}
                onSubmit={handleRegister}
-               // onSubmit={(values) => {
-               //    console.log(values)
-               // }}
             >
                {({ values, handleChange, handleBlur, touched ,isSubmitting  }) => (
                   <Form>
