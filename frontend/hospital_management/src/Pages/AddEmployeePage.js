@@ -98,13 +98,16 @@ function Dashboard() {
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addemployee(values)
-         console.log(res.error.message)
+
+       
+   
          // toast.success(res?.data?.message || ' Employee added successfully')
          // resetForm()
-         if (res.data && res.data.status === 200) {
+         if (res.data && res.data.status == 200) {
+            console.log("Its working")
             toast.success(res.data.message || 'Employee added successfully');
             resetForm();
-          } else {
+          } else if(res) {
             toast.warn(res.error.message || 'Already exists');
             resetForm();
           }
