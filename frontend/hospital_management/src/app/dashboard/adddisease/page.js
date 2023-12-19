@@ -169,7 +169,7 @@ const page = () => {
             </DialogTitle>
             <DialogContent>
                <p>
-                  Are you sure you want to change the status of
+                  Are you sure you want to change the status ?
                   <span className='Data'> <b> {disease?.disease_name}</b></span>
                </p>
             </DialogContent>
@@ -217,6 +217,7 @@ const page = () => {
                      >
                         {({ errors, isSubmitting }) => (
                            <Form>
+                              <h2 style={{ marginTop: 0 }}>Add Disease</h2>
                               {console.log(errors, 'here')}
                               <Grid container spacing={2}>
                                  <Grid item xs={12}>
@@ -259,6 +260,7 @@ const page = () => {
                                        type='submit'
                                        size='large'
                                        disabled={isSubmitting}
+                                       sx={{position:'absolute',right:10, bottom:10 }}
                                     >
                                        {isSubmitting ? 'Submitting...' : 'Submit'}
                                     </Button>

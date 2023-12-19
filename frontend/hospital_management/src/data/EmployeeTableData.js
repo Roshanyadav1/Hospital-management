@@ -108,11 +108,11 @@ const GetStatusButton = (row) => {
                   fontSize: '1rem',
                }}
             >
-               Confirmation for Changing Status
+               Confirmation for changing status
             </DialogTitle>
             <DialogContent>
                <p>
-                  Do you want to Change the Status for{selectedRow?.employee_name}
+                  Do you want to change the status{selectedRow?.employee_name} ?
                   <span className='Data'>{selectedRow?.employee_name}</span>
                </p>
             </DialogContent>
@@ -256,7 +256,7 @@ const GetActionButton = (row) => {
             <DialogContent>
                <p>
                   Do you want to delete the data for{' '}
-                  <span className='Data'>{selectedRow?.employee_name}</span>
+                  <span className='Data'>{selectedRow?.employee_name}</span> ?
                </p>
             </DialogContent>
             <DialogActions>
