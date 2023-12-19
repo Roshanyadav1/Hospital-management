@@ -1,6 +1,6 @@
 'use client'
 
-import FixedContainer from '@/Pages/container'
+import FixedContainer from '@/Pages/Container'
 import { Grid } from '@mui/material'
  
 import SwipeableTextMobileStepper from '@/Pages/Steper'

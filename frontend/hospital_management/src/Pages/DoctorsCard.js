@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { Grid, Card, CardContent, Typography, Button } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
@@ -21,8 +20,9 @@ import 'swiper/css/navigation' // Add this line for navigation styles
 import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
 import { useGetViewDoctorQuery } from '@/services/Query'
+import Chip from '@mui/material/Chip';
 function DoctorCard() {
-   const {data:getDname} = useGetViewDoctorQuery();
+   const { data: getDname } = useGetViewDoctorQuery()
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
 
    useEffect(() => {
@@ -44,11 +44,11 @@ function DoctorCard() {
       if (typeof window !== 'undefined') {
          const width = window.innerWidth
          if (width <= 320) {
-            return 1;
+            return 1
          } else if (width <= 768) {
-            return 2;
+            return 2
          } else {
-            return 3;
+            return 3
          }
       }
    }
@@ -63,8 +63,13 @@ function DoctorCard() {
    }
    return (
       <>
-         <Typography variant='h3' align='center'  color='primary' style={{ marginTop: '50px' }}>
-             Doctors
+         <Typography
+            variant='h3'
+            align='center'
+            color='primary'
+            style={{ marginTop: '50px' }}
+         >
+            Doctors
          </Typography>
          <Container maxWidth='lg' sx={{ padding: '3rem' }}>
             <Swiper
@@ -78,48 +83,50 @@ function DoctorCard() {
                className='mySwiper'
             >
                {getDname?.data?.results?.map((result, index) => (
-                  <Grid key={index} container spacing={1} marginY={1}>
+                <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                key={index}
+              >
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
-                          
-                              <Card
-                                 sx={{
-                                    maxWidth: 350,
-                                    border: '1 px solid',
-                                    margin: '10px',
-                                    padding: 1,
-                                    textAlign: 'center',
-                                 }}
-                              >
-                                 <Image
-                                    height={250}
-                                    width={350}
-                                    src={result.doctor_profile_picture}
-                                    //doctor_profile_picture
-                                    alt='image'
-                                 />
-                                 <Typography
-                                    gutterBottom
-                                    variant='h5'
-                                    component='div'
-                                 >
-                                    Dr.{result.employee?.employee_name}
-                                    <Typography
-                                       variant='body2'
-                                       color='text.secondary'
-                                    >
-                                       {result.specialization}
-                                       <Typography
-                                          variant='body3'
-                                          color='text.secondary'
-                                       >
-                                          {result.category}
-                                       </Typography>
-                                    </Typography>
-                                 </Typography>
-                                 <Link  style={{ textDecoration: 'none' }}
-                               href="/doctorpage">
+                           <Card
+                              sx={{
+                                 maxWidth: 350,
+                                 border: '4 px solid',
+                                 // margin: '15px',
+                                 // padding: 1,
+                                 textAlign: 'center',
+                              }}
+                           >
+                              <Image
+                                 height={250}
+                                 width={350}
+                                 src={result.doctor_profile_picture}
+                                 //doctor_profile_picture
+                                 alt='image'
+                              />
+                              <Typography gutterBottom variant='h5' component='div'>
+                                {/* <Typography>
                                  <Button
+                                 size='small' > {result.disease_specialist} </Button>
+                                 </Typography>
+                                     
+                                     */}
+                                     <Chip label={result.disease_specialist}  variant="contained" sx={{position:"absolute", right:"7rem",  bottom:"3rem" , backgroundColor: "white"}}/>
+                                 
+                                 Dr.{result.employee?.employee_name}
+                                 <Typography variant='body2' color='text.secondary'paddingBottom={"3px"}>
+                                    {result.category}
+                                 </Typography>
+                              </Typography>
+                              <Link
+                                 style={{ textDecoration: 'none' }}
+                                 href='/doctorpage'
+                              >
+                                 {/* <Button
                                     sx={{
                                        border: '1px solid',
                                        '&:hover': {
@@ -129,10 +136,9 @@ function DoctorCard() {
                                     }}
                                  >
                                     Book Appointment
-                                 </Button>
-                                 </Link>
-                                 
-                              </Card>
+                                 </Button> */}
+                              </Link>
+                           </Card>
                         </Grid>
                      </SwiperSlide>
                   </Grid>
