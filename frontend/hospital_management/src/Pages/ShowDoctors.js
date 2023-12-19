@@ -45,7 +45,7 @@ function ShowDoctors() {
          <Grid container spacing={2}>
             {docLoading
                ? Array.from({ length: 12 }).map((_, index) => (
-                    <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3}>
+                    <Grid key={index} display={'flex'} justifyContent={'center'} item xs={12} sm={6} md={4} lg={3} xl={3}>
                        <Card
                           sx={{
                              maxWidth: 350,
