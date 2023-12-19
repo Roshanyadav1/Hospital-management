@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles'
 // import { useAddEmployeeMutation } from '@/services/Query'
 import Employee_Validation from '../../../../components/FormValidation/employeeValidation'
 import { colors } from '@/styles/theme'
-import AddEmployee from '@/components/AddEmployee'
+import AddEmployee from '../../../../components/AddEmployee'
 import { useSearchParams } from 'next/navigation'
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
