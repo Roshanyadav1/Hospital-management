@@ -12,7 +12,7 @@ export default function DiseaseCard() {
    return (
       <div>
          <Container maxWidth='lg'>
-            <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
+            <Typography variant='h3' align='center'  color='primary' style={{ marginTop: '50px' }}>
                Diseases
             </Typography>
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
