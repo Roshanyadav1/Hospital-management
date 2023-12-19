@@ -8,7 +8,7 @@ import DiseaseCards from '@/Pages/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css'
 import Cards from '@/Pages/Card'
 import DoctorDashboard from '@/Pages/DoctorDashboard'
-
+import PatientProfile from '@/Pages/PatientProfile'
 
 function page() {
    return (
@@ -20,8 +20,8 @@ function page() {
          <Cards />
          <DiseaseCards />
          <DoctorCard /> */}
-         <DoctorDashboard />
-        
+         {/* <DoctorDashboard /> */}
+         <PatientProfile/>
       </div>
    )
 }
