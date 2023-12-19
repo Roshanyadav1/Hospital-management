@@ -9,8 +9,9 @@ import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
-import Logo from '../assets/blueSga.png'
+import Logo from '../assets/navbarimages/blueSga.png'
 import Image from 'next/image'
+import manager from '../assets/manager.png'
 import { Grid, Link } from '@mui/material'
 const settings = [
    { label: 'Profile', route: '/dashboard/profile' },
@@ -55,8 +56,8 @@ function ResponsiveAppBar({ sidebarChanges }) {
                      <Tooltip title='Open settings'>
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                            <Avatar
-                              alt='Remy Sharp'
-                              src='/static/images/avatar/2.jpg'
+                              alt=''
+                              src={manager}
                            />
                         </IconButton>
                      </Tooltip>

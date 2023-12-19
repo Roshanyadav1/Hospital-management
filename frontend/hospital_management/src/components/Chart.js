@@ -19,8 +19,8 @@ import {
 } from 'recharts'
 import '@/components/App.css'
 import CommonListItem from './CommonListItem'
-import Image from 'next/image'
-import Doc from './Doc.png'
+// import Image from 'next/image'
+// import Doctor from '../assets/dashboardimages/Doc.png'
 
 function Chart() {
    const {
@@ -215,7 +215,7 @@ function Chart() {
                               </span>
                            </Grid>
                            <Grid item xs={6}>
-                              <div
+                              {/* <div
                                  style={{
                                     width: '80%',
                                     height: '100%',
@@ -236,7 +236,7 @@ function Chart() {
                                     width={100}
                                     src={Doc}
                                  />
-                              </div>
+                              </div> */}
                            </Grid>
                         </Grid>
                      </div>

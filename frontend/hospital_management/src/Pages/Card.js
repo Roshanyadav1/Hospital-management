@@ -8,7 +8,7 @@ import Image from 'next/image';
 export default function Cards() {
   const glass={
     background: 'rgba( 19, 41, 61, 0.05 )',
-    boxShadow: '-1px 4px 19px -8px rgba(66, 68, 90, 1)',
+    boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
     backdropFilter: 'blur( 3.5px )',
     webkitBackdropFilter: 'blur( 3.5px )',
     borderRadius: '10px',

@@ -71,13 +71,8 @@ function RecipeReviewCard() {
             </Container>
       )
    } else if (isError) {
-      return  <Container maxWidth='sm'>
-      <Grid mt={2} container spacing={2}  justifyContent='center'
-      alignItems='center'>
-        <Image src={datanotfoundd} width={350} height={350} alt="No appointment Here"/>
-      </Grid>
-    </Container>
-      //  <p> No Appointment Here {isError}</p>
+      return  <p> No Appointment Here {isError}</p>
+     
      
    } else {
       return (

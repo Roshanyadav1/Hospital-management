@@ -41,8 +41,8 @@ function DoctorPage() {
    const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
    const isDateDisabled = (date) => {
       return date.isBefore(dayjs(), 'day');
-    };
-  
+   };
+
    const {
       data: filterDoc,
       isFetching: DocFetch,
@@ -61,7 +61,7 @@ function DoctorPage() {
          backgroundSize: 'cover',
          backgroundRepeat: 'no-repeat',
          backgroundPosition: 'center',
-         color: 'white', 
+         color: 'white',
          padding: '2rem',
          display: 'flex',
          alignItems: 'center',
@@ -119,71 +119,50 @@ function DoctorPage() {
    //  selectedDoctor  &&  allDoctor  &&  data
 
    const DoctorCard = ({ result }) => {
-      let diseases = result?.disease_specialist || []
-      let img2 =
-         'https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg'
-      let image = result?.doctor_profile_picture || img2
+      let diseases = result?.disease_specialist || [];
+      let img2 = 'https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg';
+      let image = result?.doctor_profile_picture || img2;
 
       return (
          <Grid item xs={12} md={3} sm={6}>
-            <Card sx={{ borderRadius: '5px', height: '100%' }}>
-               <CardActionArea sx={{ minHeight: 240 }}>
-                  <CardContent>
-                     <Grid container alignItems='center' spacing={2}>
-                        <Grid item>
-                           <Image height={50} width={50} src={image} style={{borderRadius:'50%'}} />
-                        </Grid>
-                        <Grid item sx={{ paddingLeft: 2, flex: 1 }}>
-                           <Typography
-                              variant='body2'
-                              color='#2CD9C5'
-                              sx={{ fontWeight: 700 }}
-                           >
-                              Name
-                           </Typography>
-                           <Typography gutterBottom variant='h6' component='div'>
-                              {`Dr. ${result?.employee?.employee_name || ''}`}
-                           </Typography>
-                        </Grid>
-                     </Grid>
+            <Card sx={{ borderRadius: '2px', display: 'flex', flexDirection: 'column', boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px', padding: '20px' }}>
+               {/* <CardActionArea sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}> */}
+               <div style={{ textAlign: 'center'  }}>
+                  <Image height={70} width={70} src={image} style={{ borderRadius: '50%', marginTop: '5px' }} />
+                  <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 700, marginTop: 1, color: colors.secondary }}>
+                     {`Dr. ${result?.employee?.employee_name || ''}`}
+                  </Typography>
+               </div>
 
-                     <Typography
-                        variant='body2'
-                        // color='#35CFF4'
-                        sx={{ fontWeight: 700, marginTop: 1.5, color:colors.secondary }}
-                     >
-                        Disease Specialist
-                     </Typography>
-                     <Box marginBottom={2}>
-                        {diseases?.map((item, index) => (
-                           <Chip
-                              key={index}
-                              size='small'
-                              label={item || 'Some item'}
-                              sx={{
-                                 marginRight: 1,
-                                 marginTop: 1,
-                                 backgroundColor: '#2CD9C51A',
-                              }}
-                           />
-                        ))}
-                     </Box>
+               <div style={{ display: 'flex', alignItems: 'center',justifyContent:'center' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700, marginTop: 1.5, color: colors.secondary, marginRight: '5px' }}>
+                     Specialist:
+                  </Typography>
+                  <Typography variant="body2" sx={{ marginTop: 1.5, color: colors.primary }}>
+                     {diseases?.join(', ') || 'No specialist'}
+                  </Typography>
+               </div>
 
-                     <Link
-                        href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`}
-                        prefetch
-                     >
-                        <Button variant='contained' size='small'>
-                           Book Appointment
-                        </Button>
-                     </Link>
-                  </CardContent>
-               </CardActionArea>
+
+               <Link href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`} prefetch 
+                 sx={{
+                  textDecoration: 'none', 
+               }}
+               >
+                  <Button variant="contained" size="small" sx={{
+                    display:'block',
+                    margin:'0 auto',
+                    
+                  }}>
+                     Book Appointment
+                  </Button>
+               </Link>
+               {/* </CardActionArea> */}
             </Card>
          </Grid>
-      )
-      
-   }
+      );
+   };
+
 
    const DoctorCardSkeleton = () => (
       <Grid item xs={12} md={3} sm={6}>
@@ -364,8 +343,8 @@ function DoctorPage() {
          </div>
          {/* // all doctor view  */}
          <Container maxWidth='xl'>
-            <Typography variant='h4' align='center' style={{ marginTop: '50px', color:'#13293D' }}>
-              FIND DOCTOR
+            <Typography variant='h4' align='center' style={{ marginTop: '50px', color: '#13293D' }}>
+               FIND DOCTOR
             </Typography>
 
             {filterDocLoading || docListLoading || docLoading ? (
