@@ -20,6 +20,7 @@ import { useSpecialistDoctorMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import Image from 'next/image'
+import { colors } from '../styles/theme'
 
 function DoctorPage() {
    const [filterDoctor, { isLoading: filterDocLoading, isError }] =
@@ -35,9 +36,13 @@ function DoctorPage() {
    const [data, setData] = useState('')
 
    const [selectedDate, setSelectedDate] = useState(dayjs(new Date())) // Initial date value
+   const formattedDate = selectedDate.format('YYYY-MM-DD');
    const [selectedDiseases, setSelectedDiseases] = useState([]) // Initial diseases value
    const [selectedDoctor, setSelectedDoctor] = useState([]) // Initial diseases value
-
+   const isDateDisabled = (date) => {
+      return date.isBefore(dayjs(), 'day');
+    };
+  
    const {
       data: filterDoc,
       isFetching: DocFetch,
@@ -46,17 +51,17 @@ function DoctorPage() {
    console.log(filterDoc)
    let fill = {
       disease: selectedDiseases,
-      day: selectedDate,
+      day: formattedDate,
       doctor: selectedDoctor,
    }
 
    const styles = {
       container: {
-         backgroundImage: `url(${'https://e0.pxfuel.com/wallpapers/597/471/desktop-wallpaper-hospital-medical-care.jpg'})`,
+         backgroundImage: `url(${'https://www.carehospitals.com/indore/assets/images/banners/doctorlist-banner.jpg'})`,
          backgroundSize: 'cover',
          backgroundRepeat: 'no-repeat',
          backgroundPosition: 'center',
-         color: 'white', // Adjust text color based on your background
+         color: 'white', 
          padding: '2rem',
          display: 'flex',
          alignItems: 'center',
@@ -126,7 +131,7 @@ function DoctorPage() {
                   <CardContent>
                      <Grid container alignItems='center' spacing={2}>
                         <Grid item>
-                           <Image height={50} width={50} src={image} />
+                           <Image height={50} width={50} src={image} style={{borderRadius:'50%'}} />
                         </Grid>
                         <Grid item sx={{ paddingLeft: 2, flex: 1 }}>
                            <Typography
@@ -144,8 +149,8 @@ function DoctorPage() {
 
                      <Typography
                         variant='body2'
-                        color='#2CD9C5'
-                        sx={{ fontWeight: 700, marginTop: 1.5 }}
+                        // color='#35CFF4'
+                        sx={{ fontWeight: 700, marginTop: 1.5, color:colors.secondary }}
                      >
                         Disease Specialist
                      </Typography>
@@ -165,7 +170,7 @@ function DoctorPage() {
                      </Box>
 
                      <Link
-                        href={`/bookappointment/${result?.doctor_id}+${result?.employee?.employee_name}`}
+                        href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`}
                         prefetch
                      >
                         <Button variant='contained' size='small'>
@@ -177,6 +182,7 @@ function DoctorPage() {
             </Card>
          </Grid>
       )
+      
    }
 
    const DoctorCardSkeleton = () => (
@@ -275,9 +281,9 @@ function DoctorPage() {
                               InputProps={{
                                  ...params.InputProps,
                                  placeholder: DiseaseLoading
-                                    ? 'loading...'
-                                    : 'disease',
-                                 type: 'search',
+                                    ? 'Loading...'
+                                    : 'Disease',
+                                 type: 'Search',
                               }}
                            />
                         )}
@@ -293,6 +299,8 @@ function DoctorPage() {
                               views={['year', 'month', 'day']}
                               value={selectedDate}
                               onChange={handleDateChange}
+                              shouldDisableDate={isDateDisabled} // Pass the custom validation function
+
                               sx={{ background: 'white', borderRadius: '5px' }}
                            />
                         </DemoItem>
@@ -319,13 +327,13 @@ function DoctorPage() {
                         renderInput={(params) => (
                            <TextField
                               {...params}
-                              label='Select doctor'
+                              // label='Select doctor'
                               InputProps={{
                                  ...params.InputProps,
                                  placeholder: DocFetch
-                                    ? 'loading...'
-                                    : 'select a doctor',
-                                 type: 'search',
+                                    ? 'Loading...'
+                                    : 'Select a doctor',
+                                 type: 'Search',
                               }}
                            />
                         )}
@@ -356,8 +364,8 @@ function DoctorPage() {
          </div>
          {/* // all doctor view  */}
          <Container maxWidth='xl'>
-            <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
-               Doctors
+            <Typography variant='h4' align='center' style={{ marginTop: '50px', color:'#13293D' }}>
+              FIND DOCTOR
             </Typography>
 
             {filterDocLoading || docListLoading || docLoading ? (

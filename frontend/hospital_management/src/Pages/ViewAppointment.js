@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import { useGetAppointmentQuery } from '@/services/Query'
 import { Chip, Container, Grid, Skeleton } from '@mui/material'
+import datanotfoundd from '../assets/nodatafoundd.jpg'
+import Image from 'next/image'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
 
@@ -69,7 +71,14 @@ function RecipeReviewCard() {
             </Container>
       )
    } else if (isError) {
-      return <p>Error: {isError}</p>
+      return  <Container maxWidth='sm'>
+      <Grid mt={2} container spacing={2}  justifyContent='center'
+      alignItems='center'>
+        <Image src={datanotfoundd} width={350} height={350} alt="No appointment Here"/>
+      </Grid>
+    </Container>
+      //  <p> No Appointment Here {isError}</p>
+     
    } else {
       return (
          <Container maxWidth='sm'>
@@ -86,10 +95,13 @@ function RecipeReviewCard() {
                      sx={{ paddingBottom: '1rem' }}
                   >
                      <Card sx={{ backgroundColor: '#C4D0DC' }}>
+                        <Grid container justifyContent='space-between'>
+                        <Grid item>
+
                         <CardHeader
                            avatar={
                               <Avatar
-                                 sx={{ bgcolor: '#13293D' }}
+                              sx={{ bgcolor: '#13293D' }}
                                  aria-label='recipe'
                               >
                                  {e?.doctor?.employee?.employee_name.split('')[0]}
@@ -99,7 +111,15 @@ function RecipeReviewCard() {
                            subheader={
                               e?.appointment_time + '   ' + e?.appointment_date
                            }
-                        />
+                           />
+                              </Grid>
+                              <Grid item p={3}>
+                                 <Chip
+                                    label={e?.checked ? 'Checked' : 'Not Checked'}
+                                    sx={{ backgroundColor:e?.checked ? '#39cef5' : 'gray'  , marginRight: 1 }}
+                                 />
+                              </Grid>
+                           </Grid>
                         <CardContent>
                            <Grid
                               container
