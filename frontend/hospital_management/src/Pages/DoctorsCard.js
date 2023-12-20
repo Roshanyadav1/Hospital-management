@@ -101,17 +101,17 @@ function DoctorCard() {
                                  // padding: 1,
                                  padding: '20px',
                                  textAlign: 'center',
-                                 backgroundColor:'#A7AFB7',
+                                 // backgroundColor:'#A7AFB7',
                                  boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px'
                               }}
                            >
                               <Image
-                                 height={130}
-                                 width={130}
+                                 height={250}
+                                 width={350}
                                  src={result.doctor_profile_picture}
                                  //doctor_profile_picture
                                  alt='image'
-                                 style={{ borderRadius: '50%' }}
+                                 // style={{ borderRadius: '50%' }}
                               />
 
                               <Typography gutterBottom variant='h5' component='div'>
@@ -126,6 +126,7 @@ function DoctorCard() {
                                  />
                                  <Typography variant='body2' color='text.secondary'>
                                     {result.disease}
+                                    
                                  </Typography>
                               </Typography>
                               <Link
