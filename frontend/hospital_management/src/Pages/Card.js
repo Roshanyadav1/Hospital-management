@@ -10,7 +10,7 @@ export default function Cards() {
     background: 'rgba( 19, 41, 61, 0.05 )',
     boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
     backdropFilter: 'blur( 3.5px )',
-    webkitBackdropFilter: 'blur( 3.5px )',
+    WebkitBackdropFilter: 'blur( 3.5px )',
     borderRadius: '10px',
     border:' 1px solid rgba( 255, 255, 255, 0.18 )',
   }
