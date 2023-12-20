@@ -10,8 +10,8 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
 import Logo from '../assets/navbarimages/blueSga.png'
+import manager from './../assets/manager.png'
 import Image from 'next/image'
-import manager from '../assets/manager.png'
 import { Grid, Link } from '@mui/material'
 const settings = [
    { label: 'Profile', route: '/dashboard/profile' },
@@ -50,17 +50,14 @@ function ResponsiveAppBar({ sidebarChanges }) {
                      >
                         <MenuIcon />
                      </IconButton>
-                     <Image width={120} height={40} src={Logo} />
+                     <Image width={120} alt="image" height={40} src={Logo} />
                   </Grid>
                   <Grid item>
-                     <Tooltip title='Open settings'>
+                    
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                           <Avatar
-                              alt=''
-                              src={manager}
-                           />
+                        <Image alt="image" height="35" width="35" decoding="async" src={manager} />
                         </IconButton>
-                     </Tooltip>
+                     
                      <Menu
                         sx={{ mt: '5rem' }}
                         id='menu-appbar'

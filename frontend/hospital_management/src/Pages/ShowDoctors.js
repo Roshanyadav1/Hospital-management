@@ -11,7 +11,7 @@ import {
    Skeleton,
    LinearProgress,
 } from '@mui/material'
-import docImage from '../assets/patient.png'
+import docImage from '../assets/doctorimg2.jpg'
 import Image from 'next/image'
 import Link from 'next/link'
 import moment from 'moment'
@@ -41,7 +41,6 @@ function ShowDoctors() {
          <Typography p={2} variant='h4' align='center' sx={{color:'#13293D'}}  >
           
          </Typography>
-
          <Grid container spacing={2}>
          {docLoading ? (
                // Skeletons while loading
@@ -80,6 +79,7 @@ function ShowDoctors() {
                   let image = doctor.doctor_profile_picture || docImage;
                   return (
                      <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3}>
+                        <Link href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`} prefetch  style={{textDecoration: 'none'}}  >
                         <Card
                            sx={{
                               maxWidth: 280,
@@ -109,7 +109,7 @@ function ShowDoctors() {
                                  {doctor.disease_specialist.join(', ')}
                               </Typography>
                            </Typography>
-                           <Link href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`} prefetch>
+                           {/* <Link href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`} prefetch>
                               <Button
                                  size='small'
                                  sx={{
@@ -123,8 +123,9 @@ function ShowDoctors() {
                               >
                                  Book Appointment
                               </Button>
-                           </Link>
+                           </Link> */}
                         </Card>
+                        </Link>
                      </Grid>
                   );
                })
