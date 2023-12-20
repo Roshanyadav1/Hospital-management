@@ -3,12 +3,6 @@ import Card from '@mui/material/Card'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import PeopleIcon from '@mui/icons-material/People'
-import Box from '@mui/material/Box'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { Grid, Container, IconButton } from '@mui/material'
 import dayjs from 'dayjs'
@@ -17,7 +11,8 @@ import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-
+import Chip from '@mui/material/Chip'
+import Button from '@mui/material/Button'
 import patientLogo from '../assets/patientlogo2.png'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -55,7 +50,7 @@ function PatientProfile() {
                                  />
                               </Grid>
                               <Grid item xs={8} sm={8}>
-                                 <Grid container>
+                                 <Grid container sx={{marginLeft:10}}>
                                     <Grid item xs={4} sm={4}>
                                        <Typography variant='h6' component='h5'>
                                           Name
@@ -96,58 +91,138 @@ function PatientProfile() {
                         </Card>
                      </Grid>
                      <Grid item xs={12} sm={12} mt={2}>
-                        <div style={{ display: 'flex' , marginBottom:15}}>
+                        <div style={{ display: 'flex', marginBottom: 15 }}>
                            <PeopleIcon />
                            <Typography variant='h6' color='primary'>
                               Appointment History
                            </Typography>
                         </div>
-                        <Accordion>
+                        <Accordion sx={{borderRadius:2}}>
                            <AccordionSummary
                               expandIcon={<ExpandMoreIcon />}
-                              aria-controls='panel1a-content'
-                              id='panel1a-header'
+                              
                            >
                               <Typography>12/12/23</Typography>
                            </AccordionSummary>
                            <AccordionDetails>
-                              <Typography>
-                                 Lorem ipsum dolor sit amet, consectetur adipiscing
-                                 elit. Suspendisse malesuada lacus ex, sit amet
-                                 blandit leo lobortis eget.
-                              </Typography>
+                              
+                                 <Grid container>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Doctor
+                                       </Typography>
+                                       <Typography variant='body2'>
+                                          Dr. Sumit Jain
+                                       </Typography>
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Disease
+                                       </Typography>
+                                       <Typography variant='body2'>Fever</Typography>
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Status
+                                       </Typography>
+                                       <Chip
+                                          label='Attended'
+                                          color='secondary'
+                                          size='small'
+                                       />
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Button variant='contained' size='small'>
+                                          View Prescription
+                                       </Button>
+                                    </Grid>
+                                 </Grid>
+                              
                            </AccordionDetails>
                         </Accordion>
-                        <Accordion>
+                        <Accordion sx={{borderRadius:2}}>
                            <AccordionSummary
                               expandIcon={<ExpandMoreIcon />}
-                              aria-controls='panel2a-content'
-                              id='panel2a-header'
+                             
                            >
                               <Typography>15/12/23</Typography>
                            </AccordionSummary>
                            <AccordionDetails>
-                              <Typography>
-                                 Lorem ipsum dolor sit amet, consectetur adipiscing
-                                 elit. Suspendisse malesuada lacus ex, sit amet
-                                 blandit leo lobortis eget.
-                              </Typography>
+                           <Grid container>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Doctor
+                                       </Typography>
+                                       <Typography variant='body2'>
+                                          Dr. Rashmika jain
+                                       </Typography>
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Disease
+                                       </Typography>
+                                       <Typography variant='body2'>Cold</Typography>
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Status
+                                       </Typography>
+                                       <Chip
+                                          label='Not attended'
+                                          color='secondary'
+                                          size='small'
+                                          disabled
+                                       />
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Button variant='contained' size='small'>
+                                          View Prescription
+                                       </Button>
+                                    </Grid>
+                                 </Grid>
+                              
                            </AccordionDetails>
                         </Accordion>
-                        <Accordion >
+                        <Accordion sx={{borderRadius:2}}>
                            <AccordionSummary
                               expandIcon={<ExpandMoreIcon />}
-                              aria-controls='panel3a-content'
-                              id='panel3a-header'
+                              
                            >
                               <Typography>18/12/23</Typography>
                            </AccordionSummary>
                            <AccordionDetails>
-                              <Typography>
-                                 Lorem ipsum dolor sit amet, consectetur adipiscing
-                                 elit. Suspendisse malesuada lacus ex, sit amet
-                                 blandit leo lobortis eget.
-                              </Typography>
+                           <Grid container>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Doctor
+                                       </Typography>
+                                       <Typography variant='body2'>
+                                          Dr. Jagrati Junwal 
+                                       </Typography>
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Disease
+                                       </Typography>
+                                       <Typography variant='body2'>Dehydration</Typography>
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Typography variant='b1' component='h5'>
+                                          Status
+                                       </Typography>
+                                       <Chip
+                                          label='Attended'
+                                          color='secondary'
+                                          size='small'
+                                       />
+                                    </Grid>
+                                    <Grid item xs={3} sm={3}>
+                                       <Button variant='contained' size='small'>
+                                          View Prescription
+                                       </Button>
+                                    </Grid>
+                                 </Grid>
+                              
                            </AccordionDetails>
                         </Accordion>
                      </Grid>
@@ -175,7 +250,7 @@ function PatientProfile() {
                               onChange={(newValue) => setValue(newValue)}
                               style={{
                                  boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
-                                 border: '2px solid primary',
+                                 
                               }}
                            />
                         </DemoItem>
