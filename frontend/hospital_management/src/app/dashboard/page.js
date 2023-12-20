@@ -74,8 +74,8 @@ function FetchData() {
             ) : userRole === 'Doctor' ? (
               
                  <Box>
-                  <Grid container>
-                     <Grid item xs={12} sm={8}>
+                  <Grid container py={3}>
+                     <Grid item xs={12} sm={8} >
                         <Grid container>
                            <Grid item xs={12} sm={12}>
                               <Card
@@ -84,8 +84,11 @@ function FetchData() {
                                     // minWidth: 470,
                                     paddingY: 6,
                                     paddingX: 2,
-                                    marginTop: 2,
+                                    // marginTop: 2,
+                                    bgcolor: 'background.paper',
                                     borderRadius: 2,
+                                    boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+
                                  }}
                               >
                                  <div>
@@ -179,32 +182,43 @@ function FetchData() {
                      </Grid>
 
                      <Grid item xs={12} sm={4}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                     <Grid container>
+                           <Grid item xs={12} sm={12} px={2}>
+                           <Box
+                                 sx={{
+                                    width: '100%',
+                                    //   minWidth: 470,
+                                    bgcolor: 'background.paper',
+                                    borderRadius: 2,
+                                    boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+                                 }}
+                                 // p={1}
+                              >
+                        <LocalizationProvider dateAdapter={AdapterDayjs} >
                            <DemoContainer
                               components={['DateCalendar', 'DateCalendar']}
-                              sx={{
-                                 marginLeft: 3,
-                                 marginTop: 5,
-                              }}
+             
                            >
-                              <div style={{ display: 'flex' }}>
+                              {/* <div style={{ display: 'flex' }}>
                                  <CalendarMonthIcon />
                                  <Typography variant='h6' color='primary'>
                                     Scheduled calender
                                  </Typography>
-                              </div>
+                              </div> */}
                               <DemoItem>
+                              <Typography px={1} variant='h6' color='primary'>
+                                    Scheduled calender
+                                 </Typography>
                                  <DateCalendar
                                     value={value}
                                     onChange={(newValue) => setValue(newValue)}
-                                    style={{
-                                       boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
-                                       border: '2px solid primary',
-                                    }}
                                  />
                               </DemoItem>
                            </DemoContainer>
                         </LocalizationProvider>
+                        </Box>
+                        </Grid>
+                        </Grid>
                      </Grid>
                   </Grid>
               </Box>

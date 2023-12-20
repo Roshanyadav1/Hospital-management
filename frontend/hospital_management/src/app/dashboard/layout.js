@@ -263,7 +263,6 @@ function Layout({ children }) {
             component='main'
             sx={{
                width: { sm: `calc(100% - ${drawerWidth}px)` },
-               p: 3,
             }}
          >
             <Toolbar />
