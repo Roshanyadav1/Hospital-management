@@ -13,7 +13,6 @@ export default function Cards() {
     webkitBackdropFilter: 'blur( 3.5px )',
     borderRadius: '10px',
     border:' 1px solid rgba( 255, 255, 255, 0.18 )',
-    paddingTop:"15px"
   }
   // const imageStyles = {
   //   backgroundColor: '#13293D40', 
@@ -29,7 +28,7 @@ export default function Cards() {
           {welcome.map((result, index) => (
             <Grid key={index} item xs={12} md={3} sm={4}>
               <Card sx={{ maxWidth: 345 }} style={glass} >
-                <CardActionArea sx={{textAlign:'center'}}>
+                <CardActionArea sx={{textAlign:'center'}} style={{ paddingTop: '15px'}}>
                 
                     <Image height={100} width={100} src={result.image} alt="image"  />
                 
