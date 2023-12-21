@@ -115,11 +115,11 @@ class UserLoginView(GenericAPIView):
                         employee_id=user.member_id).doctor_id
                 else:
                     id = user.member_id
-                # logger.info({
-                #     'message': "Logged In As " + user.user_role,
-                #     'email': user.user_email,
-                #     'name': user.user_name,
-                # })
+                logger.info({
+                    'message': "Logged In As " + user.user_role,
+                    'email': user.user_email,
+                    'name': user.user_name,
+                })
                 return Response(
                     {
                         'status': status.HTTP_200_OK,
