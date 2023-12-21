@@ -22,10 +22,3 @@ stderr_handler.setFormatter(formatter)
 # Add handlers to the logger
 logger.addHandler(stdout_handler)
 logger.addHandler(stderr_handler)
-
-# Log some messages
-logger.debug('Debug message')
-logger.info('Info message')
-logger.warning('Warning message')
-logger.error('Error message')
-logger.critical('Critical message')

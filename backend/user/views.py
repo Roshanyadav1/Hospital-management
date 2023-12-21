@@ -116,10 +116,6 @@ class UserLoginView(GenericAPIView):
                 else:
                     id = user.member_id
                 logger.info({
-                    'timestamp': current_timestamp,
-                    'method': request.method,
-                    'path': request.path,
-                    'status': status.HTTP_200_OK,
                     'message': "Logged In As " + user.user_role,
                     'email': user.user_email,
                     'name': user.user_name,
@@ -148,10 +144,6 @@ class UserLoginView(GenericAPIView):
                         else:
                             id = user.member_id
                         logger.info({
-                            'timestamp': current_timestamp,
-                            'method': request.method,
-                            'path': request.path,
-                            'status': status.HTTP_200_OK,
                             'message': "Logged In As " + user.user_role,
                             'email': user.user_email,
                             'name': user.user_name,
