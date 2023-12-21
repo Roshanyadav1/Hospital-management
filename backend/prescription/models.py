@@ -1,17 +1,18 @@
 from django.db import models
-from disease.models import Disease
+from appointment.models import Appointment
 import uuid
 
 
 # Prescription View Class
 class Prescription(models.Model):
     prescription_id  = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    disease_id =  models.ForeignKey(Disease, default = uuid.uuid4, on_delete = models.CASCADE)
+    appointment =  models.ForeignKey(Appointment, default = uuid.uuid4, on_delete = models.CASCADE)
+    prescription_photo = models.CharField(max_length = 255)
     medication_name = models.CharField(max_length = 255)
     dosage = models.CharField(max_length = 10)
     frequency = models.CharField(max_length = 50)
-    route = models.CharField(max_length = 50, choices=(('tablet', 'Tablet'),
-                                                     ('oral','oral'),
+    route = models.CharField(max_length = 50, choices=(('Tablet', 'Tablet'),
+                                                     ('Oral','Oral'),
                                                      ('Intravenous', 'Intravenous'),
                                                      ('Intramuscular','Intramuscular'),
                                                      ('Subcutaneous','Subcutaneous'),

@@ -6,6 +6,9 @@ from prescription.models import Prescription
 class PrescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prescription
-        fields = '__all__'
-        
-        
+        fields = ['appointment','prescription_photo']        
+
+class PrescriptionViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Prescription
+        fields = ['prescription_id','appointment','prescription_photo']  

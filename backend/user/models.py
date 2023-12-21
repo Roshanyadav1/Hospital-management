@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.hashers import make_password
 
 
 class UserManager(BaseUserManager):
@@ -51,6 +52,7 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_verify = models.BooleanField(default=False)
+    status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -74,3 +76,8 @@ class User(AbstractBaseUser):
     def is_staff(self):
         "Is the user a member of staff?"
         return self.is_admin
+    
+    def save(self, *args, **kwargs):
+        # Hash the password before saving
+        self.user_password = make_password(self.user_password)
+        super(User, self).save(*args, **kwargs)

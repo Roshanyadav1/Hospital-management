@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.core.validators import RegexValidator
 
 
 # Hospital Model Class
@@ -14,7 +15,7 @@ class Hospital(models.Model):
     hospital_address = models.CharField(max_length = 255)
     hospital_city = models.CharField(max_length = 255)
     hospital_status =  models.BooleanField()
-    # hospital_logo = models.ImageField(upload_to = 'hospital_logo/')
+    hospital_logo = models.CharField(max_length=225)
     hospital_type = models.CharField(max_length = 255)
     hospital_category = models.CharField(max_length = 255)
     username = models.CharField(max_length = 255)
