@@ -55,8 +55,8 @@ function DoctorCard() {
 
    // Rest of your code...
    const settings = {
-      dots: true,
-      infinite: false,
+      dots: "true",
+      infinite: "false",
       speed: 500,
       slidesPerView: screenSize,
       spaceBetween: screenSize * 10,
