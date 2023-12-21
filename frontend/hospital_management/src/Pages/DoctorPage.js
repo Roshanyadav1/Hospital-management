@@ -98,14 +98,12 @@ function DoctorPage() {
       }
    }
 
-   // const [status, updatedStatus] = useState()
 
    const Typo = {
       fontWeight: 800,
       fontSize: '2.5rem',
    }
 
-   // for filter use
    const diseases = getDisease?.data?.map((disease) => disease?.disease_name) || [
       'No Disease Found !',
    ]
@@ -114,10 +112,7 @@ function DoctorPage() {
          ? filterDoc?.data?.map((doctor) => doctor?.employee?.employee_name)
          : ['No Doctor Found !']
 
-   // default all doctor show
    let allDoctor = data ? data : getDoctors?.data || []
-   //  selectedDoctor  &&  allDoctor  &&  data
-
    const DoctorCard = ({ result }) => {
       let diseases = result?.disease_specialist || [];
       let img2 = 'https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg';
@@ -135,29 +130,26 @@ function DoctorPage() {
                </div>
 
                <div style={{ display: 'flex', alignItems: 'center',justifyContent:'center' }}>
-                  <Typography variant="body2" sx={{ fontWeight: 700, marginTop: 1.5, color: colors.secondary, marginRight: '5px' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700, marginTop: 1, color: colors.secondary, marginRight: '5px' }}>
                      Specialist:
                   </Typography>
-                  <Typography variant="body2" sx={{ marginTop: 1.5, color: colors.primary }}>
+                  <Typography variant="body2" sx={{ marginTop: 1, color: colors.primary }}>
                      {diseases?.join(', ') || 'No specialist'}
                   </Typography>
                </div>
 
 
                <Link href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`} prefetch 
-                 sx={{
-                  textDecoration: 'none', 
-               }}
+                 style={{ textDecoration: 'none', }}
                >
                   <Button variant="contained" size="small" sx={{
                     display:'block',
                     margin:'0 auto',
-                    
+                    marginTop:1
                   }}>
                      Book Appointment
                   </Button>
                </Link>
-               {/* </CardActionArea> */}
             </Card>
          </Grid>
       );

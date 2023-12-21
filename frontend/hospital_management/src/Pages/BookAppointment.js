@@ -115,7 +115,6 @@ function BookAppoinment({ id, name, date }) {
    return (
       <Container maxWidth='lg' p={2}>
          <Grid
-            container
             maxWidth='lg'
             boxShadow={1}
             spacing={5}
@@ -141,8 +140,6 @@ function BookAppoinment({ id, name, date }) {
                <Grid
                   item
                   xl={8}
-                  // sm={8}
-                  // bgcolor={"rebeccapurple"}
                   display='flex'
                   Direction='column'
                   justifyContent='center'
@@ -161,6 +158,7 @@ function BookAppoinment({ id, name, date }) {
                </Grid>
             </Grid>
          </Grid>
+
          <br /> <br />
          <Grid container Direction='column' display={'flex'} rowSpacing={4}>
             {/* 1ST COLUMN */}

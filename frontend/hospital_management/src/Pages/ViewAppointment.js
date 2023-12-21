@@ -1,12 +1,11 @@
 'use client'
-// import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import { useGetAppointmentQuery } from '@/services/Query'
 import { Chip, Container, Grid, Skeleton } from '@mui/material'
-import datanotfoundd from '../assets/nodatafoundd.jpg'
+import viewappointmentimg from './../assets/viewAppointment.gif'
 import Image from 'next/image'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
@@ -70,9 +69,14 @@ function RecipeReviewCard() {
                </Grid>
             </Container>
       )
-   } else if (isError) {
-      return  <p> No Appointment Here {isError}</p>
-     
+   } else if (isError || !Array.isArray(appointment?.data) || appointment.data.length === 0) {
+      return (
+         <Container maxWidth='sm'>
+            <Grid mt={3} container justifyContent='center'>
+               <Image height={400} width={400} src={viewappointmentimg} alt='No data found' />
+            </Grid>
+         </Container>
+      );
      
    } else {
       return (

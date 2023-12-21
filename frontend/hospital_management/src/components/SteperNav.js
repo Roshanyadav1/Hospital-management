@@ -12,21 +12,18 @@ import ListItemText from '@mui/material/ListItemText'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import patient from './../assets/manager.png'
+import manager from './../assets/manager.png'
+import patient from './../assets/patient.png'
 import Logo from '../assets/navbarimages/whiteSga.png'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import Image from 'next/image'
 import Link from 'next/link'
-import doctor from '../assets/doctorr.png'
 import { useState, useEffect } from 'react'
 import { useLoginUserMutation } from '@/services/Query'
 
@@ -42,10 +39,12 @@ function ResponsiveAppBar(props) {
    const [mobileOpen, setMobileOpen] = useState(false)
    const [userLogin] = useLoginUserMutation();
    const { user } = useUser()
+   // eslint-disable-next-line no-unused-vars
    const [isLoading, setIsLoading] = useState(false);
    const [loggedIn, setLoggedIn] = useState(false);
+   // eslint-disable-next-line no-unused-vars
    const [showLogout, setShowLogout] = useState(false);
-   const [anchorElNav, setAnchorElNav] = React.useState(null);
+   const [, setAnchorElNav] = React.useState(null);
    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
    const handleOpenNavMenu = (event) => {
@@ -55,9 +54,6 @@ function ResponsiveAppBar(props) {
       setAnchorElUser(event.currentTarget);
    };
 
-   const handleCloseNavMenu = () => {
-      setAnchorElNav(null);
-   };
 
    const handleCloseUserMenu = () => {
       setAnchorElUser(null);
@@ -114,6 +110,22 @@ function ResponsiveAppBar(props) {
       }
    };
 
+   const getUserImage = () => {
+      const userRole = localStorage.getItem('user_role');
+
+      switch (userRole) {
+         case 'Admin':
+         case 'Manager':
+            return <Image alt="Admin" height="35" width="35" decoding="async" src={manager} />;
+         case 'Doctor':
+            return <Image alt="Doctor" height="35" width="35" decoding="async" src={doctr} />;
+         case 'Patient':
+            return <Image alt="Patient" height="35" width="35" decoding="async" src={patient} />
+         default:
+            return null;
+      }
+   };
+
    useEffect(() => {
       if (user && !loggedIn) {
          setIsLoading(true);
@@ -157,6 +169,9 @@ function ResponsiveAppBar(props) {
          </List>
       </Box>
    )
+
+
+   
    const container = window !== undefined ? () => window().document.body : undefined
    return (
       <div>
@@ -175,8 +190,6 @@ function ResponsiveAppBar(props) {
                      >
                         <MenuIcon />
                      </IconButton>
-
-
                   </Box>
                   <Link href={'/'} prefetch style={{ display: 'flex', flexGrow: 1 }}>
                      <Image width={120} height={40} src={Logo} />
@@ -196,12 +209,10 @@ function ResponsiveAppBar(props) {
                   </Box>
 
                   <Box sx={{ flexGrow: 0 }}>
-                    
                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                     <Image alt="image" height="35" width="35" decoding="async" src={patient} />
+                     {/* <Image alt="image" height="35" width="35" decoding="async" src={patient} /> */}
+                     {getUserImage()}
                      </IconButton>
-                        {/* <Image alt="image" height="30" width="30" decoding="async" src={patient} /> */}
-                     
                      <Menu
                         sx={{ mt: '45px' }}
                         id="menu-appbar"

@@ -8,9 +8,19 @@ import Avatar from '@mui/material/Avatar';
 import { useGetDoctorIdQuery } from '../../services/Query';
 import { Container, Grid, Button, Typography, Skeleton } from '@mui/material';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-function FetchData() {
+function FetchData(roles) {
+   const [role, setRole] = useState(null)
+   console.log("role", role, roles)
    const userRole = localStorage.getItem('user_role')
+
+   useEffect(() => {
+      if(userRole){
+         setRole(userRole)
+      }
+
+   }, [userRole])
    const doctorId = localStorage.getItem('user_id');
    const { data: appointment = [], error, isLoading } = useGetDoctorIdQuery(doctorId, {
       skip: userRole === 'Doctor' ? false : true
@@ -45,7 +55,7 @@ function FetchData() {
       return (
          <div>
             {isAdmin ? (
-               <Chart />
+               <Chart/>
             ) : userRole === 'Doctor' ? (
                <Container maxWidth='lg'>
                   <Grid container spacing={3}>

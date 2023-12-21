@@ -6,11 +6,11 @@ import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
-import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
 import Logo from '../assets/navbarimages/blueSga.png'
 import manager from './../assets/manager.png'
+import docter from './../assets/doctorr.png'
 import Image from 'next/image'
 import { Grid, Link } from '@mui/material'
 const settings = [
@@ -27,6 +27,20 @@ function ResponsiveAppBar({ sidebarChanges }) {
    const handleCloseUserMenu = () => {
       setAnchorElUser(null)
    }
+
+   const getUserImage = () => {
+      const userRole = localStorage.getItem('user_role');
+
+      switch (userRole) {
+         case 'Admin':
+         case 'Manager':
+            return <Image alt="Admin" height="35" width="35" decoding="async" src={manager} />;
+         case 'Doctor':
+            return <Image alt="Doctor" height="35" width="35" decoding="async" src={docter} />;
+         default:
+            return null;
+      }
+   };
 
    return (
       <AppBar
@@ -55,7 +69,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
                   <Grid item>
                     
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Image alt="image" height="35" width="35" decoding="async" src={manager} />
+                        {getUserImage()}
                         </IconButton>
                      
                      <Menu

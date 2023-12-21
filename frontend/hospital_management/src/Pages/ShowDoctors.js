@@ -89,7 +89,6 @@ function ShowDoctors() {
                               textAlign: 'center',
                               display: 'flex',
                               flexDirection: 'column',
-                              // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                               boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
                               borderRadius: '8px',
                            }}
@@ -109,21 +108,6 @@ function ShowDoctors() {
                                  {doctor.disease_specialist.join(', ')}
                               </Typography>
                            </Typography>
-                           {/* <Link href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`} prefetch>
-                              <Button
-                                 size='small'
-                                 sx={{
-                                    border: '1px solid',
-                                    borderRadius: 5,
-                                    '&:hover': {
-                                       backgroundColor: '#13293d',
-                                       color: '#fff',
-                                    },
-                                 }}
-                              >
-                                 Book Appointment
-                              </Button>
-                           </Link> */}
                         </Card>
                         </Link>
                      </Grid>
