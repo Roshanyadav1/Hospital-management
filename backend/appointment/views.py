@@ -257,7 +257,7 @@ class AppointmentCount(ListAPIView):
 
 
 class AppointmentView(ListAPIView):
-    queryset = Appointment.objects.all().order_by('created_at')
+    queryset = Appointment.objects.all().order_by('-created_at')
     serializer_class = AppointmentViewSerializer
     filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
     pagination_class = CustomPagination
