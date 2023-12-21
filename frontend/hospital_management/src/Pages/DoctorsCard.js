@@ -109,13 +109,13 @@ function DoctorCard() {
                                  alt='image'
                               />
                               <Typography gutterBottom variant='h5' component='div'>
-                                {/* <Typography>
-                                 <Button
-                                 size='small' > {result.disease_specialist} </Button>
+                                 
+                                <Typography variant='body1'sx={{display:'inline', bgcolor:'#fff' ,position:"absolute",right:'80px',left:'80px',  bottom:"2rem", justifyContent:'center',boxShadow:'0' }}>
+                               {result.disease_specialist} 
                                  </Typography>
-                                     
-                                     */}
-                                     <Chip label={result.disease_specialist}  variant="contained" sx={{position:"absolute", right:"7rem",  bottom:"3rem" , backgroundColor: "white"}}/>
+                                 
+                                    
+                                     {/* <Chip label={result.disease_specialist}  variant="contained" sx={{position:"absolute", right:"7rem",  bottom:"3rem" , backgroundColor: "white"}}/> */}
                                  
                                  Dr.{result.employee?.employee_name}
                                  <Typography variant='body2' color='text.secondary'paddingBottom={"3px"}>

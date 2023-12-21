@@ -230,6 +230,13 @@ export const queries = createApi({
             }),
         invalidatesTags: ['EMP'],
      }),  
+     GetEmployeeDetails: build.query({
+      query:(employee_id) =>({
+         url:`employee/view/${employee_id}`,
+         method:'GET'
+      })
+
+     })
 
    }),
 })
@@ -258,7 +265,8 @@ export const {
    useChangeStatusMutation,
    useDiseaseStatusMutation,
    useChangeEmpDataMutation,
-   useAppointmentUpdateMutation
+   useAppointmentUpdateMutation,
+   useGetEmployeeDetailsQuery,
 } = queries
 
 // export const { useRegisterAuth } = apiAuth
