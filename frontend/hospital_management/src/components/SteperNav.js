@@ -20,6 +20,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import manager from './../assets/manager.png'
 import patient from './../assets/patient.png'
+import docter from './../assets/doctorr.png'
 import Logo from '../assets/navbarimages/whiteSga.png'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import Image from 'next/image'
@@ -118,7 +119,7 @@ function ResponsiveAppBar(props) {
          case 'Manager':
             return <Image alt="Admin" height="35" width="35" decoding="async" src={manager} />;
          case 'Doctor':
-            return <Image alt="Doctor" height="35" width="35" decoding="async" src={doctr} />;
+            return <Image alt="Doctor" height="35" width="35" decoding="async" src={docter} />;
          case 'Patient':
             return <Image alt="Patient" height="35" width="35" decoding="async" src={patient} />
          default:
@@ -170,8 +171,6 @@ function ResponsiveAppBar(props) {
       </Box>
    )
 
-
-   
    const container = window !== undefined ? () => window().document.body : undefined
    return (
       <div>
@@ -196,21 +195,12 @@ function ResponsiveAppBar(props) {
                   </Link>
 
                   <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end', fontSize: '15px' }}>
-                     {/* {pages.map((page) => (
-                     <Button
-                        key={page}
-                        onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: 'white', display: 'block', fontSize: '16px' }}
-                     >
-                        {page}
-                     </Button>
-                  ))} */}
+
                      {getNavigationItems()}
                   </Box>
 
                   <Box sx={{ flexGrow: 0 }}>
                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                     {/* <Image alt="image" height="35" width="35" decoding="async" src={patient} /> */}
                      {getUserImage()}
                      </IconButton>
                      <Menu

@@ -100,6 +100,7 @@ function MiniDrawer() {
                {[
                   { text: 'Dashboard', path: '/dashboard' },
                   { text: 'EmployeeData', path: '/dashboard/employeedata' },
+                  { text: 'Profile', path: '/dashboard/profile' },
                   { text: 'Doctor', path: '/dashboard/docter' },
                   { text: 'Disease', path: '/dashboard/disease' },
                   // { text: 'Add Hospital', path: '/dashboard/abouthospital' },

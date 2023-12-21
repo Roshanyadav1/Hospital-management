@@ -210,8 +210,6 @@ export const queries = createApi({
             },
          }),
       }),
-
-     
       appointmentUpdate: build.mutation({
          query: (p) => ({
             url: '/appointment/update/'+ p.id,
@@ -221,15 +219,12 @@ export const queries = createApi({
         invalidatesTags: ['APP'],
      }),
      
-      // eslint-disable-next-line no-dupe-keys
-      changeEmpData: build.mutation({
-         query: (p) => ({
-            url: '/employee/update/'+ p.id,
-             method: 'PATCH', 
-            body: p.pro,
-            }),
-        invalidatesTags: ['EMP'],
-     }),  
+     getAppointmentHistory: build.query({
+      query: (doctor_id) => ({
+         url: `/appointment/view/?doctor_id=${doctor_id}`,
+         method: 'GET',
+      }),
+   }),  
 
    }),
 })
@@ -258,7 +253,8 @@ export const {
    useChangeStatusMutation,
    useDiseaseStatusMutation,
    useChangeEmpDataMutation,
-   useAppointmentUpdateMutation
+   useAppointmentUpdateMutation,
+   useGetAppointmentHistoryQuery,
 } = queries
 
 // export const { useRegisterAuth } = apiAuth

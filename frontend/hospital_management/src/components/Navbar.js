@@ -5,7 +5,6 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
 import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
 import Logo from '../assets/navbarimages/blueSga.png'
@@ -14,9 +13,8 @@ import docter from './../assets/doctorr.png'
 import Image from 'next/image'
 import { Grid, Link } from '@mui/material'
 const settings = [
-   { label: 'Profile', route: '/dashboard/profile' },
-   { label: 'Account', route: '/dashboard/account' },]
-
+   { label: 'Profile', route: '/dashboard/profile' },]
+ 
 function ResponsiveAppBar({ sidebarChanges }) {
    const [anchorElUser, setAnchorElUser] = React.useState(null)
 
@@ -41,6 +39,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
             return null;
       }
    };
+  
 
    return (
       <AppBar
@@ -90,7 +89,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
                      >
                         {settings.map((setting) => (
                            <MenuItem key={setting.label}>
-                              <Link href={setting.route} prefetch >
+                              <Link href={setting.route} prefetch>
                                  <Typography component='a' textAlign='center'>{setting.label}</Typography>
                               </Link>
                            </MenuItem>

@@ -165,6 +165,7 @@ function Chart() {
 
    const handleViewClick = (appointment_id) => {
       console.log('View Clicked for Doctor ID:', appointment_id)
+      
       // Add logic to navigate to the individual appointment page
    }
 
