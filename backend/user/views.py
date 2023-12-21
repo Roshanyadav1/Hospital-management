@@ -15,7 +15,7 @@ from doctor.models import Doctor
 from django.contrib.auth.hashers import make_password
 from patient.models import Patient
 from employee.models import Employee
-from hospital_management.logger import logger
+# from hospital_management.logger import logger
 from datetime import datetime
 
 
@@ -115,15 +115,15 @@ class UserLoginView(GenericAPIView):
                         employee_id=user.member_id).doctor_id
                 else:
                     id = user.member_id
-                logger.info({
-                    'timestamp': current_timestamp,
-                    'method': request.method,
-                    'path': request.path,
-                    'status': status.HTTP_200_OK,
-                    'message': "Logged In As " + user.user_role,
-                    'email': user.user_email,
-                    'name': user.user_name,
-                })
+                # logger.info({
+                #     'timestamp': current_timestamp,
+                #     'method': request.method,
+                #     'path': request.path,
+                #     'status': status.HTTP_200_OK,
+                #     'message': "Logged In As " + user.user_role,
+                #     'email': user.user_email,
+                #     'name': user.user_name,
+                # })
                 return Response(
                     {
                         'status': status.HTTP_200_OK,
@@ -147,15 +147,15 @@ class UserLoginView(GenericAPIView):
                                 employee_id=user.member_id).doctor_id
                         else:
                             id = user.member_id
-                        logger.info({
-                            'timestamp': current_timestamp,
-                            'method': request.method,
-                            'path': request.path,
-                            'status': status.HTTP_200_OK,
-                            'message': "Logged In As " + user.user_role,
-                            'email': user.user_email,
-                            'name': user.user_name,
-                        })
+                        # logger.info({
+                        #     'timestamp': current_timestamp,
+                        #     'method': request.method,
+                        #     'path': request.path,
+                        #     'status': status.HTTP_200_OK,
+                        #     'message': "Logged In As " + user.user_role,
+                        #     'email': user.user_email,
+                        #     'name': user.user_name,
+                        # })
                         return Response(
                             {
                                 'status': status.HTTP_200_OK,
