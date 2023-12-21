@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React from 'react'
 // import { Grid, Card, CardContent, Typography, Button } from '@mui/material'
 // import CardActions from '@mui/material/CardActions'
@@ -180,6 +181,11 @@
 
 
 import { Grid, Card, Typography } from '@mui/material'
+=======
+import React from 'react'
+import { Grid, Card, CardContent, Typography, Button } from '@mui/material'
+import CardActions from '@mui/material/CardActions'
+>>>>>>> 5da58078055850f4474fe228ba283cbd66522ee4
 import Container from '@mui/material/Container'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -190,6 +196,7 @@ import 'swiper/css/navigation'
 import { Pagination, Navigation } from 'swiper/modules'
 import Link from 'next/link'
 import { useGetViewDoctorQuery } from '@/services/Query'
+import Chip from '@mui/material/Chip';
 function DoctorCard() {
    const { data: getDname } = useGetViewDoctorQuery()
    const [screenSize, setScreenSize] = useState(getInitialScreenSize())
