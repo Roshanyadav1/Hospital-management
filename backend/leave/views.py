@@ -79,6 +79,7 @@ class LeaveView(ListAPIView):
     queryset = Leave.objects.all()
     serializer_class = LeaveSerializer
     pagination_class = CustomPagination
+    filterset_fields = ['doctor_id']
     permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
