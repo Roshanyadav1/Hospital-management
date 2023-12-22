@@ -1,7 +1,6 @@
 'use client'
 import Chart from '@/Pages/Chart'
 import Card from '@mui/material/Card'
-import Badge from '@mui/material/Badge'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
 import datanotfound from '@/assets/dataNotFound.gif'
@@ -10,7 +9,6 @@ import React, { useEffect, useState } from 'react'
 import doctorImage from '@/assets/doctorIllustration.png'
 import Image from 'next/image'
 import dayjs from 'dayjs'
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
@@ -22,7 +20,6 @@ import PeopleIcon from '@mui/icons-material/People'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import { useGetDoctorIdQuery } from '../../services/Query'
 import { Container, Grid, Button, Typography, Skeleton } from '@mui/material'
 import { colors, themeOptions } from '@/styles/theme'
@@ -45,13 +42,11 @@ function FetchData() {
    console.log('dateData', dateData)
    function getSpecificDates() {
     console.log('in this function', dateData)
-      // Add your specific dates in the format 'YYYY-MM-DD'
       return dateData
    }
 
    useEffect(() => {
       if(names?.length > 0 ){
-         // setDataMyTest(dates)
          setDateData(names)
       }
       if(dateData?.length > 0){
@@ -63,10 +58,11 @@ function FetchData() {
    function fakeFetch(date, { signal }) {
       return new Promise((resolve, reject) => {
          const timeout = setTimeout(() => {
-            // Instead of generating random dates, use the specific dates from the array
-            const daysToHighlight = getSpecificDates().map((dateStr) =>
-               dayjs(dateStr).date()
-            )
+            const currentMonth = dayjs(date).month();
+
+            const daysToHighlight = getSpecificDates()
+               .filter((dateStr) => dayjs(dateStr).month() === currentMonth)
+               .map((dateStr) => dayjs(dateStr).date());
    
             resolve({ daysToHighlight })
          }, 500)
@@ -125,7 +121,6 @@ function FetchData() {
             setIsLoading(false)
          })
          .catch((error) => {
-            // ignore the error if it's caused by `controller.abort`
             if (error.name !== 'AbortError') {
                throw error
             }
@@ -137,15 +132,13 @@ function FetchData() {
    useEffect(() => {
       if(dateData?.length > 0){
       fetchHighlightedDays(initialValue)
-      // abort request on unmount
       return () => requestAbortController.current?.abort()
       }
    }, [dateData])
 
    const handleMonthChange = (date) => {
       if (requestAbortController.current) {
-         // make sure that you are aborting useless requests
-         // because it is possible to switch between months pretty quickly
+        
          requestAbortController.current.abort()
       }
 
@@ -153,7 +146,12 @@ function FetchData() {
       setHighlightedDays([])
       fetchHighlightedDays(date)
    }
-
+ 
+   // for changing time format
+   function formatTime(timeString) {
+      const [hours, minutes] = timeString.split(':');
+      return `${hours}:${minutes}`;
+    }
   
 
 
@@ -256,7 +254,7 @@ function FetchData() {
                                  }}
                               >
                                  {isError ? (
-                                    <div style={{ display:'flex', justifyContent:'center',alignItems:'center'}}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                                        <Image src={datanotfound} alt='data not found' height={150} width={150} />
                                        <Typography variant='b1'>Data Not found</Typography>
                                     </div>
@@ -278,10 +276,13 @@ function FetchData() {
                                                    }
                                                 />
                                                 <ListItemText
-                                                   primary={
-                                                      appointment?.appointment_time
-                                                   }
+                                                   // primary={
+                                                   //    formatTime(appointment.appointment_time)
+                                                   // }
+                                                   primary={formatTime(appointment.appointment_time) + ' / ' + appointment.appointment_date}
                                                 />
+
+                                                
 
                                                 {appointment.checked ? (
                                                    <IconButton
