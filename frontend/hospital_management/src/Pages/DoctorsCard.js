@@ -1,6 +1,4 @@
 
-
-
 import { Grid, Card, Typography } from '@mui/material'
 import Container from '@mui/material/Container'
 import Image from 'next/image'
@@ -87,8 +85,6 @@ function DoctorCard() {
                               sx={{
                                  maxWidth: 350,
                                  border: '4 px solid',
-                                 // margin: '15px',
-                                 // padding: 1,
                                  textAlign: 'center',
                               }}
                            >
@@ -96,12 +92,11 @@ function DoctorCard() {
                                  height={250}
                                  width={350}
                                  src={result.doctor_profile_picture}
-                                 //doctor_profile_picture
                                  alt='image'
                               />
-                              <Typography gutterBottom variant='h5' component='div'>
+                              <Typography gutterBottom variant='h5' component='div' >
                                  
-                                <Typography variant='body1'sx={{display:'inline', bgcolor:'#fff' ,position:"absolute",right:'80px',left:'80px',  bottom:"2rem", justifyContent:'center',boxShadow:'0' }}>
+                                <Typography variant='body1'sx={{display:'inline', bgcolor:'#fff' ,position:"absolute",right:'80px',left:'80px',  bottom:"2rem", justifyContent:'center',borderRadius:1,boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',margin:1 }}>
                                {result.disease_specialist} 
                                  </Typography>
                                  

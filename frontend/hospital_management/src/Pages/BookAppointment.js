@@ -23,47 +23,45 @@ import Image from 'next/image'
 import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
-
-const ProfileCard = ({ icon, title, content }) => {
-   return (
-      <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2} key={title}>
-      <CardHeader
-         avatar={icon}
-         title={title}
-         sx={{ display: 'flex', alignItems: 'center' }}
-      />
-      <Divider />
-      <CardContent>
-         <Typography variant='body2' p={1}>
-            {content}
-         </Typography>
-      </CardContent>
-   </Card>
-   )
-      }
-      
+import moment from 'moment'
 function BookAppoinment({ id, name, date }) {
    let data = {
       id: id,
       date: date
    }
-   const { data: doctorTimes , refetch , isFetching : isLoading } = useGetDoctorTimesQuery(data)
+   const { data: doctorTimes, refetch, isFetching: isLoading } = useGetDoctorTimesQuery(data)
    const [isBooking, setIsBooking] = useState(false)
-   const[addAppointment] = useAddAppointmentMutation()
+   const [addAppointment] = useAddAppointmentMutation()
    const [selectedSlot, setSelectedSlot] = useState(null)
    const [openDialog, setOpenDialog] = useState(false)
    const [times, setTimes] = useState([])
    const [hiddentime, setHiddentime] = useState([])
    const { createTimeSlots } = useTimeSlots()
    // doctorTimes
-   
+   const ProfileCard = ({ icon, title, content }) => (
+      <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
+         <CardHeader
+            avatar={icon}
+            title={title}
+            sx={{ display: 'flex', alignItems: 'center' }}
+         />
+         <Divider />
+         <CardContent>
+            <Typography variant='body2' p={1}>
+               {content}
+            </Typography>
+         </CardContent>
+      </Card>
+   )
    useEffect(() => {
-      if (doctorTimes?.data && !isLoading) {
+      if (
+         doctorTimes &&
+         doctorTimes.data && !isLoading) {
          setTimes(doctorTimes.data.times)
          setHiddentime(createTimeSlots(doctorTimes.data.per_patient_time, doctorTimes.data.times))
       }
-   }, [createTimeSlots, doctorTimes, isLoading])
-   
+   }, [doctorTimes, isLoading])
+
    function formatTime(timeString) {
       const time = new Date(`2000-01-01T${timeString}`)
       return time.toLocaleString('en-US', {
@@ -85,7 +83,7 @@ function BookAppoinment({ id, name, date }) {
       handleOpenDialog()
    }
    const handleAppointment = async () => {
-      setIsBooking((prev)=> !prev)
+      setIsBooking((prev) => !prev)
       if (!selectedSlot) {
          toast.error('Please select a time slot')
       }
@@ -105,11 +103,11 @@ function BookAppoinment({ id, name, date }) {
             await addAppointment(payload).unwrap()
             refetch()
             toast.success('Appointment Booked Successfully')
-            setIsBooking((prev)=> !prev)
+            setIsBooking((prev) => !prev)
             handleCloseDialog()
             setSelectedSlot(null)
          } catch (e) {
-            setIsBooking((prev)=> !prev)
+            setIsBooking((prev) => !prev)
             toast.error('Something went wrong')
          }
       }
@@ -121,54 +119,60 @@ function BookAppoinment({ id, name, date }) {
             boxShadow={1}
             spacing={5}
             display='flex'
-            direction='column'
+            Direction='column'
          >
-            <Grid item bgcolor={'fff'} display={'flex'} direction='column'>
+            <Grid item bgcolor={'fff'} display={'flex'} Direction='column'>
                {
-                  isLoading ? (<Skeleton
+                  isLoading ? (<>
+                     <Skeleton
                         sx={{ border: '1px solid #E0E0E0' }}
-                        variant="circular" height={150} width={150} />) : (<Image
+                        variant="circular" height={150} width={150} />
+                  </>) : (<>
+                     <Image
                         priority={true}
                         src={doctorTimes?.data?.doctor_profile_picture || 'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'}
-                        height={140}
-                        width={140}
-                        style={{ borderRadius: '50%', padding: 10 }}
-                     />)
+                        height={185}
+                        width={185}
+                        style={{ borderRadius: '50%', padding: 10, margin:1 }}
+                     />
+                  </>)
                }
                <Grid
                   item
                   xl={8}
                   display='flex'
-                  direction='column'
+                  Direction='column'
                   justifyContent='center'
                   margin={0}
                   p={{ xs: 2, sm: 5 }}
                   gap={10}
                >
+                  <>
                      <Typography gutterBottom variant='h4' component='div'>
                         {name}
                         <Typography variant='body1' color='text.secondary'>
                            EXECUTIVE DOCTOR FORTIS C DOC | Fortis C-Doc
                         </Typography>
                      </Typography>
+                  </>
                </Grid>
             </Grid>
          </Grid>
-
-         <br /> <br />
-         <Grid container direction='column' display={'flex'} rowSpacing={4}>
-            {/* 1ST COLUMN */}
-            <Grid item xs={12} sm={6}>
-               <ProfileCard
-                  icon={<PersonIcon sx={{ marginRight: 1 }} />}
-                  title={<Typography gutterBottom variant='h6'> About</Typography>}
+         <Grid>
+         <ProfileCard
                   content={`Dr ${name} is a renowned Neurosurgeon with over 20 years
         of experience. Dr ${name} is an adept in all disciplines of Brain
         and Spine Surgery including Brain tumor surgery among adults, as
         well as pediatric and Neonatal, endoscopic surgery,
         microvascular decompression surger...`}
                />
-               <br />
+         </Grid>
+        
+
+         <br /> <br />
+         <Grid container Direction='column' display={'flex'} rowSpacing={4}>
+            {/* 1ST COLUMN */}
+            <Grid item xs={12} sm={6}>
                <ProfileCard
                   icon={<SchoolIcon sx={{ marginRight: 1 }} />}
                   title={<Typography gutterBottom variant='h6'>Education</Typography>}
@@ -177,7 +181,7 @@ function BookAppoinment({ id, name, date }) {
                />
             </Grid>
 
-              
+
 
 
             {/* 2ND COLUMN */}
@@ -207,7 +211,7 @@ function BookAppoinment({ id, name, date }) {
                      }}
                   >
                      {isLoading ? (
-                        Array.from({ length: 4 }).map((_, index) => (
+                        Array.from({ length: 3 }).map((_, index) => (
                            <Grid item key={index} xs={6} sm={6} md={6}>
                               <Skeleton
                                  sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
@@ -238,7 +242,7 @@ function BookAppoinment({ id, name, date }) {
                                  <Typography variant='body2'>
                                     {formatTime(timeSlot.start_time)} -{' '}
                                     {formatTime(timeSlot.end_time)} :
-                                 </Typography><br />
+                                 </Typography>
                                  <Typography
                                     variant='body2'
                                     sx={{ fontSize: '12px', marginTop: '4px' }}
@@ -270,16 +274,16 @@ function BookAppoinment({ id, name, date }) {
                      </DialogContent>
                      <DialogActions>
                         <Button
-                        disabled={isBooking}
-                        onClick={handleCloseDialog} color='primary'>
+                           disabled={isBooking}
+                           onClick={handleCloseDialog} color='primary'>
                            Cancel
                         </Button>
                         <Button
-                        disabled={isBooking}
+                           disabled={isBooking}
                            onClick={handleAppointment}
                            color='primary'
                            autoFocus
-                          
+
                         >
                            Confirm
                         </Button>

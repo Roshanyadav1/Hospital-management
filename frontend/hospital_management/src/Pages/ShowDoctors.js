@@ -15,7 +15,6 @@ import docImage from '../assets/doctorimg2.jpg'
 import Image from 'next/image'
 import Link from 'next/link'
 import moment from 'moment'
-import {colors} from '../styles/theme'
 
 function ShowDoctors() {
    const [currentPage, setCurrentPage] = useState(1)
@@ -29,7 +28,7 @@ function ShowDoctors() {
 
    const totalPages = doctorList?.data?.total_pages
    let currentDate=moment()
-   const formattedDate = currentDate.format('YYYY-MM-DD');
+   const formattedDate = currentDate.format('DD-MM-YYYY');
 
    const handlePageChange = (event, value) => {
       setCurrentPage(value)
@@ -60,7 +59,7 @@ function ShowDoctors() {
                            borderRadius: '8px',
                         }}
                      >
-                        <Skeleton variant='rectangular' width='100%' height={250} style={{ borderRadius: '8px' }} />
+                        <Skeleton variant='rectangular' width='100%' height={100} style={{ borderRadius: '8px' }} />
                         <Typography variant='h5' component='div' sx={{ flex: '1', overflow: 'hidden', padding: '12px' }}>
                            <Skeleton />
                            <Typography variant='body2' color='text.secondary'>
@@ -79,7 +78,7 @@ function ShowDoctors() {
                   let image = doctor.doctor_profile_picture || docImage;
                   return (
                      <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3}>
-                        <Link href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`} prefetch  style={{textDecoration: 'none'}}  >
+                        {/* <Link href={`/bookappointment/${doctor?.doctor_id}+${formattedDate}+${doctor?.employee?.employee_name}`} prefetch  style={{textDecoration: 'none'}}  > */}
                         <Card
                            sx={{
                               maxWidth: 280,
@@ -109,7 +108,7 @@ function ShowDoctors() {
                               </Typography>
                            </Typography>
                         </Card>
-                        </Link>
+                        {/* </Link> */}
                      </Grid>
                   );
                })

@@ -628,7 +628,6 @@ const GetActionButton = (row) => {
    }
    // console.log('Delete :', selectedRow);
    const handleEdit = () => {
-      // Handle edit logic here
       setSelectedRow(row.params.row)
       setOpenEditModal(true)
       console.log('Edit:', row)
@@ -714,6 +713,7 @@ const GetActionButton = (row) => {
                handleRegister={handleRegister}
                disableEmail={true}
                disablePass={true}
+               disableRole={true}
                closeButton={<Button
                variant='contained'
                color='primary'
