@@ -38,10 +38,8 @@ function FetchData() {
    var names = appointments?.data?.map(function(item) {
       return item['appointment_date'];
    });
-   console.log('names', names)
-   console.log('dateData', dateData)
+   
    function getSpecificDates() {
-    console.log('in this function', dateData)
       return dateData
    }
 
