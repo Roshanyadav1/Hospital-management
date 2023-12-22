@@ -83,6 +83,7 @@ class AppointmentAdd(GenericAPIView):
 class AppointmentTab(ListAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, input, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
