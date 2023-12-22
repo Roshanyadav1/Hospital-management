@@ -7,16 +7,8 @@ import DoctorCard from '@/Pages/DoctorsCard'
 import DiseaseCards from '@/Pages/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css'
 import Cards from '@/Pages/Card'
+
 function page() {
-   // let userRole = localStorage.getItem('user_role')
-   // // eslint-disable-next-line react-hooks/rules-of-hooks
-   // const route = useRouter();
-   // // eslint-disable-next-line react-hooks/rules-of-hooks
-   // useEffect(() => {
-   //    if (userRole !== undefined) {
-   //       route.push("/dashboard")
-   //    }
-   // }, [route, userRole])
    return (
       <div>
          <SwipeableTextMobileStepper />

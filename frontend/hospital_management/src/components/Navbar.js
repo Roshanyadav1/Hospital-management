@@ -27,6 +27,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
    }
 
    const getUserImage = () => {
+   //eslint-disable-next-line
       const userRole = localStorage.getItem('user_role');
 
       switch (userRole) {
