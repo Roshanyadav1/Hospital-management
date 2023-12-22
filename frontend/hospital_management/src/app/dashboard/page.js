@@ -152,10 +152,15 @@ function FetchData() {
     }
 
     const disabledDates = ['2023-12-05', '2023-12-25', '2023-12-30'];
+    
     const shouldDisableDate = (date) => {
-      return date.day() === 0;
-    };
-  
+      
+    const isSunday = date.day() === 0;
+    const formattedDate = date.format('YYYY-MM-DD');
+    const isRandomDisabledDate = disabledDates.includes(formattedDate);
+
+    return isSunday || isRandomDisabledDate;
+  };
   
 
 
