@@ -17,10 +17,8 @@ import {
    Legend,
    Area,
 } from 'recharts'
-import '@/components/App.css'
-import CommonListItem from './CommonListItem'
-// import Image from 'next/image'
-// import Doctor from '../assets/dashboardimages/Doc.png'
+import './../styles/dashboard.css'
+import CommonListItem from './../components/CommonListItem'
 
 function Chart() {
    const {

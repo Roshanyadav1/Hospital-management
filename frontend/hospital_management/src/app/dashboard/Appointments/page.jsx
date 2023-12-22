@@ -9,7 +9,7 @@ function page() {
   console.log(patient_id)
   return (
     <div>
-<h1>zdsfsf</h1>
+<h1>hiiiiiiiiiiiiiii</h1>
     </div>
   )
 }

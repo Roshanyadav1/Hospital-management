@@ -1,6 +1,6 @@
 'use client'
 
-import ShowDoctors from '@/Pages/ShowDoctors'
+import ShowDoctors from './../../Pages/ShowDoctors'
 function DoctorPage() {
    return (
       <div>

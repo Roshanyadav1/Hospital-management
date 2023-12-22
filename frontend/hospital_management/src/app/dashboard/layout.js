@@ -154,13 +154,8 @@ function Layout({ children }) {
          return disableStyle
       }
    }
-
-
    let userRole = localStorage.getItem('user_role')
    let isAdmin = !!(userRole === 'Admin' || userRole === 'Manager');
-
-
-
    return (
       <Box sx={{ display: 'flex' }}>
          <CssBaseline />
@@ -181,11 +176,6 @@ function Layout({ children }) {
                      {
                         text: 'Employee',
                         path: '/dashboard/employeedata',
-                        icon: <TrackChangesIcon />,
-                     },
-                     {
-                        text: 'Appointments',
-                        path: '/dashboard/appointments',
                         icon: <TrackChangesIcon />,
                      },
                      // {
@@ -260,7 +250,6 @@ function Layout({ children }) {
             <Container>{children}</Container>
          </Box>
       </Box>
-      // </Box>
    )
 }
 

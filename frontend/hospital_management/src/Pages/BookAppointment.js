@@ -238,7 +238,7 @@ function BookAppoinment({ id, name, date }) {
                                  <Typography variant='body2'>
                                     {formatTime(timeSlot.start_time)} -{' '}
                                     {formatTime(timeSlot.end_time)} :
-                                 </Typography>
+                                 </Typography><br />
                                  <Typography
                                     variant='body2'
                                     sx={{ fontSize: '12px', marginTop: '4px' }}
