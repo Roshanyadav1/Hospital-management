@@ -4,7 +4,7 @@ import Card from '@mui/material/Card'
 import Badge from '@mui/material/Badge'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
-
+import datanotfound from '@/assets/dataNotFound.gif'
 import { Avatar, IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import doctorImage from '@/assets/doctorIllustration.png'
@@ -256,7 +256,10 @@ function FetchData() {
                                  }}
                               >
                                  {isError ? (
-                                    'error'
+                                    <div style={{ display:'flex', justifyContent:'center',alignItems:'center'}}>
+                                       <Image src={datanotfound} alt='data not found' height={150} width={150} />
+                                       <Typography variant='b1'>Data Not found</Typography>
+                                    </div>
                                  ) : (
                                     <nav aria-label='secondary mailbox folders'>
                                        <List>
