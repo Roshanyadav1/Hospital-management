@@ -27,6 +27,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useLoginUserMutation } from '@/services/Query'
+import { useRouter } from 'next/navigation';
 
 const drawerWidth = 240
 const pages = [{ label: 'Doctor', route: '/showdoctors' },
@@ -36,13 +37,17 @@ const pages = [{ label: 'Doctor', route: '/showdoctors' },
 const settings = [];
 
 function ResponsiveAppBar(props) {
+
+   //eslint-disable-next-line
+   let isLogin = localStorage.getItem('isLogin');
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
    const [userLogin] = useLoginUserMutation();
    const { user } = useUser()
+   const navigate = useRouter();
    // eslint-disable-next-line no-unused-vars
    const [isLoading, setIsLoading] = useState(false);
-   const [loggedIn, setLoggedIn] = useState(false);
+   const [loggedIn, setLoggedIn] = useState(isLogin ? true : false);
    // eslint-disable-next-line no-unused-vars
    const [showLogout, setShowLogout] = useState(false);
    const [, setAnchorElNav] = React.useState(null);
@@ -64,6 +69,7 @@ function ResponsiveAppBar(props) {
       setMobileOpen((prevState) => !prevState)
    }
    const getNavigationItems = () => {
+   //eslint-disable-next-line
       const role = localStorage.getItem('user_role');
       switch (role) {
          case 'Admin':
@@ -112,6 +118,7 @@ function ResponsiveAppBar(props) {
    };
 
    const getUserImage = () => {
+   //eslint-disable-next-line
       const userRole = localStorage.getItem('user_role');
 
       switch (userRole) {
@@ -128,6 +135,7 @@ function ResponsiveAppBar(props) {
    };
 
    useEffect(() => {
+
       if (user && !loggedIn) {
          setIsLoading(true);
          const handleSubmit = async () => {
@@ -137,6 +145,13 @@ function ResponsiveAppBar(props) {
                localStorage.setItem('access_token', res.data.token.access);
                localStorage.setItem('user_role', res.data.user_role);
                localStorage.setItem('refresh_token', res.data.token.refresh);
+               localStorage.setItem('isLogin', true);
+
+               if(res.data.user_role !== 'Patient'){
+                  // redirect to dashboard
+                  navigate.push('/dashboard');
+               }
+
                setIsLoading(false);
                setLoggedIn(true);
             } catch (err) {
@@ -146,7 +161,7 @@ function ResponsiveAppBar(props) {
          };
          handleSubmit();
       }
-   }, [user, loggedIn, userLogin]);
+   }, [user, loggedIn, userLogin, isLogin, navigate]);
 
    const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>

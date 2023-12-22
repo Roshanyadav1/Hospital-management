@@ -356,6 +356,7 @@ import DoctorDash from './../../components/DoctorDashboard';
 import Chart from './../../components/Chart';
 
 function FetchData() {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const userRole = localStorage.getItem('user_role');
 
   return (
