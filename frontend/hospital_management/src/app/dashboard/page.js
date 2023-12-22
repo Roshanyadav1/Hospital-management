@@ -150,6 +150,12 @@ function FetchData() {
       const [hours, minutes] = timeString.split(':');
       return `${hours}:${minutes}`;
     }
+
+    const disabledDates = ['2023-12-05', '2023-12-25', '2023-12-30'];
+    const shouldDisableDate = (date) => {
+      return date.day() === 0;
+    };
+  
   
 
 
@@ -330,6 +336,7 @@ function FetchData() {
                                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DateCalendar
                                        defaultValue={initialValue}
+                                       shouldDisableDate={shouldDisableDate}
                                        loading={isLoading}
                                        onMonthChange={handleMonthChange}
                                        renderLoading={() => <DayCalendarSkeleton />}
