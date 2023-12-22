@@ -3,9 +3,9 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 // import { useAddEmployeeMutation } from '@/services/Query'
-import Employee_Validation from '@/components/form/EmployeeValidation/employeeValidation'
+import Employee_Validation from '../../../../components/FormValidation/employeeValidation'
 import { colors } from '@/styles/theme'
-import AddEmployee from '@/components/AddEmployee'
+import AddEmployee from '../../../../components/AddEmployee'
 import { useSearchParams } from 'next/navigation'
 
 const StyledPaper = styled(Paper)(({ theme }) => ({

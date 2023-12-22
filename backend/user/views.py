@@ -15,6 +15,12 @@ from doctor.models import Doctor
 from django.contrib.auth.hashers import make_password
 from patient.models import Patient
 from employee.models import Employee
+from hospital_management.logger import logger
+from datetime import datetime
+
+
+current_datetime = datetime.now()
+current_timestamp = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
 
 def get_tokens_for_user(user):
@@ -105,9 +111,15 @@ class UserLoginView(GenericAPIView):
                 Response.status_code = status.HTTP_200_OK
                 id = ""
                 if user.user_role == "Doctor":
-                    id = Doctor.objects.get(employee_id=user.member_id).doctor_id
+                    id = Doctor.objects.get(
+                        employee_id=user.member_id).doctor_id
                 else:
                     id = user.member_id
+                logger.info({
+                    'message': "Logged In As " + user.user_role,
+                    'email': user.user_email,
+                    'name': user.user_name,
+                })
                 return Response(
                     {
                         'status': status.HTTP_200_OK,
@@ -127,9 +139,15 @@ class UserLoginView(GenericAPIView):
                         Response.status_code = status.HTTP_200_OK
                         id = ""
                         if user.user_role == "Doctor":
-                            id = Doctor.objects.get(employee_id=user.member_id).doctor_id
+                            id = Doctor.objects.get(
+                                employee_id=user.member_id).doctor_id
                         else:
                             id = user.member_id
+                        # logger.info({
+                        #     'message': "Logged In As " + user.user_role,
+                        #     'email': user.user_email,
+                        #     'name': user.user_name,
+                        # })
                         return Response(
                             {
                                 'status': status.HTTP_200_OK,

@@ -1,0 +1,1 @@
+{'timestamp': '2023-12-21 10:35:10', 'method': 'POST', 'path': '/api/user/login/', 'status': 200, 'message': 'Logged In As Patient', 'email': 'agrkeshav04@gmail.com', 'name': 'Keshav Agrawal'}

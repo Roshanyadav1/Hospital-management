@@ -3,7 +3,7 @@ import { Facebook, Instagram, Twitter } from '@mui/icons-material'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
 import Image from 'next/image'
-import { colors } from '@/styles/theme'
+import { colors } from '../styles/theme'
 import Logo from '../assets/footerimages/whiteSga.png'
 
 const Footer = () => {
@@ -87,13 +87,17 @@ const Footer = () => {
                         Department of Orthopedics
                      </Typography>
                   </Link>
-                  <Link href='https://www.facebook.com' color='#FFFFFF'>
+
+                  <Link href='https://www.facebook.com' color='#FFFFFF'
+                     sx={{ pl: 1, pr: 1 }}
+                  >
                      <Facebook />
+
                   </Link>
                   <Link
                      href='https://www.instagram.com'
                      color='#FFFFFF'
-                     sx={{ pl: 1, pr: 1 }}
+                     sx={{ pl:0 , pr: 1 }}
                   >
                      <Instagram />
                   </Link>
@@ -198,11 +202,11 @@ const Footer = () => {
                   >
                      Hospital Details
                   </Typography>
-                  <Link href='/contact' passHref>
+                 
                      <Typography variant='body2' color='white' sx={{ padding: 1 }}>
                         Contact Us
                      </Typography>
-                  </Link>
+               
                   <Typography variant='body2' color='white' sx={{ padding: 1 }}>
                      <Input
                         varient='outline'
@@ -240,7 +244,7 @@ const Footer = () => {
                   </Typography>
                </Grid>
             </Grid>
-            <Box sx={{ marginLeft: 5 }}>
+            <Box sx={{ marginLeft: 3 }}>
                <hr />
             </Box>
 
@@ -251,6 +255,7 @@ const Footer = () => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  padding:1
                }}
             >
                &copy; {new Date().getFullYear()} Your Website Name

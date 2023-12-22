@@ -12,7 +12,6 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { BiRadioCircle } from 'react-icons/bi'
 import ResponsiveAppBar from './Navbar'
-import Footer from './Footer'
 import Link from 'next/link'
 import Discharge from '@/app/dashboard/discharge/page'
 import { useRouter } from 'next/navigation'
@@ -103,7 +102,7 @@ function MiniDrawer() {
                   { text: 'EmployeeData', path: '/dashboard/employeedata' },
                   { text: 'Doctor', path: '/dashboard/docter' },
                   { text: 'Disease', path: '/dashboard/disease' },
-                  { text: 'Add Hospital', path: '/dashboard/abouthospital' },
+                  // { text: 'Add Hospital', path: '/dashboard/abouthospital' },
                   { text: 'Prescription', path: '/dashboard/registerForm' },
                ].map((item, _index) => (
                   <ListItem
@@ -175,13 +174,11 @@ function MiniDrawer() {
                ))}
             </List>
          </Drawer>
-         <Box component='main' sx={{ flexGrow: 1 }}></Box>
-         {router.pathname === '/dashboard/discharge' && <Discharge />}
-         <Box sx={{ marginBottom: 0 }}>
-            <Footer />
+         <Box component='main' sx={{ flexGrow: 1 }}>
          </Box>
       </Box>
    )
 }
 
-export default MiniDrawer
+export default MiniDrawer;
+
