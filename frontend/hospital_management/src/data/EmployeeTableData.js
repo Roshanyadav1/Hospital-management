@@ -145,9 +145,8 @@ const GetActionButton = (row) => {
    const {
       data: viewEmployee,
       isLoading,
-      isError,
-      error,
-   } = useGetEmployeeDetailsQuery(id, { skip })
+      isSuccess,
+   } = useGetEmployeeDetailsQuery(id, { skip: skip })
 
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
@@ -349,19 +348,58 @@ const GetActionButton = (row) => {
          <Dialog open={openViewModal} onClose={handleCloseViewModal} padding={3}>
             <DialogTitle>View Employee</DialogTitle>
             <DialogContent>
-               {isLoading ? (
-                  <p>Loading...</p>
-               ) : isError ? (
-                  <p>Error: {error.message}</p>
-               ) : viewEmployee?.data?.result ? (
-                  viewEmployee.data.result.map((result, index) => (
-                     <DialogContentText key={index} id='alert-dialog-description'>
-                        employee name: {result.employee_email}
-                     </DialogContentText>
-                  ))
-               ) : (
-                  <p>No data available</p>
-               )}
+               {
+                  isLoading && ("Loading...")
+               }
+               {
+                  isSuccess && (<>
+                  {/* // i have to add view the employee data in formate way  */}
+                        <DialogContent>
+                  <Grid container>
+
+                     <Grid item justifyContent='space-between' >
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           Name 
+                        </Typography>
+                        <Typography variant='h6' color='primary' fontWeight='bold'> 
+                           Email
+                        </Typography>
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           Phone
+                        </Typography>
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           Role
+                        </Typography>
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           Status
+                        </Typography>
+
+
+                     </Grid>
+                     <Grid item justifyContent='space-between' >
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           : { viewEmployee?.data?.employee_name}
+                        </Typography>
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           : { viewEmployee?.data?.employee_email} 
+                        </Typography>
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           : { viewEmployee?.data?.employee_number}
+                        </Typography>
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           : { viewEmployee?.data?.employee_role}
+                        </Typography>
+                        <Typography variant='h6' color='primary' fontWeight='bold'>
+                           : { viewEmployee?.data?.employee_status ? "Active" : "Inactive"}
+                        </Typography>
+
+                  </Grid>
+                  </Grid>
+                        </DialogContent>
+                  
+                  </>)
+               }
+               
             </DialogContent>
             <IconButton
                aria-label='close'
