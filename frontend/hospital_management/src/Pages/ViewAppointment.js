@@ -74,7 +74,9 @@ function RecipeReviewCard() {
       return  <Container maxWidth='sm'>
       <Grid mt={2} container spacing={2}  justifyContent='center'
       alignItems='center'>
-        <Image src={datanotfoundd} width={350} height={350} alt="No appointment Here"/>
+        <Image src={"https://hospital0000.s3.ap-south-1.amazonaws.com/No+data.gif"
+
+} width={350} height={350} alt="No appointment Here"/>
       </Grid>
     </Container>
       //  <p> No Appointment Here {isError}</p>
