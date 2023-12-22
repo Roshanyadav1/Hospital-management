@@ -23,7 +23,25 @@ import Image from 'next/image'
 import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
-import moment from 'moment'
+
+const ProfileCard = ({ icon, title, content }) => {
+   return (
+      <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2} key={title}>
+      <CardHeader
+         avatar={icon}
+         title={title}
+         sx={{ display: 'flex', alignItems: 'center' }}
+      />
+      <Divider />
+      <CardContent>
+         <Typography variant='body2' p={1}>
+            {content}
+         </Typography>
+      </CardContent>
+   </Card>
+   )
+      }
+      
 function BookAppoinment({ id, name, date }) {
    let data = {
       id: id,
@@ -38,29 +56,13 @@ function BookAppoinment({ id, name, date }) {
    const [hiddentime, setHiddentime] = useState([])
    const { createTimeSlots } = useTimeSlots()
    // doctorTimes
-   const ProfileCard = ({ icon, title, content }) => (
-      <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
-         <CardHeader
-            avatar={icon}
-            title={title}
-            sx={{ display: 'flex', alignItems: 'center' }}
-         />
-         <Divider />
-         <CardContent>
-            <Typography variant='body2' p={1}>
-               {content}
-            </Typography>
-         </CardContent>
-      </Card>
-   )
+   
    useEffect(() => {
-      if (
-         doctorTimes &&
-         doctorTimes.data && !isLoading) {
+      if (doctorTimes?.data && !isLoading) {
          setTimes(doctorTimes.data.times)
          setHiddentime(createTimeSlots(doctorTimes.data.per_patient_time, doctorTimes.data.times))
       }
-   }, [doctorTimes, isLoading])
+   }, [createTimeSlots, doctorTimes, isLoading])
    
    function formatTime(timeString) {
       const time = new Date(`2000-01-01T${timeString}`)
@@ -119,48 +121,42 @@ function BookAppoinment({ id, name, date }) {
             boxShadow={1}
             spacing={5}
             display='flex'
-            Direction='column'
+            direction='column'
          >
-            <Grid item bgcolor={'fff'} display={'flex'} Direction='column'>
+            <Grid item bgcolor={'fff'} display={'flex'} direction='column'>
                {
-                  isLoading ? (<>
-                     <Skeleton
+                  isLoading ? (<Skeleton
                         sx={{ border: '1px solid #E0E0E0' }}
-                        variant="circular" height={150} width={150} />
-                  </>) : (<>
-                     <Image
+                        variant="circular" height={150} width={150} />) : (<Image
                         priority={true}
                         src={doctorTimes?.data?.doctor_profile_picture || 'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'}
                         height={140}
                         width={140}
                         style={{ borderRadius: '50%', padding: 10 }}
-                     />
-                  </>)
+                     />)
                }
                <Grid
                   item
                   xl={8}
                   display='flex'
-                  Direction='column'
+                  direction='column'
                   justifyContent='center'
                   margin={0}
                   p={{ xs: 2, sm: 5 }}
                   gap={10}
                >
-                  <>
                      <Typography gutterBottom variant='h4' component='div'>
                         {name}
                         <Typography variant='body1' color='text.secondary'>
                            EXECUTIVE DOCTOR FORTIS C DOC | Fortis C-Doc
                         </Typography>
                      </Typography>
-                  </>
                </Grid>
             </Grid>
          </Grid>
 
          <br /> <br />
-         <Grid container Direction='column' display={'flex'} rowSpacing={4}>
+         <Grid container direction='column' display={'flex'} rowSpacing={4}>
             {/* 1ST COLUMN */}
             <Grid item xs={12} sm={6}>
                <ProfileCard

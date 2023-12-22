@@ -19,12 +19,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import TrackChangesIcon from '@mui/icons-material/TrackChanges'
 import MedicationIcon from '@mui/icons-material/Medication'
 import CoronavirusIcon from '@mui/icons-material/Coronavirus'
-import AddBoxIcon from '@mui/icons-material/AddBox'
-import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility'
-import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { Container } from '@mui/system'
 import withRoleRedirect from '@/helpers/withRoleRedirect'
-import Footer from '../../components/Footer'
 const drawerWidth = 240
 
 const openedMixin = (theme) => ({
@@ -92,17 +88,6 @@ const Drawer = styled(MuiDrawer, {
    }),
 }))
 
-const INITIAL_FORM_STATE = {
-   employee_name: '',
-   employee_email: '',
-   employee_number: '',
-   employee_password: '', // not available
-   employee_type: '',
-   employee_role: '',
-   employee_status: '',
-   created_by: 'admin',
-   updated_by: 'admin',
-}
 
 function Layout({ children }) {
    const pathname = usePathname()
@@ -172,7 +157,7 @@ function Layout({ children }) {
 
 
    let userRole = localStorage.getItem('user_role')
-   let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false;
+   let isAdmin = !!(userRole === 'Admin' || userRole === 'Manager');
 
 
 
@@ -196,6 +181,11 @@ function Layout({ children }) {
                      {
                         text: 'Employee',
                         path: '/dashboard/employeedata',
+                        icon: <TrackChangesIcon />,
+                     },
+                     {
+                        text: 'Appointments',
+                        path: '/dashboard/appointments',
                         icon: <TrackChangesIcon />,
                      },
                      // {

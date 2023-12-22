@@ -1,15 +1,9 @@
 
 'use client'
-import { Grid, CardHeader, Divider } from '@mui/material'
+import { Grid, CardHeader, Divider, Container, Badge } from '@mui/material'
 import Image from 'next/image'
-import React from 'react'
-import { Container } from '@mui/material'
-import Badge from '@mui/material/Badge'
 import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import PersonIcon from '@mui/icons-material/Person'
 import SchoolIcon from '@mui/icons-material/School'
@@ -19,7 +13,6 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Chip from '@mui/material/Chip'
 import HistoryIcon from '@mui/icons-material/History'
-import { display } from '@mui/system'
 import { useGetAppointmentHistoryQuery } from '@/services/Query'
 let arr =  [
  {
@@ -92,40 +85,26 @@ let arr =  [
      }
  }
 ]
-const appointmentsByDate = arr.reduce((acc =[], appointment =[]) => {
- const date = appointment.appointment_date;
- if (!acc[date]) {
-     acc[date] = [];
- }
- acc[date].push({
-     patient_id: appointment.patient.patient_id,
-     patient_name: appointment.patient.patient_name,
-     doctor_name: appointment.doctor.employee.employee_name,
-     disease_name: appointment.disease.disease_name,
-     appointment_time: appointment.appointment_time,
-     checked: appointment.checked,
- });
- return acc;
-}, {});
-console.log(appointmentsByDate);
-const DoctorProfile = ({id}) => {
- const ProfileCard = ({ icon, title, content }) => (
-    <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
-       <CardHeader
-          avatar={icon}
-          title={title}
-          sx={{ display: 'flex', alignItems: 'center' }}
-       />
-       <Divider />
-       <CardContent>
-          <Typography variant='body2' p={1}>
-             {content}
-          </Typography>
-       </CardContent>
-    </Card>
- )
 
- const {data: appointmentHistory,isLoading,} = useGetAppointmentHistoryQuery(id);
+
+const ProfileCard = ({ icon, title, content }) => (
+   <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
+      <CardHeader
+         avatar={icon}
+         title={title}
+         sx={{ display: 'flex', alignItems: 'center' }}
+      />
+      <Divider />
+      <CardContent>
+         <Typography variant='body2' p={1}>
+            {content}
+         </Typography>
+      </CardContent>
+   </Card>
+)
+
+const DoctorProfile = ({ id }) => {
+ const {data: appointmentHistory, isLoading} = useGetAppointmentHistoryQuery(id);
 
  if(isLoading){
    return "loading"
@@ -147,13 +126,11 @@ const DoctorProfile = ({id}) => {
    });
    return acc;
 }, {}): [];
-
-console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
  
  return (
     <Container maxWidth='lg' p={2}>
        <Grid container boxShadow={1} spacing={2}>
-          <Grid container item bgcolor={'fff'} display={'flex'} Direction='column'>
+          <Grid container item bgcolor={'fff'} display={'flex'} direction='column'>
              {
                 <Image
                    priority={true}
@@ -167,20 +144,18 @@ console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
                 item
                 xl={8}
                 display='flex'
-                Direction='column'
+                direction='column'
                 justifyContent='center'
                 margin={0}
                 p={{ xs: 2, sm: 5 }}
                 gap={10}
              >
-                <>
                    <Typography gutterBottom variant='h4' component='div'>
                       Name
                       <Typography variant='body1' color='text.secondary'>
                          EXECUTIVE CHAIRMAN FORTIS C DOC | Fortis C-Doc
                       </Typography>
                    </Typography>
-                </>
              </Grid>
           </Grid>
        </Grid>
@@ -194,8 +169,8 @@ console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
                       About
                    </Typography>
                 }
-                content={`Dr ${name} is a renowned Neurosurgeon with over 20 years
-                of experience. Dr ${name} is an adept in all disciplines of Brain
+                content={`Dr is a renowned Neurosurgeon with over 20 years
+                of experience. Dr is an adept in all disciplines of Brain
                 and Spine Surgery including Brain tumor surgery among adults, as
                 well as pediatric and Neonatal, endoscopic surgery,
                 microvascular decompression surger...`}
@@ -221,9 +196,9 @@ console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
                       History
                    </Typography>
                 }
-                content={appointmentsByDate?.map((appointment) =>(
+                content={appointmentsByDate?.map((appointment, index) =>(
                    // eslint-disable-next-line react/jsx-key
-                   <Accordion sx={{ boxShadow: '0px 2px 1px rgba(0, 0, 0, 0.2)'}}>
+                   <Accordion sx={{ boxShadow: '0px 2px 1px rgba(0, 0, 0, 0.2)'}} key={index}>
                    <AccordionSummary
                       expandIcon={
                          <Badge badgeContent={appointment.length} color='primary'>
