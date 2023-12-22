@@ -8,82 +8,21 @@ import { Chip, Container, Grid, Skeleton } from '@mui/material'
 import viewappointmentimg from './../assets/viewAppointment.gif'
 import Image from 'next/image'
 function RecipeReviewCard() {
+   function formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+    
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
 
    if (isLoading) {
       return (
-            <Container maxWidth='sm'>
-               <Grid mt={3} container spacing={2}>
-                  {[1, 2, 3].map((_, i) => (
-                     <Grid
-                        item
-                        key={i}
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={12}
-                        sx={{ paddingBottom: '1rem' }}
-                     >
-                        <Card sx={{ backgroundColor: '#C4D0DC' }}>
-                           <CardContent>
-                              <Skeleton
-                                 animation='wave'
-                                 height={20}
-                                 width='80%'
-                                 style={{ marginBottom: 6 }}
-                              />
-                              <Skeleton
-                                 animation='wave'
-                                 height={20}
-                                 width='40%'
-                                 style={{ marginBottom: 6 }}
-                              />
-                              <Grid container spacing={1}>
-                                 <Grid item>
-                                    <Skeleton
-                                       animation='wave'
-                                       height={30}
-                                       width={30}
-                                       variant='circular'
-                                    />
-                                 </Grid>
-                                 <Grid item>
-                                    <Skeleton
-                                       animation='wave'
-                                       height={30}
-                                       width='80%'
-                                       style={{ marginBottom: 6 }}
-                                    />
-                                 </Grid>
-                              </Grid>
-                              <Skeleton
-                                 animation='wave'
-                                 height={30}
-                                 width='60%'
-                                 style={{ marginBottom: 6 }}
-                              />
-                           </CardContent>
-                        </Card>
-                     </Grid>
-                  ))}
-               </Grid>
-            </Container>
-      )
-   } else if (isError || !Array.isArray(appointment?.data) || appointment.data.length === 0) {
-      return (
          <Container maxWidth='sm'>
-            <Grid mt={3} container justifyContent='center'>
-               <Image height={400} width={400} src={viewappointmentimg} alt='No data found' />
-            </Grid>
-         </Container>
-      );
-     
-   } else {
-      return (
-         <Container maxWidth='sm'>
-         <Grid mt={2} container spacing={2}>
-            {Array.isArray(appointment?.data) &&
-               appointment?.data?.map((e, i) => (
+            <Grid mt={3} container spacing={2}>
+               {[1, 2, 3].map((_, i) => (
                   <Grid
                      item
                      key={i}
@@ -93,53 +32,122 @@ function RecipeReviewCard() {
                      lg={12}
                      sx={{ paddingBottom: '1rem' }}
                   >
-                     <Card sx={{ backgroundColor: '#C4D0DC' }}>
-                        <Grid container justifyContent='space-between'>
-                        <Grid item>
-
-                        <CardHeader
-                           avatar={
-                              <Avatar
-                              sx={{ bgcolor: '#13293D' }}
-                                 aria-label='recipe'
-                              >
-                                 {e?.doctor?.employee?.employee_name.split('')[0]}
-                              </Avatar>
-                           }
-                           title={e?.doctor?.employee?.employee_name}
-                           subheader={
-                              e?.appointment_time + '   ' + e?.appointment_date
-                           }
+                     <Card sx={{ backgroundColor: '#A7AFB7' }}>
+                        <CardContent>
+                           <Skeleton
+                              animation='wave'
+                              height={20}
+                              width='80%'
+                              style={{ marginBottom: 6 }}
                            />
+                           <Skeleton
+                              animation='wave'
+                              height={20}
+                              width='40%'
+                              style={{ marginBottom: 6 }}
+                           />
+                           <Grid container spacing={1}>
+                              <Grid item>
+                                 <Skeleton
+                                    animation='wave'
+                                    height={30}
+                                    width={30}
+                                    variant='circular'
+                                 />
                               </Grid>
-                              <Grid item p={3}>
-                                 <Chip
-                                    label={e?.checked ? 'Checked' : 'Not Checked'}
-                                    sx={{ backgroundColor:e?.checked ? '#39cef5' : 'gray'  , marginRight: 1 }}
+                              <Grid item>
+                                 <Skeleton
+                                    animation='wave'
+                                    height={30}
+                                    width='80%'
+                                    style={{ marginBottom: 6 }}
                                  />
                               </Grid>
                            </Grid>
-                        <CardContent>
-                           <Grid
-                              container
-                              spacing={1}
-                              alignItems='center'
-                              justifyContent='space-between'
-                           >
-                              <Grid item>
-                                    <Chip
-                                       label={e?.disease?.disease_name}
-                                       sx={{ backgroundColor: '#7F8FA45B', marginRight: 1 }}
-                                    />
-                              </Grid>
-                           </Grid>
+                           <Skeleton
+                              animation='wave'
+                              height={30}
+                              width='60%'
+                              style={{ marginBottom: 6 }}
+                           />
                         </CardContent>
                      </Card>
                   </Grid>
                ))}
-         </Grid>
-      </Container>
-      
+            </Grid>
+         </Container>
+      )
+   } else if (isError || !Array.isArray(appointment?.data) || appointment.data.length === 0) {
+      return (
+         <Container maxWidth='sm'>
+            <Grid mt={3} container justifyContent='center'>
+               <Image height={400} width={400} src={viewappointmentimg} alt='No data found' />
+            </Grid>
+         </Container>
+      );
+
+   } else {
+      return (
+         <Container maxWidth='sm'>
+            <Grid mt={2} container justifyContent={'center'} spacing={2}>
+               {Array.isArray(appointment?.data) &&
+                  appointment?.data?.map((e, i) => (
+                     <Grid
+                        item
+                        key={i}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={10}
+                        sx={{ paddingBottom: '1rem' }}
+                     >
+                        <Card sx={{ backgroundColor: '#A7AFB7', boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
+                           <Grid container justifyContent='space-between'>
+                              <Grid item>
+
+                                 <CardHeader 
+                                    avatar={
+                                       <Avatar
+                                          sx={{ bgcolor: '#13293D', fontWeight:400 }}
+                                          aria-label='recipe'
+                                       >
+                                          {e?.doctor?.employee?.employee_name.split('')[0]}
+                                       </Avatar>
+                                    }
+                                    title={e?.doctor?.employee?.employee_name}
+                                    subheader={
+                                       e?.appointment_time + '   ' + e?.appointment_date
+                                    }
+                                 />
+                              </Grid>
+                              <Grid item p={3}>
+                                 <Chip
+                                    label={e?.checked ? 'Checked' : 'Not Checked'}
+                                    sx={{ color: 'white', backgroundColor: e?.checked ? '#39cef5' : '#13293D', marginRight: 1 }}
+                                 />
+                              </Grid>
+                           </Grid>
+                           <CardContent>
+                              <Grid
+                                 container
+                                 spacing={1}
+                                 alignItems='center'
+                                 justifyContent='space-between'
+                              >
+                                 <Grid item>
+                                    <Chip
+                                       label={e?.disease?.disease_name}
+                                       sx={{ backgroundColor: '#7F8FA45B', marginRight: 1 }}
+                                    />
+                                 </Grid>
+                              </Grid>
+                           </CardContent>
+                        </Card>
+                     </Grid>
+                  ))}
+            </Grid>
+         </Container>
+
       )
    }
 }
