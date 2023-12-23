@@ -167,6 +167,11 @@ function Layout({ children }) {
                <DrawerHeader></DrawerHeader>
                <List>
                   {[
+                       {
+                        text: 'Home',
+                        path: '/dashboard',
+                        icon: <HomeIcon/>,
+                     },
                      {
                         text: 'Dashboard',
                         path: '/dashboard',
@@ -177,11 +182,6 @@ function Layout({ children }) {
                         path: '/dashboard/employeedata',
                         icon: <TrackChangesIcon />,
                      },
-                     // {
-                     //    text: 'Add Doctor',
-                     //    path: '/dashboard/adddoctor',
-                     //    icon: <SettingsAccessibilityIcon />,
-                     // },
                      {
                         text: 'Add Disease',
                         path: '/dashboard/adddisease',
@@ -189,6 +189,7 @@ function Layout({ children }) {
                      },
 
                   ].map((item , index) => {
+                     if (userRole === 'Doctor' && item.path !== '/dashboard')
                      if ( index >= 2 && !isAdmin) return null;
                   return (
                      <ListItem

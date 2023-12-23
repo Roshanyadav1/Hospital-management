@@ -232,10 +232,16 @@ export const queries = createApi({
          method:'GET'
       })
 
-     })
-
+     }),
+     leaveView: build.query({
+      query: (doctor_id) => ({
+         url: `/leave/view/?doctor_id=${doctor_id}`,
+         method: 'GET',
+      }),
    }),
-})
+   })
+
+   })
 
 export const {
    useRegisterHospitalMutation,
@@ -263,7 +269,8 @@ export const {
    useChangeEmpDataMutation,
    useAppointmentUpdateMutation,
    useGetAppointmentHistoryQuery,
-   useGetEmployeeDetailsQuery
+   useGetEmployeeDetailsQuery,
+   useLeaveViewQuery,
 } = queries
 
 // export const { useRegisterAuth } = apiAuth
