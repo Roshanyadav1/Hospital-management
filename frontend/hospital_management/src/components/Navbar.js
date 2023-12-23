@@ -1,33 +1,47 @@
-import * as React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import Container from '@mui/material/Container'
-import MenuItem from '@mui/material/MenuItem'
-import MenuIcon from '@mui/icons-material/Menu'
-import Logo from '../assets/navbarimages/blueSga.png'
-import manager from './../assets/manager.png'
-import docter from './../assets/doctorr.png'
-import Image from 'next/image'
-import { Grid, Link } from '@mui/material'
-const settings = [
-   { label: 'Profile', route: '/dashboard/profile' },]
- 
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import Container from '@mui/material/Container';
+import MenuItem from '@mui/material/MenuItem';
+import MenuIcon from '@mui/icons-material/Menu';
+import Logo from '../assets/navbarimages/blueSga.png';
+import manager from './../assets/manager.png';
+import docter from './../assets/doctorr.png';
+import Image from 'next/image';
+import { Grid, Link } from '@mui/material';
+
 function ResponsiveAppBar({ sidebarChanges }) {
-   const [anchorElUser, setAnchorElUser] = React.useState(null)
+   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
    const handleOpenUserMenu = (event) => {
-      setAnchorElUser(event.currentTarget)
-   }
+      setAnchorElUser(event.currentTarget);
+   };
 
    const handleCloseUserMenu = () => {
-      setAnchorElUser(null)
-   }
+      setAnchorElUser(null);
+   };
+
+   const getUserSettings = () => {
+      const settings = [];
+      const userRole = localStorage.getItem('user_role');
+
+      switch (userRole) {
+         case 'Doctor':
+            settings.push({ label: 'Profile', route: '/dashboard/profile' });
+            break;
+         default:
+            break;
+      }
+
+      return settings;
+   };
+
+   const settings = getUserSettings();
 
    const getUserImage = () => {
-   //eslint-disable-next-line
       const userRole = localStorage.getItem('user_role');
 
       switch (userRole) {
@@ -40,7 +54,6 @@ function ResponsiveAppBar({ sidebarChanges }) {
             return null;
       }
    };
-  
 
    return (
       <AppBar
@@ -67,11 +80,9 @@ function ResponsiveAppBar({ sidebarChanges }) {
                      <Image width={120} alt="image" height={40} src={Logo} />
                   </Grid>
                   <Grid item>
-                    
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         {getUserImage()}
-                        </IconButton>
-                     
+                     </IconButton>
                      <Menu
                         sx={{ mt: '5rem' }}
                         id='menu-appbar'
@@ -91,16 +102,18 @@ function ResponsiveAppBar({ sidebarChanges }) {
                         {settings.map((setting) => (
                            <MenuItem key={setting.label}>
                               <Link href={setting.route} prefetch>
-                                 <Typography component='a' textAlign='center'>{setting.label}</Typography>
+                                 <Typography component='a' textAlign='center'>
+                                    {setting.label}
+                                 </Typography>
                               </Link>
                            </MenuItem>
                         ))}
                         <MenuItem
                            onClick={() => {
-                              localStorage.clear()
-                              const a = document.createElement('a')
-                              a.href = '/api/auth/logout'
-                              a.click()
+                              localStorage.clear();
+                              const a = document.createElement('a');
+                              a.href = '/api/auth/logout';
+                              a.click();
                            }}
                         >
                            <Typography textAlign='center'>Logout</Typography>
@@ -111,7 +124,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
             </Toolbar>
          </Container>
       </AppBar>
-   )
+   );
 }
 
-export default ResponsiveAppBar
+export default ResponsiveAppBar;

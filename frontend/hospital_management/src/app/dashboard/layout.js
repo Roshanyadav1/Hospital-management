@@ -167,7 +167,6 @@ function Layout({ children }) {
                <DrawerHeader></DrawerHeader>
                <List>
                   {[
-                     { text: 'Home', path: '/', icon: <HomeIcon /> },
                      {
                         text: 'Dashboard',
                         path: '/dashboard',
@@ -188,12 +187,7 @@ function Layout({ children }) {
                         path: '/dashboard/adddisease',
                         icon: <CoronavirusIcon />,
                      },
-         
-                     {
-                        text: 'Prescription',
-                        path: '/dashboard/precription',
-                        icon: <MedicationIcon />,
-                     },
+
                   ].map((item , index) => {
                      if ( index >= 2 && !isAdmin) return null;
                   return (
