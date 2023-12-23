@@ -17,7 +17,7 @@ import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import '@/styles/container.css'
- import Dialog from '@mui/material/Dialog'
+import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
@@ -48,6 +48,7 @@ function DoctorPage() {
    const handleFileChange = (event) => {
       setSelectedFile(event.target.files[0]);
    };
+
    const handleSubmit = async () => {
       if (selectedFile) {
          const formData = new FormData();
@@ -95,31 +96,14 @@ function DoctorPage() {
       setIsSwitchOn(!isSwitchOn);
    };
 
-
    return (
-      <Container maxWidth='lg'>
-
-<Grid container spacing={2}>
-
-{isLoading && (
-   <>
- {
-    [1, 2, 3].map((e) => (
-      <Grid  key={e} item xs={12} sm={12} md={6} lg={4} sx={{ paddingBottom: '1rem' }} component={motion.div} variants={fadeInUp} initial='hidden' animate='visible'>
-       <Skeleton  variant="rectangular" width={300} height={400} animation="wave" />
-      </Grid>
-       ))
-      }
- </>
-)}
-</Grid>
-
+      <Container maxWidth='lg' sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
          <Grid container spacing={2}>
-            {Array.isArray(appointmentInfo?.data) &&
-               appointmentInfo?.data?.map((e, i) => (
+            {isLoading ? (
+               [1, 2, 3].map((e) => (
                   <Grid
+                     key={e}
                      item
-                     key={i}
                      xs={12}
                      sm={12}
                      md={6}
@@ -130,7 +114,32 @@ function DoctorPage() {
                      initial='hidden'
                      animate='visible'
                   >
-                     <Card sx={{ backgroundColor: '#C4D0DC' }}>
+                     <Card sx={{ backgroundColor: '#C4D0DC', width: '100%', height: '100%' }}>
+                        <Skeleton variant="rectangular" width="100%" height="100%" animation="wave" />
+                     </Card>
+                  </Grid>
+               ))
+            ) : (
+               appointmentInfo?.data?.map((e, i) => (
+                  <Grid
+                     item
+                     key={i}
+                     xs={12}
+                     sm={12}
+                     md={6}
+                     lg={4}
+                     sx={{
+                        paddingBottom: '1rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                     }}
+                     component={motion.div}
+                     variants={fadeInUp}
+                     initial='hidden'
+                     animate='visible'
+                  >
+                     <Card sx={{ backgroundColor: '#35CFF4', width: '500px', height: '350px',marginLeft:'200%', textAlign: 'center', padding: '1rem' }}>
                         <CardHeader
                            avatar={
                               <Avatar
@@ -145,45 +154,41 @@ function DoctorPage() {
                               e.appointment_time + '   ' + e.appointment_date
                            }
                         />
-                        <CardContent>
+                        <CardContent sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                            <Chip
                               label={'Disease Name : ' + e?.disease?.disease_name}
-                              sx={{ backgroundColor: '#7F8FA45B' }}
+                              sx={{ backgroundColor: '#7F8FA45B', marginBottom: '0.5rem' }}
                            />
-                        </CardContent>
-                        <CardContent>
                            <Chip
                               label={'Patient Name : ' + e?.patient?.patient_name}
-                              sx={{ backgroundColor: '#7F8FA45B' }}
+                              sx={{ backgroundColor: '#7F8FA45B', marginBottom: '0.5rem' }}
                            />
-                        </CardContent>
-                        <CardContent>
                            <Chip
                               label={'Appointment No. : ' + e?.appointment_number}
-                              sx={{ backgroundColor: '#7F8FA45B' }}
+                              sx={{ backgroundColor: '#7F8FA45B', marginBottom: '1rem' }}
                            />
-                        </CardContent>
-                        <CardContent>
                            <Switch
                               {...label}
                               checked={isSwitchOn}
                               onChange={handleSwitchChange}
-                              color='primary'
+                              color='success' // Change the color to green
                               size='small'
-                              disabled={isSwitchOn} 
+                              sx={{ marginBottom: '1rem' }}
                            />
                            {isSwitchOn ? (
-                              <div>
-                                 <Input type='file' onChange={handleFileChange} />
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                 <Input type='file' onChange={handleFileChange} sx={{ marginBottom: '0.5rem' }} />
                                  <Button
                                     variant='contained'
                                     color='primary'
+                                    size='small'
                                     onClick={handleSubmit}
+                                    sx={{ background: '#4CAF50', color: 'white', '&:hover': { background: '#45a049' } }}
                                  >
                                     Add Prescription
                                  </Button>
                                  {isFileChosenError && (
-                                    <p style={{ color: 'red' }}>
+                                    <p style={{ color: 'red', marginTop: '0.5rem' }}>
                                        Please choose the file.
                                     </p>
                                  )}
@@ -215,10 +220,16 @@ function DoctorPage() {
                         </Dialog>
                      </Card>
                   </Grid>
-               ))}
+               ))
+            )}
          </Grid>
       </Container>
    )
 }
 
-export default DoctorPage
+export default DoctorPage;
+
+
+// adjust all the items in the center of the card and the button s should not be in the samethe ADD PRESCRIPTION button should be below the choose file button, add styles to the choose file buttton and apply green color to the toggle switch button not tot he ADD PRESCRIPTION button 
+
+// improve the UI of the card in such a way that width will will be 500px and height will be 350px and the card should be in the middle of the page, the color of the toggle switch button should be green and the choose file button should contain attractive styles and decrease the size of the APP PRESCRIPTION button make this requirments execute to the card properly which willl give the proper user experience and attractive Ui

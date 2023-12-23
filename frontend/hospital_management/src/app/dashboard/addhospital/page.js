@@ -175,7 +175,7 @@ const Register = () => {
          resetForm()
       } catch (error) {
          // Handle error
-         // console.error('Error submitting form:', error);
+         console.error('Error submitting form:', error);
       }
    }
 
