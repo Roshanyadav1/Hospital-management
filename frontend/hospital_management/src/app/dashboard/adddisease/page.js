@@ -160,6 +160,7 @@ const page = () => {
          console.error('Error changing status:', error)
       }
    }
+   
 
    return (
       <div>
@@ -173,7 +174,7 @@ const page = () => {
                   fontSize: '1rem',
                }}
             >
-               Do you want?
+               Do you want to update status?
             </DialogTitle>
             <Divider variant='middle' />
             <DialogContent>
@@ -203,6 +204,7 @@ const page = () => {
             onClose={handleClose}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
+            
          >
             <Box sx={style}>
                <StyledFormWrapper>
