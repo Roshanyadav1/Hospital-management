@@ -11,7 +11,10 @@ import {
    DialogContent,
    DialogTitle,
    Skeleton,
+   IconButton,
 } from '@mui/material'
+
+import CloseIcon from '@mui/icons-material/Close'
 import { CardActionArea } from '@mui/material'
 import { CardContent } from '@mui/material'
 import { Formik, Form } from 'formik'
@@ -32,6 +35,7 @@ import { alpha } from '@mui/material/styles'
 import { green } from '@mui/material/colors'
 import Switch from '@mui/material/Switch'
 import { useDiseaseStatusMutation } from '../../../services/Query'
+import { positions } from '@mui/system'
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
    '& .MuiSwitch-switchBase.Mui-checked': {
@@ -101,6 +105,8 @@ const page = () => {
    const [updateStatus] = useDiseaseStatusMutation()
    const [addDisease] = useAddDiseasesMutation()
 
+   const [loading, setLoading] = useState(false)
+
    const [openModal, setOpenModal] = useState(false)
    const [open, setOpen] = useState(false)
    const [disease, setDisease] = useState()
@@ -138,9 +144,13 @@ const page = () => {
    // change status
    const ChangeStatus = async (isSubmitting) => {
       try {
+         setLoading((prev) => !prev)
          // Assuming your API expects an employee ID for deletion
          const result = await updateStatus(disease)
          refetch()
+
+         setLoading((prev) => !prev)
+
          // Log the result to the console
          console.log('Result of updateStatus mutation:', result)
          handleCloseModal()
@@ -163,20 +173,24 @@ const page = () => {
                   fontSize: '1rem',
                }}
             >
-               Confirmation
+               Do you want?
             </DialogTitle>
+            <Divider variant='middle' />
             <DialogContent>
                <p>
-                  Are you sure you want to change the status of
-                  <span className='Data'>{disease?.disease_name}</span>
+                  Change the status of
+                  <span className='Data'>
+                     {' '}
+                     <b> {disease?.disease_name}</b>
+                  </span>
                </p>
             </DialogContent>
             <DialogActions>
                <Button onClick={handleCloseModal} color='primary' className='No'>
                   No
                </Button>
-               <Button onClick={ChangeStatus} color='primary' className='Yes'>
-                  Yes
+               <Button disabled={loading} onClick={ChangeStatus} color='primary' className='Yes'>
+                  {loading ? <CircularProgress size={20} /> : 'Yes'}
                </Button>
             </DialogActions>
          </Dialog>
@@ -192,6 +206,19 @@ const page = () => {
          >
             <Box sx={style}>
                <StyledFormWrapper>
+                  <IconButton
+                     aria-label='close'
+                     onClick={handleClose}
+                     sx={{
+                        position: 'absolute',
+                        right: 3,
+                        top: -5,
+                        color: (theme) => theme.palette.grey[500],
+                        // margin: 3
+                     }}
+                  >
+                     <CloseIcon />
+                  </IconButton>
                   <StyledPaper elevation={3}>
                      <Formik
                         initialValues={{
@@ -203,6 +230,8 @@ const page = () => {
                         {({ errors, isSubmitting }) => (
                            <Form>
                               {console.log(errors, 'here')}
+                              <h2 style={{ marginTop: 0 }}>Add Disease</h2>
+
                               <Grid container spacing={2}>
                                  <Grid item xs={12}>
                                     <Text
@@ -230,13 +259,8 @@ const page = () => {
                                  </Grid>
                                  <Divider />
 
-                                 <Grid item xs={12} sm={5}>
-                                    <VisuallyHiddenInput
-                                       id='logoInput'
-                                       type='file'
-                                       accept='image/*'
-                                    />
-                                 </Grid>
+                             
+
                                  <Grid item xs={12} sm={6}>
                                     <Button
                                        variant='contained'
@@ -244,11 +268,15 @@ const page = () => {
                                        type='submit'
                                        size='large'
                                        disabled={isSubmitting}
+                                        sx={{position:'absolute', right:7 ,bottom:7}}
+                                   
                                     >
                                        {isSubmitting ? 'Submitting...' : 'Submit'}
                                     </Button>
                                  </Grid>
-                              </Grid>
+                               
+                                 </Grid>
+                            
                            </Form>
                         )}
                      </Formik>

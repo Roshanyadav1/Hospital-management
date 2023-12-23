@@ -35,6 +35,8 @@ function SteperNav(props) {
    const [mobileOpen, setMobileOpen] = useState(false)
    const [userLogin] = useLoginUserMutation();
    const { user } = useUser()
+   const [isLoading, setIsLoading] = useState(false);
+   const [loggedIn, setLoggedIn] = useState(false);
 
    const handleDrawerToggle = () => {
       setMobileOpen((prevState) => !prevState)
@@ -103,9 +105,9 @@ function SteperNav(props) {
                   <Button sx={{ color: '#fff' }}>{item.label}</Button>
                 </Link>
               ))}
-              {user && (
+              {/* {user && (
                 <Button sx={{ color: '#fff' }}>{user.name || 'User'}</Button>
-              )}
+              )} */}
               {user && (
                 <Button
                   onClick={() => {
@@ -131,29 +133,33 @@ function SteperNav(props) {
       }
     };
    useEffect(() => {
-      if (user) {
+      if (user && !loggedIn) {
+         setIsLoading(true); 
          const handleSubmit = async () => {
             try {
-               let res = await userLogin(user.email).unwrap()
-               localStorage.setItem('user_id', res.data.id)
-               localStorage.setItem('access_token', res.data.token.access)
-               localStorage.setItem('user_role', res.data.user_role)
-               localStorage.setItem('refresh_token', res.data.token.refresh)
+               let res = await userLogin(user.email).unwrap();
+               localStorage.setItem('user_id', res.data.id);
+               localStorage.setItem('access_token', res.data.token.access);
+               localStorage.setItem('user_role', res.data.user_role);
+               localStorage.setItem('refresh_token', res.data.token.refresh);
+               setIsLoading(false); 
+               setLoggedIn(true); 
             } catch (err) {
-               console.warn(err)
+               setIsLoading(false); 
+               console.warn(err);
             }
-         }
-         handleSubmit()
+         };
+         handleSubmit();
       }
-   }, [user])
-
+   }, [user, loggedIn, userLogin]);
+   
    const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
          <Divider />
          <List>
-            <Button href='/api/auth/login' sx={{ color: '#fff' }}>
+            {/* <Button href='/api/auth/login' sx={{ color: '#fff' }}>
                Login
-            </Button>
+            </Button> */}
             {navItems.map((item) => (
                <ListItem key={item.label} disablePadding>
                   <ListItemButton sx={{ textAlign: 'center' }}>
@@ -162,7 +168,7 @@ function SteperNav(props) {
                            primary={item.label}
                            primaryTypographyProps={{
                               variant: 'body2',
-                              fontSize: '14px',
+                              fontSize: '12px',
                            }}
                         />
                      </Link>

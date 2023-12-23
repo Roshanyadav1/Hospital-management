@@ -29,6 +29,8 @@ import { Color } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAddEmployeeMutation } from '@/services/Query'
 
+import { toast } from 'react-toastify'
+
 const style = {
    position: 'absolute',
    top: '50%',
@@ -72,7 +74,6 @@ const StyledFormWrapper = styled('div')({
    minHeight: '100vh',
    display: 'grid',
    placeItems: 'center',
-   // padding: '2rem',
    '@media (max-width: 450px)': {
       padding: '0rem',
    },
@@ -82,7 +83,7 @@ const INITIAL_FORM_STATE = {
    employee_name: '',
    employee_email: '',
    employee_number: '',
-   employee_password: '', // not available
+   employee_password: '', 
    employee_type: '',
    employee_role: '',
    employee_status: true,
@@ -96,12 +97,22 @@ function Dashboard() {
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addemployee(values)
-         console.log(res)
-         toast.success(res?.data?.message || ' Employee added successfully')
-         resetForm()
+
+       
+   
+         // toast.success(res?.data?.message || ' Employee added successfully')
+         // resetForm()
+         if (res.data && res.data.status == 200) {
+            console.log("Its working")
+            toast.success(res.data.message || 'Employee added successfully');
+            resetForm();
+          } else if(res) {
+            toast.warn(res.error.message || 'Already exists');
+            resetForm();
+          }
       } catch (error) {
-         // Handle error
-         // console.error('Error submitting form:', error);
+         console.error('Error submitting form:', error);
+         toast.error('An error occurred while submitting the form');
       }
    }
 
@@ -133,9 +144,6 @@ function Dashboard() {
             justifyContent='space-between'
             alignItems='center'
          >
-            <Typography variant='h4' component='h5'>
-               Employee
-            </Typography>
             <Button variant='outlined' onClick={handleClickOpen}>
                Add Employee
             </Button>
@@ -171,9 +179,6 @@ function Dashboard() {
                }}
                validationSchema={FORM_VALIDATION}
                onSubmit={handleRegister}
-               // onSubmit={(values) => {
-               //    console.log(values)
-               // }}
             >
                {({ values, handleChange, handleBlur, touched ,isSubmitting  }) => (
                   <Form>
@@ -285,8 +290,9 @@ function Dashboard() {
                               color='primary'
                               type='submit'
                               size='large'
+                              disabled={isSubmitting}
                            >
-                              Submit
+                             {isSubmitting ? "Submitting ..." : "Submit"}
                            </Button>
                         </DialogActions>
                      </DialogContent>

@@ -154,7 +154,7 @@ function BookAppoinment({ id, name, date }) {
                      <Typography gutterBottom variant='h4' component='div'>
                         {name}
                         <Typography variant='body1' color='text.secondary'>
-                           EXECUTIVE DOCTORS FORTIS C DOC | Fortis C-Doc
+                           EXECUTIVE DOCTOR FORTIS C DOC | Fortis C-Doc
                         </Typography>
                      </Typography>
                   </>
@@ -216,7 +216,7 @@ function BookAppoinment({ id, name, date }) {
                         Array.from({ length: 4 }).map((_, index) => (
                            <Grid item key={index} xs={6} sm={6} md={6}>
                               <Skeleton
-                                 sx={{ border: '1px solid #E0E0E0', borderRadius: '10px' }}
+                                 sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
                                  variant="rectangular" height={60} />
                            </Grid>
                         ))
@@ -270,7 +270,7 @@ function BookAppoinment({ id, name, date }) {
                      <DialogTitle>Confirm Appointment Booking</DialogTitle>
                      <DialogContent>
                         <DialogContentText>
-                           Are you sure you want to book the appointment?
+                           Are you sure you want to book the appointment ?
                            An email confirmation will be sent to you shortly.
                         </DialogContentText>
                      </DialogContent>
@@ -285,6 +285,7 @@ function BookAppoinment({ id, name, date }) {
                            onClick={handleAppointment}
                            color='primary'
                            autoFocus
+                          
                         >
                            Confirm
                         </Button>

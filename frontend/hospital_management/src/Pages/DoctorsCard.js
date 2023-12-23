@@ -63,8 +63,8 @@ function DoctorCard() {
    }
    return (
       <>
-         <Typography variant='h3' align='center' style={{ marginTop: '50px' }}>
-            Our Doctors
+         <Typography variant='h3' align='center'  color='primary' style={{ marginTop: '50px' }}>
+             Doctors
          </Typography>
          <Container maxWidth='lg' sx={{ padding: '3rem' }}>
             <Swiper

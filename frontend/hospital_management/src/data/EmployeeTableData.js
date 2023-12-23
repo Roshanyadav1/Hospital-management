@@ -680,8 +680,8 @@ const GetActionButton = (row) => {
             </DialogTitle>
             <DialogContent>
                <p>
-                  Do you want to delete the data for{' '}
-                  <span className='Data'>{selectedRow?.employee_name}</span>
+                  Do you want to delete the data for{' '} 
+                  <span className='Data'>{selectedRow?.employee_name}</span> ?
                </p>
             </DialogContent>
             <DialogActions>
@@ -729,14 +729,14 @@ const GetActionButton = (row) => {
                </Grid>
     
          </Dialog>
-         <IconButton onClick={handleDelete} color='error' size='small'>
+         <IconButton onClick={handleDelete} color='primary' size='small'>
             <Delete />
          </IconButton>
          {/* dont fill the color in the delete button just outlineit */}
          <IconButton onClick={handleEdit} color='primary' size='small'>
             <Create />
          </IconButton>
-         <IconButton onClick={handleView} color='success' size='small'>
+         <IconButton onClick={handleView} color='primary' size='small'>
             <Visibility />
          </IconButton>
       </div>

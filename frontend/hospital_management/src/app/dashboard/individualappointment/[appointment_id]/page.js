@@ -164,8 +164,13 @@ function DoctorPage() {
                               sx={{ backgroundColor: '#7F8FA45B', marginBottom: '0.5rem' }}
                            />
                            <Chip
+<<<<<<< HEAD
                               label={'Appointment No. : ' + e?.appointment_number}
                               sx={{ backgroundColor: '#7F8FA45B', marginBottom: '1rem' }}
+=======
+                              label={'Appointment No : ' + e?.appointment_number}
+                              sx={{ backgroundColor: '#7F8FA45B' }}
+>>>>>>> 7606b01bd40d8816341a9f6f00f4aa090674e8b0
                            />
                            <Switch
                               {...label}
