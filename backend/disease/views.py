@@ -355,10 +355,17 @@ class DiseaseView(APIView):
             except:
                 response_message = ResponseMessage.RETRIEVED_SUCCESS
                 response_code = status.HTTP_200_OK
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': 'Disease ' + response_message,
+            })
             return Response(
                 {
                     'status': response_code,
-                    'message': "Disese " + response_message,
+                    'message': "Disease " + response_message,
                     'data': serializer.data
                 },
             )

@@ -13,14 +13,20 @@ from hospital_management.custom_paginations import CustomPagination
 from hospital_management.responses import ResponseMessage
 from leave.models import Leave
 import json
-from datetime import datetime, timedelta , time
+from datetime import datetime, timedelta, time
 from appointment.models import Appointment
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from user.models import User
-import jwt 
+import jwt
 from employee.models import Employee
+from hospital_management.logger import logger
+from datetime import datetime
+
+
+current_datetime = datetime.now()
+current_timestamp = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
 
 class DoctorRegister(GenericAPIView):
@@ -131,6 +137,13 @@ class DoctorView(ListAPIView):
             response_message = ResponseMessage.RETRIEVED_SUCCESS
             response_code = status.HTTP_200_OK
             Response.status_code = status.HTTP_200_OK
+        logger.info({
+            'timestamp': current_timestamp,
+            'method': request.method,
+            'path': request.path,
+            'status': response_code,
+            'message': 'Doctor ' + response_message,
+        })
         return Response(
             {
                 'status': response_code,
@@ -182,22 +195,23 @@ class DoctorViewById(APIView):
                         time_parts[1]), seconds=int(time_parts[2]))
                     slot = diiff/time_deltaa
                     data['total_slots'] = int(slot)
-                    appointment = Appointment.objects.filter(doctor_id = id)
-                    appointment = appointment.filter(appointment_date = inputDate)
+                    appointment = Appointment.objects.filter(doctor_id=id)
+                    appointment = appointment.filter(
+                        appointment_date=inputDate)
                     for appoint in appointment:
-                     start_time_iso = time.fromisoformat(start_time)
-                     end_time_iso = time.fromisoformat(end_time)
-                     between_time = appoint.appointment_time
-                     if  between_time>= start_time_iso and between_time <= end_time_iso:
-                             slot = slot-1
-                     else:
-                         pass
+                        start_time_iso = time.fromisoformat(start_time)
+                        end_time_iso = time.fromisoformat(end_time)
+                        between_time = appoint.appointment_time
+                        if between_time >= start_time_iso and between_time <= end_time_iso:
+                            slot = slot-1
+                        else:
+                            pass
                     data['slots'] = int(slot)
-                                   
+
                 slots_data = json.dumps(serializer_data['times'])
                 doctor.times = slots_data
                 doctor.save()
-                
+
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message
@@ -206,6 +220,13 @@ class DoctorViewById(APIView):
                 except:
                     response_message = ResponseMessage.RETRIEVED_SUCCESS
                     response_code = status.HTTP_200_OK
+                logger.info({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': response_code,
+                    'message': 'Doctor ' + response_message,
+                })
                 return Response(
                     {
                         'status': response_code,
@@ -224,6 +245,13 @@ class DoctorViewById(APIView):
                 except:
                     response_message = ResponseMessage.INVALID_ID
                     response_code = status.HTTP_400_BAD_REQUEST
+                logger.warning({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': response_code,
+                    'message': response_message,
+                })
                 return Response(
                     {
                         'status': response_code,

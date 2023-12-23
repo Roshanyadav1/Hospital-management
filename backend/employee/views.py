@@ -178,7 +178,7 @@ class EmployeeView(ListAPIView):
         except:
             response_message = ResponseMessage.RETRIEVED_SUCCESS
             response_code = status.HTTP_200_OK
-        logger.warning({
+        logger.info({
             'timestamp': current_timestamp,
             'method': request.method,
             'path': request.path,
