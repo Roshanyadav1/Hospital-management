@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from 'react'
 import Card from '@mui/material/Card'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
@@ -12,7 +14,7 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
-import patientLogo from '../assets/patientlogo2.png'
+import patientLogo from '../assets/patient.png'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
