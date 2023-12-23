@@ -14,17 +14,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
-import Link from 'next/link'
 import ListItem from '@mui/material/ListItem'
 import PeopleIcon from '@mui/icons-material/People'
 import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import { useGetDoctorIdQuery } from '../../services/Query'
 import { Container, Grid, Button, Typography, Skeleton } from '@mui/material'
 import { colors, themeOptions } from '@/styles/theme'
 import { styled } from '@mui/material/styles'
-
 import '@/styles/container.css'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -34,10 +31,8 @@ import DialogContentText from '@mui/material/DialogContentText'
 import { useAppointmentUpdateMutation } from '@/services/Query'
 import { toast } from 'react-toastify'
 import { useGetAppointmentInfoQuery } from '@/services/Query'
-import { useParams } from 'next/navigation'
 import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-
 import { useLeaveViewQuery } from '../../services/Query'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -217,13 +212,7 @@ function FetchData() {
       return `${hours}:${minutes}`
    }
     
-   const doctorID =  appointments?.data[0]?.doctor?.doctor_id
-
-
-// console.log(datesArray);
-
-//    const disabledDates = datesArray;
-//    console.log(disabledDates)
+   //const doctorID =  appointments?.data[0]?.doctor?.doctor_id
 
    const shouldDisableDate = (date) => {
       const isSunday = date.day() === 0

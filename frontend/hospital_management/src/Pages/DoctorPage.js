@@ -277,7 +277,6 @@ function DoctorPage() {
                         renderInput={(params) => (
                            <TextField
                               {...params}
-                              //  label="Search input"
                               InputProps={{
                                  ...params.InputProps,
                                  placeholder: DiseaseLoading
@@ -299,7 +298,7 @@ function DoctorPage() {
                               views={['year', 'month', 'day']}
                               value={selectedDate}
                               onChange={handleDateChange}
-                              shouldDisableDate={isDateDisabled} // Pass the custom validation function
+                              shouldDisableDate={isDateDisabled} // Passing custom validation function
 
                               sx={{ background: 'white', borderRadius: '5px' }}
                            />
