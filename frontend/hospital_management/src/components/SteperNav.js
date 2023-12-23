@@ -40,11 +40,11 @@ function ResponsiveAppBar(props) {
 
    //eslint-disable-next-line
    let isLogin = localStorage.getItem('isLogin');
+   const navigate = useRouter();
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
    const [userLogin] = useLoginUserMutation();
    const { user } = useUser()
-   const navigate = useRouter();
    // eslint-disable-next-line no-unused-vars
    const [isLoading, setIsLoading] = useState(false);
    const [loggedIn, setLoggedIn] = useState(isLogin ? true : false);
@@ -68,6 +68,24 @@ function ResponsiveAppBar(props) {
    const handleDrawerToggle = () => {
       setMobileOpen((prevState) => !prevState)
    }
+
+
+   const getUserSettings = () => {
+      const settings = [];
+      const userRole = localStorage.getItem('user_role');
+
+      switch (userRole) {
+         case 'Patient':
+            settings.push({ label: 'Profile', route: '/patientprofile' });
+            break;
+         default:
+            break;
+      }
+
+      return settings;
+   };
+   const settings = getUserSettings();
+
    const getNavigationItems = () => {
    //eslint-disable-next-line
       const role = localStorage.getItem('user_role');
@@ -152,7 +170,6 @@ function ResponsiveAppBar(props) {
                   // redirect to dashboard
                   navigate.push('/dashboard');
                }
-
                setIsLoading(false);
                setLoggedIn(true);
             } catch (err) {
@@ -235,9 +252,13 @@ function ResponsiveAppBar(props) {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                      >
-                        {settings.map((setting) => (
-                           <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                              <Typography textAlign="center">{setting}</Typography>
+                         {settings.map((setting) => (
+                           <MenuItem key={setting.label}>
+                              <Link href={setting.route} prefetch>
+                                 <Typography component='a' textAlign='center'>
+                                    {setting.label}
+                                 </Typography>
+                              </Link>
                            </MenuItem>
                         ))}
                         {/* {['Admin', 'Doctor', 'Patient'].includes(localStorage.getItem('user_role')) && user && ( */}
