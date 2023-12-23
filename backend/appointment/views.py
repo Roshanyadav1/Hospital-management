@@ -277,7 +277,7 @@ class AppointmentCount(ListAPIView):
                 duplicate_patient = set()
                 appointment_count = 0
 
-        print(appointment_list)
+       
         # for entry in appointments_per_day:
         #     print(f"Date: {entry['appointment_date']}, Appointments: {entry['appointment_count']}, Doctor: {entry['doctor_count']}")
 
