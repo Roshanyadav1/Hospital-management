@@ -35,7 +35,8 @@ const nextConfig = {
          '0 , _services_Query__WEBPACK_IMPORTED_MODULE_6__.useLoginUserMutation',
          'thumbs.dreamstime.com',
          '0 , _services_Query__WEBPACK_IMPORTED_MODULE_1__.useGetDoctorTimesQuery',
-         '(0 , _services_Query__WEBPACK_IMPORTED_MODULE_1__.useRegisterAuth'
+         '(0 , _services_Query__WEBPACK_IMPORTED_MODULE_1__.useRegisterAuth',
+         '0 , _services_Query__WEBPACK_IMPORTED_MODULE_3__.useGetEmployeeDetailsQuery'
       ],
    },
 }

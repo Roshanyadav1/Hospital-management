@@ -6,24 +6,25 @@ import {
    CardHeader,
    Avatar,
    CardContent,
-   Chip,
    Switch,
    Button,
    Input,
    Skeleton,
+   Typography
 } from '@mui/material'
 import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import '@/styles/container.css'
- import Dialog from '@mui/material/Dialog'
+import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import { useAppointmentUpdateMutation } from '@/services/Query'
 import { toast } from 'react-toastify'
+import { margin } from '@mui/system'
 
 const fadeInUp = {
    hidden: { opacity: 0, y: 20 },
@@ -43,7 +44,7 @@ function DoctorPage() {
    const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
    const [isFileChosenError, setIsFileChosenError] = useState(false);
 
-   const [appointmentUpdate] = useAppointmentUpdateMutation(); 
+   const [appointmentUpdate] = useAppointmentUpdateMutation();
 
    const handleFileChange = (event) => {
       setSelectedFile(event.target.files[0]);
@@ -99,20 +100,20 @@ function DoctorPage() {
    return (
       <Container maxWidth='lg'>
 
-<Grid container spacing={2}>
+         <Grid container spacing={2}>
 
-{isLoading && (
-   <>
- {
-    [1, 2, 3].map((e) => (
-      <Grid  key={e} item xs={12} sm={12} md={6} lg={4} sx={{ paddingBottom: '1rem' }} component={motion.div} variants={fadeInUp} initial='hidden' animate='visible'>
-       <Skeleton  variant="rectangular" width={300} height={400} animation="wave" />
-      </Grid>
-       ))
-      }
- </>
-)}
-</Grid>
+            {isLoading && (
+               <>
+                  {
+                     [1, 2, 3].map((e) => (
+                        <Grid key={e} item xs={12} sm={12} md={6} lg={4} sx={{ paddingBottom: '1rem' }} component={motion.div} variants={fadeInUp} initial='hidden' animate='visible'>
+                           <Skeleton variant="rectangular" width={300} height={400} animation="wave" />
+                        </Grid>
+                     ))
+                  }
+               </>
+            )}
+         </Grid>
 
          <Grid container spacing={2}>
             {Array.isArray(appointmentInfo?.data) &&
@@ -130,7 +131,7 @@ function DoctorPage() {
                      initial='hidden'
                      animate='visible'
                   >
-                     <Card sx={{ backgroundColor: '#C4D0DC' }}>
+                     <Card sx={{ backgroundColor: '#fff', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',border:'1px solid #13293D' }}>
                         <CardHeader
                            avatar={
                               <Avatar
@@ -146,23 +147,31 @@ function DoctorPage() {
                            }
                         />
                         <CardContent>
-                           <Chip
-                              label={'Disease Name : ' + e?.disease?.disease_name}
-                              sx={{ backgroundColor: '#7F8FA45B' }}
-                           />
+                           {e?.disease?.disease_name && (
+                              // eslint-disable-next-line react/jsx-no-undef
+                              <Typography variant="body1" sx={{ padding: '3px', marginBottom: '3px' }}>
+                                 {'Disease Name : ' + e?.disease?.disease_name}
+                              </Typography>
+                           )}
                         </CardContent>
                         <CardContent>
-                           <Chip
-                              label={'Patient Name : ' + e?.patient?.patient_name}
-                              sx={{ backgroundColor: '#7F8FA45B' }}
-                           />
+                           {e?.patient?.patient_name && (
+                              // eslint-disable-next-line react/jsx-no-undef
+                              <Typography variant="body1" sx={{ padding: '3px', marginBottom: '3px' }}>
+                                 {'Patient Name : ' + e?.patient?.patient_name}
+                              </Typography>
+                           )}
                         </CardContent>
                         <CardContent>
-                           <Chip
-                              label={'Appointment No : ' + e?.appointment_number}
-                              sx={{ backgroundColor: '#7F8FA45B' }}
-                           />
+                           {e?.appointment_number && (
+                              // eslint-disable-next-line react/jsx-no-undef
+                              <Typography variant="body1" sx={{ padding: '3px', marginBottom: '3px' }}>
+                                 {'Appointment No : ' + e?.appointment_number}
+                              </Typography>
+                           )}
                         </CardContent>
+
+
                         <CardContent>
                            <Switch
                               {...label}
@@ -170,15 +179,17 @@ function DoctorPage() {
                               onChange={handleSwitchChange}
                               color='primary'
                               size='small'
-                              disabled={isSwitchOn} 
+                              disabled={isSwitchOn}
                            />
                            {isSwitchOn ? (
-                              <div>
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                                  <Input type='file' onChange={handleFileChange} />
                                  <Button
                                     variant='contained'
                                     color='primary'
+                                    size='small'
                                     onClick={handleSubmit}
+                                    style={{ margin: 5 }}
                                  >
                                     Add Prescription
                                  </Button>

@@ -225,6 +225,13 @@ export const queries = createApi({
          method: 'GET',
       }),
    }),  
+   GetEmployeeDetails: build.query({
+      query:(employee_id) =>({
+         url:`employee/view/${employee_id}`,
+         method:'GET'
+      })
+
+     })
 
    }),
 })
@@ -255,6 +262,7 @@ export const {
    useChangeEmpDataMutation,
    useAppointmentUpdateMutation,
    useGetAppointmentHistoryQuery,
+   useGetEmployeeDetailsQuery
 } = queries
 
 // export const { useRegisterAuth } = apiAuth
