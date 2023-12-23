@@ -281,7 +281,7 @@ const GetActionButton = (row) => {
       <div
          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
-         <Dialog open={openModal} onClose={handleCloseModal}>
+         <Dialog open={openModal}>
             <DialogTitle
                style={{
                   border: '1px solid white',
