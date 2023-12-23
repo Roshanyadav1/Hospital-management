@@ -77,7 +77,7 @@ function FetchData() {
       (appointment) => appointment?.appointment_date
    )
 
-   console.log("jhfit", appointments?.data[0]?.appointment_id)
+   console.log('jhfit', appointments?.data[0]?.appointment_id)
 
    const [dateData, setDateData] = useState([])
 
@@ -207,7 +207,7 @@ function FetchData() {
 
    ///////////////////////////////////////////////////////
 
-   const  appointment_id  = appointments?.data[0]?.appointment_id
+   const appointment_id = appointments?.data[0]?.appointment_id
    const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
    console.log('dfs', appointmentInfo)
    const label = { inputProps: { 'aria-label': 'Size switch demo' } }
@@ -280,29 +280,60 @@ function FetchData() {
 
    if (dataloading) {
       return (
-         <Container maxWidth='lg'>
-            <Grid mt={3} container spacing={2}>
-               {[1, 2, 3, 4, 5].map((elmnt, i) => (
-                  <Grid
-                     item
-                     key={i}
-                     xs={12}
-                     sm={6}
-                     md={4}
-                     sx={{ paddingBottom: '1rem' }}
+        
+         <Grid container py={3}>
+            <Grid item container xs={12} sm={8}>
+               <Grid item xs={12} sm={12}>
+                  <Card
+                     sx={{
+                       
+                        borderRadius: 2,
+                        
+                     }}
                   >
-                     <Card sx={{ backgroundColor: '#C4D0DC' }}>
-                        <Skeleton
-                           variant='rectangular'
-                           width='100%'
-                           height={250}
-                           animation='wave'
-                        />
-                     </Card>
-                  </Grid>
-               ))}
+                     <Skeleton
+                        variant='rectangular'
+                        width='100%'
+                        height={200}
+                        animation='wave'
+                     />
+                  </Card>
+               </Grid>
+               <Grid item xs={12} sm={12} mt={5}>
+                  <Card
+                     sx={{
+                        
+                        borderRadius: 2,
+                        
+                     }}
+                  >
+                     <Skeleton
+                        variant='rectangular'
+                        width='100%'
+                        height={180}
+                        animation='wave'
+                     />
+                  </Card>
+               </Grid>
             </Grid>
-         </Container>
+            <Grid item container xs={12} sm={4}>
+               <Card
+                  sx={{
+                     width: '100%',
+                     marginLeft: 2 ,
+                     borderRadius: 2,
+                     height: 340 ,
+                    }}
+               >
+                  <Skeleton
+                     variant='rectangular'
+                     width='100%'
+                     height={340}
+                     animation='wave'
+                  />
+               </Card>
+            </Grid>
+         </Grid>
       )
       // } else if (isError) {
       //    return <p> No Appointment Here {isError}</p>
@@ -391,7 +422,7 @@ function FetchData() {
                                           height={150}
                                           width={150}
                                        />
-                                       <Typography variant='b1'>
+                                       <Typography variant='h6' color='secondary'>
                                           Data Not found
                                        </Typography>
                                     </div>
@@ -413,7 +444,6 @@ function FetchData() {
                                                    }
                                                 />
                                                 <ListItemText
-                                                   
                                                    primary={
                                                       formatTime(
                                                          appointment.appointment_time
@@ -434,7 +464,6 @@ function FetchData() {
                                                       <FiberManualRecordIcon />
                                                    </IconButton>
                                                 )}
-                                                
 
                                                 <Button
                                                    variant='contained'
@@ -449,18 +478,18 @@ function FetchData() {
                                                    open={open}
                                                 >
                                                    <DialogTitle
-                                                      sx={{ m: 0, p: 2 }}
+                                                      sx={{ m: 0 }}
                                                       id='customized-dialog-title'
                                                    >
-                                                      Modal title
+                                                      Appointment Information
                                                    </DialogTitle>
                                                    <IconButton
                                                       aria-label='close'
                                                       onClick={handleClose}
                                                       sx={{
                                                          position: 'absolute',
-                                                         right: 8,
-                                                         top: 8,
+                                                         right: 0,
+                                                         top: 0,
                                                          color: (theme) =>
                                                             theme.palette.grey[500],
                                                       }}
@@ -468,8 +497,11 @@ function FetchData() {
                                                       <CloseIcon />
                                                    </IconButton>
                                                    <DialogContent dividers>
-                                                      
-                                                      {Array.isArray( appointmentInfo?.data  ) && appointmentInfo?.data?.map(  (e, i) => (
+                                                      {Array.isArray(
+                                                         appointmentInfo?.data
+                                                      ) &&
+                                                         appointmentInfo?.data?.map(
+                                                            (e, i) => (
                                                                <Grid
                                                                   item
                                                                   key={i}
@@ -477,7 +509,6 @@ function FetchData() {
                                                                   sm={12}
                                                                   md={12}
                                                                   lg={12}
-                                                                  
                                                                   variants={fadeInUp}
                                                                   initial='hidden'
                                                                   animate='visible'
@@ -670,12 +701,11 @@ function FetchData() {
                               <Box
                                  sx={{
                                     width: '100%',
-                                    //   minWidth: 470,
+
                                     bgcolor: 'background.paper',
                                     borderRadius: 2,
                                     boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
                                  }}
-                                 // p={1}
                               >
                                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DateCalendar
