@@ -20,8 +20,8 @@ import { toast } from 'react-toastify'
 export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
-      // 'https://hospital-management-six-chi.vercel.app/api/',
-      baseUrl: 'http://192.168.8.172:3000/api/',
+   
+      baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
       prepareHeaders: (headers) => {
          const token = localStorage.getItem('access_token')
          if (token) {

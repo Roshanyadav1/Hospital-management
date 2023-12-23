@@ -9,6 +9,8 @@ import {
    IconButton,
    Switch,
 } from '@mui/material'
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import DialogContentText from '@mui/material/DialogContentText'
 import CloseIcon from '@mui/icons-material/Close'
 import { styled } from '@mui/material/styles'
@@ -153,6 +155,13 @@ const GetActionButton = (row) => {
    const [openModal, setOpenModal] = useState(false)
    const [openEditModal, setOpenEditModal] = useState(false)
    const [openViewModal, setOpenViewModal] = useState(false)
+
+   const Img = styled('img')({
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    });
 
    const INITIAL_FORM_STATE = {
       employee_name: row?.params?.row?.employee_name,
@@ -357,13 +366,16 @@ const GetActionButton = (row) => {
                      {/* // i have to add view the employee data in formate way  */}
                      <DialogContent>
                         <Grid container>
+                           <Grid item >
+                           <Img alt="complex" src="https://hospital0000.s3.ap-south-1.amazonaws.com/doctors/jagratijunwal.jpg" />
+                           </Grid>
 
                            <Grid item justifyContent='space-between' margin={3}  >
                               <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 Name : 
+                                 <AccountCircleOutlinedIcon/>
                               </Typography>
                               <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 Email :
+                              <EmailOutlinedIcon/>
                               </Typography>
                               <Typography variant='h6' color='primary' fontWeight='bold'>
                                  Phone :
