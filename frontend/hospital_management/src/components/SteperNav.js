@@ -254,8 +254,8 @@ function ResponsiveAppBar(props) {
                      >
                          {settings.map((setting) => (
                            <MenuItem key={setting.label}>
-                              <Link href={setting.route} prefetch>
-                                 <Typography component='a' textAlign='center'>
+                              <Link href={setting.route}  style={{  textDecoration: 'none', color: 'inherit' }} prefetch>
+                                 <Typography component='a' textAlign='center'  >
                                     {setting.label}
                                  </Typography>
                               </Link>

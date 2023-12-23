@@ -23,8 +23,8 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import { useAppointmentUpdateMutation } from '@/services/Query'
+import { useAddPrescriptionMutation } from '@/services/Query'
 import { toast } from 'react-toastify'
-import { margin } from '@mui/system'
 
 const fadeInUp = {
    hidden: { opacity: 0, y: 20 },
@@ -45,34 +45,33 @@ function DoctorPage() {
    const [isFileChosenError, setIsFileChosenError] = useState(false);
 
    const [appointmentUpdate] = useAppointmentUpdateMutation();
+   
+   const [addPrescription] = useAddPrescriptionMutation();
 
    const handleFileChange = (event) => {
-      setSelectedFile(event.target.files[0]);
+     setSelectedFile(event.target.files[0]);
    };
+ 
    const handleSubmit = async () => {
-      if (selectedFile) {
-         const formData = new FormData();
-         formData.append('file', selectedFile);
-
-         try {
-            const response = await fetch('/api/s3-upload', {
-               method: 'POST',
-               body: formData,
-            });
-
-            if (response.ok) {
-               setIsSuccessDialogOpen(true);
-               setIsFileChosenError(false);
-            } else {
-               console.error('Failed to upload image');
-            }
-         } catch (error) {
-            console.error('Error uploading image:', error);
-         }
+       if (selectedFile) {
+      //   const formData = new FormData();
+      //   formData.append('file', selectedFile);
+      //   formData.append('appointment_id', appointmentInfo?.data?.[0]?.appointment_id);
+      console.log('calll')
+    
+        try {
+           await addPrescription({'file':selectedFile,'appointment_id': appointmentInfo?.data?.[0]?.appointment_id});
+    
+           setIsSuccessDialogOpen(true);
+          setIsFileChosenError(false);
+        } catch (error) {
+          console.error('Error uploading prescription photo:', error);
+        }
       } else {
-         setIsFileChosenError(true);
+        setIsFileChosenError(true);
       }
-   };
+    };
+
 
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false);
@@ -185,7 +184,7 @@ function DoctorPage() {
                               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                                  <Input type='file' onChange={handleFileChange} />
                                  <Button
-                                    variant='contained'
+                                    // variant='contained'
                                     color='primary'
                                     size='small'
                                     onClick={handleSubmit}
@@ -233,3 +232,5 @@ function DoctorPage() {
 }
 
 export default DoctorPage
+
+ 

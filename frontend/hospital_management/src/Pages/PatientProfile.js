@@ -71,7 +71,7 @@ function PatientProfile() {
                                     </Grid>
                                     <Grid item xs={4} sm={4}>
                                        <Typography variant='h6' component='h5'>
-                                          Mohammad Haris
+                                          Aman Yadav
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           18
@@ -80,10 +80,10 @@ function PatientProfile() {
                                           Male
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          Harda
+                                          Khategaon
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          O+ve
+                                          A+
                                        </Typography>
                                     </Grid>
                                  </Grid>

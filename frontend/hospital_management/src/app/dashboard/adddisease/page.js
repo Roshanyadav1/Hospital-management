@@ -164,7 +164,7 @@ const page = () => {
 
    return (
       <div>
-         <Dialog open={openModal} onClose={handleCloseModal}>
+         <Dialog open={openModal}>
             <DialogTitle
                style={{
                   border: '1px solid white',
@@ -175,6 +175,7 @@ const page = () => {
                }}
             >
                Do you want to update status?
+               
             </DialogTitle>
             <Divider variant='middle' />
             <DialogContent>
@@ -201,7 +202,7 @@ const page = () => {
 
          <Modal
             open={open}
-            onClose={handleClose}
+            // onClose={handleClose}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
             
