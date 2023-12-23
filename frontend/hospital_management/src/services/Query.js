@@ -1,23 +1,8 @@
 'use client'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
-
-// export const apiAuth = createApi({
-//    reducerpath: 'apiAuth',
-//    baseQuery: fetchBaseQuery({
-//       baseUrl: 'https://dev-wk502078emf2n02u.us.auth0.com',
-//    }),
-//    endpoints: (build) => ({
-//       registerAuth: build.mutation({
-//          query: (value) => ({
-//             url: 'Username-Password-Authentication/signup',
-//             method: 'POST',
-//             body: value,
-//          }),
-//       }),
-//    }),
-// })
-export const queries = createApi({
+ 
+ export const queries = createApi({
    reducerpath: 'queries',
    baseQuery: fetchBaseQuery({
       // 'https://hospital-management-six-chi.vercel.app/api/',
@@ -180,6 +165,13 @@ export const queries = createApi({
             method: 'GET',
          }),
       }),
+      addPrescription: build.mutation({
+         query: (formData) => ({
+           url: '/prescription/add',
+           method: 'POST',
+           body: formData,
+         }),
+       }),   
       getDoctorId: build.query({
          query: (doctor_id) => ({
             url: `/appointment/view/?doctor_id=${doctor_id}`,
@@ -232,16 +224,23 @@ export const queries = createApi({
          method:'GET'
       })
 
-     })
-
+     }),
+     leaveView: build.query({
+      query: (doctor_id) => ({
+         url: `/leave/view/?doctor_id=${doctor_id}`,
+         method: 'GET',
+      }),
    }),
-})
+   })
+
+   })
 
 export const {
    useRegisterHospitalMutation,
    useDoctorUpdateMutation,
    useAddEmployeeMutation,
    useAddDiseasesMutation,
+   useAddPrescriptionMutation,
    useDeleteEmployeeMutation,
    useGetEmployeeQuery,
    useGetAllHospitalQuery,
@@ -263,7 +262,8 @@ export const {
    useChangeEmpDataMutation,
    useAppointmentUpdateMutation,
    useGetAppointmentHistoryQuery,
-   useGetEmployeeDetailsQuery
+   useGetEmployeeDetailsQuery,
+   useLeaveViewQuery,
 } = queries
 
-// export const { useRegisterAuth } = apiAuth
+ 

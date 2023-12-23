@@ -243,6 +243,7 @@ const DoctorProfile = ({ id }) => {
                          </Grid>
                       </Grid>
                    </AccordionDetails>
+                   
                 </Accordion>))
              }
              />

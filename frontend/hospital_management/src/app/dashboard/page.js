@@ -5,7 +5,7 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
 // import datanotfound from '@/assets/dataNotFound.gif'
 import { Avatar, IconButton } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import doctorImage from '@/assets/doctorIllustration.png'
 import Image from 'next/image'
 import dayjs from 'dayjs'
@@ -37,6 +37,9 @@ import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { useParams } from 'next/navigation'
 import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { useAddPrescriptionMutation } from '../../services/Query'
+
+import { useLeaveViewQuery } from '../../services/Query'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
    '& .MuiDialogContent-root': {
@@ -65,30 +68,46 @@ const style = {
 }
 
 function FetchData() {
+   const requestAbortController = useRef(null)
    const userRole = localStorage.getItem('user_role')
    const doctorId = localStorage.getItem('user_id')
+   const [dateData, setDateData] = useState([])
+   const [isLoading, setIsLoading] = useState(false)
+   const [highlightedDays, setHighlightedDays] = useState(getSpecificDates())
+   const [isSwitchOn, setIsSwitchOn] = useState(false)
+   const [selectedFile, setSelectedFile] = useState(null)
+   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false)
+   const [isFileChosenError, setIsFileChosenError] = useState(false)
+   const [open, setOpen] = useState(false)
+   const [datesArray, setDatesArray] = useState([])
+
+
+   // const [appointmentUpdate] = useAppointmentUpdateMutation()
    const {
       data: appointments,
       isError,
       isLoading: dataloading,
    } = useGetDoctorIdQuery(doctorId, { skip: userRole === 'Doctor' ? false : true })
+
+   const docId = localStorage.getItem("user_id")
+   const {data: holidays, isSuccess:isHolidaySuccess} = useLeaveViewQuery(docId) 
+   const appointment_id = appointments?.data[0]?.appointment_id
+   const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
+
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
    const dates = appointments?.data?.map(
       (appointment) => appointment?.appointment_date
    )
 
-   console.log('jhfit', appointments?.data[0]?.appointment_id)
-
-   const [dateData, setDateData] = useState([])
-
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
    })
-
-   function getSpecificDates() {
-      return dateData
-   }
-
+   useEffect(() => {
+      if (dateData?.length > 0) {
+         fetchHighlightedDays(initialValue)
+         return () => requestAbortController.current?.abort()
+      }
+   }, [dateData])
    useEffect(() => {
       if (names?.length > 0) {
          setDateData(names)
@@ -97,6 +116,17 @@ function FetchData() {
          getSpecificDates()
       }
    }, [names?.length])
+ // for holidays highlight in calender
+   useEffect(()=> {
+      if(holidays?.data && isHolidaySuccess){
+         setDatesArray(holidays?.data?.map(item => item.date));
+      }
+   },[holidays?.data,isHolidaySuccess])
+   function getSpecificDates() {
+      return dateData
+   }
+
+
 
    function fakeFetch(date, { signal }) {
       return new Promise((resolve, reject) => {
@@ -150,9 +180,7 @@ function FetchData() {
       )
    }
 
-   const requestAbortController = React.useRef(null)
-   const [isLoading, setIsLoading] = React.useState(false)
-   const [highlightedDays, setHighlightedDays] = React.useState(getSpecificDates())
+
 
    const fetchHighlightedDays = (date) => {
       const controller = new AbortController()
@@ -172,12 +200,7 @@ function FetchData() {
       requestAbortController.current = controller
    }
 
-   useEffect(() => {
-      if (dateData?.length > 0) {
-         fetchHighlightedDays(initialValue)
-         return () => requestAbortController.current?.abort()
-      }
-   }, [dateData])
+
 
    const handleMonthChange = (date) => {
       if (requestAbortController.current) {
@@ -194,58 +217,77 @@ function FetchData() {
       const [hours, minutes] = timeString.split(':')
       return `${hours}:${minutes}`
    }
+    
+   const doctorID =  appointments?.data[0]?.doctor?.doctor_id
 
-   const disabledDates = ['2023-12-05', '2023-12-25', '2023-12-30']
+
+// console.log(datesArray);
+
+//    const disabledDates = datesArray;
+//    console.log(disabledDates)
 
    const shouldDisableDate = (date) => {
       const isSunday = date.day() === 0
       const formattedDate = date.format('YYYY-MM-DD')
-      const isRandomDisabledDate = disabledDates.includes(formattedDate)
+      const isRandomDisabledDate = datesArray?.includes(formattedDate)
 
       return isSunday || isRandomDisabledDate
    }
 
    ///////////////////////////////////////////////////////
 
-   const appointment_id = appointments?.data[0]?.appointment_id
-   const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
-   console.log('dfs', appointmentInfo)
+   
    const label = { inputProps: { 'aria-label': 'Size switch demo' } }
-
-   const [isSwitchOn, setIsSwitchOn] = useState(false)
-   const [selectedFile, setSelectedFile] = useState(null)
-   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false)
-   const [isFileChosenError, setIsFileChosenError] = useState(false)
-
    const [appointmentUpdate] = useAppointmentUpdateMutation()
+   const [addPrescription] = useAddPrescriptionMutation();
+
 
    const handleFileChange = (event) => {
       setSelectedFile(event.target.files[0])
    }
    const handleSubmit = async () => {
       if (selectedFile) {
-         const formData = new FormData()
-         formData.append('file', selectedFile)
-
+         const formData = new FormData();
+         formData.append('file', selectedFile);
+   
          try {
-            const response = await fetch('/api/s3-upload', {
+             const s3Response = await fetch('/api/s3-upload', {
                method: 'POST',
                body: formData,
-            })
-
-            if (response.ok) {
-               setIsSuccessDialogOpen(true)
-               setIsFileChosenError(false)
+            });
+   
+             if (s3Response.ok) {
+                const s3Data = await s3Response.json();
+               const imageUrl = s3Data.imageUrl;
+   
+                console.log('S3 Image URL:', imageUrl);
+   
+                const apiResponse = await addPrescription({
+                  prescription_photo: imageUrl,
+                  appointment_id: appointmentInfo?.data?.[0]?.appointment_id,
+               });
+   
+                if (apiResponse.data) {
+                  setIsSuccessDialogOpen(true);
+                  setIsFileChosenError(false);
+               } else {
+                  console.error('Failed to post prescription data to API');
+               }
             } else {
-               console.error('Failed to upload image')
+               console.error('Failed to upload image to S3');
             }
          } catch (error) {
-            console.error('Error uploading image:', error)
+            console.error('Error:', error);
          }
       } else {
-         setIsFileChosenError(true)
+         setIsFileChosenError(true);
       }
-   }
+   };
+   
+   
+   
+   
+   
 
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false)
@@ -269,7 +311,6 @@ function FetchData() {
       setIsSwitchOn(!isSwitchOn)
    }
 
-   const [open, setOpen] = React.useState(false)
 
    const handleClickOpen = () => {
       setOpen(true)
