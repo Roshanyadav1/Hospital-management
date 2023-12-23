@@ -159,8 +159,8 @@ const GetActionButton = (row) => {
    const Img = styled('img')({
       margin: 'auto',
       display: 'block',
-      maxWidth: '100%',
-      maxHeight: '100%',
+      maxWidth: '80%',
+      maxHeight: '80%',
     });
 
    const INITIAL_FORM_STATE = {
@@ -370,7 +370,7 @@ const GetActionButton = (row) => {
                            <Img alt="complex" src="https://hospital0000.s3.ap-south-1.amazonaws.com/doctors/jagratijunwal.jpg" />
                            </Grid>
 
-                           <Grid item justifyContent='space-between' margin={3}  >
+                           <Grid item justifyContent='space-between' >
                               <Typography variant='h6' color='primary' fontWeight='bold'>
                                  <AccountCircleOutlinedIcon/>
                               </Typography>
@@ -389,7 +389,7 @@ const GetActionButton = (row) => {
 
 
                            </Grid>
-                           <Grid item justifyContent='space-between' margin={3} >
+                           <Grid item justifyContent='space-between' >
                               <Typography variant='h6' color='primary' fontWeight='bold'>
                                   {viewEmployee?.data?.employee_name}
                               </Typography>
