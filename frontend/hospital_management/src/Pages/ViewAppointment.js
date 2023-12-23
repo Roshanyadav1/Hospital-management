@@ -1,15 +1,15 @@
 'use client'
+// import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import { useGetAppointmentQuery } from '@/services/Query'
 import { Chip, Container, Grid, Skeleton } from '@mui/material'
-import viewappointmentimg from './../assets/viewAppointment.gif'
+import datanotfoundd from '../assets/nodatafoundd.jpg'
 import Image from 'next/image'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
-
    if (isLoading) {
       return (
             <Container maxWidth='sm'>
@@ -69,15 +69,15 @@ function RecipeReviewCard() {
                </Grid>
             </Container>
       )
-   } else if (isError || !Array.isArray(appointment?.data) || appointment.data.length === 0) {
-      return (
-         <Container maxWidth='sm'>
-            <Grid mt={3} container justifyContent='center'>
-               <Image height={400} width={400} src={viewappointmentimg} alt='No data found' />
-            </Grid>
-         </Container>
-      );
-     
+   } else if (isError) {
+      return  <Container maxWidth='xl' sx={{height:"90vh" , alignItems:'center'}}>
+      <Grid mt={2} container spacing={2}  justifyContent='center'
+      alignItems='center'>
+        <Image src={"https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif"
+} width={350} height={350} alt="No appointment Here"/>
+      </Grid>
+    </Container>
+      //  <p> No Appointment Here {isError}</p>
    } else {
       return (
          <Container maxWidth='sm'>
@@ -96,7 +96,6 @@ function RecipeReviewCard() {
                      <Card sx={{ backgroundColor: '#C4D0DC' }}>
                         <Grid container justifyContent='space-between'>
                         <Grid item>
-
                         <CardHeader
                            avatar={
                               <Avatar
@@ -115,7 +114,7 @@ function RecipeReviewCard() {
                               <Grid item p={3}>
                                  <Chip
                                     label={e?.checked ? 'Checked' : 'Not Checked'}
-                                    sx={{ backgroundColor:e?.checked ? '#39cef5' : 'gray'  , marginRight: 1 }}
+                                    sx={{ backgroundColor:e?.checked ? '#39CEF5' : 'gray'  , marginRight: 1 }}
                                  />
                               </Grid>
                            </Grid>
@@ -139,7 +138,6 @@ function RecipeReviewCard() {
                ))}
          </Grid>
       </Container>
-      
       )
    }
 }
