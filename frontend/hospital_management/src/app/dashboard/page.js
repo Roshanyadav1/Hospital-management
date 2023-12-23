@@ -37,6 +37,7 @@ import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { useParams } from 'next/navigation'
 import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { useAddPrescriptionMutation } from '../../services/Query'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
    '& .MuiDialogContent-root': {
@@ -218,34 +219,55 @@ function FetchData() {
    const [isFileChosenError, setIsFileChosenError] = useState(false)
 
    const [appointmentUpdate] = useAppointmentUpdateMutation()
+   const [addPrescription] = useAddPrescriptionMutation();
+
 
    const handleFileChange = (event) => {
       setSelectedFile(event.target.files[0])
    }
    const handleSubmit = async () => {
       if (selectedFile) {
-         const formData = new FormData()
-         formData.append('file', selectedFile)
-
+         const formData = new FormData();
+         formData.append('file', selectedFile);
+   
          try {
-            const response = await fetch('/api/s3-upload', {
+             const s3Response = await fetch('/api/s3-upload', {
                method: 'POST',
                body: formData,
-            })
-
-            if (response.ok) {
-               setIsSuccessDialogOpen(true)
-               setIsFileChosenError(false)
+            });
+   
+             if (s3Response.ok) {
+                const s3Data = await s3Response.json();
+               const imageUrl = s3Data.imageUrl;
+   
+                console.log('S3 Image URL:', imageUrl);
+   
+                const apiResponse = await addPrescription({
+                  prescription_photo: imageUrl,
+                  appointment_id: appointmentInfo?.data?.[0]?.appointment_id,
+               });
+   
+                if (apiResponse.data) {
+                  setIsSuccessDialogOpen(true);
+                  setIsFileChosenError(false);
+               } else {
+                  console.error('Failed to post prescription data to API');
+               }
             } else {
-               console.error('Failed to upload image')
+               console.error('Failed to upload image to S3');
             }
          } catch (error) {
-            console.error('Error uploading image:', error)
+            console.error('Error:', error);
          }
       } else {
-         setIsFileChosenError(true)
+         setIsFileChosenError(true);
       }
-   }
+   };
+   
+   
+   
+   
+   
 
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false)
