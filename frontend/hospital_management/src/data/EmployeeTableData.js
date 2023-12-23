@@ -317,7 +317,7 @@ const GetActionButton = (row) => {
                </Button>
             </DialogActions>
          </Dialog>
-         <Dialog open={openEditModal} onClose={handleCloseEditModal} padding={3}>
+         <Dialog open={openEditModal}  padding={3}>
             <DialogTitle>Edit Employee</DialogTitle>
             <IconButton
                aria-label='close'
