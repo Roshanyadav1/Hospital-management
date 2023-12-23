@@ -98,7 +98,7 @@ function ResponsiveAppBar(props) {
                      <Button sx={{ color: '#fff' }}>Dashboard</Button>
                   </Link>
                   {pages.map((item) => (
-                     <Link key={item.label} href={item.route} prefetch passHref>
+                     <Link key={item ? item?.label : ''} href={item.route} prefetch passHref>
                         <Button sx={{ color: '#fff' }}>{item.label}</Button>
                      </Link>
                   ))}
@@ -119,7 +119,7 @@ function ResponsiveAppBar(props) {
             return (
                <>
                   {pages.map((item) => (
-                     <Link key={item.label} href={item.route} prefetch passHref>
+                     <Link key={item.label} href={item ? item?.label : ''} prefetch passHref>
                         <Button sx={{ color: '#fff' }}>{item.label}</Button>
                      </Link>
                   ))}
@@ -188,7 +188,7 @@ function ResponsiveAppBar(props) {
             {pages.map((item) => (
                <ListItem key={item.label} disablePadding>
                   <ListItemButton sx={{ textAlign: 'center' }}>
-                     <Link href={item.route} passHref>
+                     <Link href={item ? item?.label : ''} passHref>
                         <ListItemText
                            primary={item.label}
                            primaryTypographyProps={{
@@ -254,7 +254,7 @@ function ResponsiveAppBar(props) {
                      >
                          {settings.map((setting) => (
                            <MenuItem key={setting.label}>
-                              <Link href={setting.route}  style={{  textDecoration: 'none', color: 'inherit' }} prefetch>
+                              <Link href={setting ? setting?.route : ''}  style={{  textDecoration: 'none', color: 'inherit' }} prefetch>
                                  <Typography component='a' textAlign='center'  >
                                     {setting.label}
                                  </Typography>

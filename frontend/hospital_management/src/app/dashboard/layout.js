@@ -17,7 +17,6 @@ import { Toolbar } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import TrackChangesIcon from '@mui/icons-material/TrackChanges'
-import MedicationIcon from '@mui/icons-material/Medication'
 import CoronavirusIcon from '@mui/icons-material/Coronavirus'
 import { Container } from '@mui/system'
 import withRoleRedirect from '@/helpers/withRoleRedirect'
@@ -169,7 +168,6 @@ function Layout({ children }) {
                   {[
                        {
                         text: 'Home',
-                        path: '/dashboard',
                         icon: <HomeIcon/>,
                      },
                      {
@@ -205,7 +203,7 @@ function Layout({ children }) {
                               textDecoration: 'none',
                            }}
                            prefetch={true}
-                           href={item.path}
+                           href={ item? item?.path:''}
                         >
                            <ListItemButton
                               component='a'

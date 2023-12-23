@@ -14,15 +14,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
-import Link from 'next/link'
 import ListItem from '@mui/material/ListItem'
 import PeopleIcon from '@mui/icons-material/People'
 import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import { useGetDoctorIdQuery } from '../../services/Query'
-import { Container, Grid, Button, Typography, Skeleton } from '@mui/material'
-import { colors, themeOptions } from '@/styles/theme'
+import { Grid, Button, Typography, Skeleton } from '@mui/material'
+import { colors } from '@/styles/theme'
 import { styled } from '@mui/material/styles'
 
 import '@/styles/container.css'
@@ -34,7 +32,6 @@ import DialogContentText from '@mui/material/DialogContentText'
 import { useAppointmentUpdateMutation } from '@/services/Query'
 import { toast } from 'react-toastify'
 import { useGetAppointmentInfoQuery } from '@/services/Query'
-import { useParams } from 'next/navigation'
 import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAddPrescriptionMutation } from '../../services/Query'
@@ -55,17 +52,6 @@ const fadeInUp = {
    visible: { opacity: 1, y: 0 },
 }
 
-const style = {
-   position: 'absolute',
-   top: '50%',
-   left: '50%',
-   transform: 'translate(-50%, -50%)',
-   width: 400,
-   bgcolor: 'background.paper',
-   border: '2px solid #000',
-   boxShadow: 24,
-   p: 4,
-}
 
 function FetchData() {
    const requestAbortController = useRef(null)
@@ -80,9 +66,6 @@ function FetchData() {
    const [isFileChosenError, setIsFileChosenError] = useState(false)
    const [open, setOpen] = useState(false)
    const [datesArray, setDatesArray] = useState([])
-
-
-   // const [appointmentUpdate] = useAppointmentUpdateMutation()
    const {
       data: appointments,
       isError,
@@ -95,9 +78,6 @@ function FetchData() {
    const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
-   const dates = appointments?.data?.map(
-      (appointment) => appointment?.appointment_date
-   )
 
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
@@ -218,6 +198,7 @@ function FetchData() {
       return `${hours}:${minutes}`
    }
     
+   // eslint-disable-next-line no-unused-vars
    const doctorID =  appointments?.data[0]?.doctor?.doctor_id
 
 
@@ -233,8 +214,6 @@ function FetchData() {
 
       return isSunday || isRandomDisabledDate
    }
-
-   ///////////////////////////////////////////////////////
 
    
    const label = { inputProps: { 'aria-label': 'Size switch demo' } }

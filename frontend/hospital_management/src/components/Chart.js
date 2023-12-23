@@ -244,10 +244,10 @@ function Chart() {
 
             <Grid pt={3} item xs={12} style={{ display: 'flex' }}>
                {showServerError && (
-                  <div>
-                     <h2>Error fetching data from the server</h2>
+                  <div  style={{textAlign:'center'}} >
+                     <h3>Error fetching data from the server</h3>
                      {showReloadButton && (
-                        <Button onClick={() => refetchAppCount()}>Reload</Button>
+                        <Button style={{border:'1px solid blue'}} onClick={() => refetchAppCount()}>Reload</Button>
                      )}
                   </div>
                )}
