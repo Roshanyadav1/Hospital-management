@@ -116,6 +116,10 @@ class UserLoginView(GenericAPIView):
                 else:
                     id = user.member_id
                 logger.info({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': status.HTTP_200_OK,
                     'message': "Logged In As " + user.user_role,
                     'email': user.user_email,
                     'name': user.user_name,
@@ -143,11 +147,15 @@ class UserLoginView(GenericAPIView):
                                 employee_id=user.member_id).doctor_id
                         else:
                             id = user.member_id
-                        # logger.info({
-                        #     'message': "Logged In As " + user.user_role,
-                        #     'email': user.user_email,
-                        #     'name': user.user_name,
-                        # })
+                        logger.info({
+                            'timestamp': current_timestamp,
+                            'method': request.method,
+                            'path': request.path,
+                            'status': status.HTTP_200_OK,
+                            'message': "Logged In As " + user.user_role,
+                            'email': user.user_email,
+                            'name': user.user_name,
+                        })
                         return Response(
                             {
                                 'status': status.HTTP_200_OK,
@@ -165,6 +173,14 @@ class UserLoginView(GenericAPIView):
                             message = "You Are Not Approved From Administrator"
                         if user.user_role == "Patient":
                             message = "Verify Your Email First"
+                        logger.info({
+                            'timestamp': current_timestamp,
+                            'method': request.method,
+                            'path': request.path,
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': message,
+                            'email': email,
+                        })
                         Response.status_code = status.HTTP_400_BAD_REQUEST
                         return Response(
                             {
@@ -174,6 +190,14 @@ class UserLoginView(GenericAPIView):
                         )
                 else:
                     Response.status_code = status.HTTP_400_BAD_REQUEST
+                    logger.info({
+                        'timestamp': current_timestamp,
+                        'method': request.method,
+                        'path': request.path,
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'message': "Password Mismatch",
+                        'email': email,
+                    })
                     return Response(
                         {
                             'status': status.HTTP_400_BAD_REQUEST,
@@ -182,6 +206,14 @@ class UserLoginView(GenericAPIView):
                     )
         else:
             Response.status_code = status.HTTP_404_NOT_FOUND
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': status.HTTP_404_NOT_FOUND,
+                'message': "User With This Email Is Not Registered",
+                'email': email,
+            })
             return Response(
                 {
                     'status': status.HTTP_404_NOT_FOUND,

@@ -21,6 +21,12 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from user.models import User
 import jwt
+from hospital_management.logger import logger
+from datetime import datetime
+
+
+current_datetime = datetime.now()
+current_timestamp = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
 
 def get_tokens_for_user(user):
@@ -60,6 +66,14 @@ class EmployeeAdd(GenericAPIView):
             except:
                 response_message = ResponseMessage.ALREADY_REGISTERED
                 response_code = status.HTTP_400_BAD_REQUEST
+            logger.warning({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': 'Employee ' + response_message,
+                'email': request.data.get('employee_email'),
+            })
             return Response(
                 {
                     'status': response_code,
@@ -109,6 +123,15 @@ class EmployeeAdd(GenericAPIView):
             except:
                 response_message = ResponseMessage.ADD_SUCCESS
                 response_code = status.HTTP_201_CREATED
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': 'Employee ' + response_message,
+                'email': user.user_email,
+                'user_role': user.user_role
+            })
             return Response(
                 {
                     'status': response_code,
@@ -155,7 +178,14 @@ class EmployeeView(ListAPIView):
         except:
             response_message = ResponseMessage.RETRIEVED_SUCCESS
             response_code = status.HTTP_200_OK
-
+        logger.warning({
+            'timestamp': current_timestamp,
+            'method': request.method,
+            'path': request.path,
+            'status': response_code,
+            'message': 'Employee ' + response_message,
+            'email': user.user_email,
+        })
         return Response(
             {
                 'status': response_code,
@@ -183,6 +213,14 @@ class EmployeeViewById(APIView):
                 except:
                     response_message = ResponseMessage.RETRIEVED_SUCCESS
                     response_code = status.HTTP_200_OK
+                logger.info({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': response_code,
+                    'message': 'Employee ' + response_message,
+                    'email': employee.employee_email,
+                })
                 return Response(
                     {
                         'status': response_code,
@@ -201,6 +239,13 @@ class EmployeeViewById(APIView):
                 except:
                     response_message = ResponseMessage.INVALID_ID
                     response_code = status.HTTP_400_BAD_REQUEST
+                logger.warning({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': response_code,
+                    'message': 'Employee ' + response_message,
+                })
                 return Response(
                     {
                         'status': response_code,
@@ -222,7 +267,7 @@ class EmployeeDelete(APIView):
                 user.delete()
             except:
                 pass
-            employee.delete()
+            employee = employee.delete()
             response_message = ""
             response_code = ""
             try:
@@ -233,6 +278,15 @@ class EmployeeDelete(APIView):
                 response_message = ResponseMessage.DELETE_SUCCESS
                 response_code = status.HTTP_200_OK
                 Response.status_code = error.error_code
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': 'Employee ' + response_message,
+                'email': employee.employee_email,
+                'user_role': employee.employee_role
+            })
             return Response(
                 {
                     'status': response_code,
@@ -250,6 +304,13 @@ class EmployeeDelete(APIView):
             except:
                 response_message = ResponseMessage.INVALID_ID
                 response_code = status.HTTP_400_BAD_REQUEST
+            logger.warning({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': 'Employee ' + response_message,
+            })
             return Response(
                 {
                     'status': response_code,
@@ -286,6 +347,14 @@ class EmployeeUpdate(APIView):
             except:
                 response_message = ResponseMessage.UPDATE_SUCCESS
                 response_code = status.HTTP_200_OK
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': 'Employee ' + response_message,
+                'email': user.user_email,
+            })
             return Response(
                 {
                     'status': response_code,

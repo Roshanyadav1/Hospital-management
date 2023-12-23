@@ -29,9 +29,11 @@ SECRET_KEY = 'django-insecure-^xhl(d2zpr^x#$h(4uw332=lg*+^$t!+83%ul*h^hmrw@c--&h
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '*',
     '127.0.0.1',
     '192.168.0.7',
     '192.168.3.189',
+    '192.168.8.189',
     'hospital-management-six-chi.vercel.app',
     # '192.168.46.147',
 ]

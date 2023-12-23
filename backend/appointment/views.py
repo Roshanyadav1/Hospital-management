@@ -26,6 +26,13 @@ from prescription.models import Prescription
 from checkup.models import CheckUp
 from datetime import datetime, timedelta
 from patient.models import Patient
+from hospital_management.logger import logger
+from datetime import datetime
+
+
+current_datetime = datetime.now()
+current_timestamp = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
+
 
 class AppointmentAdd(GenericAPIView):
     serializer_class = AppointmentAddSerializer
@@ -45,6 +52,15 @@ class AppointmentAdd(GenericAPIView):
 
         if user_role == "Manager" or user_role == "Admin":
             Response.status_code = status.HTTP_401_UNAUTHORIZED
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': status.HTTP_401_UNAUTHORIZED,
+                'message': "Unauthorized Access",
+                'email': user.user_email,
+                'user_role': user_role,
+            })
             return Response(
                 {
                     'status': status.HTTP_401_UNAUTHORIZED,
@@ -54,6 +70,15 @@ class AppointmentAdd(GenericAPIView):
         if user_role == "Doctor":
             if request.GET.get('doctor_id') is None:
                 Response.status_code = status.HTTP_401_UNAUTHORIZED
+                logger.info({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                    'email': user.user_email,
+                    'user_role': user_role,
+                })
                 return Response(
                     {
                         'status': status.HTTP_401_UNAUTHORIZED,
@@ -69,6 +94,14 @@ class AppointmentAdd(GenericAPIView):
             response_message = error.error_message
             response_code = error.error_code
             Response.status_code = error.error_code
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': "Appointment" + response_message,
+                'email': user.user_email,
+            })
         except:
             response_message = ResponseMessage.BOOKED_SUCCESS
             response_code = status.HTTP_201_CREATED
@@ -129,7 +162,6 @@ class AppointmentTab(ListAPIView):
                     list['tab'] = 'upcoming'
                 if list['appointment_date'] < datetime.today().date():
                     list['tab'] = 'previous'
-
             return Response({
                 'status': status.HTTP_200_OK,
                 'message': ResponseMessage.RETRIEVED_SUCCESS,
@@ -163,6 +195,15 @@ class AppointmentCount(ListAPIView):
 
         if user_role == "Patient":
             Response.status_code = status.HTTP_401_UNAUTHORIZED
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': status.HTTP_401_UNAUTHORIZED,
+                'message': "Unauthorized Access",
+                'email': user.user_email,
+                'user_role': user.user_role
+            })
             return Response(
                 {
                     'status': status.HTTP_401_UNAUTHORIZED,
@@ -171,6 +212,15 @@ class AppointmentCount(ListAPIView):
             )
         if user_role == "Doctor":
             Response.status_code = status.HTTP_401_UNAUTHORIZED
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': status.HTTP_401_UNAUTHORIZED,
+                'message': "Unauthorized Access",
+                'email': user.user_email,
+                'user_role': user.user_role
+            })
             return Response(
                 {
                     'status': status.HTTP_401_UNAUTHORIZED,
@@ -342,6 +392,15 @@ class AppointmentView(ListAPIView):
         except:
             response_message = ResponseMessage.RETRIEVED_SUCCESS
             response_code = status.HTTP_200_OK
+        logger.info({
+            'timestamp': current_timestamp,
+            'method': request.method,
+            'path': request.path,
+            'status': response_code,
+            'message': "Appointment " + response_message,
+            'email': user.user_email,
+            'user_role': user.user_role
+        })
         return Response(
             {
                 'status': response_code,
@@ -415,6 +474,15 @@ class AppointmentUpdate(APIView):
 
             if user_role == "Manager":
                 Response.status_code = status.HTTP_401_UNAUTHORIZED
+                logger.info({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                    'email': user.user_email,
+                    'user_role': user.user_role
+                })
                 return Response(
                     {
                         'status': status.HTTP_401_UNAUTHORIZED,
@@ -423,6 +491,15 @@ class AppointmentUpdate(APIView):
                 )
             if user_role == "Admin":
                 Response.status_code = status.HTTP_401_UNAUTHORIZED
+                logger.info({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': status.HTTP_401_UNAUTHORIZED,
+                    'message': "Unauthorized Access",
+                    'email': user.user_email,
+                    'user_role': user.user_role
+                })
                 return Response(
                     {
                         'status': status.HTTP_401_UNAUTHORIZED,
@@ -438,6 +515,15 @@ class AppointmentUpdate(APIView):
             except:
                 response_message = ResponseMessage.EMPTY_REQUEST
                 response_code = status.HTTP_400_BAD_REQUEST
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': response_message,
+                'email': user.user_email,
+                'user_role': user.user_role
+            })
             return Response(
                 {
                     'status': response_code,
@@ -461,6 +547,15 @@ class AppointmentUpdate(APIView):
                 except:
                     response_message = ResponseMessage.UPDATE_SUCCESS
                     response_code = status.HTTP_200_OK
+                logger.info({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': response_code,
+                    'message': 'Appointment ' + response_message,
+                    'email': user.user_email,
+                    'user_role': user.user_role
+                })
                 return Response(
                     {
                         'status': response_code,

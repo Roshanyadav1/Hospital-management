@@ -18,6 +18,12 @@ from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from user.models import User
 import jwt
+from hospital_management.logger import logger
+from datetime import datetime
+
+
+current_datetime = datetime.now()
+current_timestamp = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
 
 def get_tokens_for_user(user):
@@ -65,6 +71,15 @@ class PatientRegister(GenericAPIView):
             except:
                 response_message = ResponseMessage.ALREADY_REGISTERED
                 response_code = status.HTTP_400_BAD_REQUEST
+            logger.warning({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': 'Patient' + response_message,
+                'email': user.user_email,
+                'user_role': user.user_role
+            })
             return Response(
                 {
                     'status': response_code,
@@ -102,6 +117,15 @@ class PatientRegister(GenericAPIView):
             except:
                 response_message = ResponseMessage.REGISTRATION_SUCCESS
                 response_code = status.HTTP_201_CREATED
+            logger.info({
+                'timestamp': current_timestamp,
+                'method': request.method,
+                'path': request.path,
+                'status': response_code,
+                'message': 'Patient' + response_message,
+                'email': user.user_email,
+                'user_role': user.user_role
+            })
             return Response(
                 {
                     'status': response_code,
@@ -151,6 +175,15 @@ class PatientView(ListAPIView):
         except:
             response_message = ResponseMessage.RETRIEVED_SUCCESS
             response_code = status.HTTP_200_OK
+        logger.info({
+            'timestamp': current_timestamp,
+            'method': request.method,
+            'path': request.path,
+            'status': response_code,
+            'message': 'Patient' + response_message,
+            'email': user.user_email,
+            'user_role': user.user_role
+        })
         return Response(
             {
                 'status': response_code,
@@ -180,7 +213,14 @@ class PatientViewById(APIView):
                 except:
                     response_message = ResponseMessage.RETRIEVED_SUCCESS
                     response_code = status.HTTP_200_OK
-
+                logger.info({
+                    'timestamp': current_timestamp,
+                    'method': request.method,
+                    'path': request.path,
+                    'status': response_code,
+                    'message': 'Patient' + response_message,
+                    'email': serializer.data.patient_email,
+                })
                 return Response(
                     {
                         'status': response_code,
