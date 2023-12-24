@@ -366,16 +366,14 @@ const GetActionButton = (row) => {
                      {/* // i have to add view the employee data in formate way  */}
                      <DialogContent>
                         <Grid container>
-                           <Grid item >
-                           <Img alt="complex" src="https://hospital0000.s3.ap-south-1.amazonaws.com/doctors/jagratijunwal.jpg" />
-                           </Grid>
+                        
 
                            <Grid item justifyContent='space-between' >
                               <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 <AccountCircleOutlinedIcon/>
+                               Name: 
                               </Typography>
                               <Typography variant='h6' color='primary' fontWeight='bold'>
-                              <EmailOutlinedIcon/>
+                           Email:
                               </Typography>
                               <Typography variant='h6' color='primary' fontWeight='bold'>
                                  Phone :
