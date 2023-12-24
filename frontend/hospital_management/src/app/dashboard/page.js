@@ -85,13 +85,14 @@ function FetchData() {
 
    const docId = localStorage.getItem("user_id")
    const {data: holidays, isSuccess:isHolidaySuccess} = useLeaveViewQuery(docId) 
+
    const appointment_id = appointments?.data[0]?.appointment_id
    const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
-   const dates = appointments?.data?.map(
-      (appointment) => appointment?.appointment_date
-   )
+   // const dates = appointments?.data?.map(
+   //    (appointment) => appointment?.appointment_date
+   // )
 
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
@@ -195,7 +196,7 @@ function FetchData() {
    }
 
 
-
+// for showing data in current month only
    const handleMonthChange = (date) => {
       if (requestAbortController.current) {
          requestAbortController.current.abort()
