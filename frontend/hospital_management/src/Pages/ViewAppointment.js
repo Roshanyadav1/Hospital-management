@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import { useGetAppointmentQuery } from '@/services/Query'
 import { Chip, Container, Grid, Skeleton } from '@mui/material'
-import datanotfoundd from '../assets/nodatafoundd.jpg'
 import Image from 'next/image'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
