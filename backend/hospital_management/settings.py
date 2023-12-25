@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
     '192.168.8.172'
     'hospital-management-six-chi.vercel.app',
     '192.168.46.147',
+    '192.168.3.139'
 ]
 
 
