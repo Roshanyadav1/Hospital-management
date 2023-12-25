@@ -1,34 +1,6 @@
-{'timestamp': '2023-12-22 10:31:26', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'aman@gmail.com', 'name': 'Aman yadav'}
-{'timestamp': '2023-12-22 10:31:26', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'aman@gmail.com', 'name': 'Aman yadav'}
-{'timestamp': '2023-12-22 10:31:26', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'aman@gmail.com', 'name': 'Aman yadav'}
-{'timestamp': '2023-12-22 10:31:26', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'aman@gmail.com'}
-{'timestamp': '2023-12-22 10:31:26', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'aman@gmail.com', 'user_role': 'Patient'}
-{'timestamp': '2023-12-22 10:53:12', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'aman@gmail.com', 'name': 'Aman yadav'}
-{'timestamp': '2023-12-22 10:53:12', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'aman@gmail.com', 'name': 'Aman yadav'}
-{'timestamp': '2023-12-22 10:53:12', 'method': 'POST', 'path': '/api/user/login', 'status': 404, 'message': 'User With This Email Is Not Registered', 'email': 'adminegmail.com'}
-{'timestamp': '2023-12-22 10:53:12', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Admin', 'email': 'admin@gmail.com', 'name': 'Admin'}
-{'timestamp': '2023-12-22 10:53:12', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Admin', 'email': 'admin@gmail.com', 'name': 'Admin'}
-{'timestamp': '2023-12-22 10:53:12', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'admin@gmail.com', 'user_role': 'Admin'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Admin', 'email': 'admin@gmail.com', 'name': 'Admin'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'admin@gmail.com', 'user_role': 'Admin'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Doctor', 'email': 'jagratijunwal@gmail.com', 'name': 'Jagrati Junwal'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'jagratijunwal@gmail.com', 'user_role': 'Doctor'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'jagratijunwal@gmail.com', 'user_role': 'Doctor'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'jagratijunwal@gmail.com', 'user_role': 'Doctor'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Doctor', 'email': 'jagratijunwal@gmail.com', 'name': 'Jagrati Junwal'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Doctor', 'email': 'jagratijunwal@gmail.com', 'name': 'Jagrati Junwal'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'jagratijunwal@gmail.com', 'user_role': 'Doctor'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Admin', 'email': 'admin@gmail.com', 'name': 'Admin'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'GET', 'path': '/api/patient/view/', 'status': 200, 'message': 'PatientData Retrieved Successfully', 'email': 'admin@gmail.com', 'user_role': 'Admin'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'admin@gmail.com', 'user_role': 'Admin'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'aman@gmail.com', 'name': 'Aman yadav'}
-{'timestamp': '2023-12-22 10:58:52', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'aman@gmail.com'}
-{'timestamp': '2023-12-23 07:27:31', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'agrkeshav04@gmail.com', 'name': 'Keshav Agrawal'}
-{'timestamp': '2023-12-23 07:27:31', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'agrkeshav04@gmail.com', 'name': 'Keshav Agrawal'}
-{'timestamp': '2023-12-23 07:27:31', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'agrkeshav04@gmail.com', 'user_role': 'Patient'}
-{'timestamp': '2023-12-23 07:27:31', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'agrkeshav04@gmail.com'}
-{'timestamp': '2023-12-23 07:42:26', 'method': 'GET', 'path': '/api/disease/view/', 'status': 200, 'message': 'Disease Data Retrieved Successfully'}
-{'timestamp': '2023-12-23 12:21:45', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'aman@gmail.com', 'name': 'Aman yadav'}
-{'timestamp': '2023-12-23 12:21:44', 'method': 'GET', 'path': '/api/doctor/view/', 'status': 200, 'message': 'Doctor Data Retrieved Successfully'}
-{'timestamp': '2023-12-23 12:21:45', 'method': 'POST', 'path': '/api/user/login', 'status': 404, 'message': 'User With This Email Is Not Registered', 'email': 'sumitjaingmail.com'}
-{'timestamp': '2023-12-23 12:21:45', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Doctor', 'email': 'sumitjain@gmail.com', 'name': 'Sumit Jain'}
+{'timestamp': '2023-12-25 10:49:26', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Admin', 'email': 'admin@gmail.com', 'name': 'Admin'}
+{'timestamp': '2023-12-25 10:49:26', 'method': 'GET', 'path': '/api/appointment/view/', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'admin@gmail.com', 'user_role': 'Admin'}
+{'timestamp': '2023-12-25 11:08:09', 'method': 'GET', 'path': '/api/appointment/appointmentCount', 'status': 200, 'message': 'Appointment Data Retrieved Successfully', 'email': 'admin@gmail.com', 'user_role': 'Admin'}
+{'timestamp': '2023-12-25 11:08:09', 'method': 'GET', 'path': '/api/disease/view/', 'status': 200, 'message': 'Disease Data Retrieved Successfully'}
+{'timestamp': '2023-12-25 11:08:09', 'method': 'GET', 'path': '/api/employee/view/', 'status': 200, 'message': 'Employee Data Retrieved Successfully', 'email': 'admin@gmail.com'}
+{'timestamp': '2023-12-25 12:04:03', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Admin', 'email': 'admin@gmail.com', 'name': 'Admin'}

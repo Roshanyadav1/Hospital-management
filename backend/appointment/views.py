@@ -255,7 +255,6 @@ class AppointmentCount(ListAPIView):
         # appointment_date_set = set(appointment_date_list)
         # appointment_date_list_2 = [appointment_date_set]
         for date in appointment_date_list:
-            print(date)
             appointment_detail = Appointment.objects.filter(
                 appointment_date=date)
             for appointment in appointment_detail:
@@ -271,23 +270,10 @@ class AppointmentCount(ListAPIView):
                 duplicate_patient = set()
                 appointment_count = 0
             else:
-                print(appointment.appointment_date, duplicate_patient)
                 appointment_list.append(new_dict)
                 duplicate_doctor = set()
                 duplicate_patient = set()
                 appointment_count = 0
-
-       
-        # for entry in appointments_per_day:
-        #     print(f"Date: {entry['appointment_date']}, Appointments: {entry['appointment_count']}, Doctor: {entry['doctor_count']}")
-
-        # # Print the patient count for each day (for debugging purposes)
-        # for entry in patient_count_per_day:
-        #     print(f"Date: {entry['appointment_date']}, Patient Count: {entry['patient_count']}")
-
-        # for entry in doctor_count_per_day:
-        #   print(f"Date: {entry['appointment_date']}, Doctor Count: {entry['doctor_count']}")
-
         try:
             error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
             response_message = error.error_message
@@ -296,13 +282,20 @@ class AppointmentCount(ListAPIView):
         except:
             response_message = ResponseMessage.RETRIEVED_SUCCESS
             response_code = status.HTTP_200_OK
+        logger.info({
+            'timestamp': current_timestamp,
+            'method': request.method,
+            'path': request.path,
+            'status': response_code,
+            'message': "Appointment " + response_message,
+            'email': user.user_email,
+            'user_role': user.user_role
+        })
         return Response(
             {
                 'status': response_code,
                 'message': "Appointment " + response_message,
-                # 'appointement_per_week': list(appointments_per_day),
                 "appointments_per_day": appointment_list
-
             }
         )
 
