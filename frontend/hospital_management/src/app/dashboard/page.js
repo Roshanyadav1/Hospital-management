@@ -92,7 +92,7 @@ function FetchData() {
          fetchHighlightedDays(initialValue)
          return () => requestAbortController.current?.abort()
       }
-   }, [dateData, fetchHighlightedDays, initialValue])
+   }, [dateData])
    useEffect(() => {
       if (names?.length > 0) {
          setDateData(names)
@@ -100,7 +100,7 @@ function FetchData() {
       if (dateData?.length > 0) {
          getSpecificDates()
       }
-   }, [dateData?.length, getSpecificDates, names, names?.length])
+   }, [ names?.length])
    // for holidays highlight in calender
    useEffect(() => {
       if (holidays?.data && isHolidaySuccess) {
@@ -166,7 +166,7 @@ function FetchData() {
 
 
    // eslint-disable-next-line react-hooks/exhaustive-deps, no-undef
-   const fetchHighlightedDays = useCallback((date) => {
+   const fetchHighlightedDays =((date) => {
       const controller = new AbortController()
       fakeFetch(date, {
          signal: controller.signal,
