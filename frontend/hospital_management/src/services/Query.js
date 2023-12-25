@@ -258,6 +258,7 @@ export const queries = createApi({
          method: 'GET',
       }),
    }),
+   
    }),
 })
 
@@ -288,6 +289,7 @@ export const {
    useAppointmentUpdateMutation,
    useGetAppointmentHistoryQuery,
    useLeaveViewQuery,
+  
 } = queries
 
 // export const { useRegisterAuth } = apiAuth

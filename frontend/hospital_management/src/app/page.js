@@ -13,15 +13,15 @@ import PatientProfile from '@/Pages/PatientProfile'
 function page() {
    return (
       <div>
-         <SwipeableTextMobileStepper />
+         {/* <SwipeableTextMobileStepper />
          <Grid container item>
             <FixedContainer />
          </Grid>
          <Cards />
          <DiseaseCards />
-         <DoctorCard />
+         <DoctorCard /> */}
          {/* <DoctorDashboard /> */}
-         {/* <PatientProfile/> */}
+         <PatientProfile/>
       </div>
    )
 }
