@@ -3,9 +3,9 @@ import Chart from '@/Pages/Chart'
 import Card from '@mui/material/Card'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
-// import datanotfound from '@/assets/dataNotFound.gif'
+import datanotfound from '@/assets/nodatafoundd.jpg'
 import { Avatar, IconButton } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import doctorImage from '@/assets/doctorIllustration.png'
 import Image from 'next/image'
 import dayjs from 'dayjs'
@@ -22,7 +22,6 @@ import { useGetDoctorIdQuery } from '../../services/Query'
 import { Grid, Button, Typography, Skeleton } from '@mui/material'
 import { colors } from '@/styles/theme'
 import { styled } from '@mui/material/styles'
-
 import '@/styles/container.css'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -34,8 +33,6 @@ import { toast } from 'react-toastify'
 import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { useAddPrescriptionMutation } from '../../services/Query'
-
 import { useLeaveViewQuery } from '../../services/Query'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -66,6 +63,9 @@ function FetchData() {
    const [isFileChosenError, setIsFileChosenError] = useState(false)
    const [open, setOpen] = useState(false)
    const [datesArray, setDatesArray] = useState([])
+
+
+   const [appointmentUpdate] = useAppointmentUpdateMutation()
    const {
       data: appointments,
       isError,
@@ -78,6 +78,10 @@ function FetchData() {
    const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
+   // eslint-disable-next-line no-unused-vars
+   const dates = appointments?.data?.map(
+      (appointment) => appointment?.appointment_date
+   )
 
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
@@ -198,14 +202,7 @@ function FetchData() {
       return `${hours}:${minutes}`
    }
     
-   // eslint-disable-next-line no-unused-vars
-   const doctorID =  appointments?.data[0]?.doctor?.doctor_id
-
-
-// console.log(datesArray);
-
-//    const disabledDates = datesArray;
-//    console.log(disabledDates)
+   //const doctorID =  appointments?.data[0]?.doctor?.doctor_id
 
    const shouldDisableDate = (date) => {
       const isSunday = date.day() === 0
@@ -215,10 +212,11 @@ function FetchData() {
       return isSunday || isRandomDisabledDate
    }
 
+   ///////////////////////////////////////////////////////
+
    
    const label = { inputProps: { 'aria-label': 'Size switch demo' } }
-   const [appointmentUpdate] = useAppointmentUpdateMutation()
-   const [addPrescription] = useAddPrescriptionMutation();
+
 
 
    const handleFileChange = (event) => {
@@ -226,47 +224,28 @@ function FetchData() {
    }
    const handleSubmit = async () => {
       if (selectedFile) {
-         const formData = new FormData();
-         formData.append('file', selectedFile);
-   
+         const formData = new FormData()
+         formData.append('file', selectedFile)
+
          try {
-             const s3Response = await fetch('/api/s3-upload', {
+            const response = await fetch('/api/s3-upload', {
                method: 'POST',
                body: formData,
-            });
-   
-             if (s3Response.ok) {
-                const s3Data = await s3Response.json();
-               const imageUrl = s3Data.imageUrl;
-   
-                console.log('S3 Image URL:', imageUrl);
-   
-                const apiResponse = await addPrescription({
-                  prescription_photo: imageUrl,
-                  appointment_id: appointmentInfo?.data?.[0]?.appointment_id,
-               });
-   
-                if (apiResponse.data) {
-                  setIsSuccessDialogOpen(true);
-                  setIsFileChosenError(false);
-               } else {
-                  console.error('Failed to post prescription data to API');
-               }
+            })
+
+            if (response.ok) {
+               setIsSuccessDialogOpen(true)
+               setIsFileChosenError(false)
             } else {
-               console.error('Failed to upload image to S3');
+               console.error('Failed to upload image')
             }
          } catch (error) {
-            console.error('Error:', error);
+            console.error('Error uploading image:', error)
          }
       } else {
-         setIsFileChosenError(true);
+         setIsFileChosenError(true)
       }
-   };
-   
-   
-   
-   
-   
+   }
 
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false)
@@ -436,12 +415,12 @@ function FetchData() {
                                           justifyContent: 'center',
                                        }}
                                     >
-                                       {/* <Image
+                                       <Image
                                           src={datanotfound}
                                           alt='data not found'
                                           height={150}
                                           width={150}
-                                       /> */}
+                                       />
                                        <Typography variant='h6' color='secondary'>
                                           Data Not found
                                        </Typography>

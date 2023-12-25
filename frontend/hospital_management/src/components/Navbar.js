@@ -101,7 +101,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
                      >
                         {settings.map((setting) => (
                            <MenuItem key={setting.label}>
-                              <Link href={setting? setting?.route:''}  style={{  textDecoration: 'none', color: 'inherit' }} prefetch>
+                              <Link href={`${setting.route}`}  style={{  textDecoration: 'none', color: 'inherit' }} prefetch>
                                  <Typography component='a' textAlign='center'>
                                     {setting.label}
                                  </Typography>

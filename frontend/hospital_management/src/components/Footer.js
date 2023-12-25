@@ -8,7 +8,7 @@ import Logo from '../assets/footerimages/whiteSga.png'
 
 const Footer = () => {
    return (
-      <Grid
+      <><Grid
          className='main-body'
          // component="footer"
          sx={{
@@ -21,7 +21,7 @@ const Footer = () => {
             position: 'relative',
             left: 0,
             bottom: 0,
-            width: '100%',
+            width: '100%'
          }}
       >
          <Container sx={{ margin: 'auto' }} maxWidth='lg'>
@@ -46,7 +46,7 @@ const Footer = () => {
                         variant='body2'
                         color='white'
                         sx={{
-                           padding: 1,
+                           padding: 1
                         }}
                      >
                         Centre for Transplant
@@ -58,7 +58,7 @@ const Footer = () => {
                         variant='body2'
                         color='white'
                         sx={{
-                           padding: 1,
+                           padding: 1
                         }}
                      >
                         Critical Care Unit
@@ -69,7 +69,7 @@ const Footer = () => {
                         variant='body2'
                         color='white'
                         sx={{
-                           padding: 1,
+                           padding: 1
                         }}
                      >
                         Department of Cardiology
@@ -81,7 +81,7 @@ const Footer = () => {
                         variant='body2'
                         color='white'
                         sx={{
-                           padding: 1,
+                           padding: 1
                         }}
                      >
                         Department of Orthopedics
@@ -97,7 +97,7 @@ const Footer = () => {
                   <Link
                      href='https://www.instagram.com'
                      color='#FFFFFF'
-                     sx={{ pl:0 , pr: 1 }}
+                     sx={{ pl: 0, pr: 1 }}
                   >
                      <Instagram />
                   </Link>
@@ -115,134 +115,131 @@ const Footer = () => {
                      Centres of Excellence
                   </Typography>
 
-                  <Link href='/dashboard/neurosciences' passHref>
-                     <Typography variant='body2' color='white' sx={{ padding: 1 }}>
-                        Centre for Neurosciences
-                     </Typography>
-                  </Link>
-
-                  <Link>
-                     <Typography
-                        variant='body2'
-                        color='white'
-                        sx={{
-                           padding: 1,
-                        }}
-                     >
-                        Centre for Transplant
-                     </Typography>
-                  </Link>
-
-                  <Link>
-                     <Typography
-                        variant='body2'
-                        color='white'
-                        sx={{
-                           padding: 1,
-                        }}
-                     >
-                        Critical Care Unit
-                     </Typography>
-                  </Link>
-
-                  <Link>
-                     <Typography
-                        variant='body2'
-                        color='white'
-                        sx={{
-                           padding: 1,
-                        }}
-                     >
-                        Department of Cardiology
-                     </Typography>
-                  </Link>
-
-                  <Link>
-                     <Typography
-                        variant='body2'
-                        color='white'
-                        sx={{
-                           padding: 1,
-                        }}
-                     >
-                        Department of Orthopedics
-                     </Typography>
-                  </Link>
-
-                  <Link>
-                     <Typography
-                        variant='body2'
-                        color='white'
-                        sx={{
-                           padding: 1,
-                        }}
-                     >
-                        Gynaecology and Obstetrics
-                     </Typography>
-                  </Link>
-
-                  <Link>
-                     <Typography
-                        variant='body2'
-                        color='white'
-                        sx={{
-                           padding: 1,
-                        }}
-                     >
-                        Pediatrics
-                     </Typography>
-                  </Link>
-               </Grid>
-
-               <Grid item xs={12} sm={3}>
-                  <Typography
-                     variant='body1'
-                     color='white'
-                     sx={{ padding: 1, fontWeight: 'bold' }}
-                  >
-                     Hospital Details
-                  </Typography>
-                 
-                     <Typography variant='body2' color='white' sx={{ padding: 1 }}>
-                        Contact Us
-                     </Typography>
-               
+                  {/* <Link href='/dashboard/neurosciences' passHref> */}
                   <Typography variant='body2' color='white' sx={{ padding: 1 }}>
-                     <Input
-                        varient='outline'
-                        type='text'
-                        placeholder='Enter your email'
-                        sx={{
-                           padding: 2,
-                           width: '100%',
-                           backgroundColor: 'white',
-                           borderRadius: 3,
-                           outline: 'none',
-                           border: 'none',
-                           height: 17,
-                           margin: 1,
-                           borderBottom: ' ipx solid transparent',
-                           '&:focus': {
-                              borderBottom: 'none',
-                           },
-                        }}
-                     />
-                     <Button
-                        variant='contained'
-                        sx={{
-                           borderRadius: 3,
-                           margin: '5px',
-                           maxHeight: '2rem',
-                           backgroundColor: '#35CFF4',
-                           '&:hover': {
-                              backgroundColor: '#35CFF4',
-                           },
-                        }}
-                     >
-                        Sign Up
-                     </Button>
+                     Centre for Neurosciences
                   </Typography>
-               </Grid>
+               {/* </Link> */}
+
+               {/* <Link> */}
+               <Typography
+                  variant='body2'
+                  color='white'
+                  sx={{
+                     padding: 1
+                  }}
+               >
+                  Centre for Transplant
+               </Typography>
+            </Link>
+
+            <Link>
+               <Typography
+                  variant='body2'
+                  color='white'
+                  sx={{
+                     padding: 1
+                  }}
+               >
+                  Critical Care Unit
+               </Typography>
+            </Link>
+
+            <Link>
+               <Typography
+                  variant='body2'
+                  color='white'
+                  sx={{
+                     padding: 1
+                  }}
+               >
+                  Department of Cardiology
+               </Typography>
+            </Link>
+
+            <Link>
+               <Typography
+                  variant='body2'
+                  color='white'
+                  sx={{
+                     padding: 1
+                  }}
+               >
+                  Department of Orthopedics
+               </Typography>
+            </Link>
+
+            <Link>
+               <Typography
+                  variant='body2'
+                  color='white'
+                  sx={{
+                     padding: 1
+                  }}
+               >
+                  Gynaecology and Obstetrics
+               </Typography>
+            </Link>
+
+            <Link>
+               <Typography
+                  variant='body2'
+                  color='white'
+                  sx={{
+                     padding: 1
+                  }}
+               >
+                  Pediatrics
+               </Typography>
+            </Link>
+         </></Grid><Grid item xs={12} sm={3}>
+            <Typography
+               variant='body1'
+               color='white'
+               sx={{ padding: 1, fontWeight: 'bold' }}
+            >
+               Hospital Details
+            </Typography>
+
+            <Typography variant='body2' color='white' sx={{ padding: 1 }}>
+               Contact Us
+            </Typography>
+
+            <Typography variant='body2' color='white' sx={{ padding: 1 }}>
+               <Input
+                  varient='outline'
+                  type='text'
+                  placeholder='Enter your email'
+                  sx={{
+                     padding: 2,
+                     width: '100%',
+                     backgroundColor: 'white',
+                     borderRadius: 3,
+                     outline: 'none',
+                     border: 'none',
+                     height: 17,
+                     margin: 1,
+                     borderBottom: ' ipx solid transparent',
+                     '&:focus': {
+                        borderBottom: 'none'
+                     }
+                  }} />
+               <Button
+                  variant='contained'
+                  sx={{
+                     borderRadius: 3,
+                     margin: '5px',
+                     maxHeight: '2rem',
+                     backgroundColor: '#35CFF4',
+                     '&:hover': {
+                        backgroundColor: '#35CFF4'
+                     }
+                  }}
+               >
+                  Sign Up
+               </Button>
+            </Typography>
+         </Grid></>
             </Grid>
             <Box sx={{ marginLeft: 3 }}>
                <hr />
