@@ -1,11 +1,8 @@
-"use client"
-
-import * as React from 'react'
+'use client'
 import Card from '@mui/material/Card'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import PeopleIcon from '@mui/icons-material/People'
 import Typography from '@mui/material/Typography'
-import { Grid, Container } from '@mui/material'
+import { Grid, Container, Box } from '@mui/material'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import Accordion from '@mui/material/Accordion'
@@ -15,17 +12,184 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
 import patientLogo from '../assets/patient.png'
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
+import { useGetAppointmentQuery } from '@/services/Query'
+import { useEffect, useRef, useState } from 'react'
+import { PickersDay } from '@mui/x-date-pickers/PickersDay'
+import { Avatar } from '@mui/material'
+import {colors} from './../styles/theme'
+
+
 
 function PatientProfile() {
-   const [value, setValue] = React.useState(dayjs('2022-04-17'))
+   // eslint-disable-next-line no-unused-vars
+   const { data: appointmentHistory, isError } = useGetAppointmentQuery()
+   console.log('object', appointmentHistory)
+
+   const requestAbortController = useRef(null)
+   const [dateData, setDateData] = useState([])
+   const [isLoading, setIsLoading] = useState(false)
+   const [highlightedDays, setHighlightedDays] = useState(getSpecificDates())
+   const [datesArray] = useState([])
+
+   var names = appointmentHistory?.data?.map(appointment => appointment?.appointment_date);
+   console.log("names", names)
+   useEffect(() => {
+      if (dateData?.length > 0) {
+         fetchHighlightedDays(initialValue)
+         return () => requestAbortController.current?.abort()
+      }
+   }, [dateData])
+   useEffect(() => {
+      if (names?.length > 0) {
+         setDateData(names)
+      }
+      if (dateData?.length > 0) {
+         getSpecificDates()
+      }
+   }, [names?.length])
+   // for holidays highlight in calender
+
+   function getSpecificDates() {
+      return dateData
+   }
+
+
+
+   function fakeFetch(date, { signal }) {
+      return new Promise((resolve, reject) => {
+         const timeout = setTimeout(() => {
+            const currentMonth = dayjs(date).month()
+
+            const daysToHighlight = getSpecificDates()
+               .filter((dateStr) => dayjs(dateStr).month() === currentMonth)
+               .map((dateStr) => dayjs(dateStr).date())
+
+            resolve({ daysToHighlight })
+         }, 500)
+
+         signal.onabort = () => {
+            clearTimeout(timeout)
+            reject(new DOMException('aborted', 'AbortError'))
+         }
+      })
+   }
+
+   const initialValue = dayjs()
+
+   function ServerDay(props) {
+      const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props
+
+      const isSelected =
+         !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0
+
+      return (
+         <>
+            {isSelected ? (
+               <Avatar
+                  key={props.day.toString()}
+                  overlap='circular'
+                  // eslint-disable-next-line no-undef
+                  sx={{ bgcolor: colors.secondary }}
+               >
+                  <PickersDay
+                     {...other}
+                     outsideCurrentMonth={outsideCurrentMonth}
+                     day={day}
+                  />
+               </Avatar>
+            ) : (
+               <PickersDay
+                  {...other}
+                  outsideCurrentMonth={outsideCurrentMonth}
+                  day={day}
+               />
+            )}
+         </>
+      )
+   }
+
+
+
+   const fetchHighlightedDays = (date) => {
+      const controller = new AbortController()
+      fakeFetch(date, {
+         signal: controller.signal,
+      })
+         .then(({ daysToHighlight }) => {
+            setHighlightedDays(daysToHighlight)
+            setIsLoading(false)
+         })
+         .catch((error) => {
+            if (error.name !== 'AbortError') {
+               throw error
+            }
+         })
+
+      requestAbortController.current = controller
+   }
+
+
+   // for showing data in current month only
+   const handleMonthChange = (date) => {
+      if (requestAbortController.current) {
+         requestAbortController.current.abort()
+      }
+
+      setIsLoading(true)
+      setHighlightedDays([])
+      fetchHighlightedDays(date)
+   }
+
+
+
+   //const doctorID =  appointments?.data[0]?.doctor?.doctor_id
+
+   const shouldDisableDate = (date) => {
+      const isSunday = date.day() === 0
+      const formattedDate = date.format('DD-MM-YYYY')
+      const isRandomDisabledDate = datesArray?.includes(formattedDate)
+
+      return isSunday || isRandomDisabledDate
+   }
+
+
+
+
+   // const [] = React.useState(dayjs('2022-04-17'))
+
+   const appointmentsByDate = Array.isArray(appointmentHistory?.data)
+      ? appointmentHistory?.data.reduce((acc = [], appointment = []) => {
+         const date = appointment.appointment_date
+         if (!acc[date]) {
+            acc[date] = []
+         }
+         acc[date].push({
+            patient_id: appointment.patient.patient_id,
+            patient_name: appointment.patient.patient_name,
+            doctor_name: appointment.doctor.employee.employee_name,
+            disease_name: appointment.disease.disease_name,
+            appointment_time: appointment.appointment_time,
+            checked: appointment.checked,
+         })
+         return acc
+      }, {})
+      : []
+
+   console.log('appointmentsByDate', appointmentsByDate)
+
+   const appointmentsArray = Object.entries(appointmentsByDate).map(
+      ([date, appointments]) => ({
+         date,
+         appointments,
+      })
+   )
 
    return (
       <div>
-         <Container maxWidth='lg' p={2}>
+         <Container maxWidth='xl' >
             <Grid container>
                <Grid item xs={12} sm={8}>
                   <Grid container>
@@ -51,7 +215,7 @@ function PatientProfile() {
                                  />
                               </Grid>
                               <Grid item xs={8} sm={8}>
-                                 <Grid container sx={{marginLeft:10}}>
+                                 <Grid container sx={{ marginLeft: 10 }}>
                                     <Grid item xs={4} sm={4}>
                                        <Typography variant='h6' component='h5'>
                                           Name
@@ -71,19 +235,22 @@ function PatientProfile() {
                                     </Grid>
                                     <Grid item xs={4} sm={4}>
                                        <Typography variant='h6' component='h5'>
-                                          Aman Yadav
+                                          {
+                                             appointmentHistory?.data[0]?.patient
+                                                ?.patient_name
+                                          }
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           18
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          Male
+                                         Female
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           Khategaon
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          A+
+                                         A+
                                        </Typography>
                                     </Grid>
                                  </Grid>
@@ -98,165 +265,92 @@ function PatientProfile() {
                               Appointment History
                            </Typography>
                         </div>
-                        <Accordion sx={{borderRadius:2}}>
-                           <AccordionSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              
-                           >
-                              <Typography>12/12/23</Typography>
-                           </AccordionSummary>
-                           <AccordionDetails>
-                              
-                                 <Grid container>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Doctor
-                                       </Typography>
-                                       <Typography variant='body2'>
-                                          Dr. Sumit Jain
-                                       </Typography>
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Disease
-                                       </Typography>
-                                       <Typography variant='body2'>Fever</Typography>
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Status
-                                       </Typography>
-                                       <Chip
-                                          label='Attended'
-                                          color='secondary'
-                                          size='small'
-                                       />
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Button variant='contained' size='small'>
-                                          View Prescription
-                                       </Button>
-                                    </Grid>
-                                 </Grid>
-                              
-                           </AccordionDetails>
-                        </Accordion>
-                        <Accordion sx={{borderRadius:2}}>
-                           <AccordionSummary
-                              expandIcon={<ExpandMoreIcon />}
-                             
-                           >
-                              <Typography>15/12/23</Typography>
-                           </AccordionSummary>
-                           <AccordionDetails>
-                           <Grid container>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Doctor
-                                       </Typography>
-                                       <Typography variant='body2'>
-                                          Dr. Rashmika jain
-                                       </Typography>
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Disease
-                                       </Typography>
-                                       <Typography variant='body2'>Cold</Typography>
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Status
-                                       </Typography>
-                                       <Chip
-                                          label='Not attended'
-                                          color='secondary'
-                                          size='small'
-                                          disabled
-                                       />
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Button variant='contained' size='small'>
-                                          View Prescription
-                                       </Button>
-                                    </Grid>
-                                 </Grid>
-                              
-                           </AccordionDetails>
-                        </Accordion>
-                        <Accordion sx={{borderRadius:2}}>
-                           <AccordionSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              
-                           >
-                              <Typography>18/12/23</Typography>
-                           </AccordionSummary>
-                           <AccordionDetails>
-                           <Grid container>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Doctor
-                                       </Typography>
-                                       <Typography variant='body2'>
-                                          Dr. Jagrati Junwal 
-                                       </Typography>
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Disease
-                                       </Typography>
-                                       <Typography variant='body2'>Dehydration</Typography>
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Typography variant='b1' component='h5'>
-                                          Status
-                                       </Typography>
-                                       <Chip
-                                          label='Attended'
-                                          color='secondary'
-                                          size='small'
-                                       />
-                                    </Grid>
-                                    <Grid item xs={3} sm={3}>
-                                       <Button variant='contained' size='small'>
-                                          View Prescription
-                                       </Button>
-                                    </Grid>
-                                 </Grid>
-                              
-                           </AccordionDetails>
-                        </Accordion>
+                        {appointmentsArray.map(appointmentGroup => {
+                           const { date, appointments } = appointmentGroup;
+                           console.log(`Appointments for ${date}:`);
+                           return (
+                              <div key={date}>
+                                 {appointments.map(appointment => (
+                                    <Accordion key={appointment.appointment_time} sx={{ borderRadius: 2 }}>
+                                       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                          <Typography>Date - {date}</Typography>
+                                       </AccordionSummary>
+                                       <AccordionDetails>
+                                          <Grid container>
+                                             <Grid item xs={3} sm={3}>
+                                                <Typography variant='b1' component='h5'>
+                                                   Doctor
+                                                </Typography>
+                                                <Typography variant='body2'>
+                                                   {appointment.doctor_name}
+                                                </Typography>
+                                             </Grid>
+                                             <Grid item xs={3} sm={3}>
+                                                <Typography variant='b1' component='h5'>
+                                                   Disease
+                                                </Typography>
+                                                <Typography variant='body2'>
+                                                   {appointment.disease_name}
+                                                </Typography>
+                                             </Grid>
+                                             <Grid item xs={3} sm={3}>
+                                                <Typography variant='b1' component='h5'>
+                                                   Status
+                                                </Typography>
+                                                {
+                                                   appointment.checked === true ? (
+                                                      <Chip label='Attended' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
+                                                   ) : (
+                                                      <Chip label='Not Attended' size='small' disabled />
+                                                   )
+                                                }
+                                             </Grid>
+                                             <Grid item xs={3} sm={3}>
+                                                <Button variant='contained' size='small'>
+                                                   View Prescription
+                                                </Button>
+                                             </Grid>
+                                          </Grid>
+                                       </AccordionDetails>
+                                    </Accordion>
+                                 ))}
+                              </div>
+                           );
+                        })}
                      </Grid>
                   </Grid>
                </Grid>
 
                <Grid item xs={12} sm={4}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                     <DemoContainer
-                        components={['DateCalendar', 'DateCalendar']}
-                        sx={{
-                           marginLeft: 10,
-                           marginTop: 8,
-                        }}
-                     >
-                        <div style={{ display: 'flex' }}>
-                           <CalendarMonthIcon />
-                           <Typography variant='h6' color='primary'>
-                              Scheduled calender
-                           </Typography>
-                        </div>
-                        <DemoItem>
-                           <DateCalendar
-                              value={value}
-                              onChange={(newValue) => setValue(newValue)}
-                              style={{
-                                 boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
-                                 
-                              }}
-                           />
-                        </DemoItem>
-                     </DemoContainer>
-                  </LocalizationProvider>
+                  <Box
+                     sx={{
+                        marginLeft: 2,
+                        marginTop: 7,
+                        width: 400,
+                        bgcolor: 'background.paper',
+                        borderRadius: 2,
+                        boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+                     }}
+                  >
+                     <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateCalendar
+                           defaultValue={initialValue}
+                           shouldDisableDate={shouldDisableDate}
+                           loading={isLoading}
+                           onMonthChange={handleMonthChange}
+                           // eslint-disable-next-line react/jsx-no-undef
+                           renderLoading={() => <DayCalendarSkeleton />}
+                           slots={{
+                              day: ServerDay,
+                           }}
+                           slotProps={{
+                              day: {
+                                 highlightedDays,
+                              },
+                           }}
+                        />
+                     </LocalizationProvider>
+                  </Box>
                </Grid>
             </Grid>
          </Container>

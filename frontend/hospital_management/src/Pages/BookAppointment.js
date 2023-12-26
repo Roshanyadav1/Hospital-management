@@ -129,7 +129,7 @@ function BookAppoinment({ id, name, date }) {
                         src={doctorTimes?.data?.doctor_profile_picture || 'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'}
                         height={185}
                         width={185}
-                        style={{ borderRadius: '50%', padding: 10, margin:1 }}
+                        style={{ borderRadius: '50%', padding: 10, margin: 1 }}
                      />
                }
                <Grid
@@ -152,16 +152,14 @@ function BookAppoinment({ id, name, date }) {
             </Grid>
          </Grid>
          <Grid>
-         <ProfileCard
-                  content={`Dr ${name} is a renowned Neurosurgeon with over 20 years
+            <ProfileCard
+               content={`Dr ${name} is a renowned Neurosurgeon with over 20 years
         of experience. Dr ${name} is an adept in all disciplines of Brain
         and Spine Surgery including Brain tumor surgery among adults, as
         well as pediatric and Neonatal, endoscopic surgery,
         microvascular decompression surger...`}
-               />
+            />
          </Grid>
-        
-
          <br /> <br />
          <Grid container Direction='column' display={'flex'} rowSpacing={4}>
             {/* 1ST COLUMN */}
@@ -170,13 +168,9 @@ function BookAppoinment({ id, name, date }) {
                   icon={<SchoolIcon sx={{ marginRight: 1 }} />}
                   title={<Typography gutterBottom variant='h6'>Education</Typography>}
                   content='F.R.C.S.(London), F.R.C.S. (Neurosurgery), CCST (UK), Spine
-        Fellowship (USA), Skull Base& Vascular Fellowship (USA)...'
+                    Fellowship (USA), Skull Base& Vascular Fellowship (USA)...'
                />
             </Grid>
-
-
-
-
             {/* 2ND COLUMN */}
             <Grid item sm={6} xs={12}>
                <Paper

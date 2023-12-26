@@ -525,7 +525,7 @@ function Chart() {
                               }
                            />
                            {console.log(item, 'item')}
-                           {/* <Grid xs={12} style={{ textAlign: 'center' }}>
+                           <Grid xs={12} style={{ textAlign: 'center' }}>
                               <Link
                                  href={`dashboard/individualappointment/${item?.appointment_id}`}
                               >
@@ -546,7 +546,7 @@ function Chart() {
                                     View
                                  </Button>
                               </Link>
-                           </Grid> */}
+                           </Grid>
 
                            <hr />
                         </div>

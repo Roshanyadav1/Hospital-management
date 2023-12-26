@@ -51,7 +51,6 @@ const fadeInUp = {
    hidden: { opacity: 0, y: 20 },
    visible: { opacity: 1, y: 0 },
 }
-
 function FetchData() {
    const requestAbortController = useRef(null)
    const userRole = localStorage.getItem('user_role')
@@ -79,6 +78,10 @@ function FetchData() {
    const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
+   // eslint-disable-next-line no-unused-vars
+   const dates = appointments?.data?.map(
+      (appointment) => appointment?.appointment_date
+   )
 
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
