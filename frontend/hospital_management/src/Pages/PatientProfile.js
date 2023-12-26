@@ -25,6 +25,12 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { Avatar, IconButton } from '@mui/material'
 
 
+const colors = {
+  
+   secondary: '#35CFF4',
+   
+ };
+
 
 function PatientProfile() {
    const { data: appointmentHistory, isLoading : loading, isError } = useGetAppointmentQuery()
