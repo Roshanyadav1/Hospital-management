@@ -4,3 +4,9 @@
 {'timestamp': '2023-12-25 11:08:09', 'method': 'GET', 'path': '/api/disease/view/', 'status': 200, 'message': 'Disease Data Retrieved Successfully'}
 {'timestamp': '2023-12-25 11:08:09', 'method': 'GET', 'path': '/api/employee/view/', 'status': 200, 'message': 'Employee Data Retrieved Successfully', 'email': 'admin@gmail.com'}
 {'timestamp': '2023-12-25 12:04:03', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Admin', 'email': 'admin@gmail.com', 'name': 'Admin'}
+{'timestamp': '2023-12-26 13:42:29', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Patient', 'email': 'agrkeshav04@gmail.com', 'name': 'Keshav Agrawal'}
+{'timestamp': '2023-12-26 13:42:29', 'method': 'GET', 'path': '/api/doctor/view/', 'status': 200, 'message': 'Doctor Data Retrieved Successfully'}
+{'timestamp': '2023-12-26 13:42:29', 'method': 'GET', 'path': '/api/disease/view/', 'status': 200, 'message': 'Disease Data Retrieved Successfully'}
+{'timestamp': '2023-12-26 13:47:23', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'agrkeshav04@gmail.com'}
+{'timestamp': '2023-12-26 13:48:37', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'agrkeshav04@gmail.com'}
+{'timestamp': '2023-12-26 13:49:50', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'agrkeshav04@gmail.com'}

@@ -11,6 +11,7 @@ from employee.models import Employee
 from bs4 import BeautifulSoup
 from pathlib import Path
 from hospital.models import Hospital
+import requests
 
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
@@ -58,7 +59,32 @@ I hope this email finds you in good health. I am writing to inform you that your
 Date: {} Time: {} Location: {}
 
 We understand the importance of your time and are committed to providing you with the best possible care. To ensure a smooth and efficient visit, we kindly request that you arrive at least 10 minutes before your scheduled appointment. This will allow us to complete any necessary paperwork and make sure you receive the full attention and care you deserve""".format(patient.patient_name, appointment.appointment_date, appointment.appointment_time, location)
-    print(body)
+
+    # Whatsapp API
+
+    body1 = """Dear {},
+
+I hope this message finds you in good health. I am writing to inform you that your appointment has been successfully booked with our clinic. We are delighted to confirm the details of your upcoming appointment:
+
+Date: {} 
+Time: {} 
+Location: {}
+Appointment Number: {}
+
+We understand the importance of your time and are committed to providing you with the best possible care. To ensure a smooth and efficient visit, we kindly request that you arrive at least 10 minutes before your scheduled appointment. This will allow us to complete any necessary paperwork and make sure you receive the full attention and care you deserve""".format(patient.patient_name, appointment.appointment_date, appointment.appointment_time, location, appointment.appointment_number)
+
+    url = "https://api.ultramsg.com/instance72602/messages/chat"
+
+    payload = """token=l96p4orhdh2q7f74&to={}&body={}""".format(
+        patient.patient_mobile, body1)
+    # payload = "token=urysccappofwtxvi&to= " + patient.patient_mobile + "&body=" + body
+    payload = payload.encode('utf8').decode('iso-8859-1')
+    headers = {'content-type': 'application/x-www-form-urlencoded'}
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+
+    print(response.text)
+
     msg.attach(MIMEText(body, 'plain'))
     print("Email Sent Successfully")
 
