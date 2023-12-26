@@ -256,8 +256,7 @@ function Chart() {
                      width={650}
                      height={345}
                      data={weeklyData}
-                     margin={{
-                        top: 20,
+                     margin={{                        top: 20,
                         right: 80,
                         bottom: 20,
                         left: 20,
