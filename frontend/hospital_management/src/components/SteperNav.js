@@ -234,6 +234,14 @@ function ResponsiveAppBar(props) {
                   </Link>
 
                   <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end', fontSize: '15px' }}>
+                  {isLoading && (
+                  <Backdrop open={true} style={{ zIndex: 9999, color: '#fff' }}>
+                     <CircularProgress color="inherit" />
+                     <Typography variant="subtitle1" style={{ marginTop: '10px', color: '#fff' }}>
+                        Checking authentication...
+                     </Typography>
+                  </Backdrop>
+               )}
                      {getNavigationItems()}
                   </Box>
 
@@ -282,14 +290,7 @@ function ResponsiveAppBar(props) {
                   </Box>
                </Toolbar>
 
-               {isLoading && (
-                  <Backdrop open={true} style={{ zIndex: 9999, color: '#fff' }}>
-                     <CircularProgress color="inherit" />
-                     <Typography variant="subtitle1" style={{ marginTop: '10px', color: '#fff' }}>
-                        Checking authentication...
-                     </Typography>
-                  </Backdrop>
-               )}
+              
             </Container>
          </AppBar>
 
