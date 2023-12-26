@@ -1,14 +1,14 @@
 export const welcome = [
    {
-      title: ' Neurosiences',
+      title: ' Neurosciences',
       image: 'https://www.carehospitals.com/indore/assets/images/speciality/neurosciences-04.png',
       description: 'The Department of Neurology at Care',
-      category: 'Neurosiences',
+      category: 'Neurosciences',
    },
    {
       title: ' Transplant',
       image: 'https://www.carehospitals.com/indore/assets/images/speciality/transplants-12.png',
-      description: 'The centre of transparant offers in hispital',
+      description: 'The centre of transparent offers in hospital',
       category: 'Transplant',
    },
    {
@@ -30,21 +30,21 @@ export const welcome = [
       category: 'Orthopaedics',
    },
    {
-      title: 'Gynaecology',
+      title: 'Gynecology',
       image: 'https://www.carehospitals.com/indore/assets/images/speciality/women%20and%20child%20institute-11.png',
-      description: 'The Centreof obstetrics and Gynaecology..',
-      category: 'Gynaecology',
+      description: 'The Centre of obstetrics and Gynecology..',
+      category: 'Gynecology',
    },
    {
-      title: 'Paediatrics',
+      title: 'Pediatrics',
       image: 'https://www.carehospitals.com/indore/assets/images/speciality/pediatrics-07.png',
-      description: 'The Department of Paediatrics at CARE CHL',
-      category: 'Paediatrics',
+      description: 'The Department of Pediatrics at CARE CHL',
+      category: 'Pediatrics',
    },
    {
-      title: 'Neurosiences',
+      title: 'Neurosciences',
       image: 'https://www.carehospitals.com/indore/assets/images/speciality/surgical%20oncology.png',
       description: 'The Department of Neurology at Care CHL',
-      category: 'Neurosiences',
+      category: 'Neurosciences',
    },
 ]

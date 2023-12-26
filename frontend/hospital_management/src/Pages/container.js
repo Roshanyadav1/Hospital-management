@@ -37,7 +37,7 @@ export default function FixedContainer() {
                >
                   <MedicalServicesIcon sx={{ fontSize: 48 }} />
                   <Typography variant='h6' sx={{ padding: 3 }}>
-                     Book an Appoinment{' '}
+                     Book an Appointment{' '}
                   </Typography>
                   <Typography variant='body2' sx={{ padding: 2 }}>
                      You can register and get an appointment online for the
@@ -70,11 +70,11 @@ export default function FixedContainer() {
                >
                   <VolunteerActivismIcon sx={{ fontSize: 48 }} />
                   <Typography variant='h6' sx={{ padding: 3 }}>
-                     Specialities & Treatments{' '}
+                     Specialties & Treatments{' '}
                   </Typography>
                   <Typography variant='body2' sx={{ padding: 2 }}>
                      Experience the best-in-class medical treatments with over 30+
-                     specialities.
+                     specialties.
                   </Typography>
                   <Button
                      variant='contained'
@@ -139,8 +139,7 @@ export default function FixedContainer() {
                      Health Checkup Packages{' '}
                   </Typography>
                   <Typography variant='body2' sx={{ padding: 2 }}>
-                     "An executive checkup a year, keeps your future hospital bill in
-                     control"
+                     "An executive checkup a year keeps your future hospital bill in control"
                   </Typography>
                   <Button
                      variant='contained'
