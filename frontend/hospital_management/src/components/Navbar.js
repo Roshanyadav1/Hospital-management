@@ -11,7 +11,8 @@ import Logo from '../assets/navbarimages/blueSga.png';
 import manager from './../assets/manager.png';
 import docter from './../assets/doctorr.png';
 import Image from 'next/image';
-import { Grid, Link } from '@mui/material';
+import { Grid } from '@mui/material';
+import Link from 'next/link';
 
 function ResponsiveAppBar({ sidebarChanges }) {
    const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -101,7 +102,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
                      >
                         {settings.map((setting) => (
                            <MenuItem key={setting.label}>
-                              <Link href={setting.route}  style={{  textDecoration: 'none', color: 'inherit' }} prefetch>
+                              <Link href={setting.route} style={{ textDecoration: 'none', color: 'inherit' }} prefetch>
                                  <Typography component='a' textAlign='center'>
                                     {setting.label}
                                  </Typography>

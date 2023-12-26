@@ -184,7 +184,7 @@ function DoctorPage() {
                               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                                  <Input type='file' onChange={handleFileChange} />
                                  <Button
-                                    // variant='contained'
+                                    variant='contained'
                                     color='primary'
                                     size='small'
                                     onClick={handleSubmit}

@@ -14,10 +14,8 @@ import ResponsiveAppBar from '@/components/Navbar'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Toolbar } from '@mui/material'
-import HomeIcon from '@mui/icons-material/Home'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import TrackChangesIcon from '@mui/icons-material/TrackChanges'
-import MedicationIcon from '@mui/icons-material/Medication'
 import CoronavirusIcon from '@mui/icons-material/Coronavirus'
 import { Container } from '@mui/system'
 import withRoleRedirect from '@/helpers/withRoleRedirect'
@@ -49,7 +47,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
    alignItems: 'center',
    justifyContent: 'flex-end',
    padding: theme.spacing(0, 1),
-   // necessary for content to be below app bar
    ...theme.mixins.toolbar,
 }))
 
@@ -91,8 +88,9 @@ const Drawer = styled(MuiDrawer, {
 
 function Layout({ children }) {
    const pathname = usePathname()
+   const userRole = localStorage.getItem('user_role');
 
-   const [open, setOpen] = React.useState(true)
+   const [open, setOpen] = React.useState(userRole === 'Doctor' ? false : true)
    const sidebarChanges = () => {
       setOpen(!open)
    }
@@ -154,7 +152,6 @@ function Layout({ children }) {
          return disableStyle
       }
    }
-   let userRole = localStorage.getItem('user_role')
    let isAdmin = !!(userRole === 'Admin' || userRole === 'Manager');
    return (
       <Box sx={{ display: 'flex' }}>
@@ -167,11 +164,7 @@ function Layout({ children }) {
                <DrawerHeader></DrawerHeader>
                <List>
                   {[
-                       {
-                        text: 'Home',
-                        path: '/dashboard',
-                        icon: <HomeIcon/>,
-                     },
+
                      {
                         text: 'Dashboard',
                         path: '/dashboard',
@@ -190,7 +183,7 @@ function Layout({ children }) {
 
                   ].map((item , index) => {
                      if (userRole === 'Doctor' && item.path !== '/dashboard')
-                     if ( index >= 2 && !isAdmin) return null;
+                     if ( index >= 1 && !isAdmin) return null;
                   return (
                      <ListItem
                         key={item.text}

@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import { useGetAppointmentQuery } from '@/services/Query'
 import { Chip, Container, Grid, Skeleton } from '@mui/material'
-import datanotfoundd from '../assets/nodatafoundd.jpg'
 import Image from 'next/image'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
@@ -72,9 +71,9 @@ function RecipeReviewCard() {
    } else if (isError) {
       return  <Container maxWidth='xl' sx={{height:"90vh" , alignItems:'center'}}>
       <Grid mt={2} container spacing={2}  justifyContent='center'
-      alignItems='center'>
+      alignItems='center'  >
         <Image src={"https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif"
-} width={350} height={350} alt="No appointment Here"/>
+} width={350}  height={350} alt="No appointment Here"  style={{marginTop:25}}/>
       </Grid>
     </Container>
       //  <p> No Appointment Here {isError}</p>

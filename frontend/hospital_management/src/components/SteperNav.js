@@ -23,6 +23,8 @@ import patient from './../assets/patient.png'
 import docter from './../assets/doctorr.png'
 import Logo from '../assets/navbarimages/whiteSga.png'
 import { useUser } from '@auth0/nextjs-auth0/client'
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
@@ -34,7 +36,6 @@ const pages = [{ label: 'Doctor', route: '/showdoctors' },
 { label: 'Book Appointment', route: '/doctorpage' },
 { label: 'View Appointment', route: '/viewappoinment' },];
 
-const settings = [];
 
 function ResponsiveAppBar(props) {
 
@@ -87,7 +88,7 @@ function ResponsiveAppBar(props) {
    const settings = getUserSettings();
 
    const getNavigationItems = () => {
-   //eslint-disable-next-line
+      //eslint-disable-next-line
       const role = localStorage.getItem('user_role');
       switch (role) {
          case 'Admin':
@@ -111,7 +112,7 @@ function ResponsiveAppBar(props) {
                   <Link href="/dashboard" prefetch>
                      <Button sx={{ color: '#fff' }}>Dashboard</Button>
                   </Link>
-                 
+
                </>
             );
 
@@ -123,7 +124,7 @@ function ResponsiveAppBar(props) {
                         <Button sx={{ color: '#fff' }}>{item.label}</Button>
                      </Link>
                   ))}
-                  
+
                </>
             );
 
@@ -137,7 +138,7 @@ function ResponsiveAppBar(props) {
    };
 
    const getUserImage = () => {
-   //eslint-disable-next-line
+      //eslint-disable-next-line
       const userRole = localStorage.getItem('user_role');
 
       switch (userRole) {
@@ -154,24 +155,28 @@ function ResponsiveAppBar(props) {
    };
 
    useEffect(() => {
-
       if (user && !loggedIn) {
          setIsLoading(true);
          const handleSubmit = async () => {
             try {
                let res = await userLogin(user.email).unwrap();
+
+               localStorage.setItem('user_name', user.name);
                localStorage.setItem('user_id', res.data.id);
                localStorage.setItem('access_token', res.data.token.access);
                localStorage.setItem('user_role', res.data.user_role);
                localStorage.setItem('refresh_token', res.data.token.refresh);
                localStorage.setItem('isLogin', true);
 
-               if(res.data.user_role !== 'Patient'){
+               if (res.data.user_role !== 'Patient') {
                   // redirect to dashboard
                   navigate.push('/dashboard');
                }
-               setIsLoading(false);
-               setLoggedIn(true);
+               setTimeout(() => {
+                  setIsLoading(false);
+                  setLoggedIn(true);
+               }, 2000)
+
             } catch (err) {
                setIsLoading(false);
                console.warn(err);
@@ -222,19 +227,19 @@ function ResponsiveAppBar(props) {
                      >
                         <MenuIcon />
                      </IconButton>
+
                   </Box>
                   <Link href={'/'} prefetch style={{ display: 'flex', flexGrow: 1 }}>
                      <Image width={120} height={40} src={Logo} />
                   </Link>
 
                   <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end', fontSize: '15px' }}>
-
                      {getNavigationItems()}
                   </Box>
 
                   <Box sx={{ flexGrow: 0 }}>
                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                     {getUserImage()}
+                        {getUserImage()}
                      </IconButton>
                      <Menu
                         sx={{ mt: '45px' }}
@@ -252,9 +257,9 @@ function ResponsiveAppBar(props) {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                      >
-                         {settings.map((setting) => (
+                        {settings.map((setting) => (
                            <MenuItem key={setting.label}>
-                              <Link href={setting.route}  style={{  textDecoration: 'none', color: 'inherit' }} prefetch>
+                              <Link href={setting.route} style={{ textDecoration: 'none', color: 'inherit' }} prefetch>
                                  <Typography component='a' textAlign='center'  >
                                     {setting.label}
                                  </Typography>
@@ -262,21 +267,29 @@ function ResponsiveAppBar(props) {
                            </MenuItem>
                         ))}
                         {/* {['Admin', 'Doctor', 'Patient'].includes(localStorage.getItem('user_role')) && user && ( */}
-                           <MenuItem
-                              onClick={() => {
-                                 localStorage.clear();
-                                 const a = document.createElement('a');
-                                 a.href = '/api/auth/logout';
-                                 a.click();
-                              }}
-                           >
-                              <Typography textAlign='center'>Logout</Typography>
-                           </MenuItem>
+                        <MenuItem
+                           onClick={() => {
+                              localStorage.clear();
+                              const a = document.createElement('a');
+                              a.href = '/api/auth/logout';
+                              a.click();
+                           }}
+                        >
+                           <Typography textAlign='center'>Logout</Typography>
+                        </MenuItem>
                         {/* )} */}
                      </Menu>
                   </Box>
-
                </Toolbar>
+
+               {isLoading && (
+                  <Backdrop open={true} style={{ zIndex: 9999, color: '#fff' }}>
+                     <CircularProgress color="inherit" />
+                     <Typography variant="subtitle1" style={{ marginTop: '10px', color: '#fff' }}>
+                        Checking authentication...
+                     </Typography>
+                  </Backdrop>
+               )}
             </Container>
          </AppBar>
 
@@ -304,6 +317,7 @@ function ResponsiveAppBar(props) {
             <Toolbar />
             <Typography></Typography>
          </Box>
+
       </div >
    );
 }
