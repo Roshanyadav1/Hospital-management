@@ -66,7 +66,7 @@ const VisuallyHiddenInput = styled('input')({
 const StyledPaper = styled(Paper)(({ theme }) => ({
    //  maxWidth: '950px',
    boxShadow: theme.shadows[3],
-   backgroundColor: colors.background,
+   // backgroundColor: colors.background,
    borderRadius: '20px',
    padding: '2rem',
    width: '600',
@@ -209,6 +209,7 @@ const page = () => {
          >
             <Box sx={style}>
                <StyledFormWrapper>
+               
                   <IconButton
                      aria-label='close'
                      onClick={handleClose}
@@ -223,6 +224,8 @@ const page = () => {
                      <CloseIcon />
                   </IconButton>
                   <StyledPaper elevation={3}>
+                  <Typography variant='h5' marginBottom={1} >Add Disease</Typography>
+                  <Divider sx={{marginBottom:4}}/>
                      <Formik
                         initialValues={{
                            ...INITIAL_FORM_STATE,
@@ -233,8 +236,8 @@ const page = () => {
                         {({ errors, isSubmitting }) => (
                            <Form>
                               {console.log(errors, 'here')}
-                              <h2 style={{ marginTop: 0 }}>Add Disease</h2>
-
+                              
+                            
                               <Grid container spacing={2}>
                                  <Grid item xs={12}>
                                     <Text
