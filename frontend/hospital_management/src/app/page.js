@@ -7,21 +7,19 @@ import DoctorCard from '@/Pages/DoctorsCard'
 import DiseaseCards from '@/Pages/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css'
 import Cards from '@/Pages/Card'
-import DoctorDashboard from '@/Pages/DoctorDashboard'
-import PatientProfile from '@/Pages/PatientProfile'
+import DoctorProfile, {Profile} from '@/Pages/Profile'
 
 function page() {
    return (
       <div>
-         {/* <SwipeableTextMobileStepper />
+         <SwipeableTextMobileStepper />
          <Grid container item>
             <FixedContainer />
          </Grid>
          <Cards />
          <DiseaseCards />
-         <DoctorCard /> */}
-         {/* <DoctorDashboard /> */}
-         <PatientProfile/>
+         <DoctorCard />
+       
       </div>
    )
 }

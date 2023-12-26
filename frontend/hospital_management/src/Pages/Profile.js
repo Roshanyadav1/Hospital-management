@@ -38,8 +38,9 @@ const DoctorProfile = ({id}) => {
        </CardContent>
     </Card>
  )
-
- const {data: appointmentHistory,isLoading,} = useGetAppointmentHistoryQuery(id);
+ const doctor_id = localStorage.getItem('user_id')
+ const {data: appointmentHistory,isLoading,} = useGetAppointmentHistoryQuery(doctor_id);
+ console.log("id",doctor_id)
 
  if(isLoading){
    return "loading"
@@ -62,8 +63,11 @@ const DoctorProfile = ({id}) => {
    return acc;
 }, {}): [];
 
-console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
+console.log(appointmentsByDate ,"appointmentsByDate")
  
+const DoctorName = Object.values(appointmentsByDate)[0][0]?.doctor_name;
+console.log("doc name",DoctorName)
+
  return (
     <Container maxWidth='lg' p={2}>
        <Grid container boxShadow={1} spacing={2}>
@@ -97,7 +101,7 @@ console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
              >
                 <>
                    <Typography gutterBottom variant='h4' component='div'>
-                      Name
+                      {DoctorName}
                       <Typography variant='body1' color='text.secondary'>
                          EXECUTIVE CHAIRMAN FORTIS C DOC | Fortis C-Doc
                       </Typography>
@@ -116,8 +120,8 @@ console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
                       About
                    </Typography>
                 }
-                content={`Dr ${name} is a renowned Neurosurgeon with over 20 years
-                of experience. Dr ${name} is an adept in all disciplines of Brain
+                content={`Dr ${DoctorName} is a renowned Neurosurgeon with over 20 years
+                of experience. Dr ${DoctorName} is an adept in all disciplines of Brain
                 and Spine Surgery including Brain tumor surgery among adults, as
                 well as pediatric and Neonatal, endoscopic surgery,
                 microvascular decompression surger...`}
@@ -135,65 +139,69 @@ console.log(typeof(appointmentsByDate) ,"appointmentsByDate")
              />
           </Grid>
           <Grid item xs={12} sm={6}>
-             <ProfileCard
-                icon={<HistoryIcon sx={{ marginRight: 1 }} />}
-                title={
-                   <Typography gutterBottom variant='h6'>
-                      {' '}
-                      History
-                   </Typography>
-                }
-                content={appointmentsByDate?.map((appointment) =>(
-                   // eslint-disable-next-line react/jsx-key
-                   <Accordion sx={{ boxShadow: '0px 2px 1px rgba(0, 0, 0, 0.2)'}}>
-                   <AccordionSummary
-                      expandIcon={
-                         <Badge badgeContent={appointment.length} color='primary'>
-                            <ExpandMoreIcon />
-                         </Badge>
-                      }
-                      aria-controls='panel1a-content'
-                      id='panel1a-header'
-                   >
-                      <Typography variant='h6'>Date - {appointment.appointment_date}</Typography>
-                   </AccordionSummary>
-                   <AccordionDetails sx={{ marginLeft: 1 }}>
-                      <div style={{ display: 'flex', paddingBottom: 10 }}>
-                         <Typography variant='body2'>
-                            Number of Appointments conducted =
-                         </Typography>
-                         <Typography variant='body2'>{arr.length}</Typography>
-                      </div>
-                      <Typography variant='h6' paddingY={1}>
-                         Patient Details -
-                      </Typography>
-                      <Grid container>
-                         <Grid item xs={4} sm={4}>
-                            <Typography variant='b1' component='h5'>
-                               Name
-                            </Typography>
-                            <Typography variant='body2'>{appointment.patient.patient_name}</Typography>
-                         </Grid>
-                         <Grid item xs={4} sm={4}>
-                            <Typography variant='b1' component='h5'>
-                               Disease
-                            </Typography>
-                            <Typography variant='body2'>{appointment.disease.disease_name}</Typography>
-                         </Grid>
-                         <Grid item xs={4} sm={4}>
-                            <Typography variant='b1' component='h5'>
-                               Status
-                            </Typography>
-                            {
-                               appointment.checked === true ? <Chip label='Attended'  size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} /> : <Chip label='Not Attended'  size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
-                            }
-                         </Grid>
-                      </Grid>
-                   </AccordionDetails>
-                </Accordion>))
-             }
-             />
-          </Grid>
+  <ProfileCard
+    icon={<HistoryIcon sx={{ marginRight: 1 }} />}
+    title={
+      <Typography gutterBottom variant='h6'>
+        History
+      </Typography>
+    }
+    content={
+      Object.keys(appointmentsByDate).map((date) => (
+        // eslint-disable-next-line react/jsx-key
+        <Accordion key={date} sx={{ boxShadow: '0px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+          <AccordionSummary
+            expandIcon={
+              <Badge badgeContent={appointmentsByDate[date].length} color='primary'>
+                <ExpandMoreIcon />
+              </Badge>
+            }
+            aria-controls='panel1a-content'
+            id='panel1a-header'
+          >
+            <Typography variant='h6'>Date - {date}</Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ marginLeft: 1 }}>
+            <div style={{ display: 'flex', paddingBottom: 10 }}>
+              <Typography variant='body2'>Number of Appointments conducted =</Typography>
+              <Typography variant='body2'>{appointmentsByDate[date].length}</Typography>
+            </div>
+            <Typography variant='h6' paddingY={1}>
+              Patient Details -
+            </Typography>
+            {appointmentsByDate[date].map((appointment) => (
+              <Grid container key={appointment?.appointment_id}>
+                <Grid item xs={4} sm={4}>
+                  <Typography variant='b1' component='h5'>
+                    Name
+                  </Typography>
+                  <Typography variant='body2'>{appointment?.patient_name}</Typography>
+                </Grid>
+                <Grid item xs={4} sm={4}>
+                  <Typography variant='b1' component='h5'>
+                    Disease
+                  </Typography>
+                  <Typography variant='body2'>{appointment?.disease_name}</Typography>
+                </Grid>
+                <Grid item xs={4} sm={4}>
+                  <Typography variant='b1' component='h5'>
+                    Status
+                  </Typography>
+                  {appointment?.checked === true ? (
+                    <Chip label='Attended' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
+                  ) : (
+                    <Chip label='Not Attended' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
+                  )}
+                </Grid>
+              </Grid>
+            ))}
+          </AccordionDetails>
+        </Accordion>
+      ))
+    }
+  />
+</Grid>
+
        </Grid>
     </Container>
  )
