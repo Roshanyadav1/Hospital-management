@@ -160,7 +160,8 @@ function Dashboard() {
          </Grid>
 
          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Add Employee</DialogTitle>
+            <DialogTitle><Typography variant='h5'>Add Employee</Typography> </DialogTitle>
+            <Divider />
             <IconButton
                aria-label='close'
                onClick={handleClose}

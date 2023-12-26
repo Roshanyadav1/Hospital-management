@@ -385,7 +385,7 @@ function FetchData() {
                <Chart />
             ) : userRole === 'Doctor' ? (
                <Box>
-                  <Grid container py={3}>
+                  <Grid container  py={3}>
                      <Grid item xs={12} sm={8}>
                         <Grid container>
                            <Grid item xs={12} sm={12}>
