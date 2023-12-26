@@ -199,7 +199,7 @@ function DoctorPage() {
                                  )}
                               </div>
                            ) : (
-                              <p>Unchecked Message</p>
+                              <p>Unchecked</p>
                            )}
                         </CardContent>
 
