@@ -30,132 +30,76 @@ export default function FixedContainer() {
                   xs={12}
                   md={3}
                   sx={{
-                     padding: 2,
-                     backgroundColor: '#13293D',
-                     color: 'white',
+                     // padding: 2,
+                     backgroundColor: '#fff',
+                     color: '#13293D',
                   }}
                >
                   <MedicalServicesIcon sx={{ fontSize: 48 }} />
-                  <Typography variant='h6' sx={{ padding: 3 }}>
+                  <Typography variant='h6' sx={{ padding: 1 }}>
                      Book an Appoinment{' '}
                   </Typography>
-                  <Typography variant='body2' sx={{ padding: 2 }}>
+                  <Typography variant='body2'>
                      You can register and get an appointment online for the
                      government hospitals
                   </Typography>
-                  <Button
-                     variant='contained'
-                     sx={{
-                        marginTop: 6,
-                        backgroundColor: 'white',
-                        color: '#13293D',
-                        padding: '10px',
-                        '&:hover': {
-                           backgroundColor: '#A7AFB7',
-                        },
-                     }}
-                  >
-                     Reach Us
-                  </Button>
                </Grid>
                <Grid
                   item
                   xs={12}
                   md={3}
                   sx={{
-                     padding: 2,
-                     backgroundColor: '#A7AFB7',
-                     color: 'white',
+                     // padding: 2,
+                     backgroundColor: '#fff',
+                     color: '#13293D',
                   }}
                >
                   <VolunteerActivismIcon sx={{ fontSize: 48 }} />
-                  <Typography variant='h6' sx={{ padding: 3 }}>
+                  <Typography variant='h6' sx={{ padding: 1 }}>
                      Specialities & Treatments{' '}
                   </Typography>
-                  <Typography variant='body2' sx={{ padding: 2 }}>
+                  <Typography variant='body2'>
                      Experience the best-in-class medical treatments with over 30+
                      specialities.
                   </Typography>
-                  <Button
-                     variant='contained'
-                     sx={{
-                        marginTop: 6,
-                        backgroundColor: 'white',
-                        color: '#13293D',
-                        padding: '10px',
-                        '&:hover': {
-                           backgroundColor: '#A7AFB7',
-                        },
-                     }}
-                  >
-                     know More
-                  </Button>
                </Grid>
                <Grid
                   item
                   xs={12}
                   md={3}
                   sx={{
-                     padding: 2,
-                     backgroundColor: '#13293D',
-                     color: 'white',
+                     // padding: 2,
+                     backgroundColor: '#fff',
+                     color: '#13293D',
                   }}
                >
                   <PersonAddIcon sx={{ fontSize: 48 }} />
-                  <Typography variant='h6' sx={{ padding: 3 }}>
+                  <Typography variant='h6' sx={{ padding: 1 }}>
                      Find Doctor in Hospital{' '}
                   </Typography>
-                  <Typography variant='body2' sx={{ padding: 2 }}>
+                  <Typography variant='body2'>
                      Trust the expert care of our doctors for your health and
                      well-being.
                   </Typography>
-                  <Button
-                     variant='contained'
-                     sx={{
-                        marginTop: 6,
-                        backgroundColor: 'white',
-                        color: '#13293D',
-                        padding: '10px',
-                        '&:hover': {
-                           backgroundColor: '#A7AFB7',
-                        },
-                     }}
-                  >
-                     know More
-                  </Button>
                </Grid>
                <Grid
                   item
                   xs={12}
                   md={3}
                   sx={{
-                     padding: 2,
-                     backgroundColor: '#A7AFB7',
-                     color: 'white',
+                     // paddingRight: 2,
+                     backgroundColor: '#fff',
+                     color: '#13293D',
                   }}
                >
                   <HealthAndSafetyIcon sx={{ fontSize: 48 }} />
-                  <Typography variant='h6' sx={{ padding: 3 }}>
+                  <Typography variant='h6' sx={{ padding: 1 }}>
                      Health Checkup Packages{' '}
                   </Typography>
-                  <Typography variant='body2' sx={{ padding: 2 }}>
+                  <Typography variant='body2'>
                      "An executive checkup a year, keeps your future hospital bill in
                      control"
                   </Typography>
-                  <Button
-                     variant='contained'
-                     sx={{
-                        marginTop: 6,
-                        backgroundColor: 'white',
-                        color: '#13293D',
-                        padding: '10px',
-                        '&:hover': {
-                           backgroundColor: '#A7AFB7',
-                        },
-                     }}
-                  >
-                     Visit know
-                  </Button>
                </Grid>
             </Grid>
          </Container>

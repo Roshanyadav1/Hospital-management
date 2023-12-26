@@ -1,4 +1,3 @@
-import React from 'react';
 import { Grid, Card, CardContent, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { CardActionArea, CardMedia } from '@mui/material';
@@ -13,13 +12,13 @@ export default function DiseaseCard() {
                Diseases
             </Typography>
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
-               {patient.map((result, index) => (
-                  <Grid item xs={6} md={3} sm={4} key={index}>
+               {patient.map((result) => (
+                  <Grid item xs={6} md={3} sm={4} key={result?.id}>
                      <Link style={{ textDecoration: 'none', textAlign: 'center' }} href='/doctorpage'>
                         <Card
                            sx={{
                               maxWidth: 300,
-                              borderRadius: 5,
+                              borderRadius: 2,
                               // boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                               textAlign: 'center',
                               // '&:hover': {
@@ -32,13 +31,13 @@ export default function DiseaseCard() {
                                  sx={{ height: 140 }}
                                  component='img'
                                  image={result.image}
-                                 alt={result.title}
+                                 alt='image'
                               />
                               <CardContent>
                                  <Typography gutterBottom variant='h6' component='div'>
                                     {result.title}
                                  </Typography>
-                                 <Typography variant='body2' color='text.secondary'>
+                                 <Typography variant='body2' color='text.primary'>
                                     {result.description}
                                  </Typography>
                               </CardContent>

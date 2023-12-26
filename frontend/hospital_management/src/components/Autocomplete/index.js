@@ -18,7 +18,7 @@ const CustomAutocomplete = ({
          <Autocomplete
             name={name}
             options={options}
-            getOptionLabel={(option) => option}
+            getOptionLabel={(option) => option ? option : ''}
             value={value}
             onChange={(event, newValue) => {
                onChange({ target: { name, value: newValue } })

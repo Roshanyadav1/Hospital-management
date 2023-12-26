@@ -9,7 +9,6 @@ import Grid from '@mui/system/Unstable_Grid/Grid'
 import Container from '@mui/material/Container'
 import { Card, CardContent, Skeleton } from '@mui/material'
 import { CardActionArea } from '@mui/material'
-import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import LinearProgress from '@mui/material/LinearProgress'
@@ -46,7 +45,7 @@ function DoctorPage() {
    const {
       data: filterDoc,
       isFetching: DocFetch,
-      isLoading: isDoctorsLoading,
+      // isLoading: isDoctorsLoading,
    } = useGetAllDoctorsQuery(selectedDiseases)
    console.log(filterDoc)
    let fill = {
@@ -351,8 +350,8 @@ function DoctorPage() {
                      <div>Oops ! Something went Wrong</div>
                   ) : (
                      <Grid container spacing={6} style={{ marginTop: '20px' }}>
-                        {allDoctor?.map((result, index) => (
-                           <DoctorCard key={index} result={result} />
+                        {allDoctor?.map((result) => (
+                           <DoctorCard key={result?.doctor_id} result={result} />
                         ))}
                      </Grid>
                   )}

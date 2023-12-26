@@ -13,7 +13,6 @@ import {
 } from '@mui/material'
 import docImage from '../assets/doctorimg2.jpg'
 import Image from 'next/image'
-import Link from 'next/link'
 import moment from 'moment'
 
 function ShowDoctors() {

@@ -71,13 +71,13 @@ function DoctorCard() {
                modules={[Pagination, Navigation]}
                className='mySwiper'
             >
-               {getDname?.data?.results?.map((result, index) => (
+               {getDname?.data?.results?.map((result) => (
                 <Grid
                 container
                 direction="row"
                 justifyContent="center"
                 alignItems="center"
-                key={index}
+                key={result?.doctor_id}
               >
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>

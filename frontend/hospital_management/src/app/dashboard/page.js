@@ -14,15 +14,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
-import Link from 'next/link'
 import ListItem from '@mui/material/ListItem'
 import PeopleIcon from '@mui/icons-material/People'
 import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import { useGetDoctorIdQuery } from '../../services/Query'
-import { Container, Grid, Button, Typography, Skeleton } from '@mui/material'
-import { colors, themeOptions } from '@/styles/theme'
+import { Grid, Button, Typography, Skeleton } from '@mui/material'
+import { colors } from '@/styles/theme'
 import { styled } from '@mui/material/styles'
 
 import '@/styles/container.css'
@@ -34,7 +32,6 @@ import DialogContentText from '@mui/material/DialogContentText'
 import { useAppointmentUpdateMutation } from '@/services/Query'
 import { toast } from 'react-toastify'
 import { useGetAppointmentInfoQuery } from '@/services/Query'
-import { useParams } from 'next/navigation'
 import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAddPrescriptionMutation } from '../../services/Query'
@@ -55,18 +52,6 @@ const fadeInUp = {
    visible: { opacity: 1, y: 0 },
 }
 
-const style = {
-   position: 'absolute',
-   top: '50%',
-   left: '50%',
-   transform: 'translate(-50%, -50%)',
-   width: 400,
-   bgcolor: 'background.paper',
-   border: '2px solid #000',
-   boxShadow: 24,
-   p: 4,
-}
-
 function FetchData() {
    const requestAbortController = useRef(null)
    const userRole = localStorage.getItem('user_role')
@@ -81,7 +66,6 @@ function FetchData() {
    const [open, setOpen] = useState(false)
    const [datesArray, setDatesArray] = useState([])
 
-
    // const [appointmentUpdate] = useAppointmentUpdateMutation()
    const {
       data: appointments,
@@ -89,25 +73,42 @@ function FetchData() {
       isLoading: dataloading,
    } = useGetDoctorIdQuery(doctorId, { skip: userRole === 'Doctor' ? false : true })
 
-   const docId = localStorage.getItem("user_id")
-   const {data: holidays, isSuccess:isHolidaySuccess} = useLeaveViewQuery(docId) 
+   const docId = localStorage.getItem('user_id')
+   const { data: holidays, isSuccess: isHolidaySuccess } = useLeaveViewQuery(docId)
    const appointment_id = appointments?.data[0]?.appointment_id
    const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
-   const dates = appointments?.data?.map(
-      (appointment) => appointment?.appointment_date
-   )
 
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
    })
+
+   const fetchHighlightedDays = (date) => {
+      const controller = new AbortController()
+      fakeFetch(date, {
+         signal: controller.signal,
+      })
+         .then(({ daysToHighlight }) => {
+            setHighlightedDays(daysToHighlight)
+            setIsLoading(false)
+         })
+         .catch((error) => {
+            if (error.name !== 'AbortError') {
+               throw error
+            }
+         })
+
+      requestAbortController.current = controller
+   }
+
    useEffect(() => {
       if (dateData?.length > 0) {
          fetchHighlightedDays(initialValue)
          return () => requestAbortController.current?.abort()
       }
-   }, [dateData])
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [dateData, fetchHighlightedDays])
    useEffect(() => {
       if (names?.length > 0) {
          setDateData(names)
@@ -115,18 +116,17 @@ function FetchData() {
       if (dateData?.length > 0) {
          getSpecificDates()
       }
-   }, [names?.length])
- // for holidays highlight in calender
-   useEffect(()=> {
-      if(holidays?.data && isHolidaySuccess){
-         setDatesArray(holidays?.data?.map(item => item.date));
+   }, [dateData?.length, getSpecificDates, names, names?.length])
+   // for holidays highlight in calender
+   useEffect(() => {
+      if (holidays?.data && isHolidaySuccess) {
+         setDatesArray(holidays?.data?.map((item) => item.date))
       }
-   },[holidays?.data,isHolidaySuccess])
+   }, [holidays?.data, isHolidaySuccess])
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    function getSpecificDates() {
       return dateData
    }
-
-
 
    function fakeFetch(date, { signal }) {
       return new Promise((resolve, reject) => {
@@ -180,28 +180,6 @@ function FetchData() {
       )
    }
 
-
-
-   const fetchHighlightedDays = (date) => {
-      const controller = new AbortController()
-      fakeFetch(date, {
-         signal: controller.signal,
-      })
-         .then(({ daysToHighlight }) => {
-            setHighlightedDays(daysToHighlight)
-            setIsLoading(false)
-         })
-         .catch((error) => {
-            if (error.name !== 'AbortError') {
-               throw error
-            }
-         })
-
-      requestAbortController.current = controller
-   }
-
-
-
    const handleMonthChange = (date) => {
       if (requestAbortController.current) {
          requestAbortController.current.abort()
@@ -217,14 +195,6 @@ function FetchData() {
       const [hours, minutes] = timeString.split(':')
       return `${hours}:${minutes}`
    }
-    
-   const doctorID =  appointments?.data[0]?.doctor?.doctor_id
-
-
-// console.log(datesArray);
-
-//    const disabledDates = datesArray;
-//    console.log(disabledDates)
 
    const shouldDisableDate = (date) => {
       const isSunday = date.day() === 0
@@ -234,60 +204,51 @@ function FetchData() {
       return isSunday || isRandomDisabledDate
    }
 
-   ///////////////////////////////////////////////////////
-
-   
    const label = { inputProps: { 'aria-label': 'Size switch demo' } }
    const [appointmentUpdate] = useAppointmentUpdateMutation()
-   const [addPrescription] = useAddPrescriptionMutation();
-
+   const [addPrescription] = useAddPrescriptionMutation()
 
    const handleFileChange = (event) => {
       setSelectedFile(event.target.files[0])
    }
    const handleSubmit = async () => {
       if (selectedFile) {
-         const formData = new FormData();
-         formData.append('file', selectedFile);
-   
+         const formData = new FormData()
+         formData.append('file', selectedFile)
+
          try {
-             const s3Response = await fetch('/api/s3-upload', {
+            const s3Response = await fetch('/api/s3-upload', {
                method: 'POST',
                body: formData,
-            });
-   
-             if (s3Response.ok) {
-                const s3Data = await s3Response.json();
-               const imageUrl = s3Data.imageUrl;
-   
-                console.log('S3 Image URL:', imageUrl);
-   
-                const apiResponse = await addPrescription({
+            })
+
+            if (s3Response.ok) {
+               const s3Data = await s3Response.json()
+               const imageUrl = s3Data.imageUrl
+
+               console.log('S3 Image URL:', imageUrl)
+
+               const apiResponse = await addPrescription({
                   prescription_photo: imageUrl,
                   appointment_id: appointmentInfo?.data?.[0]?.appointment_id,
-               });
-   
-                if (apiResponse.data) {
-                  setIsSuccessDialogOpen(true);
-                  setIsFileChosenError(false);
+               })
+
+               if (apiResponse.data) {
+                  setIsSuccessDialogOpen(true)
+                  setIsFileChosenError(false)
                } else {
-                  console.error('Failed to post prescription data to API');
+                  console.error('Failed to post prescription data to API')
                }
             } else {
-               console.error('Failed to upload image to S3');
+               console.error('Failed to upload image to S3')
             }
          } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error)
          }
       } else {
-         setIsFileChosenError(true);
+         setIsFileChosenError(true)
       }
-   };
-   
-   
-   
-   
-   
+   }
 
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false)
@@ -311,7 +272,6 @@ function FetchData() {
       setIsSwitchOn(!isSwitchOn)
    }
 
-
    const handleClickOpen = () => {
       setOpen(true)
    }
@@ -321,15 +281,12 @@ function FetchData() {
 
    if (dataloading) {
       return (
-        
-         <Grid container py={3}>
+         <Grid container>
             <Grid item container xs={12} sm={8}>
                <Grid item xs={12} sm={12}>
                   <Card
                      sx={{
-                       
                         borderRadius: 2,
-                        
                      }}
                   >
                      <Skeleton
@@ -343,9 +300,7 @@ function FetchData() {
                <Grid item xs={12} sm={12} mt={5}>
                   <Card
                      sx={{
-                        
                         borderRadius: 2,
-                        
                      }}
                   >
                      <Skeleton
@@ -361,10 +316,10 @@ function FetchData() {
                <Card
                   sx={{
                      width: '100%',
-                     marginLeft: 2 ,
+                     marginLeft: 2,
                      borderRadius: 2,
-                     height: 340 ,
-                    }}
+                     height: 340,
+                  }}
                >
                   <Skeleton
                      variant='rectangular'
@@ -376,8 +331,6 @@ function FetchData() {
             </Grid>
          </Grid>
       )
-      // } else if (isError) {
-      //    return <p> No Appointment Here {isError}</p>
    } else {
       return (
          <div>

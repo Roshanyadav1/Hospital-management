@@ -12,10 +12,10 @@ import {
    DialogTitle,
    Skeleton,
    IconButton,
+   Switch,
 } from '@mui/material'
 
 import CloseIcon from '@mui/icons-material/Close'
-import { CardActionArea } from '@mui/material'
 import { CardContent } from '@mui/material'
 import { Formik, Form } from 'formik'
 import Paper from '@mui/material/Paper'
@@ -30,38 +30,9 @@ import Divider from '@mui/material/Divider'
 import { useAddDiseasesMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import CircularProgress from '@mui/material/CircularProgress'
-import CoronavirusTwoToneIcon from '@mui/icons-material/CoronavirusTwoTone'
-import { alpha } from '@mui/material/styles'
-import { green } from '@mui/material/colors'
-import Switch from '@mui/material/Switch'
 import { useDiseaseStatusMutation } from '../../../services/Query'
-import { positions } from '@mui/system'
 
-const GreenSwitch = styled(Switch)(({ theme }) => ({
-   '& .MuiSwitch-switchBase.Mui-checked': {
-      color: green[600],
-      '&:hover': {
-         backgroundColor: alpha(green[600], theme.palette.action.hoverOpacity),
-      },
-   },
-   '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-      backgroundColor: green[600],
-   },
-}))
-
-const label = { inputProps: { 'aria-label': 'Color switch demo' } }
-
-const VisuallyHiddenInput = styled('input')({
-   clip: 'rect(0 0 0 0)',
-   clipPath: 'inset(50%)',
-   height: 1,
-   overflow: 'hidden',
-   position: 'absolute',
-   bottom: 0,
-   left: 0,
-   whiteSpace: 'nowrap',
-   width: 1,
-})
+import CardActions from '@mui/material/CardActions'
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
    //  maxWidth: '950px',
@@ -71,13 +42,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
    padding: '2rem',
    width: '600',
    minWidth: 240,
-}))
-
-//for the heading
-const StyledTypography = styled(Typography)(() => ({
-   fontWeight: 'bold',
-   //  paddingBottom: '1rem',
-   color: colors.primary,
 }))
 
 //for hiding the input image button
@@ -92,6 +56,8 @@ const StyledFormWrapper = styled('div')({
       padding: '0rem',
    },
 })
+
+
 
 const INITIAL_FORM_STATE = {
    // disease_id: '',
@@ -142,7 +108,7 @@ const page = () => {
    }
 
    // change status
-   const ChangeStatus = async (isSubmitting) => {
+   const ChangeStatus = async () => {
       try {
          setLoading((prev) => !prev)
          // Assuming your API expects an employee ID for deletion
@@ -160,25 +126,33 @@ const page = () => {
          console.error('Error changing status:', error)
       }
    }
-   
 
    return (
       <div>
-         <Dialog open={openModal}>
+
+                  <Dialog
+        fullWidth={true}
+        maxWidth={'xs'}
+        open={openModal}
+      >
             <DialogTitle
-               style={{
-                  border: '1px solid white',
-                  borderRadius: '10px',
-                  boxShadow: 'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                  fontWeight: 'bolder',
-                  fontSize: '1rem',
-               }}
+              sx={{ m: 0, p: 2 }} id="customized-dialog-title"
             >
                Do you want to update status?
-               
             </DialogTitle>
-            <Divider variant='middle' />
-            <DialogContent>
+            <IconButton
+          aria-label="close"
+          onClick={handleCloseModal}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent dividers>
                <p>
                   Change the status of
                   <span className='Data'>
@@ -188,16 +162,26 @@ const page = () => {
                </p>
             </DialogContent>
             <DialogActions>
+
+
+                
                <Button onClick={handleCloseModal} color='primary' className='No'>
                   No
                </Button>
-               <Button disabled={loading} onClick={ChangeStatus} color='primary' className='Yes'>
+               <Button
+                  disabled={loading}
+                  onClick={ChangeStatus}
+                  variant="contained"
+                  color='primary'
+                  className='Yes'
+               >
                   {loading ? <CircularProgress size={20} /> : 'Yes'}
                </Button>
             </DialogActions>
          </Dialog>
+         
          <Button onClick={handleOpen} variant='outlined'>
-            Add Disease +
+            Add Disease
          </Button>
 
          <Modal
@@ -205,24 +189,32 @@ const page = () => {
             // onClose={handleClose}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
-            
          >
             <Box sx={style}>
                <StyledFormWrapper>
-                  <IconButton
-                     aria-label='close'
-                     onClick={handleClose}
-                     sx={{
-                        position: 'absolute',
-                        right: 3,
-                        top: -5,
-                        color: (theme) => theme.palette.grey[500],
-                        // margin: 3
-                     }}
-                  >
-                     <CloseIcon />
-                  </IconButton>
                   <StyledPaper elevation={3}>
+                     <Grid
+                        container
+                        direction='row'
+                        justifyContent='space-between'
+                        alignItems='center'
+                     >
+                        <Typography variant='h5' gutterBottom>
+                           Add Disease
+                        </Typography>
+                        <IconButton
+                           aria-label='close'
+                           onClick={handleClose}
+                           sx={{
+                              position: 'absolute',
+                              right: 8,
+                              top: 10,
+                              color: (theme) => theme.palette.grey[500],
+                           }}
+                        >
+                           <CloseIcon />
+                        </IconButton>
+                     </Grid>
                      <Formik
                         initialValues={{
                            ...INITIAL_FORM_STATE,
@@ -233,7 +225,6 @@ const page = () => {
                         {({ errors, isSubmitting }) => (
                            <Form>
                               {console.log(errors, 'here')}
-                              <h2 style={{ marginTop: 0 }}>Add Disease</h2>
 
                               <Grid container spacing={2}>
                                  <Grid item xs={12}>
@@ -262,8 +253,6 @@ const page = () => {
                                  </Grid>
                                  <Divider />
 
-                             
-
                                  <Grid item xs={12} sm={6}>
                                     <Button
                                        variant='contained'
@@ -271,15 +260,16 @@ const page = () => {
                                        type='submit'
                                        size='large'
                                        disabled={isSubmitting}
-                                        sx={{position:'absolute', right:7 ,bottom:7}}
-                                   
+                                       sx={{
+                                          position: 'absolute',
+                                          right: 7,
+                                          bottom: 7,
+                                       }}
                                     >
                                        {isSubmitting ? 'Submitting...' : 'Submit'}
                                     </Button>
                                  </Grid>
-                               
-                                 </Grid>
-                            
+                              </Grid>
                            </Form>
                         )}
                      </Formik>
@@ -312,56 +302,30 @@ const page = () => {
             </>
          )}
 
-         <Grid container spacing={5} style={{ marginTop: 0.8 }}>
+         <Grid container spacing={2} style={{ marginTop: 0.8 }}>
             {getDisease?.data?.map((e, i) => {
-               let status = e.disease_status
                return (
                   <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
-                     <Card sx={{ maxWidth: 250 }}>
+                     <Card>
                         <CardContent>
-                           <div style={{ display: 'flex' }}>
-                              <div>
-                                 <Typography sx={{ paddingTop: 0.3 }}>
-                                    <CoronavirusTwoToneIcon />
-                                 </Typography>
-                              </div>
-                              <div>
-                                 <Typography
-                                    gutterBottom
-                                    variant='h6'
-                                    component='div'
-                                 >
-                                    {e.disease_name}
-                                 </Typography>
-                              </div>
-                           </div>
-                           <div style={{ display: 'block' }}>
-                              <Typography sx={{ paddingTop: 1, color: 'primary' }}>
-                                 Status
-                              </Typography>
-
-                              {/* <GreenSwitch {...label} defaultChecked /> */}
-                              {/* toggle code///////////////////////////////////////////////////////////////////////////////////////// */}
-
-                              <div
-                                 style={{
-                                    display: 'flex',
-                                    justifyContent: 'left',
-                                    alignItems: 'left',
-                                 }}
-                              >
-                                 <Switch
-                                    checked={status}
-                                    onClick={() => {
-                                       setDisease(e)
-                                       setOpenModal(true)
-                                    }}
-                                    color='primary'
-                                    size='small'
-                                 />
-                              </div>
-                           </div>
+                           <Typography gutterBottom variant='h5' component='div'>
+                              {e?.disease_name}
+                           </Typography>
                         </CardContent>
+                        <CardActions>
+                           <Switch
+                              checked={e?.disease_status}
+                              onClick={() => {
+                                 setDisease(e)
+                                 setOpenModal(true)
+                              }}
+                              color='primary'
+                              size='small'
+                           />
+                           <Typography variant='body2' color='text.secondary'>
+                              {e?.disease_status ? 'Active' : 'Inactive'}
+                           </Typography>
+                        </CardActions>
                      </Card>
                   </Grid>
                )

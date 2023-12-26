@@ -156,13 +156,6 @@ const GetActionButton = (row) => {
    const [openEditModal, setOpenEditModal] = useState(false)
    const [openViewModal, setOpenViewModal] = useState(false)
 
-   const Img = styled('img')({
-      margin: 'auto',
-      display: 'block',
-      maxWidth: '80%',
-      maxHeight: '80%',
-    });
-
    const INITIAL_FORM_STATE = {
       employee_name: row?.params?.row?.employee_name,
       employee_email: row?.params?.row?.employee_email,

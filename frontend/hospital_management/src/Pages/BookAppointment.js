@@ -18,12 +18,27 @@ import {
 import SchoolIcon from '@mui/icons-material/School'
 import { useAddAppointmentMutation, useGetDoctorTimesQuery } from '@/services/Query'
 import { useState, useEffect } from 'react'
-import PersonIcon from '@mui/icons-material/Person'
 import Image from 'next/image'
 import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
-import moment from 'moment'
+
+const ProfileCard = ({ icon, title, content }) => (
+   <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
+      <CardHeader
+         avatar={icon}
+         title={title}
+         sx={{ display: 'flex', alignItems: 'center' }}
+      />
+      <Divider />
+      <CardContent>
+         <Typography variant='body2' p={1}>
+            {content}
+         </Typography>
+      </CardContent>
+   </Card>
+)
+
 function BookAppoinment({ id, name, date }) {
    let data = {
       id: id,
@@ -37,30 +52,13 @@ function BookAppoinment({ id, name, date }) {
    const [times, setTimes] = useState([])
    const [hiddentime, setHiddentime] = useState([])
    const { createTimeSlots } = useTimeSlots()
-   // doctorTimes
-   const ProfileCard = ({ icon, title, content }) => (
-      <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
-         <CardHeader
-            avatar={icon}
-            title={title}
-            sx={{ display: 'flex', alignItems: 'center' }}
-         />
-         <Divider />
-         <CardContent>
-            <Typography variant='body2' p={1}>
-               {content}
-            </Typography>
-         </CardContent>
-      </Card>
-   )
+
    useEffect(() => {
-      if (
-         doctorTimes &&
-         doctorTimes.data && !isLoading) {
-         setTimes(doctorTimes.data.times)
-         setHiddentime(createTimeSlots(doctorTimes.data.per_patient_time, doctorTimes.data.times))
+      if (doctorTimes?.data && !isLoading) {
+         console.log("dfgj")
+         setTimes(doctorTimes?.data?.times)
       }
-   }, [doctorTimes, isLoading])
+   }, [doctorTimes?.data, isLoading])
 
    function formatTime(timeString) {
       const time = new Date(`2000-01-01T${timeString}`)
@@ -77,6 +75,7 @@ function BookAppoinment({ id, name, date }) {
       setOpenDialog(false)
    }
    const handleSlotSelection = (timeSlot) => {
+      setHiddentime(createTimeSlots(doctorTimes?.data?.per_patient_time, doctorTimes?.data?.times))
       setSelectedSlot(timeSlot)
    }
    const handleBookAppointment = async () => {
@@ -123,19 +122,15 @@ function BookAppoinment({ id, name, date }) {
          >
             <Grid item bgcolor={'fff'} display={'flex'} Direction='column'>
                {
-                  isLoading ? (<>
-                     <Skeleton
+                  isLoading ? <Skeleton
                         sx={{ border: '1px solid #E0E0E0' }}
-                        variant="circular" height={150} width={150} />
-                  </>) : (<>
-                     <Image
+                        variant="circular" height={150} width={150} /> : <Image
                         priority={true}
                         src={doctorTimes?.data?.doctor_profile_picture || 'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'}
                         height={185}
                         width={185}
                         style={{ borderRadius: '50%', padding: 10, margin:1 }}
                      />
-                  </>)
                }
                <Grid
                   item
@@ -147,14 +142,12 @@ function BookAppoinment({ id, name, date }) {
                   p={{ xs: 2, sm: 5 }}
                   gap={10}
                >
-                  <>
                      <Typography gutterBottom variant='h4' component='div'>
                         {name}
                         <Typography variant='body1' color='text.secondary'>
                            EXECUTIVE DOCTOR FORTIS C DOC | Fortis C-Doc
                         </Typography>
                      </Typography>
-                  </>
                </Grid>
             </Grid>
          </Grid>
@@ -210,15 +203,15 @@ function BookAppoinment({ id, name, date }) {
                         },
                      }}
                   >
-                     {isLoading ? (
-                        Array.from({ length: 3 }).map((_, index) => (
-                           <Grid item key={index} xs={6} sm={6} md={6}>
+                     {isLoading ?
+                        // Array.from({ length: 3 }).map((_, index) => (
+                           <Grid item xs={6} sm={6} md={6}>
                               <Skeleton
                                  sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
                                  variant="rectangular" height={60} />
                            </Grid>
-                        ))
-                     ) :
+                        // ))
+                     :
                         times.map((timeSlot, index) => (
                            <Grid item key={index} xs={12} sm={8} md={6}>
                               <Button

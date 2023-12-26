@@ -71,6 +71,7 @@ const Test = () => {
                   className='nav-user-profile d-inline-block rounded-circle mr-3'
                   width='50'
                   height='50'
+                  // eslint-disable-next-line react/no-unknown-property
                   decode='async'
                   data-testid='navbar-picture-mobile'
                />

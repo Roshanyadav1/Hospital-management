@@ -115,7 +115,7 @@ const Footer = () => {
                      Centres of Excellence
                   </Typography>
 
-                  <Link href='/dashboard/neurosciences' passHref>
+                  <Link>
                      <Typography variant='body2' color='white' sx={{ padding: 1 }}>
                         Centre for Neurosciences
                      </Typography>
@@ -169,29 +169,7 @@ const Footer = () => {
                      </Typography>
                   </Link>
 
-                  <Link>
-                     <Typography
-                        variant='body2'
-                        color='white'
-                        sx={{
-                           padding: 1,
-                        }}
-                     >
-                        Gynaecology and Obstetrics
-                     </Typography>
-                  </Link>
 
-                  <Link>
-                     <Typography
-                        variant='body2'
-                        color='white'
-                        sx={{
-                           padding: 1,
-                        }}
-                     >
-                        Pediatrics
-                     </Typography>
-                  </Link>
                </Grid>
 
                <Grid item xs={12} sm={3}>
@@ -207,7 +185,7 @@ const Footer = () => {
                         Contact Us
                      </Typography>
                
-                  <Typography variant='body2' color='white' sx={{ padding: 1 }}>
+                  <Typography variant='body2' color='white'>
                      <Input
                         varient='outline'
                         type='text'
@@ -258,7 +236,7 @@ const Footer = () => {
                   padding:1
                }}
             >
-               &copy; {new Date().getFullYear()} Your Website Name
+               &copy; {new Date().getFullYear()} SGA
             </Typography>
          </Container>
       </Grid>
