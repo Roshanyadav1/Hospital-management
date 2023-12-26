@@ -1,18 +1,22 @@
 
-"use client"
-import  DoctorProfile from '../../../Pages/Profile'
-import { useRouter } from 'next/navigation'
-// import { useParams } from 'next/navigation'
-function page() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router=useRouter()
-  const {doc_id} = router.query()
-  console.log(doc_id)
+import DoctorProfile from '../../../Pages/Profile'
+import { useRouter } from 'next/router'
+
+function Page() {
+  const router = useRouter()
+  const { doc_id } = router.query
+  
+
+
+ 
+
   return (
     <div>
-      <DoctorProfile id={doc_id} />
+    
+        <DoctorProfile id={doc_id} />
+    
     </div>
   )
 }
 
-export default page
+export default Page

@@ -167,11 +167,11 @@ function Layout({ children }) {
                <DrawerHeader></DrawerHeader>
                <List>
                   {[
-                       {
-                        text: 'Home',
-                        path: '/dashboard',
-                        icon: <HomeIcon/>,
-                     },
+                     //   {
+                     //    text: 'Home',
+                     //    path: '/dashboard',
+                     //    icon: <HomeIcon/>,
+                     // },
                      {
                         text: 'Dashboard',
                         path: '/dashboard',
@@ -190,7 +190,7 @@ function Layout({ children }) {
 
                   ].map((item , index) => {
                      if (userRole === 'Doctor' && item.path !== '/dashboard')
-                     if ( index >= 2 && !isAdmin) return null;
+                     if ( index >= 1 && !isAdmin) return null;
                   return (
                      <ListItem
                         key={item.text}

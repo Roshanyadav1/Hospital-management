@@ -27,7 +27,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useLoginUserMutation } from '@/services/Query'
-import { useRouter } from 'next/navigation';
 
 const drawerWidth = 240
 const pages = [{ label: 'Doctor', route: '/showdoctors' },
@@ -37,17 +36,13 @@ const pages = [{ label: 'Doctor', route: '/showdoctors' },
 const settings = [];
 
 function ResponsiveAppBar(props) {
-
-   //eslint-disable-next-line
-   let isLogin = localStorage.getItem('isLogin');
-   const navigate = useRouter();
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
    const [userLogin] = useLoginUserMutation();
    const { user } = useUser()
    // eslint-disable-next-line no-unused-vars
    const [isLoading, setIsLoading] = useState(false);
-   const [loggedIn, setLoggedIn] = useState(isLogin ? true : false);
+   const [loggedIn, setLoggedIn] = useState(false);
    // eslint-disable-next-line no-unused-vars
    const [showLogout, setShowLogout] = useState(false);
    const [, setAnchorElNav] = React.useState(null);
@@ -68,26 +63,7 @@ function ResponsiveAppBar(props) {
    const handleDrawerToggle = () => {
       setMobileOpen((prevState) => !prevState)
    }
-
-
-   const getUserSettings = () => {
-      const settings = [];
-      const userRole = localStorage.getItem('user_role');
-
-      switch (userRole) {
-         case 'Patient':
-            settings.push({ label: 'Profile', route: '/patientprofile' });
-            break;
-         default:
-            break;
-      }
-
-      return settings;
-   };
-   const settings = getUserSettings();
-
    const getNavigationItems = () => {
-   //eslint-disable-next-line
       const role = localStorage.getItem('user_role');
       switch (role) {
          case 'Admin':
@@ -123,7 +99,6 @@ function ResponsiveAppBar(props) {
                         <Button sx={{ color: '#fff' }}>{item.label}</Button>
                      </Link>
                   ))}
-                  
                </>
             );
 
@@ -137,7 +112,6 @@ function ResponsiveAppBar(props) {
    };
 
    const getUserImage = () => {
-   //eslint-disable-next-line
       const userRole = localStorage.getItem('user_role');
 
       switch (userRole) {
@@ -154,7 +128,6 @@ function ResponsiveAppBar(props) {
    };
 
    useEffect(() => {
-
       if (user && !loggedIn) {
          setIsLoading(true);
          const handleSubmit = async () => {
@@ -164,12 +137,6 @@ function ResponsiveAppBar(props) {
                localStorage.setItem('access_token', res.data.token.access);
                localStorage.setItem('user_role', res.data.user_role);
                localStorage.setItem('refresh_token', res.data.token.refresh);
-               localStorage.setItem('isLogin', true);
-
-               if(res.data.user_role !== 'Patient'){
-                  // redirect to dashboard
-                  navigate.push('/dashboard');
-               }
                setIsLoading(false);
                setLoggedIn(true);
             } catch (err) {
@@ -179,7 +146,7 @@ function ResponsiveAppBar(props) {
          };
          handleSubmit();
       }
-   }, [user, loggedIn, userLogin, isLogin, navigate]);
+   }, [user, loggedIn, userLogin]);
 
    const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: '#fff' }}>
@@ -252,13 +219,9 @@ function ResponsiveAppBar(props) {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                      >
-                         {settings.map((setting) => (
-                           <MenuItem key={setting.label}>
-                              <Link href={setting.route}  style={{  textDecoration: 'none', color: 'inherit' }} prefetch>
-                                 <Typography component='a' textAlign='center'  >
-                                    {setting.label}
-                                 </Typography>
-                              </Link>
+                        {settings.map((setting) => (
+                           <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                              <Typography textAlign="center">{setting}</Typography>
                            </MenuItem>
                         ))}
                         {/* {['Admin', 'Doctor', 'Patient'].includes(localStorage.getItem('user_role')) && user && ( */}
