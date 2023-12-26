@@ -25,6 +25,9 @@ import { useChangeStatusMutation } from '@/services/Query'
 import { Delete, Create, Visibility, DisabledByDefault } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import AddEmployee from '@/components/AddEmployee'
+import { toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material'
+
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 const style = {
    position: 'absolute',
@@ -155,6 +158,7 @@ const GetActionButton = (row) => {
    const [openModal, setOpenModal] = useState(false)
    const [openEditModal, setOpenEditModal] = useState(false)
    const [openViewModal, setOpenViewModal] = useState(false)
+   const [isDeleting, setIsDeleting] = useState(false);
 
    const INITIAL_FORM_STATE = {
       employee_name: row?.params?.row?.employee_name,
@@ -238,25 +242,24 @@ const GetActionButton = (row) => {
    const handleCloseEditModal = () => {
       setOpenEditModal(false)
    }
-   const handleConfirmDelete = () => {
-      const DltEmployee = async () => {
-         try {
-            // Assuming your API expects an employee ID for deletion
-            const result = await deleteEmployee(selectedRow.employee_id)
-            alert('Employee Deleted Successfully')
-            // Log the result to the console
-            console.log('Result of deleteEmployee mutation:', result)
-            // Perform any additional logic after successful deletion
-         } catch (error) {
-            // Handle error
-            console.error('Error deleting employee:', error)
-         }
+   const handleConfirmDelete = async () => {
+      setIsDeleting(true); // Set loading state to true during deletion
+      try {
+         // Assuming your API expects an employee ID for deletion
+         const result = await deleteEmployee(selectedRow.employee_id);
+        toast.success('Employee Deleted Successfully')
+         // Log the result to the console
+         console.log('Result of deleteEmployee mutation:', result);
+         // Perform any additional logic after successful deletion
+      } catch (error) {
+         // Handle error
+         console.error('Error deleting employee:', error);
+        toast.error("Something went wrong")
+      } finally {
+         setIsDeleting(false); // Reset loading state after deletion (success or failure)
+         handleCloseModal();
       }
-      // Perform delete logic here
-      console.log('Deleting:', selectedRow)
-      DltEmployee() // Call the delete function
-      handleCloseModal()
-   }
+   };
    const handleCloseViewModal = () => {
       setOpenViewModal(false)
    }
@@ -280,9 +283,16 @@ const GetActionButton = (row) => {
    }
 
    return (
-      <div
-         style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      >
+      // <div
+      //    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      // >
+      <div>
+         {/* Loader component */}
+         {isDeleting && (
+            <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+               <CircularProgress />
+            </div>
+         )}
          <Dialog open={openModal}>
             <DialogTitle
                style={{
