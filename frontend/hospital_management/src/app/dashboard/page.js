@@ -163,8 +163,6 @@ function FetchData() {
       )
    }
 
-
-
    // eslint-disable-next-line react-hooks/exhaustive-deps, no-undef
    const fetchHighlightedDays =((date) => {
       const controller = new AbortController()
@@ -312,9 +310,7 @@ function FetchData() {
                <Grid item xs={12} sm={12}>
                   <Card
                      sx={{
-
                         borderRadius: 2,
-
                      }}
                   >
                      <Skeleton
