@@ -65,7 +65,7 @@ const DoctorName = localStorage.getItem('user_name')
 // console.log("doc name",DoctorName)
 
  return (
-    <Container maxWidth='lg' p={2}>
+    <Container maxWidth='lg' p={2} >
        <Grid container boxShadow={1} spacing={2}>
           <Grid container item bgcolor={'fff'} display={'flex'} Direction='column'>
              {
@@ -106,6 +106,7 @@ const DoctorName = localStorage.getItem('user_name')
              </Grid>
           </Grid>
        </Grid>
+
        <Grid container marginTop={2} spacing={2}>
           <Grid xs={12} sm={6}>
              <ProfileCard
@@ -196,7 +197,7 @@ const DoctorName = localStorage.getItem('user_name')
       ))
     }
   />
-</Grid>
+           </Grid>
 
        </Grid>
     </Container>
