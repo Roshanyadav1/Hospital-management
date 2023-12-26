@@ -10,3 +10,4 @@
 {'timestamp': '2023-12-26 13:47:23', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'agrkeshav04@gmail.com'}
 {'timestamp': '2023-12-26 13:48:37', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'agrkeshav04@gmail.com'}
 {'timestamp': '2023-12-26 13:49:50', 'method': 'POST', 'path': '/api/appointment/add', 'status': 200, 'message': 'AppointmentBooked Successfully', 'email': 'agrkeshav04@gmail.com'}
+{'timestamp': '2023-12-26 16:36:03', 'method': 'POST', 'path': '/api/user/login', 'status': 200, 'message': 'Logged In As Admin', 'email': 'admin@gmail.com', 'name': 'Admin'}

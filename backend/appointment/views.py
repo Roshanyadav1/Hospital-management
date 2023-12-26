@@ -229,18 +229,18 @@ class AppointmentCount(ListAPIView):
                 }
             )
 
-        appointments_in_week = self.queryset.filter(
-            appointment_date__range=[start_date, end_date])
-        appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count(
-            'appointment_date'), doctor_count=Count('doctor', distinct=True), patient_count=Count('patient')).order_by('appointment_date')
+        # appointments_in_week = self.queryset.filter(
+        #     appointment_date__range=[start_date, end_date])
+        # appointments_per_day = appointments_in_week.values('appointment_date').annotate(appointment_count=Count(
+        #     'appointment_date'), doctor_count=Count('doctor', distinct=True), patient_count=Count('patient')).order_by('appointment_date')
 
-        if not appointments_per_day:
+        # if not appointments_per_day:
 
-            # Return a JsonResponse with 'Data Not Found' message
-            return Response({
-                'status': 404,
-                'message': "Data not found"
-            })
+        #     # Return a JsonResponse with 'Data Not Found' message
+        #     return Response({
+        #         'status': 404,
+        #         'message': "Data not found"
+        #     })
 
         appointment_list = []
         appointment_date_list = []
