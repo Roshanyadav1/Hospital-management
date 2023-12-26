@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Grid, Button, CircularProgress } from '@mui/material'
+import { Grid, Button, CircularProgress, Link } from '@mui/material'
 import List from '@mui/material/List'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import { useGetAllPatientsQuery } from '@/services/Query'
@@ -524,7 +524,6 @@ function Chart() {
                                  </span>
                               }
                            />
-                           {console.log(item, 'item')}
                            <Grid xs={12} style={{ textAlign: 'center' }}>
                               <Link
                                  href={`dashboard/individualappointment/${item?.appointment_id}`}
