@@ -71,7 +71,10 @@ Time: {}
 Location: {}
 Appointment Number: {}
 
-We understand the importance of your time and are committed to providing you with the best possible care. To ensure a smooth and efficient visit, we kindly request that you arrive at least 10 minutes before your scheduled appointment. This will allow us to complete any necessary paperwork and make sure you receive the full attention and care you deserve""".format(patient.patient_name, appointment.appointment_date, appointment.appointment_time, location, appointment.appointment_number)
+We understand the importance of your time and are committed to providing you with the best possible care. To ensure a smooth and efficient visit, we kindly request that you arrive at least 10 minutes before your scheduled appointment. This will allow us to complete any necessary paperwork and make sure you receive the full attention and care you deserve
+
+Best Regards,
+{}""".format(patient.patient_name, appointment.appointment_date, appointment.appointment_time, location, appointment.appointment_number, location)
 
     url = "https://api.ultramsg.com/instance72602/messages/chat"
 
