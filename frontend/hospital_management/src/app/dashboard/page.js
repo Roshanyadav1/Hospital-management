@@ -391,7 +391,7 @@ function FetchData() {
                               <div style={{ display: 'flex' }}>
                                  <PeopleIcon />
                                  <Typography variant='h6' color='primary'>
-                                    Upcomming appointments
+                                    Upcoming appointments
                                  </Typography>
                               </div>
                               <Box

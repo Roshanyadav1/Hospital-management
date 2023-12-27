@@ -50,7 +50,7 @@ function SwipeableTextMobileStepper() {
                         </Typography>
                         <Typography variant={'body2'}>
                            CARE Hospitals expands its national footprint with the
-                           acquisition of SGA Hospital,Sandalpur{' '}
+                           acquisition of SGA Hospital, Sandalpur{' '}
                         </Typography>
                      </div>
                   )}

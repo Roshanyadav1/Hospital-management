@@ -211,7 +211,7 @@ function Chart() {
                               }}
                            >
                               <Grid style={{ display: 'flex' }} item xs={12}>
-                                 <Grid itme xs={6}>
+                                 <Grid item xs={6}>
                                     <h4
                                        style={{
                                           color: 'white',
@@ -257,7 +257,7 @@ function Chart() {
                            }}
                         >
                            <Grid style={{ display: 'flex' }} item xs={12}>
-                              <Grid itme xs={6}>
+                              <Grid item xs={6}>
                                  <h4
                                     style={{
                                        color: 'white',
