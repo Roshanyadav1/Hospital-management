@@ -20,6 +20,7 @@ import { useEffect, useRef, useState } from 'react'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { Avatar } from '@mui/material'
 import {colors} from './../styles/theme'
+import { usePatientViewQuery } from '@/services/Query'
 
 
 
@@ -27,6 +28,10 @@ function PatientProfile() {
    // eslint-disable-next-line no-unused-vars
    const { data: appointmentHistory, isError } = useGetAppointmentQuery()
    console.log('object', appointmentHistory)
+
+   const {data : patientInfo} = usePatientViewQuery()
+   console.log("pi",patientInfo)
+   console.log("pname", patientInfo?.data[0].patient_name)
 
    const requestAbortController = useRef(null)
    const [dateData, setDateData] = useState([])
@@ -214,8 +219,8 @@ function PatientProfile() {
                                     style={{ marginLeft: 15 }}
                                  />
                               </Grid>
-                              <Grid item xs={8} sm={8}>
-                                 <Grid container sx={{ marginLeft: 10 }}>
+                              <Grid item xs={12} sm={8}>
+                                 <Grid container >
                                     <Grid item xs={4} sm={4}>
                                        <Typography variant='h6' component='h5'>
                                           Name
@@ -224,33 +229,43 @@ function PatientProfile() {
                                           Age
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          Gender
+                                          Phone
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           Address
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          Blood group
+                                          Email
                                        </Typography>
                                     </Grid>
                                     <Grid item xs={4} sm={4}>
                                        <Typography variant='h6' component='h5'>
                                           {
-                                             appointmentHistory?.data[0]?.patient
-                                                ?.patient_name
+                                             patientInfo?.data[0].patient_name
+                                                 || 'loading...'
                                           }
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          18
+                                         {patientInfo?.data[0].patient_age
+                                                 || 'loading...'}
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                         Female
+                                       {
+                                             patientInfo?.data[0].patient_mobile
+                                                 || 'loading...'
+                                          }
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          Khategaon
+                                       {
+                                             patientInfo?.data[0].patient_address
+                                                 || 'loading...'
+                                          }
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                         A+
+                                       {
+                                             patientInfo?.data[0].patient_email
+                                                 || 'loading...'
+                                          }
                                        </Typography>
                                     </Grid>
                                  </Grid>
