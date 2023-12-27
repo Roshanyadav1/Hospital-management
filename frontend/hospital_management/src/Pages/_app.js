@@ -5,7 +5,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="../public/favicon.ico" />
         {/* Add other meta tags, title, etc. here */}
       </Head>
       <Component {...pageProps} />
