@@ -224,7 +224,7 @@ const DocUpdate = () => {
                               render={(arrayHelpers) => (
                                  <>
                                     {values.times.map((time, index) => (
-                                       <Grid item md={12}>
+                                       <Grid item key={index} md={12}>
                                           <Grid
                                              item
                                              xs={12}

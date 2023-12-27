@@ -122,7 +122,7 @@ const DoctorName = localStorage.getItem('user_name')
                 of experience. Dr ${DoctorName} is an adept in all disciplines of Brain
                 and Spine Surgery including Brain tumor surgery among adults, as
                 well as pediatric and Neonatal, endoscopic surgery,
-                microvascular decompression surger...`}
+                microvasculature decompression surger...`}
              />
              <br />
              <ProfileCard

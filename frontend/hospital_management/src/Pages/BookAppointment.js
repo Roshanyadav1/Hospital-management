@@ -55,7 +55,6 @@ function BookAppoinment({ id, name, date }) {
 
    useEffect(() => {
       if (doctorTimes?.data && !isLoading) {
-         console.log("dfgj")
          setTimes(doctorTimes?.data?.times)
       }
    }, [doctorTimes?.data, isLoading])
@@ -157,7 +156,7 @@ function BookAppoinment({ id, name, date }) {
         of experience. Dr ${name} is an adept in all disciplines of Brain
         and Spine Surgery including Brain tumor surgery among adults, as
         well as pediatric and Neonatal, endoscopic surgery,
-        microvascular decompression surger...`}
+        microvasculature decompression surger...`}
             />
          </Grid>
          <br /> <br />
