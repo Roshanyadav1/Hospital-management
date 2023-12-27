@@ -34,7 +34,7 @@ const colors = {
 
 function PatientProfile() {
    const { data: appointmentHistory, isLoading : loading, isError } = useGetAppointmentQuery()
-   console.log('object', appointmentHistory)
+   console.log('appointmentHistory', appointmentHistory)
 
    const requestAbortController = useRef(null)
    const [dateData, setDateData] = useState([])
@@ -243,9 +243,9 @@ function PatientProfile() {
                                     <Grid item xs={4} sm={4}>
                                        <Typography variant='h6' component='h5'>
                                           {
-                                             appointmentHistory?.data[0]?.patient
-                                                ?.patient_name
+                                             appointmentHistory?.data[0]?.patient?.patient_name
                                           }
+                                       {console.log("pname",appointmentHistory?.data[0]?.patient?.patient_name)}
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           18

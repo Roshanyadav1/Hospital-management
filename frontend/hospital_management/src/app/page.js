@@ -8,6 +8,7 @@ import DiseaseCards from '@/Pages/DiseaseCard'
 import 'react-toastify/dist/ReactToastify.css'
 import Cards from '@/Pages/Card'
 import DoctorProfile, {Profile} from '@/Pages/Profile'
+import PatientProfile from '@/Pages/PatientProfile'
 
 function page() {
    return (
