@@ -20,6 +20,8 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { colors } from './../styles/theme'
 import { usePatientViewQuery } from '@/services/Query'
 import Avatar from '@mui/material/Avatar';
+import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
+
 
 
 
@@ -353,7 +355,7 @@ function PatientProfile() {
                            shouldDisableDate={shouldDisableDate}
                            loading={isLoading}
                            onMonthChange={handleMonthChange}
-                           // eslint-disable-next-line react/jsx-no-undef
+                   
                            renderLoading={() => <DayCalendarSkeleton />}
                            slots={{
                               day: ServerDay,
