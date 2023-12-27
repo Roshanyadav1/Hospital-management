@@ -10,11 +10,8 @@ import {
    DialogTitle,
    IconButton,
 } from '@mui/material'
-import * as React from 'react'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
 import Grid from '@mui/system/Unstable_Grid/Grid'
 import { Formik, Form } from 'formik'
 import { styled } from '@mui/material/styles'
@@ -22,15 +19,14 @@ import RadioButtonGroup from '@/components/RadioButton/RadioButtonGroup'
 import CustomAutocomplete from '@/components/Autocomplete/index'
 import Divider from '@mui/material/Divider'
 import Text from '@/components/Textfield/Text'
-import { useParams } from 'next/navigation'
 import Paper from '@mui/material/Paper'
 import FORM_VALIDATION from '@/components/FormValidation/EmployeeValidation'
-import { Color } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAddEmployeeMutation } from '@/services/Query'
 
 import { toast } from 'react-toastify'
 
+// eslint-disable-next-line no-unused-vars
 const style = {
    position: 'absolute',
    top: '50%',
@@ -54,6 +50,7 @@ const VisuallyHiddenInput = styled('input')({
    width: 1,
 })
 
+// eslint-disable-next-line no-unused-vars
 const StyledPaper = styled(Paper)(({ theme }) => ({
    maxWidth: '650px',
    boxShadow: theme.shadows[3],
@@ -63,13 +60,16 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }))
 
 //for the heading
+// eslint-disable-next-line no-unused-vars
 const StyledTypography = styled(Typography)(() => ({
    fontWeight: 'bold',
    paddingBottom: '1rem',
+   // eslint-disable-next-line no-undef
    color: colors.primary,
 }))
 
 //for the whole form
+// eslint-disable-next-line no-unused-vars
 const StyledFormWrapper = styled('div')({
    minHeight: '100vh',
    display: 'grid',
@@ -160,7 +160,8 @@ function Dashboard() {
          </Grid>
 
          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Add Employee</DialogTitle>
+            <DialogTitle><Typography variant='h5'>Add Employee</Typography> </DialogTitle>
+            <Divider />
             <IconButton
                aria-label='close'
                onClick={handleClose}

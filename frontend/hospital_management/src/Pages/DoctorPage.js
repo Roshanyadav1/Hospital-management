@@ -129,7 +129,7 @@ function DoctorPage() {
                </div>
 
                <div style={{ display: 'flex', alignItems: 'center',justifyContent:'center' }}>
-                  <Typography variant="body2" sx={{ fontWeight: 700, marginTop: 1, color: colors.secondary, marginRight: '5px' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700, marginTop: 1, color: colors.primary, marginRight: '5px' }}>
                      Specialist:
                   </Typography>
                   <Typography variant="body2" sx={{ marginTop: 1, color: colors.primary }}>

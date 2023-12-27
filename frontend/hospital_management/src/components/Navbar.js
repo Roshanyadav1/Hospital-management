@@ -31,7 +31,7 @@ function ResponsiveAppBar({ sidebarChanges }) {
 
       switch (userRole) {
          case 'Doctor':
-            settings.push({ label: 'Profile', route: '/dashboard/profile' });
+            settings.push({ label: 'Profile', route: '/dashboard/profile/' });
             break;
          default:
             break;

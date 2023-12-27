@@ -4,22 +4,22 @@ import PeopleIcon from '@mui/icons-material/People'
 import Typography from '@mui/material/Typography'
 import { Grid, Container, Box } from '@mui/material'
 import dayjs from 'dayjs'
-import Image from 'next/image'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
-import patientLogo from '../assets/patient.png'
+// import patientLogo from '../assets/patient.png'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import { useGetAppointmentQuery } from '@/services/Query'
 import { useEffect, useRef, useState } from 'react'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
-import { Avatar } from '@mui/material'
-import {colors} from './../styles/theme'
+import { colors } from './../styles/theme'
+import { usePatientViewQuery } from '@/services/Query'
+import Avatar from '@mui/material/Avatar';
 
 
 
@@ -27,6 +27,10 @@ function PatientProfile() {
    // eslint-disable-next-line no-unused-vars
    const { data: appointmentHistory, isError } = useGetAppointmentQuery()
    console.log('object', appointmentHistory)
+
+   const { data: patientInfo } = usePatientViewQuery()
+   console.log("pi", patientInfo)
+   console.log("pname", patientInfo?.data[0].patient_name)
 
    const requestAbortController = useRef(null)
    const [dateData, setDateData] = useState([])
@@ -193,7 +197,7 @@ function PatientProfile() {
             <Grid container>
                <Grid item xs={12} sm={8}>
                   <Grid container>
-                     <Grid item xs={12} sm={12}>
+                     <Grid item xs={12} sm={12}  >
                         <Card
                            sx={{
                               position: 'relative',
@@ -202,55 +206,65 @@ function PatientProfile() {
                               paddingX: 2,
                               marginTop: 7,
                               borderRadius: 2,
+                              boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'
                            }}
                         >
                            <Grid container>
                               <Grid item xs={4} sm={4}>
-                                 <Image
-                                    priority={true}
-                                    src={patientLogo}
-                                    height={140}
-                                    width={140}
-                                    style={{ marginLeft: 15 }}
+                                 <Avatar
+                                    alt='Patient Avatar'
+                                    sx={{ width: 140, height: 140, marginLeft: 3 }}
                                  />
                               </Grid>
-                              <Grid item xs={8} sm={8}>
-                                 <Grid container sx={{ marginLeft: 10 }}>
-                                    <Grid item xs={4} sm={4}>
+                              <Grid item xs={12} sm={8}>
+                                 <Grid container >
+                                    <Grid item xs={4} sm={4} marginTop={3} >
                                        <Typography variant='h6' component='h5'>
                                           Name
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          Age
-                                       </Typography>
-                                       <Typography variant='h6' component='h5'>
-                                          Gender
+                                          Phone
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           Address
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          Blood group
+                                          Email
                                        </Typography>
                                     </Grid>
-                                    <Grid item xs={4} sm={4}>
+                                    <Grid item xs={4} sm={4} marginTop={3}>
                                        <Typography variant='h6' component='h5'>
-                                          {
-                                             appointmentHistory?.data[0]?.patient
-                                                ?.patient_name
-                                          }
+                                          <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                             {
+                                                patientInfo?.data[0].patient_name
+                                                || '...'
+                                             }
+                                          </div>
+                                       </Typography>
+                                       {/* <Typography variant='h6' component='h5'>
+                                         {patientInfo?.data[0].patient_age
+                                                 || 'loading...'}
+                                       </Typography> */}
+                                       <Typography variant='h6' component='h5'>
+                                          <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', }}>
+                                             {
+                                                patientInfo?.data[0].patient_mobile
+                                                || '...'
+                                             }
+                                          </div>
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                          18
+                                          <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', }}>
+                                             {patientInfo?.data[0].patient_address || '...'}
+                                          </div>
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
-                                         Female
-                                       </Typography>
-                                       <Typography variant='h6' component='h5'>
-                                          Khategaon
-                                       </Typography>
-                                       <Typography variant='h6' component='h5'>
-                                         A+
+                                          <div style={{
+                                             maxWidth: '300px', whiteSpace: 'nowrap',
+                                          }}>
+                                             {patientInfo?.data[0].patient_email
+                                                || '...'}
+                                          </div>
                                        </Typography>
                                     </Grid>
                                  </Grid>
@@ -258,7 +272,7 @@ function PatientProfile() {
                            </Grid>
                         </Card>
                      </Grid>
-                     <Grid item xs={12} sm={12} mt={2}>
+                     <Grid item xs={12} sm={12} mt={2} >
                         <div style={{ display: 'flex', marginBottom: 15 }}>
                            <PeopleIcon />
                            <Typography variant='h6' color='primary'>
@@ -269,7 +283,7 @@ function PatientProfile() {
                            const { date, appointments } = appointmentGroup;
                            console.log(`Appointments for ${date}:`);
                            return (
-                              <div key={date}>
+                              <div key={date} >
                                  {appointments.map(appointment => (
                                     <Accordion key={appointment.appointment_time} sx={{ borderRadius: 2 }}>
                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -329,7 +343,8 @@ function PatientProfile() {
                         width: 400,
                         bgcolor: 'background.paper',
                         borderRadius: 2,
-                        boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+                        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'
+                        // boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
                      }}
                   >
                      <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -353,8 +368,8 @@ function PatientProfile() {
                   </Box>
                </Grid>
             </Grid>
-         </Container>
-      </div>
+         </Container >
+      </div >
    )
 }
 

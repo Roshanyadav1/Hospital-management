@@ -231,8 +231,13 @@ import { toast } from 'react-toastify'
          method: 'GET',
       }),
    }),
+   patientView: build.query({
+      query: () => ({
+         url: `/patient/view/?patient_id=${localStorage.getItem('user_id')}`,
+         method: 'GET',
+      }),
+   }),
    })
-
    })
 
 export const {
@@ -264,6 +269,7 @@ export const {
    useGetAppointmentHistoryQuery,
    useGetEmployeeDetailsQuery,
    useLeaveViewQuery,
+   usePatientViewQuery,
 } = queries
 
  

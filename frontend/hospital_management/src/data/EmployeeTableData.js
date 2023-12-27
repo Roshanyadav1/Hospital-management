@@ -5,6 +5,7 @@ import {
    DialogActions,
    DialogContent,
    DialogTitle,
+   Divider,
    Grid,
    IconButton,
    Switch,
@@ -25,9 +26,6 @@ import { useChangeStatusMutation } from '@/services/Query'
 import { Delete, Create, Visibility, DisabledByDefault } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import AddEmployee from '@/components/AddEmployee'
-import { toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material'
-
 //using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
 const style = {
    position: 'absolute',
@@ -106,29 +104,40 @@ const GetStatusButton = (row) => {
       <div
          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
-         <Dialog open={openModal} onClose={handleCloseModal}>
+         <Dialog open={openModal} >
             <DialogTitle
                style={{
-                  border: '1px solid white',
-                  borderRadius: '10px',
                   boxShadow: 'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                  fontWeight: 'bolder',
-                  fontSize: '1rem',
+                   }}
+            >
+              <Typography variant="h5"> Confirmation for changing status </Typography>
+            </DialogTitle>
+            <IconButton
+               aria-label='close'
+               onClick={handleCloseModal}
+               sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
                }}
             >
-               Confirmation for Changing Status
-            </DialogTitle>
-            <DialogContent>
+               <CloseIcon />
+            </IconButton>
+            <Divider />
+            
+            <DialogContent >
                <p>
                   Do you want to Change the Status for{' '}
-                  <span className='Data'>{selectedRow?.employee_name}</span>
+                  <span className='Data'>{row?.params?.row?.employee_name}</span> ?
                </p>
             </DialogContent>
-            <DialogActions>
-               <Button onClick={handleCloseModal} color='primary' className='No'>
+            <Divider />
+            <DialogActions >
+               <Button onClick={handleCloseModal} color='primary'  sx={{ marginBottom:1}} >
                   No
                </Button>
-               <Button onClick={ChangeStatus} color='primary' className='No'>
+               <Button onClick={ChangeStatus} color='primary' variant='contained' sx={{marginRight:1, marginBottom:1}}>
                   Yes
                </Button>
             </DialogActions>
@@ -158,7 +167,13 @@ const GetActionButton = (row) => {
    const [openModal, setOpenModal] = useState(false)
    const [openEditModal, setOpenEditModal] = useState(false)
    const [openViewModal, setOpenViewModal] = useState(false)
-   const [isDeleting, setIsDeleting] = useState(false);
+
+   const Img = styled('img')({
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '80%',
+      maxHeight: '80%',
+    });
 
    const INITIAL_FORM_STATE = {
       employee_name: row?.params?.row?.employee_name,
@@ -210,12 +225,6 @@ const GetActionButton = (row) => {
       refetchOnMountOrArgChange: true,
    })
    const [open, setOpen] = useState(false)
-   const handleClickOpen = () => {
-      setOpen(true)
-   }
-   const handleClose = () => {
-      setOpen(false)
-   }
    // console.log(row.params , "ok")
    const handleDelete = () => {
       setSelectedRow(row.params.row)
@@ -242,24 +251,25 @@ const GetActionButton = (row) => {
    const handleCloseEditModal = () => {
       setOpenEditModal(false)
    }
-   const handleConfirmDelete = async () => {
-      setIsDeleting(true); // Set loading state to true during deletion
-      try {
-         // Assuming your API expects an employee ID for deletion
-         const result = await deleteEmployee(selectedRow.employee_id);
-        toast.success('Employee Deleted Successfully')
-         // Log the result to the console
-         console.log('Result of deleteEmployee mutation:', result);
-         // Perform any additional logic after successful deletion
-      } catch (error) {
-         // Handle error
-         console.error('Error deleting employee:', error);
-        toast.error("Something went wrong")
-      } finally {
-         setIsDeleting(false); // Reset loading state after deletion (success or failure)
-         handleCloseModal();
+   const handleConfirmDelete = () => {
+      const DltEmployee = async () => {
+         try {
+            // Assuming your API expects an employee ID for deletion
+            const result = await deleteEmployee(selectedRow.employee_id)
+            alert('Employee Deleted Successfully')
+            // Log the result to the console
+            console.log('Result of deleteEmployee mutation:', result)
+            // Perform any additional logic after successful deletion
+         } catch (error) {
+            // Handle error
+            console.error('Error deleting employee:', error)
+         }
       }
-   };
+      // Perform delete logic here
+      console.log('Deleting:', selectedRow)
+      DltEmployee() // Call the delete function
+      handleCloseModal()
+   }
    const handleCloseViewModal = () => {
       setOpenViewModal(false)
    }
@@ -283,45 +293,51 @@ const GetActionButton = (row) => {
    }
 
    return (
-      // <div
-      //    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      // >
-      <div>
-         {/* Loader component */}
-         {isDeleting && (
-            <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-               <CircularProgress />
-            </div>
-         )}
+      <div
+         style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      >
          <Dialog open={openModal}>
             <DialogTitle
                style={{
-                  border: '1px solid white',
-                  borderRadius: '10px',
+                  
                   boxShadow: 'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                  fontWeight: 'bolder',
-                  fontSize: '1rem',
+                  
                }}
             >
-               Delete Confirmation
+              <Typography variant="h5">Delete Confirmation</Typography> 
             </DialogTitle>
+            <IconButton
+               aria-label='close'
+               onClick={handleCloseModal}
+               sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+               }}
+            >
+               <CloseIcon />
+            </IconButton>
+            <Divider />
             <DialogContent>
                <p>
                   Do you want to delete the data for{' '}
-                  <span className='Data'>{selectedRow?.employee_name}</span> ?
+                  <span className='Data'>{row?.params?.row?.employee_name}</span> ?
                </p>
             </DialogContent>
+            <Divider />
             <DialogActions>
-               <Button onClick={handleCloseModal} color='primary' className='No'>
+               <Button onClick={handleCloseModal} color='primary'  sx={{ marginBottom:1}}>
                   No
                </Button>
-               <Button onClick={handleConfirmDelete} color='primary' className='No'>
+               <Button onClick={handleConfirmDelete} color='primary' variant='contained' sx={{marginRight:1, marginBottom:1}}>
                   Yes
                </Button>
             </DialogActions>
          </Dialog>
          <Dialog open={openEditModal} onClose={handleCloseEditModal} padding={3}>
-            <DialogTitle>Edit Employee</DialogTitle>
+            <DialogTitle> <Typography variant='h5'>Edit Employee</Typography> </DialogTitle>
+            <Divider />
             <IconButton
                aria-label='close'
                onClick={handleCloseEditModal}
@@ -359,7 +375,8 @@ const GetActionButton = (row) => {
          </Dialog>
          {/* view///////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
          <Dialog open={openViewModal} onClose={handleCloseViewModal} padding={3}>
-            <DialogTitle>View Employee</DialogTitle>
+            <DialogTitle><Typography variant='h5'> View Employee</Typography> </DialogTitle>
+            <Divider />
             <DialogContent>
                {
                   isLoading && ("Loading...")
@@ -368,21 +385,21 @@ const GetActionButton = (row) => {
                   isSuccess && (<>
                      {/* // i have to add view the employee data in formate way  */}
                      <DialogContent>
-                        <Grid container>
+                        <Grid container justifyContent='space-between'>
                         
 
-                           <Grid item justifyContent='space-between' >
+                           <Grid item  >
                               <Typography variant='h6' color='primary' fontWeight='bold'>
-                               Name: 
+                                 Name   : 
                               </Typography>
                               <Typography variant='h6' color='primary' fontWeight='bold'>
-                           Email:
+                                 Email  :
                               </Typography>
                               <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 Phone :
+                                 Phone  :
                               </Typography>
                               <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 Role :
+                                 Role {" "}  : 
                               </Typography>
                               <Typography variant='h6' color='primary' fontWeight='bold'>
                                  Status :
@@ -390,7 +407,7 @@ const GetActionButton = (row) => {
 
 
                            </Grid>
-                           <Grid item justifyContent='space-between' >
+                           <Grid item >
                               <Typography variant='h6' color='primary' fontWeight='bold'>
                                   {viewEmployee?.data?.employee_name}
                               </Typography>

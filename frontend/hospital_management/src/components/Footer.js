@@ -217,7 +217,7 @@ const Footer = () => {
                            },
                         }}
                      >
-                        Sign Up
+                        Sign up
                      </Button>
                   </Typography>
                </Grid>

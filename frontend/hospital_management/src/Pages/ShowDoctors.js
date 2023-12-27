@@ -36,10 +36,10 @@ function ShowDoctors() {
 
    if (docLoading) {
       return (
-         Array.from({ length: 12 }).map((_, index) => (
-            <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3}>
-               <Card
-                  sx={{
+         <Grid container spacing={2}>
+            {Array.from({ length: 12 }).map((_, index) => (
+               <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3}>
+                  <Card sx={{
                      maxWidth: 300,
                      height: '100%',
                      border: '1px solid #13293D',
@@ -50,22 +50,19 @@ function ShowDoctors() {
                      flexDirection: 'column',
                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                      borderRadius: '8px',
-                  }}
-               >
-                  <Skeleton variant='rectangular' width='100%' height={100} style={{ borderRadius: '8px' }} />
-                  <Typography variant='h5' component='div' sx={{ flex: '1', overflow: 'hidden', padding: '12px' }}>
-               
-                     <Skeleton />
-                     <Typography variant='body2' color='text.secondary'>
+                  }}>
+                     <Skeleton variant='rectangular' width='100%' height={100} style={{ borderRadius: '8px' }} />
+                     <Typography variant='h5' component='div' sx={{ flex: '1', overflow: 'hidden', padding: '12px' }}>
+                        <Skeleton />
                         <Skeleton />
                      </Typography>
-                  </Typography>
-                  <Button disabled size='small' sx={{ border: '1px solid' }}>
-                     <Skeleton />
-                  </Button>
-               </Card>
-            </Grid>
-         ))
+                     <Button disabled size='small' sx={{ border: '1px solid' }}>
+                        <Skeleton />
+                     </Button>
+                  </Card>
+               </Grid>
+            ))}
+         </Grid>
       );
    } else if (isFetching || !doctorList || !doctorList.data || doctorList.data.results.length === 0) {
       return (
@@ -90,7 +87,7 @@ function ShowDoctors() {
                {doctorList.data.results.map((doctor, index) => (
                   <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3}>
                      {/* Rendering doctor cards */}
-                  
+
                      <Card
                         sx={{
                            maxWidth: 280,

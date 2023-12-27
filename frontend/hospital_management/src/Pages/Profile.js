@@ -14,6 +14,7 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Chip from '@mui/material/Chip'
+import { CircularProgress } from '@mui/material'
 import HistoryIcon from '@mui/icons-material/History'
 import { useGetAppointmentHistoryQuery } from '@/services/Query'
 
@@ -38,8 +39,14 @@ const DoctorProfile = ({id}) => {
  const {data: appointmentHistory,isLoading, isSuccess} = useGetAppointmentHistoryQuery(doctor_id);
  console.log("id",doctor_id)
 
- if(isLoading || !isSuccess){
-   return "loading"
+ if (isLoading || !isSuccess) {
+  return (
+    <Container maxWidth='lg' p={2}>
+      <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '80vh' }}>
+        <CircularProgress />
+      </Grid>
+    </Container>
+  );
 }
 
  const appointmentsByDate = (Array.isArray(appointmentHistory?.data)&& (appointmentHistory?.data.length > 0))
@@ -66,14 +73,9 @@ const DoctorName = localStorage.getItem('user_name')
 
  return (
     <Container maxWidth='lg' p={2} >
-       <Grid container boxShadow={1} spacing={2}>
-          <Grid container item bgcolor={'fff'} display={'flex'} Direction='column'>
+       <Grid container  spacing={2}>
+          <Grid container item bgcolor={'fff'} display={'flex'} Direction='column'style={{boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'}}  >
              {
-                //   isLoading ? (<>
-                //      <Skeleton
-                //         sx={{ border: '1px solid #E0E0E0' }}
-                //         variant="circular" height={150} width={150} />
-                //   </>) : (<>
                 <Image
                    priority={true}
                    src='https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'
@@ -81,19 +83,18 @@ const DoctorName = localStorage.getItem('user_name')
                    width={140}
                    style={{ borderRadius: '50%', padding: 10 }}
                 />
-                // </>)
              }
              <Grid
                 item
                 xl={8}
-                // sm={8}
-                // bgcolor={"rebeccapurple"}
                 display='flex'
                 Direction='column'
                 justifyContent='center'
                 margin={0}
                 p={{ xs: 2, sm: 5 }}
                 gap={10}
+               
+                
              >
                 <>
                    <Typography gutterBottom variant='h4' component='div'>
@@ -106,7 +107,7 @@ const DoctorName = localStorage.getItem('user_name')
              </Grid>
           </Grid>
        </Grid>
-
+   <br/>
        <Grid container marginTop={2} spacing={2}>
           <Grid xs={12} sm={6}>
              <ProfileCard

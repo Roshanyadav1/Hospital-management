@@ -259,6 +259,7 @@ function BookAppoinment({ id, name, date }) {
                            An email confirmation will be sent to you shortly.
                         </DialogContentText>
                      </DialogContent>
+                
                      <DialogActions>
                         <Button
                            disabled={isBooking}
@@ -275,6 +276,7 @@ function BookAppoinment({ id, name, date }) {
                            Confirm
                         </Button>
                      </DialogActions>
+
                   </Dialog>
                </Paper>
             </Grid>
