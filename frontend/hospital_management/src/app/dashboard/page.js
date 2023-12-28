@@ -291,10 +291,63 @@ function FetchData() {
    if (dataloading) {
       return (
         
-         <Grid container py={3}>
-            <Grid item container xs={12} sm={8}>
-               <Grid item xs={12} sm={12}>
-                  <Card
+         // <Grid container py={3}>
+         //    <Grid item container xs={12} sm={8}>
+         //       <Grid item xs={12} sm={12}>
+                  // <Card
+                  //    sx={{
+                       
+                  //       borderRadius: 2,
+                        
+                  //    }}
+                  // >
+                  //    <Skeleton
+                  //       variant='rectangular'
+                  //       width='100%'
+                  //       height={230}
+                  //       animation='wave'
+                  //    />
+                  // </Card>
+         //       </Grid>
+         //       <Grid item xs={12} sm={12} mt={5}>
+                  // <Card
+                  //    sx={{
+                        
+                  //       borderRadius: 2,
+                        
+                  //    }}
+                  // >
+                  //    <Skeleton
+                  //       variant='rectangular'
+                  //       width='100%'
+                  //       height={180}
+                  //       animation='wave'
+                  //    />
+                  // </Card>
+         //       </Grid>
+         //    </Grid>
+         //    <Grid item container xs={12} sm={4}>
+               // <Card
+               //    sx={{
+               //       width: '100%',
+               //       marginLeft: 2 ,
+               //       borderRadius: 2,
+               //       height: 340 ,
+               //      }}
+               // >
+               //    <Skeleton
+               //       variant='rectangular'
+               //       width='100%'
+               //       height={340}
+               //       animation='wave'
+               //    />
+               // </Card>
+         //    </Grid>
+         // </Grid>
+         <Container maxWidth="xl">
+            <Grid container>
+               <Grid item xs={12} sm={8}>
+               <Card
                      sx={{
                        
                         borderRadius: 2,
@@ -304,17 +357,34 @@ function FetchData() {
                      <Skeleton
                         variant='rectangular'
                         width='100%'
-                        height={230}
+                        height={358}
                         animation='wave'
                      />
                   </Card>
                </Grid>
-               <Grid item xs={12} sm={12} mt={5}>
-                  <Card
+               <Grid item xs={12} sm={4}>
+               <Card
+                  sx={{
+                     width: '100%',
+                     marginLeft: 2 ,
+                     borderRadius: 2,
+                     height: 358 ,
+                    }}
+               >
+                  <Skeleton
+                     variant='rectangular'
+                     width='100%'
+                     height={358}
+                     animation='wave'
+                  />
+               </Card>
+               </Grid>
+               <Grid item xs={12} sm={12}>
+               <Card
                      sx={{
                         
                         borderRadius: 2,
-                        
+                        marginTop:6,
                      }}
                   >
                      <Skeleton
@@ -326,24 +396,7 @@ function FetchData() {
                   </Card>
                </Grid>
             </Grid>
-            <Grid item container xs={12} sm={4}>
-               <Card
-                  sx={{
-                     width: '100%',
-                     marginLeft: 2 ,
-                     borderRadius: 2,
-                     height: 340 ,
-                    }}
-               >
-                  <Skeleton
-                     variant='rectangular'
-                     width='100%'
-                     height={340}
-                     animation='wave'
-                  />
-               </Card>
-            </Grid>
-         </Grid>
+         </Container>
       )
       // } else if (isError) {
       //    return <p> No Appointment Here {isError}</p>
@@ -353,18 +406,16 @@ function FetchData() {
             {isAdmin ? (
                <Chart />
             ) : userRole === 'Doctor' ? (
-               <Box>
+               <Container  maxWidth="xl">
                   <Grid container py={3}>
                      <Grid item xs={12} sm={8}>
-                        <Grid container>
-                           <Grid item xs={12} sm={12}>
+                        
                               <Card
                                  sx={{
                                     position: 'relative',
-                                    // minWidth: 470,
-                                    paddingY: 6,
+                                    paddingY: 8,
                                     paddingX: 2,
-                                    // marginTop: 2,
+                                    height:335,
                                     bgcolor: 'background.paper',
                                     borderRadius: 2,
                                     boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
@@ -372,26 +423,24 @@ function FetchData() {
                               >
                                  <div>
                                     <Typography variant='h3' color='primary'>
-                                       Good morning,
+                                       Hello,
                                     </Typography>
                                     <Typography variant='h3' color='secondary'>
-                                       {
+                                      Dr.{" "} {
                                           appointments?.data[0]?.doctor?.employee
                                              ?.employee_name
                                        }
                                     </Typography>
 
-                                    <Typography variant='body2' color='primary'>
+                                    <Typography variant='body1' color='primary'>
                                        Your dedication and expertise brighten our
-                                       <br></br> hospital every day. Wishing you a
-                                       wonderful day<br></br> of healing and caring
-                                       for others{' '}
+                                       <br></br> hospital every day. We appreciate your commitment <br></br>to excellence. Wishing you a day filled with success <br></br> and positive outcomes. Thank you for being an <br></br>invaluable part of our team.
                                     </Typography>
                                  </div>
                                  <Image
                                     src={doctorImage}
                                     alt='Doctor illustration'
-                                    height={200}
+                                    height={300}
                                     style={{
                                        position: 'absolute',
                                        right: '0',
@@ -399,8 +448,43 @@ function FetchData() {
                                     }}
                                  />
                               </Card>
+                          
+                     </Grid>
+
+                     <Grid item xs={12} sm={4}>
+                        <Grid container>
+                           <Grid item xs={12} sm={12} px={2}>
+                              <Box
+                                 sx={{
+                                    width: '100%',
+
+                                    bgcolor: 'background.paper',
+                                    borderRadius: 2,
+                                    boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+                                 }}
+                              >
+                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DateCalendar
+                                       defaultValue={initialValue}
+                                       shouldDisableDate={shouldDisableDate}
+                                       loading={isLoading}
+                                       onMonthChange={handleMonthChange}
+                                       renderLoading={() => <DayCalendarSkeleton />}
+                                       slots={{
+                                          day: ServerDay,
+                                       }}
+                                       slotProps={{
+                                          day: {
+                                             highlightedDays,
+                                          },
+                                       }}
+                                    />
+                                 </LocalizationProvider>
+                              </Box>
                            </Grid>
-                           <Grid item xs={12} sm={12} mt={2}>
+                        </Grid>
+                     </Grid>
+                     <Grid item xs={12} sm={12} mt={2}>
                               <div style={{ display: 'flex' }}>
                                  <PeopleIcon />
                                  <Typography variant='h6' color='primary'>
@@ -702,44 +786,8 @@ function FetchData() {
                                  )}
                               </Box>
                            </Grid>
-                        </Grid>
-                     </Grid>
-
-                     <Grid item xs={12} sm={4}>
-                        <Grid container>
-                           <Grid item xs={12} sm={12} px={2}>
-                              <Box
-                                 sx={{
-                                    width: '100%',
-
-                                    bgcolor: 'background.paper',
-                                    borderRadius: 2,
-                                    boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
-                                 }}
-                              >
-                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DateCalendar
-                                       defaultValue={initialValue}
-                                       shouldDisableDate={shouldDisableDate}
-                                       loading={isLoading}
-                                       onMonthChange={handleMonthChange}
-                                       renderLoading={() => <DayCalendarSkeleton />}
-                                       slots={{
-                                          day: ServerDay,
-                                       }}
-                                       slotProps={{
-                                          day: {
-                                             highlightedDays,
-                                          },
-                                       }}
-                                    />
-                                 </LocalizationProvider>
-                              </Box>
-                           </Grid>
-                        </Grid>
-                     </Grid>
                   </Grid>
-               </Box>
+                  </Container>
             ) : null}
          </div>
       )

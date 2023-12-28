@@ -150,9 +150,9 @@ const DoctorName = localStorage.getItem('user_name')
         <Accordion key={date} sx={{ boxShadow: '0px 2px 1px rgba(0, 0, 0, 0.2)' }}>
           <AccordionSummary
             expandIcon={
-              <Badge badgeContent={appointmentsByDate[date].length} color='primary'>
+              // <Badge badgeContent={appointmentsByDate[date].length} color='primary'>
                 <ExpandMoreIcon />
-              </Badge>
+              // </Badge>
             }
             aria-controls='panel1a-content'
             id='panel1a-header'
@@ -161,7 +161,7 @@ const DoctorName = localStorage.getItem('user_name')
           </AccordionSummary>
           <AccordionDetails sx={{ marginLeft: 1 }}>
             <div style={{ display: 'flex', paddingBottom: 10 }}>
-              <Typography variant='body2'>Number of Appointments conducted =</Typography>
+              <Typography variant='body2'>Number of Appointments conducted = </Typography>{" "}
               <Typography variant='body2'>{appointmentsByDate[date].length}</Typography>
             </div>
             <Typography variant='h6' paddingY={1}>
