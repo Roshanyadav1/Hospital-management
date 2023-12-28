@@ -533,6 +533,14 @@ class AppointmentUpdate(APIView):
                 serializer.save()
                 response_message = ""
                 response_code = ""
+
+                header_value = request.headers['Authorization']
+                token = header_value.split(' ')[1]
+                payload = jwt.decode(token, "secret", algorithms=['HS256'])
+                user_id = payload['user_id']
+                user = User.objects.get(user_id=user_id)
+                user_role = user.user_role
+
                 try:
                     error = Error.objects.get(error_title='UPDATE_SUCCESS')
                     response_message = error.error_message
@@ -547,8 +555,6 @@ class AppointmentUpdate(APIView):
                     'path': request.path,
                     'status': response_code,
                     'message': 'Appointment ' + response_message,
-                    'email': user.user_email,
-                    'user_role': user.user_role
                 })
                 return Response(
                     {
