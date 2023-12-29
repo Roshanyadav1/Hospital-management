@@ -93,6 +93,7 @@ function FetchData() {
    // const dates = appointments?.data?.map(
    //    (appointment) => appointment?.appointment_date
    // )
+   console.log("docName",localStorage.getItem('user_name'))
 
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
@@ -291,59 +292,7 @@ function FetchData() {
    if (dataloading) {
       return (
         
-         // <Grid container py={3}>
-         //    <Grid item container xs={12} sm={8}>
-         //       <Grid item xs={12} sm={12}>
-                  // <Card
-                  //    sx={{
-                       
-                  //       borderRadius: 2,
-                        
-                  //    }}
-                  // >
-                  //    <Skeleton
-                  //       variant='rectangular'
-                  //       width='100%'
-                  //       height={230}
-                  //       animation='wave'
-                  //    />
-                  // </Card>
-         //       </Grid>
-         //       <Grid item xs={12} sm={12} mt={5}>
-                  // <Card
-                  //    sx={{
-                        
-                  //       borderRadius: 2,
-                        
-                  //    }}
-                  // >
-                  //    <Skeleton
-                  //       variant='rectangular'
-                  //       width='100%'
-                  //       height={180}
-                  //       animation='wave'
-                  //    />
-                  // </Card>
-         //       </Grid>
-         //    </Grid>
-         //    <Grid item container xs={12} sm={4}>
-               // <Card
-               //    sx={{
-               //       width: '100%',
-               //       marginLeft: 2 ,
-               //       borderRadius: 2,
-               //       height: 340 ,
-               //      }}
-               // >
-               //    <Skeleton
-               //       variant='rectangular'
-               //       width='100%'
-               //       height={340}
-               //       animation='wave'
-               //    />
-               // </Card>
-         //    </Grid>
-         // </Grid>
+         
          <Container maxWidth="xl">
             <Grid container>
                <Grid item xs={12} sm={8}>
@@ -427,8 +376,7 @@ function FetchData() {
                                     </Typography>
                                     <Typography variant='h3' color='secondary'>
                                       Dr.{" "} {
-                                          appointments?.data[0]?.doctor?.employee
-                                             ?.employee_name
+                                          localStorage.getItem('user_name')
                                        }
                                     </Typography>
 
