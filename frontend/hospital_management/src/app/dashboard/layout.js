@@ -229,8 +229,9 @@ function Layout({ children }) {
          <Box
             component='main'
             sx={{
-               width: { sm: `calc(100% - ${drawerWidth}px)` },
+               // width: { sm: `calc(100% - ${drawerWidth}px)` },
                p: 3,
+               width:'100%'
             }}
          >
             <Toolbar />

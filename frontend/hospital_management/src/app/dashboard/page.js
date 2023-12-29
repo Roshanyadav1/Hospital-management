@@ -81,7 +81,10 @@ function FetchData() {
       data: appointments,
       isError,
       isLoading: dataloading,
+      isSuccess
    } = useGetDoctorIdQuery(doctorId, { skip: userRole === 'Doctor' ? false : true })
+   const isAppointmentsEmpty = isSuccess && appointments?.data?.length === 0;
+
 
    const docId = localStorage.getItem("user_id")
    const {data: holidays, isSuccess:isHolidaySuccess} = useLeaveViewQuery(docId) 
@@ -90,10 +93,7 @@ function FetchData() {
    const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
-   // const dates = appointments?.data?.map(
-   //    (appointment) => appointment?.appointment_date
-   // )
-   console.log("docName",localStorage.getItem('user_name'))
+   
 
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
@@ -355,10 +355,9 @@ function FetchData() {
             {isAdmin ? (
                <Chart />
             ) : userRole === 'Doctor' ? (
-               <Container  maxWidth="xl">
-                  <Grid container py={3}>
+               <Container>
+                  <Grid container py={2}>
                      <Grid item xs={12} sm={8}>
-                        
                               <Card
                                  sx={{
                                     position: 'relative',
@@ -385,7 +384,14 @@ function FetchData() {
                                        <br></br> hospital every day. We appreciate your commitment <br></br>to excellence. Wishing you a day filled with success <br></br> and positive outcomes. Thank you for being an <br></br>invaluable part of our team.
                                     </Typography>
                                  </div>
+                                 <Grid item sx={{
+                                  display:{
+                                    xs:'none',
+                                    md:'block'
+                                  }
+                                   }}>
                                  <Image
+                                   
                                     src={doctorImage}
                                     alt='Doctor illustration'
                                     height={300}
@@ -395,8 +401,8 @@ function FetchData() {
                                        top: '0',
                                     }}
                                  />
+                                 </Grid>
                               </Card>
-                          
                      </Grid>
 
                      <Grid item xs={12} sm={4}>
@@ -464,11 +470,33 @@ function FetchData() {
                                           height={150}
                                           width={150}
                                        />
-                                       <Typography variant='h6' color='secondary'>
+                                       <Typography variant='h6' color='primary'>
                                           Data Not found
                                        </Typography>
                                     </div>
-                                 ) : (
+                                 ) :
+                                    isAppointmentsEmpty? (
+                                       <div
+                                       style={{
+                                          display: 'flex',
+                                          flexDirection: 'column',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                       }}
+                                    >
+                                       <Image
+                                          src={datanotfound}
+                                          alt='data not found'
+                                          height={150}
+                                          width={150}
+                                       />
+                                       <Typography variant='h6' color='primary'>
+                                          Data Not found
+                                       </Typography>
+                                    </div>)
+                                    
+                                 :
+                                  (
                                     <nav aria-label='secondary mailbox folders'>
                                        <List>
                                           {appointments?.data?.map((appointment) => (
@@ -735,7 +763,7 @@ function FetchData() {
                               </Box>
                            </Grid>
                   </Grid>
-                  </Container>
+                    </Container>
             ) : null}
          </div>
       )
