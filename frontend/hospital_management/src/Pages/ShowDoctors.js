@@ -66,7 +66,7 @@ function ShowDoctors() {
       );
    } else if (isFetching || !doctorList || !doctorList.data || doctorList.data.results.length === 0) {
       return (
-         <Container maxWidth='xl' sx={{ height: "90vh", alignItems: 'center' }}>
+         <Container maxWidth='xl' sx={{ height: "50vh", alignItems: 'center' }}>
             <Grid mt={2} container spacing={2} justifyContent='center' alignItems='center'>
                <Image
                   src={"https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif"}
