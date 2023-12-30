@@ -5,7 +5,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import { useGetAppointmentQuery } from '@/services/Query'
-import { Chip, Container, Grid, Skeleton } from '@mui/material'
+import { Chip, Container, Grid, Skeleton, Typography } from '@mui/material'
 import Image from 'next/image'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
@@ -68,15 +68,16 @@ function RecipeReviewCard() {
             </Grid>
          </Container>
       )
-   } else if (isError) {
-      return <Container maxWidth='xl' sx={{ height: "90vh", alignItems: 'center' }}>
+   } else if (isError || Array.isArray(appointment?.data) &&
+      appointment?.data.length == 0) {
+      return <Container maxWidth='xl' sx={{ height: "50vh", alignItems: 'center' }}>
          <Grid mt={2} container spacing={2} justifyContent='center'
             alignItems='center'  >
             <Image src={"https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif"
             } width={350} height={350} alt="No appointment Here" style={{ marginTop: 25 }} />
          </Grid>
+         <Typography sx={{textAlign: 'center'}} variant="h3">No Appointment Here</Typography>
       </Container>
-      //  <p> No Appointment Here {isError}</p>
    } else {
       return (
          <Container maxWidth='sm'>
@@ -145,25 +146,25 @@ function formatTime(timeString) {
    const [hours, minutes] = timeString.split(':');
    let formattedTime = '';
    let meridiem = '';
- 
+
    let hour = parseInt(hours, 10);
    if (hour === 0) {
-     formattedTime = `12:${minutes}`;
-     meridiem = 'AM';
+      formattedTime = `12:${minutes}`;
+      meridiem = 'AM';
    } else if (hour < 12) {
-     formattedTime = `${hour}:${minutes}`;
-     meridiem = 'AM';
+      formattedTime = `${hour}:${minutes}`;
+      meridiem = 'AM';
    } else if (hour === 12) {
-     formattedTime = `12:${minutes}`;
-     meridiem = 'PM';
+      formattedTime = `12:${minutes}`;
+      meridiem = 'PM';
    } else {
-     hour -= 12;
-     formattedTime = `${hour}:${minutes}`;
-     meridiem = 'PM';
+      hour -= 12;
+      formattedTime = `${hour}:${minutes}`;
+      meridiem = 'PM';
    }
- 
+
    return `${formattedTime} ${meridiem}`;
- }
+}
 export default RecipeReviewCard
 
 
