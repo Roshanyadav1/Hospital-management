@@ -21,6 +21,10 @@ import '@/styles/dashboard.css'
 import CommonListItem from '../components/CommonListItem'
 // import Image from 'next/image'
 // import Doc from '../assets/Doc.png'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
 
 
 function Chart() {
@@ -165,7 +169,7 @@ function Chart() {
 
    const handleViewClick = (appointment_id) => {
       console.log('View Clicked for Doctor ID:', appointment_id)
-      
+
       // Add logic to navigate to the individual appointment page
    }
 
@@ -203,7 +207,8 @@ function Chart() {
                         <div className='hov'>
                            <div
                               style={{
-                                 background:'linear-gradient(135deg,#006494,#35CFF4)',
+                                 background:
+                                    'linear-gradient(135deg,#006494,#35CFF4)',
                                  height: '10rem',
                                  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                                  marginRight: '1rem',
@@ -476,7 +481,7 @@ function Chart() {
                   {displayedData && displayedData.length > 0 ? (
                      displayedData.map((item, index) => (
                         <div style={{ borderRadius: '50px' }} key={index}>
-                           <CommonListItem
+                           {/* <CommonListItem
                               avatarSrc={item.avatarSrc}
                               primaryText={
                                  <span
@@ -547,6 +552,50 @@ function Chart() {
                               </Link>
                            </Grid>
 
+                        <hr /> */}
+                        {console.log("disease",item.disease_names)}
+                           <Card sx={{ maxWidth: 380,backgroundColor: '#244c73' }}>
+                              <CardHeader
+                                avatar={
+                                 <Avatar alt="Remy Sharp" src={item.avatarSrc} />
+                               }
+                                 action={
+                                    <Link
+                                    href={`dashboard/individualappointment/${item?.appointment_id}`}
+                                 >
+                                    <Button
+                                       onClick={() =>
+                                          handleViewClick(item?.appointment_id)
+                                       }
+                                       variant='contained'
+                                       size='small'
+                                       style={{
+                                          backgroundColor: '#13293D',
+                                          width: '5rem',
+                                          height: '1.4rem',
+                                          fontSize: '200',
+                                          cursor: 'pointer',
+                                          mt:20,
+                                       }}
+                                    >
+                                       View
+                                    </Button>
+                                 </Link>
+                                 }
+                                 title={
+                                    <Typography variant="h5" style={{ color: '#fff' }}>
+                                      {item.primaryText}
+                                    </Typography>
+                                  }
+                                  subheader={
+                                    <Typography variant="body2" style={{ color: 'lightgreen' }}>
+                                      {item.secondaryText}<br />
+                                      {item.disease_names}<br />
+                                      {item.patient_name}
+                                    </Typography>
+                                  }
+                              />
+                           </Card>
                            <hr />
                         </div>
                      ))
