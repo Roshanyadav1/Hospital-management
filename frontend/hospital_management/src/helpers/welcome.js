@@ -26,7 +26,7 @@ export const welcome = [
    {
       title: 'Orthopaedics',
       image: 'https://www.carehospitals.com/indore/assets/images/speciality/orthopedics-06.png',
-      description: 'The Orthopaedics Department of CARE CHL..',
+      description: 'The Orthopaedics Department of CARE SGA..',
       category: 'Orthopaedics',
    },
    {
@@ -38,13 +38,13 @@ export const welcome = [
    {
       title: 'Paediatrics',
       image: 'https://www.carehospitals.com/indore/assets/images/speciality/pediatrics-07.png',
-      description: 'The Department of Paediatrics at CARE CHL',
+      description: 'The Department of Paediatrics at CARE SGA',
       category: 'Paediatrics',
    },
    {
       title: 'Neurosiences',
       image: 'https://www.carehospitals.com/indore/assets/images/speciality/surgical%20oncology.png',
-      description: 'The Department of Neurology at Care CHL',
+      description: 'The Department of Neurology at Care SGA',
       category: 'Neurosiences',
    },
 ]

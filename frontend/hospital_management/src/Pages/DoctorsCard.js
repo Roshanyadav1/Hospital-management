@@ -58,7 +58,7 @@ function DoctorCard() {
             color='primary'
             style={{ marginTop: '50px' }}
          >
-            Doctors
+           Our Doctors
          </Typography>
          <Container maxWidth='lg' sx={{ padding: '3rem' }}>
             <Swiper

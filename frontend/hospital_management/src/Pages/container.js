@@ -97,8 +97,8 @@ export default function FixedContainer() {
                      Health Checkup Packages{' '}
                   </Typography>
                   <Typography variant='body2'>
-                     "An executive checkup a year keeps your future hospital bill in
-                     control"
+                     An executive checkup a year keeps your future hospital bill in
+                     control
                   </Typography>
                </Grid>
             </Grid>
