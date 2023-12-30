@@ -570,7 +570,8 @@ function Chart() {
                                        variant='contained'
                                        size='small'
                                        style={{
-                                          backgroundColor: '#13293D',
+                                          backgroundColor: '#35CFF4',
+                                          color:'#13293D',
                                           width: '5rem',
                                           height: '1.4rem',
                                           fontSize: '200',
