@@ -68,6 +68,7 @@ function RecipeReviewCard() {
             </Grid>
          </Container>
       )
+<<<<<<< HEAD
    } else if (isError || Array.isArray(appointment?.data) &&
       appointment?.data.length == 0) {
       return <Container maxWidth='xl' sx={{ height: "50vh", alignItems: 'center' }}>
@@ -78,6 +79,23 @@ function RecipeReviewCard() {
          </Grid>
          <Typography sx={{textAlign: 'center'}} variant="h3">No Appointment Here</Typography>
       </Container>
+=======
+   } else if (isError || !Array.isArray(appointment?.data) || appointment.data.length === 0) {
+      return (
+         // <Container maxWidth='xl' sx={{ height: '90vh', alignItems: 'center' }}>
+            <Grid mt={2} container spacing={2} justifyContent='center' alignItems='center'>
+               <Image
+                  src={'https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif'}
+                  width={360}
+                  height={360}
+                  alt='No appointment Here'
+                  style={{ marginTop: 25 }}
+               />
+            </Grid>
+         // </Container>
+      );
+      //  <p> No Appointment Here {isError}</p>
+>>>>>>> 8dc0561ab42605a14d843820bc14dc4fad367c7d
    } else {
       return (
          <Container maxWidth='sm'>
