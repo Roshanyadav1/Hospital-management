@@ -36,7 +36,7 @@ const nextConfig = {
          'thumbs.dreamstime.com',
          '0 , _services_Query__WEBPACK_IMPORTED_MODULE_1__.useGetDoctorTimesQuery',
          '(0 , _services_Query__WEBPACK_IMPORTED_MODULE_1__.useRegisterAuth',
-         '0 , _services_Query__WEBPACK_IMPORTED_MODULE_3__.useGetEmployeeDetailsQuery'
+         '0 , _services_Query__WEBPACK_IMPORTED_MODULE_3__.useGetEmployeeDetailsQuery',
       ],
    },
 }

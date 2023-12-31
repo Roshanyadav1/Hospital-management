@@ -85,13 +85,11 @@ function ShowDoctors() {
             <Typography p={2} variant='h4' align='center' sx={{ color: '#13293D' }}></Typography>
             <Grid container spacing={2}>
                {doctorList.data.results.map((doctor, index) => (
-                  <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3}>
-                     {/* Rendering doctor cards */}
-
+                  <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3} >
                      <Card
                         sx={{
                            maxWidth: 280,
-                           margin: '10px',
+                           margin: 'auto',
                            padding: 1,
                            textAlign: 'center',
                            display: 'flex',
@@ -121,7 +119,6 @@ function ShowDoctors() {
                   </Grid>
                ))}
             </Grid>
-            {/* Pagination */}
             <Pagination
                count={totalPages}
                page={currentPage}
