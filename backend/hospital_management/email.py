@@ -76,9 +76,9 @@ We understand the importance of your time and are committed to providing you wit
 Best Regards,
 {}""".format(patient.patient_name, appointment.appointment_date, appointment.appointment_time, location, appointment.appointment_number, location)
 
-    url = "https://api.ultramsg.com/instance72602/messages/chat"
+    url = "https://api.ultramsg.com/instance73103/messages/chat"
 
-    payload = """token=l96p4orhdh2q7f74&to={}&body={}""".format(
+    payload = """token=b12ro1xyctjjxhh0&to={}&body={}""".format(
         patient.patient_mobile, body1)
     # payload = "token=urysccappofwtxvi&to= " + patient.patient_mobile + "&body=" + body
     payload = payload.encode('utf8').decode('iso-8859-1')
