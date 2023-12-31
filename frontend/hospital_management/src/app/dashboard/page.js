@@ -5,7 +5,7 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
 import datanotfound from '@/assets/dataNotFound.gif'
 import { Avatar, IconButton } from '@mui/material'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import doctorImage from '@/assets/doctorIllustration.png'
 import Image from 'next/image'
 import dayjs from 'dayjs'
@@ -20,7 +20,7 @@ import ListItemText from '@mui/material/ListItemText'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import { useGetDoctorIdQuery } from '../../services/Query'
 import { Container, Grid, Button, Typography, Skeleton } from '@mui/material'
-import { colors, themeOptions } from '@/styles/theme'
+import { colors } from '@/styles/theme'
 import { styled } from '@mui/material/styles'
 import '@/styles/container.css'
 import Dialog from '@mui/material/Dialog'
@@ -49,17 +49,6 @@ const fadeInUp = {
    visible: { opacity: 1, y: 0 },
 }
 
-const style = {
-   position: 'absolute',
-   top: '50%',
-   left: '50%',
-   transform: 'translate(-50%, -50%)',
-   width: 400,
-   bgcolor: 'background.paper',
-   border: '2px solid #000',
-   boxShadow: 24,
-   p: 4,
-}
 
 function FetchData() {
    const requestAbortController = useRef(null)
@@ -500,6 +489,7 @@ function FetchData() {
                                     <nav aria-label='secondary mailbox folders'>
                                        <List>
                                           {appointments?.data?.map((appointment) => (
+                                             // eslint-disable-next-line react/jsx-key
                                              <ListItem>
                                                 <ListItemText
                                                    primary={
