@@ -35,4 +35,4 @@ class DoctorAppointmentRelation(serializers.ModelSerializer):
 
     class Meta:
         model = Doctor
-        fields = ['doctor_id', 'employee']
+        fields = ['doctor_id', 'doctor_profile_picture', 'employee']
