@@ -13,20 +13,16 @@ import {
    XAxis,
    YAxis,
    CartesianGrid,
-   Tooltip,
    Legend,
    Area,
 } from 'recharts'
 import '@/styles/dashboard.css'
-import CommonListItem from '../components/CommonListItem'
-// import Image from 'next/image'
-// import Doc from '../assets/Doc.png'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
-
-
+import IconButton from '@mui/material/IconButton'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import Tooltip from '@mui/material/Tooltip';
 function Chart() {
    const {
       data: ViewDoctor,
@@ -104,14 +100,7 @@ function Chart() {
    })
 
    const Data = appointmentData?.data?.map((appointment) => {
-      // let diseaseSpecialist = "";
-      // if (Array.isArray(appointment.doctor.disease_specialist)) {
-      //     diseaseSpecialist = appointment.doctor.disease_specialist.join(', ');
-      // } else {
-      //     diseaseSpecialist = appointment.doctor.disease_specialist || "";
-      // }
-      // diseaseSpecialist = diseaseSpecialist.replace(/[[\]"]+/g, '');
-
+      
       return {
          ...appointment,
          name: appointment.appointment_date,
@@ -132,11 +121,11 @@ function Chart() {
    // Update the Data mapping to filter based on the search term
    const filteredData = searchTerm
       ? Data?.filter((item) => {
-           const doctorName = item.primaryText.toLowerCase()
-           const searchLower = searchTerm.toLowerCase()
+         const doctorName = item.primaryText.toLowerCase()
+         const searchLower = searchTerm.toLowerCase()
 
-           return doctorName.includes(searchLower)
-        })
+         return doctorName.includes(searchLower)
+      })
       : []
 
    const displayedData = searchTerm ? filteredData : Data
@@ -181,7 +170,7 @@ function Chart() {
          alignItems: 'center',
          justifyContent: 'center',
          height: '100vh', // Full height of the viewport
-         // backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black background
+   
       }
 
       // Styling for the CircularProgress component
@@ -288,30 +277,7 @@ function Chart() {
                                     +
                                  </span>
                               </Grid>
-                              {/* <Grid item xs={6}>
-                                 <div
-                                    style={{
-                                       width: '80%',
-                                       height: '100%',
-                                       marginTop: '8%',
-                                       marginLeft: '10%',
-                                       backgroundColor: 'white',
-                                       paddingTop: '10px',
-                                       borderRadius: '50%',
-                                       position: 'relative',
-                                    }}
-                                 >
-                                    <Image
-                                       style={{
-                                          position: 'absolute',
-                                          transform: 'translate(15%)',
-                                       }}
-                                       height={100}
-                                       width={100}
-                                       src={Doc}
-                                    />
-                                 </div>
-                              </Grid> */}
+                  
                            </Grid>
                         </div>
                      </Grid>
@@ -358,7 +324,7 @@ function Chart() {
                                  position: 'insideBottomRight',
                                  offset: -10,
                               }}
-                              // scale="band"
+                           // scale="band"
                            />
                            <YAxis
                               label={{
@@ -481,123 +447,45 @@ function Chart() {
                   {displayedData && displayedData.length > 0 ? (
                      displayedData.map((item, index) => (
                         <div style={{ borderRadius: '50px' }} key={index}>
-                           {/* <CommonListItem
-                              avatarSrc={item.avatarSrc}
-                              primaryText={
-                                 <span
-                                    style={{
-                                       color: 'white',
-                                       fontSize: '1rem',
-                                       fontWeight: '525',
-                                       fontFamily: 'verdana',
-                                    }}
-                                 >
-                                    {item.primaryText}
-                                 </span>
-                              }
-                              secondaryText={
-                                 <span
-                                    style={{
-                                       color: 'lightgreen',
-                                       fontSize: '.7rem',
-                                       fontFamily: 'verdana',
-                                    }}
-                                 >
-                                    {item.secondaryText}
-                                 </span>
-                              }
-                              disease_names={
-                                 <span
-                                    style={{
-                                       color: 'lightgreen',
-                                       fontSize: '.7rem',
-                                       fontFamily: 'verdana',
-                                    }}
-                                 >
-                                    {item.disease_names}
-                                 </span>
-                              }
-                              patient_name={
-                                 <span
-                                    style={{
-                                       color: 'lightgreen',
-                                       fontSize: '.7rem',
-                                       fontFamily: 'verdana',
-                                    }}
-                                 >
-                                    {item.patient_name}
-                                 </span>
-                              }
-                           />
-                           <Grid xs={12} style={{ textAlign: 'center' }}>
-                              <Link
-                                 href={`dashboard/individualappointment/${item?.appointment_id}`}
-                              >
-                                 <Button
-                                    onClick={() =>
-                                       handleViewClick(item?.appointment_id)
-                                    }
-                                    variant='contained'
-                                    size='small'
-                                    style={{
-                                       backgroundColor: '#13293D',
-                                       width: '5rem',
-                                       height: '1.4rem',
-                                       fontSize: '200',
-                                       cursor: 'pointer',
-                                    }}
-                                 >
-                                    View
-                                 </Button>
-                              </Link>
-                           </Grid>
 
-                        <hr /> */}
-                        {console.log("disease",item.disease_names)}
-                           <Card sx={{ maxWidth: 380,backgroundColor: '#244c73' }}>
-                              <CardHeader
-                                avatar={
-                                 <Avatar alt="Remy Sharp" src={item.avatarSrc} />
-                               }
-                                 action={
-                                    <Link
-                                    href={`dashboard/individualappointment/${item?.appointment_id}`}
-                                 >
-                                    <Button
-                                       onClick={() =>
-                                          handleViewClick(item?.appointment_id)
-                                       }
-                                       variant='contained'
-                                       size='small'
-                                       style={{
-                                          backgroundColor: '#13293D',
-                                          width: '5rem',
-                                          height: '1.4rem',
-                                          fontSize: '200',
-                                          cursor: 'pointer',
-                                          mt:20,
-                                       }}
-                                    >
-                                       View
-                                    </Button>
-                                 </Link>
-                                 }
-                                 title={
+                           <Card sx={{ backgroundColor: '#244c73', padding: 2 }}>
+                              <Grid container spacing={2}>
+                                 <Grid item xs={2}>
+                                    <Avatar alt="Remy Sharp" src={item.avatarSrc} />
+                                 </Grid>
+                                 <Grid item xs={8}>
                                     <Typography variant="h5" style={{ color: '#fff' }}>
-                                      {item.primaryText}
+                                       {item.primaryText}
                                     </Typography>
-                                  }
-                                  subheader={
                                     <Typography variant="body2" style={{ color: 'lightgreen' }}>
-                                      {item.secondaryText}<br />
-                                      {item.disease_names}<br />
-                                      {item.patient_name}
+                                       <span style={{ whiteSpace: 'nowrap' }}>
+                                          {item.secondaryText}
+                                       </span>
+                                       <br />
+                                       <span style={{ whiteSpace: 'nowrap' }}>
+                                          {item.disease_names}
+                                       </span>
+                                       <br />
+                                       <span style={{ whiteSpace: 'nowrap' }}>
+                                          {item.patient_name}
+                                       </span>
                                     </Typography>
-                                  }
-                              />
+                                 </Grid>
+                                 <Grid item xs={2} >
+                                    <Link href={`dashboard/individualappointment/${item?.appointment_id}`}>
+                                    <Tooltip title="View Prescription">
+                                    <IconButton aria-label="delete">
+                                       <RemoveRedEyeIcon onClick={() => handleViewClick(item?.appointment_id)}
+                                          style={{ color: 'white' }} />
+                                    </IconButton>
+                                    </Tooltip>
+                                    </Link>
+                                 </Grid>
+                              </Grid>
                            </Card>
                            <hr />
                         </div>
+
                      ))
                   ) : (
                      <div
