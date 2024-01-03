@@ -22,6 +22,7 @@ import Image from 'next/image'
 import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
+import { CircularProgress } from '@mui/material'
 
 const ProfileCard = ({ icon, title, content }) => (
    <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
@@ -109,6 +110,7 @@ function BookAppoinment({ id, name, date }) {
             toast.error('Something went wrong')
          }
       }
+
    }
    return (
       <Container maxWidth='lg' p={2}>
@@ -275,7 +277,6 @@ function BookAppoinment({ id, name, date }) {
                            Confirm
                         </Button>
                      </DialogActions>
-
                   </Dialog>
                </Paper>
             </Grid>
