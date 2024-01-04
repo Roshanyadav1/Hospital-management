@@ -1,10 +1,11 @@
 'use client'
 import Dashboard from '@/Pages/AddEmployeePage'
+import { Container } from '@mui/material'
 function Career() {
    return (
-      <div>
+      <Container   >
          <Dashboard />
-      </div>
+      </Container>
    )
 }
 
