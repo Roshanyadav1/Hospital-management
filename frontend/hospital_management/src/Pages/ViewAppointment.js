@@ -5,7 +5,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import { useGetAppointmentQuery } from '@/services/Query'
-import { Chip, Container, Grid, Skeleton, Typography } from '@mui/material'
+import { Chip, Container, Grid, Skeleton } from '@mui/material'
 import Image from 'next/image'
 function RecipeReviewCard() {
    const { data: appointment, isLoading, isError } = useGetAppointmentQuery()
@@ -68,16 +68,21 @@ function RecipeReviewCard() {
             </Grid>
          </Container>
       )
-   } else if (isError || Array.isArray(appointment?.data) &&
-      appointment?.data.length == 0) {
-      return <Container maxWidth='xl' sx={{ height: "50vh", alignItems: 'center' }}>
-         <Grid mt={2} container spacing={2} justifyContent='center'
-            alignItems='center'  >
-            <Image src={"https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif"
-            } width={350} height={350} alt="No appointment Here" style={{ marginTop: 25 }} />
-         </Grid>
-         <Typography sx={{textAlign: 'center'}} variant="h3">No Appointment Here</Typography>
-      </Container>
+   } else if (isError || !Array.isArray(appointment?.data) || appointment.data.length === 0) {
+      return (
+         // <Container maxWidth='xl' sx={{ height: '90vh', alignItems: 'center' }}>
+            <Grid mt={2} container spacing={2} justifyContent='center' alignItems='center'>
+               <Image
+                  src={'https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif'}
+                  width={360}
+                  height={360}
+                  alt='No appointment Here'
+                  style={{ marginTop: 25 }}
+               />
+            </Grid>
+         // </Container>
+      );
+      //  <p> No Appointment Here {isError}</p>
    } else {
       return (
          <Container maxWidth='sm'>

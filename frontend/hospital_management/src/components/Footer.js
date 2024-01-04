@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Grid, Input } from '@mui/material'
+import { Box, Typography, Grid } from '@mui/material'
 import { Facebook, Instagram, Twitter } from '@mui/icons-material'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
@@ -97,7 +97,7 @@ const Footer = () => {
                   <Link
                      href='https://www.instagram.com'
                      color='#FFFFFF'
-                     sx={{ pl:0 , pr: 1 }}
+                     sx={{ pl: 0, pr: 1 }}
                   >
                      <Instagram />
                   </Link>
@@ -178,14 +178,25 @@ const Footer = () => {
                      color='white'
                      sx={{ padding: 1, fontWeight: 'bold' }}
                   >
-                     Hospital Details
+                     SGA Cares
                   </Typography>
-                 
-                     <Typography variant='body2' color='white' sx={{ padding: 1 }}>
-                        Contact Us
-                     </Typography>
-               
-                  <Typography variant='body2' color='white'>
+
+                  <Typography variant='body2' color='white' sx={{ padding: 1 }}>
+                     Lung Cancer
+                  </Typography>
+                  <Typography variant='body2' color='white' sx={{ padding: 1 }}>
+                     Brain Tumour
+                  </Typography>
+                  <Typography variant='body2' color='white' sx={{ padding: 1 }}>
+                     Heart Attack
+                  </Typography>
+                  <Typography variant='body2' color='white' sx={{ padding: 1 }}>
+                     Heart Transplant
+                  </Typography>
+                  <Typography variant='body2' color='white' sx={{ padding: 1 }}>
+                     Hernia
+                  </Typography>
+                  {/* <Typography variant='body2' color='white'>
                      <Input
                         varient='outline'
                         type='text'
@@ -219,7 +230,7 @@ const Footer = () => {
                      >
                         Sign up
                      </Button>
-                  </Typography>
+                  </Typography> */}
                </Grid>
             </Grid>
             <Box sx={{ marginLeft: 3 }}>
@@ -233,7 +244,7 @@ const Footer = () => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  padding:1
+                  padding: 1
                }}
             >
                &copy; {new Date().getFullYear()} SGA

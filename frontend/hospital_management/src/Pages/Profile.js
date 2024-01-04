@@ -3,7 +3,6 @@
 import { Grid, CardHeader, Divider } from '@mui/material'
 import Image from 'next/image'
 import { Container } from '@mui/material'
-import Badge from '@mui/material/Badge'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
@@ -138,7 +137,7 @@ const DoctorName = localStorage.getItem('user_name')
           </Grid>
           <Grid item xs={12} sm={6}>
   <ProfileCard
-    icon={<HistoryIcon sx={{ marginRight: 1 }} />}
+    icon={<HistoryIcon sx={{  }} />}
     title={
       <Typography gutterBottom variant='h6'>
         History
@@ -159,10 +158,10 @@ const DoctorName = localStorage.getItem('user_name')
           >
             <Typography variant='h6'>Date - {date}</Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ marginLeft: 1 }}>
+          <AccordionDetails>
             <div style={{ display: 'flex', paddingBottom: 10 }}>
-              <Typography variant='body2'>Number of Appointments conducted = </Typography>{" "}
-              <Typography variant='body2'>{appointmentsByDate[date].length}</Typography>
+              <Typography variant='body1'>Number of Appointments conducted = </Typography>{" "}
+              <Typography variant='body1'>{appointmentsByDate[date].length}</Typography>
             </div>
             <Typography variant='h6' paddingY={1}>
               Patient Details -

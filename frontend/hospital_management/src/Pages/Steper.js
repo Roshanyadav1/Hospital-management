@@ -6,9 +6,8 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import Box from '@mui/material/Box'
-// import './styles.css';
-import { Pagination } from 'swiper/modules'
 import { Typography } from '@mui/material'
+import { Autoplay, Pagination } from 'swiper/modules';
 
 const images = [
    {
@@ -28,11 +27,18 @@ const images = [
 function SwipeableTextMobileStepper() {
    return (
       <Swiper
-         pagination={{
-            dynamicBullets: true,
-         }}
-         modules={[Pagination]}
-         className='mySwiper'
+      spaceBetween={30}
+      centeredSlides={true}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
+      pagination={{
+        clickable: true,
+      }}
+      // navigation={true}
+      modules={[Autoplay, Pagination,]}
+      className="mySwiper"
       >
          <Box>
             {images.map((image, index) => (
