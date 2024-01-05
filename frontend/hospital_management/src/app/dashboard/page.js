@@ -34,6 +34,7 @@ import { useGetAppointmentInfoQuery } from '@/services/Query'
 import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useLeaveViewQuery } from '../../services/Query'
+import { useAddPrescriptionMutation } from '../../services/Query'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
    '& .MuiDialogContent-root': {
@@ -64,7 +65,7 @@ function FetchData() {
    const [open, setOpen] = useState(false)
    const [datesArray, setDatesArray] = useState([])
 
-
+   const [addPrescription] = useAddPrescriptionMutation();
    const [appointmentUpdate] = useAppointmentUpdateMutation()
    const {
       data: appointments,
@@ -76,13 +77,13 @@ function FetchData() {
 
 
    const docId = localStorage.getItem("user_id")
-   const {data: holidays, isSuccess:isHolidaySuccess} = useLeaveViewQuery(docId) 
+   const { data: holidays, isSuccess: isHolidaySuccess } = useLeaveViewQuery(docId)
 
    const appointment_id = appointments?.data[0]?.appointment_id
    const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
-   
+
 
    var names = appointments?.data?.map(function (item) {
       return item['appointment_date']
@@ -101,12 +102,12 @@ function FetchData() {
          getSpecificDates()
       }
    }, [names?.length])
- // for holidays highlight in calender
-   useEffect(()=> {
-      if(holidays?.data && isHolidaySuccess){
+   // for holidays highlight in calender
+   useEffect(() => {
+      if (holidays?.data && isHolidaySuccess) {
          setDatesArray(holidays?.data?.map(item => item.date));
       }
-   },[holidays?.data,isHolidaySuccess])
+   }, [holidays?.data, isHolidaySuccess])
    function getSpecificDates() {
       return dateData
    }
@@ -186,7 +187,7 @@ function FetchData() {
    }
 
 
-// for showing data in current month only
+   // for showing data in current month only
    const handleMonthChange = (date) => {
       if (requestAbortController.current) {
          requestAbortController.current.abort()
@@ -202,7 +203,7 @@ function FetchData() {
       const [hours, minutes] = timeString.split(':')
       return `${hours}:${minutes}`
    }
-    
+
    //const doctorID =  appointments?.data[0]?.doctor?.doctor_id
 
    const shouldDisableDate = (date) => {
@@ -215,7 +216,7 @@ function FetchData() {
 
    ///////////////////////////////////////////////////////
 
-   
+
    const label = { inputProps: { 'aria-label': 'Size switch demo' } }
 
 
@@ -233,10 +234,20 @@ function FetchData() {
                method: 'POST',
                body: formData,
             })
+            const data = await response.json()
+            console.log(data , "api data of s3")
 
-            if (response.ok) {
-               setIsSuccessDialogOpen(true)
-               setIsFileChosenError(false)
+            if (data) {
+               try {
+                  await addPrescription({
+                     prescription_photo: data.imageUrl,
+                     appointment_id: appointmentInfo?.data?.[0]?.appointment_id,
+                  });
+                  setIsSuccessDialogOpen(true);
+                  setIsFileChosenError(false);
+               } catch (error) {
+                  console.error('Error adding prescription:', error);
+               }
             } else {
                console.error('Failed to upload image')
             }
@@ -274,22 +285,25 @@ function FetchData() {
    const handleClickOpen = () => {
       setOpen(true)
    }
-   const handleClose = () => {
-      setOpen(false)
-   }
+
+   const handleClose = async () => {
+      if (selectedFile) {
+        await handleSubmit();
+      }
+      setOpen(false);
+    };
+  
 
    if (dataloading) {
       return (
-        
-         
+
+
          <Container maxWidth="xl">
             <Grid container>
                <Grid item xs={12} sm={8}>
-               <Card
+                  <Card
                      sx={{
-                       
                         borderRadius: 2,
-                        
                      }}
                   >
                      <Skeleton
@@ -301,28 +315,28 @@ function FetchData() {
                   </Card>
                </Grid>
                <Grid item xs={12} sm={4}>
-               <Card
-                  sx={{
-                     width: '100%',
-                     marginLeft: 2 ,
-                     borderRadius: 2,
-                     height: 358 ,
-                    }}
-               >
-                  <Skeleton
-                     variant='rectangular'
-                     width='100%'
-                     height={358}
-                     animation='wave'
-                  />
-               </Card>
+                  <Card
+                     sx={{
+                        width: '100%',
+                        marginLeft: 2,
+                        borderRadius: 2,
+                        height: 358,
+                     }}
+                  >
+                     <Skeleton
+                        variant='rectangular'
+                        width='100%'
+                        height={358}
+                        animation='wave'
+                     />
+                  </Card>
                </Grid>
                <Grid item xs={12} sm={12}>
-               <Card
+                  <Card
                      sx={{
-                        
+
                         borderRadius: 2,
-                        marginTop:6,
+                        marginTop: 6,
                      }}
                   >
                      <Skeleton
@@ -336,8 +350,7 @@ function FetchData() {
             </Grid>
          </Container>
       )
-      // } else if (isError) {
-      //    return <p> No Appointment Here {isError}</p>
+      
    } else {
       return (
          <div>
@@ -347,51 +360,51 @@ function FetchData() {
                <Container>
                   <Grid container py={2}>
                      <Grid item xs={12} sm={8}>
-                              <Card
-                                 sx={{
-                                    position: 'relative',
-                                    paddingY: 8,
-                                    paddingX: 2,
-                                    height:335,
-                                    bgcolor: 'background.paper',
-                                    borderRadius: 2,
-                                    boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
-                                 }}
-                              >
-                                 <div>
-                                    <Typography variant='h3' color='primary'>
-                                       Hello,
-                                    </Typography>
-                                    <Typography variant='h3' color='secondary'>
-                                      Dr.{" "} {
-                                          localStorage.getItem('user_name')
-                                       }
-                                    </Typography>
+                        <Card
+                           sx={{
+                              position: 'relative',
+                              paddingY: 8,
+                              paddingX: 2,
+                              height: 335,
+                              bgcolor: 'background.paper',
+                              borderRadius: 2,
+                              boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+                           }}
+                        >
+                           <div>
+                              <Typography variant='h3' color='primary'>
+                                 Hello,
+                              </Typography>
+                              <Typography variant='h3' color='secondary'>
+                                 Dr.{" "} {
+                                    localStorage.getItem('user_name')
+                                 }
+                              </Typography>
 
-                                    <Typography variant='body1' color='primary'>
-                                       Your dedication and expertise brighten our
-                                       <br></br> hospital every day. We appreciate your commitment <br></br>to excellence. Wishing you a day filled with success <br></br> and positive outcomes. Thank you for being an <br></br>invaluable part of our team.
-                                    </Typography>
-                                 </div>
-                                 <Grid item sx={{
-                                  display:{
-                                    xs:'none',
-                                    md:'block'
-                                  }
-                                   }}>
-                                 <Image
-                                   
-                                    src={doctorImage}
-                                    alt='Doctor illustration'
-                                    height={300}
-                                    style={{
-                                       position: 'absolute',
-                                       right: '0',
-                                       top: '0',
-                                    }}
-                                 />
-                                 </Grid>
-                              </Card>
+                              <Typography variant='body1' color='primary'>
+                                 Your dedication and expertise brighten our
+                                 <br></br> hospital every day. We appreciate your commitment <br></br>to excellence. Wishing you a day filled with success <br></br> and positive outcomes. Thank you for being an <br></br>invaluable part of our team.
+                              </Typography>
+                           </div>
+                           <Grid item sx={{
+                              display: {
+                                 xs: 'none',
+                                 md: 'block'
+                              }
+                           }}>
+                              <Image
+
+                                 src={doctorImage}
+                                 alt='Doctor illustration'
+                                 height={300}
+                                 style={{
+                                    position: 'absolute',
+                                    right: '0',
+                                    top: '0',
+                                 }}
+                              />
+                           </Grid>
+                        </Card>
                      </Grid>
 
                      <Grid item xs={12} sm={4}>
@@ -428,64 +441,64 @@ function FetchData() {
                         </Grid>
                      </Grid>
                      <Grid item xs={12} sm={12} mt={2}>
-                              <div style={{ display: 'flex' }}>
-                                 <PeopleIcon />
-                                 <Typography variant='h6' color='primary'>
-                                    Upcoming appointments
-                                 </Typography>
-                              </div>
-                              <Box
-                                 sx={{
-                                    width: '100%',
-                                    //   minWidth: 470,
-                                    bgcolor: 'background.paper',
-                                    borderRadius: 2,
-                                    boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
-                                    marginTop: 1,
+                        <div style={{ display: 'flex' }}>
+                           <PeopleIcon />
+                           <Typography variant='h6' color='primary'>
+                              Upcoming appointments
+                           </Typography>
+                        </div>
+                        <Box
+                           sx={{
+                              width: '100%',
+                              //   minWidth: 470,
+                              bgcolor: 'background.paper',
+                              borderRadius: 2,
+                              boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+                              marginTop: 1,
+                           }}
+                        >
+                           {isError ? (
+                              <div
+                                 style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
                                  }}
                               >
-                                 {isError ? (
-                                    <div
-                                       style={{
-                                          display: 'flex',
-                                          flexDirection: 'column',
-                                          alignItems: 'center',
-                                          justifyContent: 'center',
-                                       }}
-                                    >
-                                       <Image
-                                          src={datanotfound}
-                                          alt='data not found'
-                                          height={150}
-                                          width={150}
-                                       />
-                                       <Typography variant='h6' color='primary'>
-                                          Data Not found
-                                       </Typography>
-                                    </div>
-                                 ) :
-                                    isAppointmentsEmpty? (
-                                       <div
-                                       style={{
-                                          display: 'flex',
-                                          flexDirection: 'column',
-                                          alignItems: 'center',
-                                          justifyContent: 'center',
-                                       }}
-                                    >
-                                       <Image
-                                          src={datanotfound}
-                                          alt='data not found'
-                                          height={150}
-                                          width={150}
-                                       />
-                                       <Typography variant='h6' color='primary'>
-                                          Data Not found
-                                       </Typography>
-                                    </div>)
-                                    
+                                 <Image
+                                    src={datanotfound}
+                                    alt='data not found'
+                                    height={150}
+                                    width={150}
+                                 />
+                                 <Typography variant='h6' color='primary'>
+                                    Data Not found
+                                 </Typography>
+                              </div>
+                           ) :
+                              isAppointmentsEmpty ? (
+                                 <div
+                                    style={{
+                                       display: 'flex',
+                                       flexDirection: 'column',
+                                       alignItems: 'center',
+                                       justifyContent: 'center',
+                                    }}
+                                 >
+                                    <Image
+                                       src={datanotfound}
+                                       alt='data not found'
+                                       height={150}
+                                       width={150}
+                                    />
+                                    <Typography variant='h6' color='primary'>
+                                       Data Not found
+                                    </Typography>
+                                 </div>)
+
                                  :
-                                  (
+                                 (
                                     <nav aria-label='secondary mailbox folders'>
                                        <List>
                                           {appointments?.data?.map((appointment) => (
@@ -741,7 +754,7 @@ function FetchData() {
                                                          autoFocus
                                                          onClick={handleClose}
                                                       >
-                                                         Save changes
+                                                         SaveChanges
                                                       </Button>
                                                    </DialogActions>
                                                 </BootstrapDialog>
@@ -750,10 +763,10 @@ function FetchData() {
                                        </List>
                                     </nav>
                                  )}
-                              </Box>
-                           </Grid>
+                        </Box>
+                     </Grid>
                   </Grid>
-                    </Container>
+               </Container>
             ) : null}
          </div>
       )

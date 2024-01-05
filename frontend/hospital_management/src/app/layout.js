@@ -13,7 +13,18 @@ import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 const theme = createTheme(themeOptions)
+import { ErrorBoundary } from "react-error-boundary";
 
+function fallbackRender({ error }) {
+   // Call resetErrorBoundary() to reset the error boundary and retry the render.
+
+   return (
+      <div role="alert">
+         <p>Something went wrong:</p>
+         <pre style={{ color: "red" }}>{error.message}</pre>
+      </div>
+   );
+}
 export default function RootLayout({ children }) {
    const path = usePathname()
 
@@ -25,27 +36,31 @@ export default function RootLayout({ children }) {
    return (
       <html lang='en'>
          <body className={inter.className}>
-            <UserProvider>
-               <ToastContainer
-                  position={'top-right'}
-                  close
-                  on
-                  click={true}
-                  pauseOnHover={false}
-                  pauseOnFocusLoss={false}
-                  autoClose={2000}
-                  draggable={true}
-                  closeButton={<p>Close</p>}
-               />
-               <CustomProvider>
-                  <ThemeProvider theme={theme}>
-                     <NextTopLoader />
-                     {isShow ? null : <SteperNav />}
-                     {children}
-                     {isShow ? null : <Footer />}
-                  </ThemeProvider>
-               </CustomProvider>
-            </UserProvider>
+            <ErrorBoundary
+               fallbackRender={fallbackRender}
+            >
+               <UserProvider>
+                  <ToastContainer
+                     position={'top-right'}
+                     close
+                     on
+                     click={true}
+                     pauseOnHover={false}
+                     pauseOnFocusLoss={false}
+                     autoClose={2000}
+                     draggable={true}
+                     closeButton={<p>Close</p>}
+                  />
+                  <CustomProvider>
+                     <ThemeProvider theme={theme}>
+                        <NextTopLoader />
+                        {isShow ? null : <SteperNav />}
+                        {children}
+                        {isShow ? null : <Footer />}
+                     </ThemeProvider>
+                  </CustomProvider>
+               </UserProvider>
+            </ErrorBoundary>
          </body>
       </html>
    )

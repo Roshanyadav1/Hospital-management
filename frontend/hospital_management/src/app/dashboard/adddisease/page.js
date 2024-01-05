@@ -67,14 +67,21 @@ const INITIAL_FORM_STATE = {
 }
 
 const page = () => {
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const { data: getDisease, isLoading, refetch } = useGetAllDiseasesQuery()
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const [updateStatus] = useDiseaseStatusMutation()
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const [addDisease] = useAddDiseasesMutation()
 
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const [loading, setLoading] = useState(false)
 
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const [openModal, setOpenModal] = useState(false)
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const [open, setOpen] = useState(false)
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const [disease, setDisease] = useState()
 
    const handleOpen = () => setOpen(true)
