@@ -65,6 +65,7 @@ function FetchData() {
    const [open, setOpen] = useState(false)
    const [datesArray, setDatesArray] = useState([])
 
+
    const [addPrescription] = useAddPrescriptionMutation();
    const [appointmentUpdate] = useAppointmentUpdateMutation()
    const {
@@ -111,8 +112,6 @@ function FetchData() {
    function getSpecificDates() {
       return dateData
    }
-
-
 
    function fakeFetch(date, { signal }) {
       return new Promise((resolve, reject) => {
@@ -217,7 +216,6 @@ function FetchData() {
    ///////////////////////////////////////////////////////
 
 
-   const label = { inputProps: { 'aria-label': 'Size switch demo' } }
 
 
 
@@ -226,6 +224,8 @@ function FetchData() {
    }
    const handleSubmit = async () => {
       if (selectedFile) {
+         setIsFileChosenError(true);
+
          const formData = new FormData()
          formData.append('file', selectedFile)
 
@@ -235,7 +235,7 @@ function FetchData() {
                body: formData,
             })
             const data = await response.json()
-            console.log(data , "api data of s3")
+            console.log(data, "api data of s3")
 
             if (data) {
                try {
@@ -249,6 +249,7 @@ function FetchData() {
                   console.error('Error adding prescription:', error);
                }
             } else {
+
                console.error('Failed to upload image')
             }
          } catch (error) {
@@ -261,7 +262,7 @@ function FetchData() {
 
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false)
-      setSelectedFile(null)
+      // setSelectedFile(null)
       setIsFileChosenError(false)
    }
 
@@ -288,11 +289,11 @@ function FetchData() {
 
    const handleClose = async () => {
       if (selectedFile) {
-        await handleSubmit();
+         await handleSubmit();
       }
       setOpen(false);
-    };
-  
+   };
+
 
    if (dataloading) {
       return (
@@ -350,7 +351,7 @@ function FetchData() {
             </Grid>
          </Container>
       )
-      
+
    } else {
       return (
          <div>
@@ -586,146 +587,72 @@ function FetchData() {
                                                                   initial='hidden'
                                                                   animate='visible'
                                                                >
-                                                                  <Card
-                                                                     sx={{
-                                                                        backgroundColor:
-                                                                           '#C4D0DC',
-                                                                     }}
-                                                                  >
+                                                                  <Card sx={{ backgroundColor: '#C4D0DC' }}>
                                                                      <CardHeader
                                                                         avatar={
-                                                                           <Avatar
-                                                                              sx={{
-                                                                                 bgcolor:
-                                                                                    '#13293D',
-                                                                              }}
-                                                                              aria-label='recipe'
-                                                                           >
-                                                                              {
-                                                                                 e?.doctor?.employee?.employee_name.split(
-                                                                                    ''
-                                                                                 )[0]
-                                                                              }
+                                                                           <Avatar sx={{ bgcolor: '#13293D' }} aria-label='recipe'>
+                                                                              {e?.doctor?.employee?.employee_name.split('')[0]}
                                                                            </Avatar>
                                                                         }
-                                                                        title={
-                                                                           e?.doctor
-                                                                              ?.employee
-                                                                              ?.employee_name
-                                                                        }
-                                                                        subheader={
-                                                                           e.appointment_time +
-                                                                           '   ' +
-                                                                           e.appointment_date
-                                                                        }
+                                                                        title={e?.doctor?.employee?.employee_name}
+                                                                        subheader={e.appointment_time + ' ' + e.appointment_date}
                                                                      />
                                                                      <CardContent>
                                                                         <Chip
-                                                                           label={
-                                                                              'Disease Name : ' +
-                                                                              e
-                                                                                 ?.disease
-                                                                                 ?.disease_name
-                                                                           }
-                                                                           sx={{
-                                                                              backgroundColor:
-                                                                                 '#7F8FA45B',
-                                                                           }}
+                                                                           label={'Disease Name: ' + e?.disease?.disease_name}
+                                                                           sx={{ backgroundColor: '#13293D', color: 'white' }}
                                                                         />
                                                                      </CardContent>
                                                                      <CardContent>
                                                                         <Chip
-                                                                           label={
-                                                                              'Patient Name : ' +
-                                                                              e
-                                                                                 ?.patient
-                                                                                 ?.patient_name
-                                                                           }
-                                                                           sx={{
-                                                                              backgroundColor:
-                                                                                 '#7F8FA45B',
-                                                                           }}
+                                                                           label={'Patient Name: ' + e?.patient?.patient_name}
+                                                                           sx={{ backgroundColor: '#13293D', color: 'white' }}
                                                                         />
                                                                      </CardContent>
                                                                      <CardContent>
                                                                         <Chip
-                                                                           label={
-                                                                              'Appointment No. : ' +
-                                                                              e?.appointment_number
-                                                                           }
-                                                                           sx={{
-                                                                              backgroundColor:
-                                                                                 '#7F8FA45B',
-                                                                           }}
+                                                                           label={'Appointment No.: ' + e?.appointment_number}
+                                                                           sx={{ backgroundColor: '#13293D', color: 'white' }}
                                                                         />
                                                                      </CardContent>
                                                                      <CardContent>
                                                                         <Switch
-                                                                           {...label}
-                                                                           checked={
-                                                                              isSwitchOn
-                                                                           }
-                                                                           onChange={
-                                                                              handleSwitchChange
-                                                                           }
+                                                                           checked={isSwitchOn}
+                                                                           onChange={handleSwitchChange}
                                                                            color='primary'
                                                                            size='small'
-                                                                           disabled={
-                                                                              isSwitchOn
-                                                                           }
+                                                                           disabled={isSwitchOn}
+                                                                           sx={{
+                                                                              '& .MuiSwitch-thumb': {
+                                                                                 backgroundColor: isSwitchOn ? '#13293D' : 'white',
+                                                                              },
+                                                                              '& .MuiSwitch-track': {
+                                                                                 backgroundColor: isSwitchOn ? 'rgba(19, 41, 61, 0.5)' : '#35CFF4',
+                                                                              },
+                                                                           }}
                                                                         />
                                                                         {isSwitchOn ? (
                                                                            <div>
-                                                                              <Input
-                                                                                 type='file'
-                                                                                 onChange={
-                                                                                    handleFileChange
-                                                                                 }
-                                                                              />
+                                                                              <Input type='file' onChange={handleFileChange} />
                                                                               <Button
                                                                                  variant='contained'
                                                                                  color='primary'
-                                                                                 onClick={
-                                                                                    handleSubmit
-                                                                                 }
+                                                                                 size='small'
+                                                                                 onClick={handleSubmit}
                                                                               >
-                                                                                 Add
-                                                                                 Prescription
+                                                                                 Add Prescription
                                                                               </Button>
                                                                               {isFileChosenError && (
-                                                                                 <p
-                                                                                    style={{
-                                                                                       color: 'red',
-                                                                                    }}
-                                                                                 >
-                                                                                    Please
-                                                                                    choose
-                                                                                    the
-                                                                                    file.
-                                                                                 </p>
+                                                                                 <p style={{ color: 'red' }}>Please choose the file.</p>
                                                                               )}
                                                                            </div>
                                                                         ) : (
-                                                                           <p>
-                                                                              Unchecked
-                                                                              Message
-                                                                           </p>
+                                                                           <p>Unchecked Message</p>
                                                                         )}
                                                                      </CardContent>
 
-                                                                     <Dialog
-                                                                        open={
-                                                                           isSuccessDialogOpen
-                                                                        }
-                                                                        onClose={
-                                                                           handleDialogClose
-                                                                        }
-                                                                     >
-                                                                        <DialogTitle>
-                                                                           Prescription
-                                                                           Submitted
-                                                                           Successfully!
-                                                                        </DialogTitle>
+                                                                     <Dialog open={isSuccessDialogOpen} onClose={handleDialogClose}>
+                                                                        <DialogTitle>Prescription Submitted Successfully!</DialogTitle>
                                                                         <DialogContent>
                                                                            <DialogContentText>
                                                                               {isFileChosenError
@@ -734,29 +661,17 @@ function FetchData() {
                                                                            </DialogContentText>
                                                                         </DialogContent>
                                                                         <DialogActions>
-                                                                           <Button
-                                                                              onClick={
-                                                                                 handleDialogClose
-                                                                              }
-                                                                              color='primary'
-                                                                           >
+                                                                           <Button onClick={handleDialogClose} color='primary'>
                                                                               OK
                                                                            </Button>
                                                                         </DialogActions>
                                                                      </Dialog>
                                                                   </Card>
+
                                                                </Grid>
                                                             )
                                                          )}
                                                    </DialogContent>
-                                                   <DialogActions>
-                                                      <Button
-                                                         autoFocus
-                                                         onClick={handleClose}
-                                                      >
-                                                         SaveChanges
-                                                      </Button>
-                                                   </DialogActions>
                                                 </BootstrapDialog>
                                              </ListItem>
                                           ))}

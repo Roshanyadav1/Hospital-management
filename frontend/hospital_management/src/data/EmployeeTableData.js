@@ -10,71 +10,20 @@ import {
    IconButton,
    Switch,
 } from '@mui/material'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import DialogContentText from '@mui/material/DialogContentText'
 import CloseIcon from '@mui/icons-material/Close'
-import { styled } from '@mui/material/styles'
 import FORM_VALIDATION from '@/components/FormValidation/employeeValidation'
-import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { useAddEmployeeMutation } from '@/services/Query'
 import { useGetEmployeeDetailsQuery } from './../services/Query'
 import { useGetEmployeeQuery } from '@/services/Query'
 import { useChangeEmpDataMutation } from '@/services/Query'
 import { useChangeStatusMutation } from '@/services/Query'
-import { Delete, Create, Visibility, DisabledByDefault } from '@mui/icons-material'
+import { Delete, Create, Visibility } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import AddEmployee from '@/components/AddEmployee'
-//using the react modal component from mui, insert the proper functionality in delete button such that when the delete button will be clicked the modal component will be opened and the name of the person from the selected row will be shown and in modal and in subheading 'Do you want to delete the data' message will be shown with two buttons at the right bottm corner of the modal component, the buttons will be yes & no
-const style = {
-   position: 'absolute',
-   top: '50%',
-   left: '50%',
-   transform: 'translate(-50%, -50%)',
-   width: 700,
-   height: 400,
-   bgcolor: 'background.paper',
-   border: '2px solid #000',
-}
-const VisuallyHiddenInput = styled('input')({
-   clip: 'rect(0 0 0 0)',
-   clipPath: 'inset(50%)',
-   height: 1,
-   overflow: 'hidden',
-   position: 'absolute',
-   bottom: 0,
-   left: 0,
-   whiteSpace: 'nowrap',
-   width: 1,
-})
-const StyledPaper = styled(Paper)(({ theme }) => ({
-   maxWidth: '650px',
-   boxShadow: theme.shadows[3],
-   backgroundColor: 'primary',
-   borderRadius: '20px',
-   padding: '2rem',
-}))
-//for the heading
-const StyledTypography = styled(Typography)(() => ({
-   fontWeight: 'bold',
-   paddingBottom: '1rem',
-   color: colors.primary,
-}))
-//for the whole form
-const StyledFormWrapper = styled('div')({
-   minHeight: '100vh',
-   display: 'grid',
-   placeItems: 'center',
-   // padding: '2rem',
-   '@media (max-width: 450px)': {
-      padding: '0rem',
-   },
-})
-const Empcategories = ['Part Time', 'Full Time']
-const Role = ['Doctor', 'Manager']
 const GetStatusButton = (row) => {
    const [updateStatus] = useChangeStatusMutation()
+   // eslint-disable-next-line no-unused-vars
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
 
@@ -151,7 +100,7 @@ const GetStatusButton = (row) => {
       </div>
    )
 }
-/////////////////////////////////////////////////////////////////////////
+
 const GetActionButton = (row) => {
    const [deleteEmployee] = useDeleteEmployeeMutation()
    const [updateEmployee] = useChangeEmpDataMutation()
@@ -168,12 +117,6 @@ const GetActionButton = (row) => {
    const [openEditModal, setOpenEditModal] = useState(false)
    const [openViewModal, setOpenViewModal] = useState(false)
 
-   const Img = styled('img')({
-      margin: 'auto',
-      display: 'block',
-      maxWidth: '80%',
-      maxHeight: '80%',
-    });
 
    const INITIAL_FORM_STATE = {
       employee_name: row?.params?.row?.employee_name,
@@ -187,6 +130,7 @@ const GetActionButton = (row) => {
       // updated_by: 'admin',
    }
 
+   // eslint-disable-next-line no-unused-vars
    const [addemployee] = useAddEmployeeMutation() //for add employee form
    const handleRegister = async (values, { resetForm }) => {
       try {
@@ -213,6 +157,7 @@ const GetActionButton = (row) => {
       }
    }
    // const {data: viewEmployee, isLoading} = useGetEmployeeDetailsQuery(selectedRow.employee_id , {skip: true})
+   // eslint-disable-next-line no-unused-vars
    const [pageState, setPageState] = useState({
       isLoding: false,
       data: [],
@@ -221,10 +166,12 @@ const GetActionButton = (row) => {
       pageSize: 5,
    })
 
+   // eslint-disable-next-line no-unused-vars
    const { data: empData, isFetching: loadinData } = useGetEmployeeQuery(pageState, {
       refetchOnMountOrArgChange: true,
    })
-   const [open, setOpen] = useState(false)
+   // eslint-disable-next-line no-unused-vars
+   const [open] = useState(false)
    // console.log(row.params , "ok")
    const handleDelete = () => {
       setSelectedRow(row.params.row)
@@ -383,10 +330,8 @@ const GetActionButton = (row) => {
                }
                {
                   isSuccess && (<>
-                     {/* // i have to add view the employee data in formate way  */}
                      <DialogContent>
                         <Grid container justifyContent='space-between'>
-                        
 
                            <Grid item  >
                               <Typography variant='h6' color='primary' fontWeight='bold'>
@@ -437,7 +382,7 @@ const GetActionButton = (row) => {
                onClick={handleCloseViewModal}
                sx={{
                   position: 'absolute',
-                  right: 8,
+                  right: 10,
                   top: 8,
                   color: (theme) => theme.palette.grey[500],
                }}
@@ -445,6 +390,7 @@ const GetActionButton = (row) => {
                <CloseIcon />
             </IconButton>
          </Dialog>
+         
          <IconButton onClick={handleDelete} color='primary' size='small'>
             <Delete />
          </IconButton>
@@ -529,4 +475,3 @@ export const columns = [
       renderCell: (params) => <GetActionButton params={params} />,
    },
 ]
-// how can I find out the particular row's data from this table when i click on the delete button
