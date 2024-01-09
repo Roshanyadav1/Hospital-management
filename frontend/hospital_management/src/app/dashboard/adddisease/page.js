@@ -106,9 +106,14 @@ const page = () => {
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addDisease(values)
+     console.log(res)
+         if(res.data.status === 200){
          toast.success(res?.data?.message || 'Disease added successfully')
          resetForm()
+         }
+         
       } catch (error) {
+         toast.error("Disease already exist")
          // Handle error
          // console.error('Error submitting form:', error);
       }
