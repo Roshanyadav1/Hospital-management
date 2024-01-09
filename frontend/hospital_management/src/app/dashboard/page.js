@@ -282,7 +282,7 @@ function FetchData() {
       return (
         
          
-         <Container maxWidth="xl">
+         <Container maxWidth="lg">
             <Grid container>
                <Grid item xs={12} sm={8}>
                <Card
