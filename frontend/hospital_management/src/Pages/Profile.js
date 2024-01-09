@@ -71,7 +71,7 @@ const DoctorName = localStorage.getItem('user_name')
 // console.log("doc name",DoctorName)
 
  return (
-    <Container maxWidth='md' p={2} >
+    <Container maxWidth='lg' p={2} >
        <Grid container  spacing={2}>
           <Grid container item bgcolor={'fff'} display={'flex'} Direction='column'style={{boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'}}  >
              {
