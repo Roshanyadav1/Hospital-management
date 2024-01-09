@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from prescription.serializer import PrescriptionSerializer,PrescriptionViewSerializer
+from prescription.serializer import PrescriptionSerializer, PrescriptionViewSerializer
 from prescription.models import Prescription
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
@@ -38,24 +38,6 @@ class PrescriptionAdd(GenericAPIView):
                 }
             )
 
-        if user_role == "Manager":
-            Response.status_code = status.HTTP_401_UNAUTHORIZED
-            return Response(
-                {
-                    'status': status.HTTP_401_UNAUTHORIZED,
-                    'message': "Unauthorized Access",
-                }
-            )
-
-        if user_role == "Admin":
-            Response.status_code = status.HTTP_401_UNAUTHORIZED
-            return Response(
-                {
-                    'status': status.HTTP_401_UNAUTHORIZED,
-                    'message': "Unauthorized Access",
-                }
-            )
-
         try:
             error = Error.objects.get(error_title='ADD_SUCCESS')
             response_message = error.error_message
@@ -74,7 +56,7 @@ class PrescriptionAdd(GenericAPIView):
 
 class PrescriptionView(APIView):
     permission_classes = [IsAuthenticated]
-    
+
     def get(self, request, input=None, format=None):
         id = input
         if id is not None:
@@ -116,25 +98,58 @@ class PrescriptionView(APIView):
                     },
                 )
         else:
-            prescription = Prescription.objects.all()
-            serializer = PrescriptionViewSerializer(prescription, many=True)
-            response_message = ""
-            response_code = ""
-            try:
-                error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
-                response_message = error.error_message
-                response_code = error.error_code
-                Response.status_code = error.error_code
-            except:
-                response_message = ResponseMessage.RETRIEVED_SUCCESS
-                response_code = status.HTTP_200_OK
-            return Response(
-                {
-                    'status': response_code,
-                    'message': "Prescription " + response_message,
-                    'data': serializer.data,
-                }
-            )
+            appointment_id = request.GET.get('appointment_id')
+            if not appointment_id:
+                prescription = Prescription.objects.all()
+                serializer = PrescriptionViewSerializer(
+                    prescription, many=True)
+                response_message = ""
+                response_code = ""
+                try:
+                    error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
+                    response_message = error.error_message
+                    response_code = error.error_code
+                    Response.status_code = error.error_code
+                except:
+                    response_message = ResponseMessage.RETRIEVED_SUCCESS
+                    response_code = status.HTTP_200_OK
+                return Response(
+                    {
+                        'status': response_code,
+                        'message': "Prescription " + response_message,
+                        'data': serializer.data,
+                    }
+                )
+            else:
+                try:
+                    prescription = Prescription.objects.get(
+                        appointment_id=appointment_id)
+                    serializer = PrescriptionViewSerializer(prescription)
+                    response_message = ""
+                    response_code = ""
+                    try:
+                        error = Error.objects.get(
+                            error_title='RETRIEVED_SUCCESS')
+                        response_message = error.error_message
+                        response_code = error.error_code
+                        Response.status_code = error.error_code
+                    except:
+                        response_message = ResponseMessage.RETRIEVED_SUCCESS
+                        response_code = status.HTTP_200_OK
+                    return Response(
+                        {
+                            'status': response_code,
+                            'message': "Prescription " + response_message,
+                            'data': serializer.data,
+                        }
+                    )
+                except:
+                    return Response(
+                        {
+                            'status': status.HTTP_400_BAD_REQUEST,
+                            'message': "Prescription Not Found",
+                        }
+                    )
 
 
 class PrescriptionUpdate(APIView):
