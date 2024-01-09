@@ -239,7 +239,7 @@ function PatientProfile() {
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                              {
                                                 patientInfo?.data[0].patient_name
-                                                || '...'
+                                                || 'Loading. . .'
                                              }
                                           </div>
                                        </Typography>
@@ -251,13 +251,13 @@ function PatientProfile() {
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', }}>
                                              {
                                                 patientInfo?.data[0].patient_mobile
-                                                || '...'
+                                                || 'Loading . . .'
                                              }
                                           </div>
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', }}>
-                                             {patientInfo?.data[0].patient_address || '...'}
+                                             {patientInfo?.data[0].patient_address || 'Loading . . .'}
                                           </div>
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
@@ -265,7 +265,7 @@ function PatientProfile() {
                                              maxWidth: '300px', whiteSpace: 'nowrap',
                                           }}>
                                              {patientInfo?.data[0].patient_email
-                                                || '...'}
+                                                || 'Loading . . .'}
                                           </div>
                                        </Typography>
                                     </Grid>
@@ -274,7 +274,43 @@ function PatientProfile() {
                            </Grid>
                         </Card>
                      </Grid>
-                     <Grid item xs={12} sm={12} mt={2} >
+                     
+                  </Grid>
+               </Grid>
+
+               <Grid item xs={12} sm={4}>
+                  <Box
+                     sx={{
+                        marginLeft: 2,
+                        marginTop: 7,
+                        width: 400,
+                        bgcolor: 'background.paper',
+                        borderRadius: 2,
+                        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'
+                        // boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+                     }}
+                  >
+                     <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateCalendar
+                           defaultValue={initialValue}
+                           shouldDisableDate={shouldDisableDate}
+                           loading={isLoading}
+                           onMonthChange={handleMonthChange}
+                   
+                           renderLoading={() => <DayCalendarSkeleton />}
+                           slots={{
+                              day: ServerDay,
+                           }}
+                           slotProps={{
+                              day: {
+                                 highlightedDays,
+                              },
+                           }}
+                        />
+                     </LocalizationProvider>
+                  </Box>
+               </Grid>
+               <Grid item xs={12} sm={12} mt={12} >
                         <div style={{ display: 'flex', marginBottom: 15 }}>
                            <PeopleIcon />
                            <Typography variant='h6' color='primary'>
@@ -334,41 +370,6 @@ function PatientProfile() {
                            );
                         })}
                      </Grid>
-                  </Grid>
-               </Grid>
-
-               <Grid item xs={12} sm={4}>
-                  <Box
-                     sx={{
-                        marginLeft: 2,
-                        marginTop: 7,
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        borderRadius: 2,
-                        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'
-                        // boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
-                     }}
-                  >
-                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateCalendar
-                           defaultValue={initialValue}
-                           shouldDisableDate={shouldDisableDate}
-                           loading={isLoading}
-                           onMonthChange={handleMonthChange}
-                   
-                           renderLoading={() => <DayCalendarSkeleton />}
-                           slots={{
-                              day: ServerDay,
-                           }}
-                           slotProps={{
-                              day: {
-                                 highlightedDays,
-                              },
-                           }}
-                        />
-                     </LocalizationProvider>
-                  </Box>
-               </Grid>
             </Grid>
          </Container >
       </div >
