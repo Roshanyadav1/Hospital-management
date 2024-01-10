@@ -1,8 +1,9 @@
 'use client'
+import * as React from 'react'
 import Card from '@mui/material/Card'
 import PeopleIcon from '@mui/icons-material/People'
 import Typography from '@mui/material/Typography'
-import { Grid, Container, Box ,Skeleton } from '@mui/material'
+import { Grid, Container, Box, Skeleton } from '@mui/material'
 import dayjs from 'dayjs'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
@@ -22,20 +23,49 @@ import { usePatientViewQuery } from '@/services/Query'
 import Avatar from '@mui/material/Avatar'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
 
+import { styled } from '@mui/material/styles'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import Tooltip from '@mui/material/Tooltip'
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+   '& .MuiDialogContent-root': {
+      padding: theme.spacing(2),
+   },
+   '& .MuiDialogActions-root': {
+      padding: theme.spacing(1),
+   },
+}))
+
 function PatientProfile() {
    // eslint-disable-next-line no-unused-vars
    const { data: appointmentHistory, isError } = useGetAppointmentQuery()
    console.log('object', appointmentHistory)
 
-   const { data: patientInfo , isLoading : infoLoading } = usePatientViewQuery()
+   const { data: patientInfo, isLoading: infoLoading } = usePatientViewQuery()
    console.log('pi', patientInfo)
    console.log('pname', patientInfo?.data[0].patient_name)
 
    const requestAbortController = useRef(null)
    const [dateData, setDateData] = useState([])
-   const [isLoading , setIsLoading] = useState(false)
+   const [isLoading, setIsLoading] = useState(false)
    const [highlightedDays, setHighlightedDays] = useState(getSpecificDates())
    const [datesArray] = useState([])
+
+   //for dialog
+   const [open, setOpen] = React.useState(false)
+
+   const handleClickOpen = () => {
+      setOpen(true)
+   }
+   const handleClose = () => {
+      setOpen(false)
+   }
 
    var names = appointmentHistory?.data?.map(
       (appointment) => appointment?.appointment_date
@@ -184,29 +214,30 @@ function PatientProfile() {
 
    if (infoLoading) {
       return (
-          <Container maxWidth="lg" sx={{marginTop:2}}>
-            <Grid container>
-               <Grid item xs={12} sm={8}>
+         <Container maxWidth='lg'>
+            <Grid container spacing={2} p={2}>
+               <Grid item xs={12} md={12} lg={8}>
                   <Card
                      sx={{
+                        width: '742px',
                         borderRadius: 2,
                      }}
                   >
                      <Skeleton
                         variant='rectangular'
                         width='100%'
-                        height={358}
+                        height={337}
                         animation='wave'
                      />
                   </Card>
                </Grid>
-               <Grid item xs={12} sm={4}>
+               <Grid item xs={12} md={4} lg={4}>
                   <Card
                      sx={{
                         width: '100%',
-                        marginLeft: 2,
+                        // marginLeft: 0.5,
                         borderRadius: 2,
-                        height: 358,
+                        height: 337,
                      }}
                   >
                      <Skeleton
@@ -217,12 +248,12 @@ function PatientProfile() {
                      />
                   </Card>
                </Grid>
-               <Grid item xs={12} sm={12}>
+               <Grid item xs={12} md={8} sm={12} lg={12}>
                   <Card
                      sx={{
-
+                        width: '100%',
                         borderRadius: 2,
-                        marginTop: 6,
+                        marginTop: 5,
                      }}
                   >
                      <Skeleton
@@ -236,211 +267,277 @@ function PatientProfile() {
             </Grid>
          </Container>
       )
-
    } else {
-
-   return (
-      <div>
-         <Container maxWidth='lg'>
-            <Grid container spacing={2} p={2} >
-               <Grid item xs={12} md={12} lg={8}>
-                  <Card
-                     sx={{
-                        position: 'relative',
-                        minWidth: 320,
-                        minHeight: 335,
-                        paddingY: 10,
-                        paddingX: 2,
-                        borderRadius: 2,
-                        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
-                     }}
-                  >
-                     <Grid container>
-                        <Grid item xs={4} sm={4}>
-                           <Avatar
-                              alt='Patient Avatar'
-                              sx={{ width: 140, height: 140, marginLeft: 3 }}
-                           />
-                        </Grid>
-                        <Grid item xs={12} sm={8}>
-                           <Grid container>
-                              <Grid item xs={4} sm={4} marginTop={3}>
-                                 <Typography variant='h6' component='h5'>
-                                    Name
-                                 </Typography>
-                                 <Typography variant='h6' component='h5'>
-                                    Phone
-                                 </Typography>
-                                 <Typography variant='h6' component='h5'>
-                                    Address
-                                 </Typography>
-                                 <Typography variant='h6' component='h5'>
-                                    Email
-                                 </Typography>
-                              </Grid>
-                              <Grid item xs={4} sm={4} marginTop={3}>
-                                 <Typography variant='h6' component='h5'>
-                                    <div
-                                       style={{
-                                          maxWidth: '300px',
-                                          whiteSpace: 'nowrap',
-                                          overflow: 'hidden',
-                                          textOverflow: 'ellipsis',
-                                       }}
-                                    >
-                                       {patientInfo?.data[0].patient_name ||
-                                          'Loading. . .'}
-                                    </div>
-                                 </Typography>
-                                 {/* <Typography variant='h6' component='h5'>
+      return (
+         <div>
+            <Container maxWidth='lg'>
+               <Grid container spacing={2} p={2}>
+                  <Grid item xs={12} md={12} lg={8}>
+                     <Card
+                        sx={{
+                           position: 'relative',
+                           minWidth: 320,
+                           minHeight: 335,
+                           paddingY: 10,
+                           paddingX: 2,
+                           borderRadius: 2,
+                           boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+                        }}
+                     >
+                        <Grid container>
+                           <Grid item xs={4} sm={4}>
+                              <Avatar
+                                 alt='Patient Avatar'
+                                 sx={{ width: 140, height: 140, marginLeft: 3 }}
+                              />
+                           </Grid>
+                           <Grid item xs={12} sm={8}>
+                              <Grid container>
+                                 <Grid item xs={4} sm={4} marginTop={3}>
+                                    <Typography variant='h6' component='h5'>
+                                       Name
+                                    </Typography>
+                                    <Typography variant='h6' component='h5'>
+                                       Phone
+                                    </Typography>
+                                    <Typography variant='h6' component='h5'>
+                                       Address
+                                    </Typography>
+                                    <Typography variant='h6' component='h5'>
+                                       Email
+                                    </Typography>
+                                 </Grid>
+                                 <Grid item xs={4} sm={4} marginTop={3}>
+                                    <Typography variant='h6' component='h5'>
+                                       <div
+                                          style={{
+                                             maxWidth: '300px',
+                                             whiteSpace: 'nowrap',
+                                             overflow: 'hidden',
+                                             textOverflow: 'ellipsis',
+                                          }}
+                                       >
+                                          {patientInfo?.data[0].patient_name ||
+                                             'Loading. . .'}
+                                       </div>
+                                    </Typography>
+                                    {/* <Typography variant='h6' component='h5'>
                                          {patientInfo?.data[0].patient_age
                                                  || 'loading...'}
                                        </Typography> */}
-                                 <Typography variant='h6' component='h5'>
-                                    <div
-                                       style={{
-                                          maxWidth: '300px',
-                                          whiteSpace: 'nowrap',
-                                       }}
-                                    >
-                                       {patientInfo?.data[0].patient_mobile ||
-                                          'Loading . . .'}
-                                    </div>
-                                 </Typography>
-                                 <Typography variant='h6' component='h5'>
-                                    <div
-                                       style={{
-                                          maxWidth: '300px',
-                                          whiteSpace: 'nowrap',
-                                       }}
-                                    >
-                                       {patientInfo?.data[0].patient_address ||
-                                          'Loading . . .'}
-                                    </div>
-                                 </Typography>
-                                 <Typography variant='h6' component='h5'>
-                                    <div
-                                       style={{
-                                          maxWidth: '300px',
-                                          whiteSpace: 'nowrap',
-                                       }}
-                                    >
-                                       {patientInfo?.data[0].patient_email ||
-                                          'Loading . . .'}
-                                    </div>
-                                 </Typography>
+                                    <Typography variant='h6' component='h5'>
+                                       <div
+                                          style={{
+                                             maxWidth: '300px',
+                                             whiteSpace: 'nowrap',
+                                          }}
+                                       >
+                                          {patientInfo?.data[0].patient_mobile ||
+                                             'Loading . . .'}
+                                       </div>
+                                    </Typography>
+                                    <Typography variant='h6' component='h5'>
+                                       <div
+                                          style={{
+                                             maxWidth: '300px',
+                                             whiteSpace: 'nowrap',
+                                          }}
+                                       >
+                                          {patientInfo?.data[0].patient_address ||
+                                             'Loading . . .'}
+                                       </div>
+                                    </Typography>
+                                    <Typography variant='h6' component='h5'>
+                                       <div
+                                          style={{
+                                             maxWidth: '300px',
+                                             whiteSpace: 'nowrap',
+                                          }}
+                                       >
+                                          {patientInfo?.data[0].patient_email ||
+                                             'Loading . . .'}
+                                       </div>
+                                    </Typography>
+                                 </Grid>
                               </Grid>
                            </Grid>
                         </Grid>
-                     </Grid>
-                  </Card>
-               </Grid>
+                     </Card>
+                  </Grid>
 
-               <Grid item xs={12} md={4} lg={4}>
-                  <Box
-                     sx={{
-                        width:'100%',
-                        bgcolor: 'background.paper',
-                        borderRadius: 2,
-                        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
-                     }}
-                  >
-                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateCalendar
-                           defaultValue={initialValue}
-                           shouldDisableDate={shouldDisableDate}
-                           loading={isLoading}
-                           onMonthChange={handleMonthChange}
-                           renderLoading={() => <DayCalendarSkeleton />}
-                           slots={{
-                              day: ServerDay,
-                           }}
-                           slotProps={{
-                              day: {
-                                 highlightedDays,
-                              },
-                           }}
-                        />
-                     </LocalizationProvider>
-                  </Box>
-               </Grid>
+                  <Grid item xs={12} md={4} lg={4}>
+                     <Box
+                        sx={{
+                           width: '100%',
+                           bgcolor: 'background.paper',
+                           borderRadius: 2,
+                           boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+                        }}
+                     >
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                           <DateCalendar
+                              defaultValue={initialValue}
+                              shouldDisableDate={shouldDisableDate}
+                              loading={isLoading}
+                              onMonthChange={handleMonthChange}
+                              renderLoading={() => <DayCalendarSkeleton />}
+                              slots={{
+                                 day: ServerDay,
+                              }}
+                              slotProps={{
+                                 day: {
+                                    highlightedDays,
+                                 },
+                              }}
+                           />
+                        </LocalizationProvider>
+                     </Box>
+                  </Grid>
 
-               <Grid item xs={12} md={8} sm={12} lg={12}>
-                  <div style={{ display: 'flex', marginTop: 20 }}>
-                     <PeopleIcon style={{ marginRight: '10px' }} />
-                     <Typography variant='h6' color='primary'>
-                        Appointment History
-                     </Typography>
-                  </div>
-                  {appointmentsArray.map((appointmentGroup) => {
-                     const { date, appointments } = appointmentGroup
-                     console.log(`Appointments for ${date}:`)
-                     return (
-                        <div key={date}>
-                           {appointments.map((appointment) => (
-                              <Accordion
-                                 key={appointment.appointment_time}
-                                 sx={{ borderRadius: 2 }}
-                              >
-                                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                    <Typography>Date - {date}</Typography>
-                                 </AccordionSummary>
-                                 <AccordionDetails>
-                                    <Grid container>
-                                       <Grid item xs={3} sm={3}>
-                                          <Typography variant='b1' component='h5'>
-                                             Doctor
-                                          </Typography>
-                                          <Typography variant='body2'>
-                                             {appointment.doctor_name}
-                                          </Typography>
+                  <Grid item xs={12} md={8} sm={12} lg={12}>
+                     <div style={{ display: 'flex', marginTop: 20 }}>
+                        <PeopleIcon style={{ marginRight: '10px' }} />
+                        <Typography variant='h6' color='primary'>
+                           Appointment History
+                        </Typography>
+                     </div>
+                     {appointmentsArray.map((appointmentGroup) => {
+                        const { date, appointments } = appointmentGroup
+                        console.log(`Appointments for ${date}:`)
+                        return (
+                           <div key={date}>
+                              {appointments.map((appointment) => (
+                                 <Accordion
+                                    key={appointment.appointment_time}
+                                    sx={{ borderRadius: 2 }}
+                                 >
+                                    <AccordionSummary
+                                       expandIcon={<ExpandMoreIcon />}
+                                    >
+                                       <Typography>Date - {date}</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                       <Grid container>
+                                          <Grid item xs={4} sm={4}>
+                                             <Typography variant='b1' component='h5'>
+                                                Doctor
+                                             </Typography>
+                                             <Typography variant='body2'>
+                                                {appointment.doctor_name}
+                                             </Typography>
+                                          </Grid>
+                                          <Grid item xs={4} sm={4}>
+                                             <Typography variant='b1' component='h5'>
+                                                Disease
+                                             </Typography>
+                                             <Typography variant='body2'>
+                                                {appointment.disease_name}
+                                             </Typography>
+                                          </Grid>
+                                          <Grid item xs={3} sm={3}>
+                                             <Typography variant='b1' component='h5'>
+                                                Status
+                                             </Typography>
+                                             {appointment.checked === true ? (
+                                                <Chip
+                                                   label='Attended'
+                                                   size='small'
+                                                   sx={{
+                                                      color: 'white',
+                                                      backgroundColor: '#35CFF4',
+                                                   }}
+                                                />
+                                             ) : (
+                                                <Chip
+                                                   label='Not Attended'
+                                                   size='small'
+                                                   disabled
+                                                />
+                                             )}
+                                          </Grid>
+                                          <Grid item xs={1} sm={1}>
+                                             <Tooltip title='View Prescription'>
+                                                <Button
+                                                   variant='contained'
+                                                   size='small'
+                                                   onClick={handleClickOpen}
+                                                >
+                                                   <RemoveRedEyeIcon />
+                                                </Button>
+                                             </Tooltip>
+                                             <BootstrapDialog
+                                                onClose={handleClose}
+                                                aria-labelledby='customized-dialog-title'
+                                                open={open}
+                                             >
+                                                <DialogTitle
+                                                   sx={{ m: 0, p: 2 }}
+                                                   id='customized-dialog-title'
+                                                >
+                                                  Prescription
+                                                </DialogTitle>
+                                                <IconButton
+                                                   aria-label='close'
+                                                   onClick={handleClose}
+                                                   sx={{
+                                                      position: 'absolute',
+                                                      right: 8,
+                                                      top: 8,
+                                                      color: (theme) =>
+                                                         theme.palette.grey[500],
+                                                   }}
+                                                >
+                                                   <CloseIcon />
+                                                </IconButton>
+                                                <DialogContent dividers>
+                                                   <Typography gutterBottom>
+                                                      Cras mattis consectetur purus
+                                                      sit amet fermentum. Cras justo
+                                                      odio, dapibus ac facilisis in,
+                                                      egestas eget quam. Morbi leo
+                                                      risus, porta ac consectetur ac,
+                                                      vestibulum at eros.
+                                                   </Typography>
+                                                   <Typography gutterBottom>
+                                                      Praesent commodo cursus magna,
+                                                      vel scelerisque nisl
+                                                      consectetur et. Vivamus
+                                                      sagittis lacus vel augue
+                                                      laoreet rutrum faucibus dolor
+                                                      auctor.
+                                                   </Typography>
+                                                   <Typography gutterBottom>
+                                                      Aenean lacinia bibendum nulla
+                                                      sed consectetur. Praesent
+                                                      commodo cursus magna, vel
+                                                      scelerisque nisl consectetur
+                                                      et. Donec sed odio dui. Donec
+                                                      ullamcorper nulla non metus
+                                                      auctor fringilla.
+                                                   </Typography>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                   <Button
+                                                      autoFocus
+                                                      onClick={handleClose}
+                                                   >
+                                                      Download
+                                                   </Button>
+                                                </DialogActions>
+                                             </BootstrapDialog>
+                                          </Grid>
                                        </Grid>
-                                       <Grid item xs={3} sm={3}>
-                                          <Typography variant='b1' component='h5'>
-                                             Disease
-                                          </Typography>
-                                          <Typography variant='body2'>
-                                             {appointment.disease_name}
-                                          </Typography>
-                                       </Grid>
-                                       <Grid item xs={3} sm={3}>
-                                          <Typography variant='b1' component='h5'>
-                                             Status
-                                          </Typography>
-                                          {appointment.checked === true ? (
-                                             <Chip
-                                                label='Attended'
-                                                size='small'
-                                                sx={{
-                                                   color: 'white',
-                                                   backgroundColor: '#35CFF4',
-                                                }}
-                                             />
-                                          ) : (
-                                             <Chip
-                                                label='Not Attended'
-                                                size='small'
-                                                disabled
-                                             />
-                                          )}
-                                       </Grid>
-                                       <Grid item xs={3} sm={3}>
-                                          <Button variant='contained' size='small'>
-                                             View Prescription
-                                          </Button>
-                                       </Grid>
-                                    </Grid>
-                                 </AccordionDetails>
-                              </Accordion>
-                           ))}
-                        </div>
-                     )
-                  })}
+                                    </AccordionDetails>
+                                 </Accordion>
+                              ))}
+                           </div>
+                        )
+                     })}
+                  </Grid>
                </Grid>
-            </Grid>
-         </Container>
-      </div>
-   )
-}
+            </Container>
+         </div>
+      )
+   }
 }
 export default PatientProfile
