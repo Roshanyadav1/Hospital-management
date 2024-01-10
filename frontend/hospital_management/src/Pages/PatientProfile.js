@@ -33,6 +33,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import Tooltip from '@mui/material/Tooltip'
 
+import doctorImage from '@/assets/doctorIllustration.png'
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
    '& .MuiDialogContent-root': {
       padding: theme.spacing(2),
@@ -45,11 +47,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function PatientProfile() {
    // eslint-disable-next-line no-unused-vars
    const { data: appointmentHistory, isError } = useGetAppointmentQuery()
-   console.log('object', appointmentHistory)
-
    const { data: patientInfo, isLoading: infoLoading } = usePatientViewQuery()
-   console.log('pi', patientInfo)
-   console.log('pname', patientInfo?.data[0].patient_name)
 
    const requestAbortController = useRef(null)
    const [dateData, setDateData] = useState([])
@@ -57,10 +55,13 @@ function PatientProfile() {
    const [highlightedDays, setHighlightedDays] = useState(getSpecificDates())
    const [datesArray] = useState([])
 
+   
+
    //for dialog
    const [open, setOpen] = React.useState(false)
 
-   const handleClickOpen = () => {
+   const handleClickOpen = (id) => {
+      console.log('Present id is', id)
       setOpen(true)
    }
    const handleClose = () => {
@@ -70,7 +71,6 @@ function PatientProfile() {
    var names = appointmentHistory?.data?.map(
       (appointment) => appointment?.appointment_date
    )
-   console.log('names', names)
    useEffect(() => {
       if (dateData?.length > 0) {
          fetchHighlightedDays(initialValue)
@@ -198,12 +198,11 @@ function PatientProfile() {
               disease_name: appointment.disease.disease_name,
               appointment_time: appointment.appointment_time,
               checked: appointment.checked,
+              appointment_id: appointment.appointment_id,
            })
            return acc
         }, {})
       : []
-
-   console.log('appointmentsByDate', appointmentsByDate)
 
    const appointmentsArray = Object.entries(appointmentsByDate).map(
       ([date, appointments]) => ({
@@ -212,6 +211,7 @@ function PatientProfile() {
       })
    )
 
+   console.log('appointmentsArray', appointmentsArray)
    if (infoLoading) {
       return (
          <Container maxWidth='lg'>
@@ -402,13 +402,12 @@ function PatientProfile() {
                         </Typography>
                      </div>
                      {appointmentsArray.map((appointmentGroup) => {
-                        const { date, appointments } = appointmentGroup
-                        console.log(`Appointments for ${date}:`)
+                        const { date, appointments, appointment_id } =
+                           appointmentGroup
                         return (
                            <div key={date}>
-                              {appointments.map((appointment) => (
                                  <Accordion
-                                    key={appointment.appointment_time}
+                                    key={appointment_id}
                                     sx={{ borderRadius: 2 }}
                                  >
                                     <AccordionSummary
@@ -417,28 +416,29 @@ function PatientProfile() {
                                        <Typography>Date - {date}</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                       <Grid container>
-                                          <Grid item xs={4} sm={4}>
+                              {appointments.map((e) => (
+                                       <Grid container sx={{marginBottom:2}}>
+                                          <Grid item xs={12} sm={4}>
                                              <Typography variant='b1' component='h5'>
                                                 Doctor
                                              </Typography>
                                              <Typography variant='body2'>
-                                                {appointment.doctor_name}
+                                                {e.doctor_name}
                                              </Typography>
                                           </Grid>
-                                          <Grid item xs={4} sm={4}>
+                                          <Grid item xs={12} sm={4}>
                                              <Typography variant='b1' component='h5'>
                                                 Disease
                                              </Typography>
                                              <Typography variant='body2'>
-                                                {appointment.disease_name}
+                                                {e.disease_name}
                                              </Typography>
                                           </Grid>
-                                          <Grid item xs={3} sm={3}>
+                                          <Grid item xs={6} sm={2}>
                                              <Typography variant='b1' component='h5'>
                                                 Status
                                              </Typography>
-                                             {appointment.checked === true ? (
+                                             {e.checked === true ? (
                                                 <Chip
                                                    label='Attended'
                                                    size='small'
@@ -455,12 +455,39 @@ function PatientProfile() {
                                                 />
                                              )}
                                           </Grid>
-                                          <Grid item xs={1} sm={1}>
+                                          <Grid item xs={6} sm={2}>
+                                             <Button
+                                                variant='contained'
+                                                size='small'
+                                                onClick={() =>
+                                                   handleClickOpen(e.appointment_id)
+                                                }
+                                                sx={{
+                                                   display: {
+                                                      lg: 'block',
+                                                      md: 'none',
+                                                      sm: 'none',
+                                                      xs: 'none',
+                                                   },
+                                                }}
+                                             >
+                                                View prescription
+                                             </Button>
                                              <Tooltip title='View Prescription'>
                                                 <Button
                                                    variant='contained'
                                                    size='small'
-                                                   onClick={handleClickOpen}
+                                                   onClick={() =>
+                                                      handleClickOpen(e.appointment_id)
+                                                   }
+                                                   sx={{
+                                                      display: {
+                                                         lg: 'none',
+                                                         md: 'block',
+                                                         sm: 'block',
+                                                         xs: 'block',
+                                                      },
+                                                   }}
                                                 >
                                                    <RemoveRedEyeIcon />
                                                 </Button>
@@ -474,7 +501,7 @@ function PatientProfile() {
                                                    sx={{ m: 0, p: 2 }}
                                                    id='customized-dialog-title'
                                                 >
-                                                  Prescription
+                                                   Prescription
                                                 </DialogTitle>
                                                 <IconButton
                                                    aria-label='close'
@@ -490,31 +517,11 @@ function PatientProfile() {
                                                    <CloseIcon />
                                                 </IconButton>
                                                 <DialogContent dividers>
-                                                   <Typography gutterBottom>
-                                                      Cras mattis consectetur purus
-                                                      sit amet fermentum. Cras justo
-                                                      odio, dapibus ac facilisis in,
-                                                      egestas eget quam. Morbi leo
-                                                      risus, porta ac consectetur ac,
-                                                      vestibulum at eros.
-                                                   </Typography>
-                                                   <Typography gutterBottom>
-                                                      Praesent commodo cursus magna,
-                                                      vel scelerisque nisl
-                                                      consectetur et. Vivamus
-                                                      sagittis lacus vel augue
-                                                      laoreet rutrum faucibus dolor
-                                                      auctor.
-                                                   </Typography>
-                                                   <Typography gutterBottom>
-                                                      Aenean lacinia bibendum nulla
-                                                      sed consectetur. Praesent
-                                                      commodo cursus magna, vel
-                                                      scelerisque nisl consectetur
-                                                      et. Donec sed odio dui. Donec
-                                                      ullamcorper nulla non metus
-                                                      auctor fringilla.
-                                                   </Typography>
+                                                   <img
+                                                      src='https://www.researchgate.net/publication/345830022/figure/fig4/AS:957640029003789@1605330583881/Sample-prescription-used-as-input-to-the-GUI-developed-in-the-present-work.png'
+                                                      alt='Your Image'
+                                                      style={{ width: '100%' }}
+                                                   />
                                                 </DialogContent>
                                                 <DialogActions>
                                                    <Button
@@ -527,9 +534,9 @@ function PatientProfile() {
                                              </BootstrapDialog>
                                           </Grid>
                                        </Grid>
+                                    ))}
                                     </AccordionDetails>
                                  </Accordion>
-                              ))}
                            </div>
                         )
                      })}
