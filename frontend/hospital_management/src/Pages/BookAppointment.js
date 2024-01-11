@@ -253,7 +253,7 @@ function BookAppoinment({ id, name, date}) {
                      </Button>
                   </Grid>
                   {/* FIRST Confirmation Dialog MODAL */}
-                  <Dialog open={openDialog} onClose={handleCloseDialog}>
+                  <Dialog open={openDialog} >
                      <DialogTitle>Confirm Appointment Booking</DialogTitle>
                      <DialogContent>
                         <DialogContentText>

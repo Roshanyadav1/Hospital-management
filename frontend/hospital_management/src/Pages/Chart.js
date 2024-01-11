@@ -96,18 +96,18 @@ function Chart() {
       return {
          name: appointment.appointment_date,
          Patients: appointment.patient_count,
-         Appoints: appointment.appointment_count,
+         Appointments: appointment.appointment_count,
          Doctors: appointment.doctor_count,
       }
    })
 
    const Data = appointmentData?.data?.map((appointment) => {
-      
+
       return {
          ...appointment,
          name: appointment.appointment_date,
          Patients: appointment.patient_count,
-         Appoints: appointment.appointment_count,
+         Appointments: appointment.appointment_count,
          Doctors: appointment.doctor_count,
          avatarSrc:
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU',
@@ -172,7 +172,7 @@ function Chart() {
          alignItems: 'center',
          justifyContent: 'center',
          height: '100vh', // Full height of the viewport
-   
+
       }
 
       // Styling for the CircularProgress component
@@ -279,7 +279,7 @@ function Chart() {
                                     +
                                  </span>
                               </Grid>
-                  
+
                            </Grid>
                         </div>
                      </Grid>
@@ -339,7 +339,7 @@ function Chart() {
                            <Legend />
                            <Area
                               type='monotone'
-                              dataKey='Appoints'
+                              dataKey='Appointments'
                               fill='#AEE3F0'
                               stroke='#AEE3F0'
                            />
@@ -475,12 +475,12 @@ function Chart() {
                                  </Grid>
                                  <Grid item xs={2} >
                                     <Link href={`dashboard/individualappointment/${item?.appointment_id}`}>
-                                    <Tooltip title="View Prescription">
-                                    <IconButton aria-label="delete">
-                                       <RemoveRedEyeIcon onClick={() => handleViewClick(item?.appointment_id)}
-                                          style={{ color: 'white' }} />
-                                    </IconButton>
-                                    </Tooltip>
+                                       <Tooltip title="View Prescription">
+                                          <IconButton aria-label="delete">
+                                             <RemoveRedEyeIcon onClick={() => handleViewClick(item?.appointment_id)}
+                                                style={{ color: 'white' }} />
+                                          </IconButton>
+                                       </Tooltip>
                                     </Link>
                                  </Grid>
                               </Grid>
