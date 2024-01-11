@@ -72,7 +72,8 @@ function DoctorProfile() {
       data: appointments,
       isError,
       isLoading: dataloading,
-      isSuccess
+      isSuccess,
+      refetch
    } = useGetDoctorIdQuery(doctorId, { skip: userRole === 'Doctor' ? false : true })
    const isAppointmentsEmpty = isSuccess && appointments?.data?.length === 0;
 
@@ -235,7 +236,6 @@ function DoctorProfile() {
                body: formData,
             })
             const data = await response.json()
-            console.log(data, "api data of s3")
 
             if (data) {
                try {
@@ -270,19 +270,22 @@ function DoctorProfile() {
    }
 
    const handleSwitchChange = async () => {
+      // appointments
       try {
          const obj = {
-            id: getAppointmentInfo?.data[0]?.appointment_id,
+            id: appoint?.data[0]?.appointment_id,
             pro: {
                checked: !isSwitchOn,
             },
          }
          await appointmentUpdate(obj)
+         setIsSwitchOn(!isSwitchOn)
+         refetch()
          toast.success('Status Changed Successfully')
       } catch (error) {
-         toast.error(JSON.stringify(error))
+         console.log(error , "Caught")
+         toast.error('Something went wrong !')
       }
-      setIsSwitchOn(!isSwitchOn)
    }
 
 
@@ -451,7 +454,6 @@ function DoctorProfile() {
                         <Box
                            sx={{
                               width: '100%',
-
                               bgcolor: 'background.paper',
                               borderRadius: 2,
                               boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
@@ -497,7 +499,6 @@ function DoctorProfile() {
                                        Data Not found
                                     </Typography>
                                  </div>)
-
                                  :
                                  (
                                     <nav aria-label='secondary mailbox folders'>

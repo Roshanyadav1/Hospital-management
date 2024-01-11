@@ -40,11 +40,12 @@ const ProfileCard = ({ icon, title, content }) => (
    </Card>
 )
 
-function BookAppoinment({ id, name, date }) {
+function BookAppoinment({ id, name, date}) {
    let data = {
       id: id,
       date: date
    }
+
    const { data: doctorTimes, refetch, isFetching: isLoading } = useGetDoctorTimesQuery(data)
    const [isBooking, setIsBooking] = useState(false)
    const [addAppointment] = useAddAppointmentMutation()
@@ -87,14 +88,13 @@ function BookAppoinment({ id, name, date }) {
          toast.error('Please select a time slot')
       }
       else if (hiddentime[selectedSlot.index]) {
-
          const payload = {
             appointment_time: hiddentime[selectedSlot.index][0],
             // appointment_date: moment().format('YYYY-MM-DD'),
             appointment_date: date,
             patient: localStorage.getItem('user_id'),
             doctor: id,
-            disease: '72d9291c-f119-46f3-b0ed-44ff32697320',
+            disease: localStorage.getItem('disease') || '72d9291c-f119-46f3-b0ed-44ff32697320', // dummy 
             appointment_number: (selectedSlot.total_slots - selectedSlot.slots) + 1,
          }
          // addAppointment
@@ -110,8 +110,8 @@ function BookAppoinment({ id, name, date }) {
             toast.error('Something went wrong')
          }
       }
-
    }
+
    return (
       <Container maxWidth='lg' p={2}>
          <Grid

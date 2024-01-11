@@ -21,6 +21,16 @@ import { toast } from 'react-toastify'
    refetchOnFocus: true,
    tagTypes: ['EMP', 'LOGIN'],
    endpoints: (build) => ({
+      getRefreshToken: build.query({
+         query: (arg) => ({
+            url: 'user/token/refresh',
+            method: 'POST',
+            body : {
+               "refresh": arg
+            }
+         }),
+      }),
+
       registerHospital: build.mutation({
          query: (value) => ({
             url: 'hospital/register',
@@ -280,6 +290,7 @@ export const {
    useGetEmployeeDetailsQuery,
    useLeaveViewQuery,
    usePatientViewQuery,
+   usegetRefreshTokenQuery,
 } = queries
 
  

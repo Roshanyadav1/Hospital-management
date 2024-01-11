@@ -21,6 +21,7 @@ import { useGetAllDoctorsQuery } from '@/services/Query'
 import Image from 'next/image'
 import { colors } from '../styles/theme'
 
+
 function DoctorPage() {
    const [filterDoctor, { isLoading: filterDocLoading, isError }] =
       useSpecialistDoctorMutation()
@@ -47,7 +48,6 @@ function DoctorPage() {
       isFetching: DocFetch,
       // isLoading: isDoctorsLoading,
    } = useGetAllDoctorsQuery(selectedDiseases)
-   console.log(filterDoc)
    let fill = {
       disease: selectedDiseases,
       day: formattedDate,
@@ -73,6 +73,8 @@ function DoctorPage() {
    }
 
    const handleDiseasesChange = (event, values) => {
+      let r1 = getDisease?.data.filter((e)=> e.disease_name === values)
+      localStorage.setItem('disease' , r1[0].disease_id)
       setSelectedDiseases(values)
       setSelectedDoctor('')
    }
@@ -97,13 +99,12 @@ function DoctorPage() {
       }
    }
 
-
    const Typo = {
       fontWeight: 800,
       fontSize: '2.5rem',
    }
 
-   const diseases = getDisease?.data?.map((disease) => disease?.disease_name) || [
+   const diseases = getDisease?.data?.filter((e) => e?.disease_status === true) || [
       'No Disease Found !',
    ]
    let doctors =
@@ -138,7 +139,7 @@ function DoctorPage() {
                </div>
 
 
-               <Link href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`} prefetch 
+               <Link href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}+${selectedDiseases}`} prefetch 
                  style={{ textDecoration: 'none', }}
                >
                   <Button variant="contained" size="small" sx={{
@@ -234,8 +235,8 @@ function DoctorPage() {
                      <Autocomplete
                         freeSolo
                         id='tags-outlined'
-                        options={diseases}
-                        disable={DiseaseLoading}
+                        options={diseases.map((disease) => disease?.disease_name)}
+                        disabled={DiseaseLoading}
                         value={selectedDiseases}
                         onChange={handleDiseasesChange}
                         sx={{

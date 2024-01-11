@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Grid, Button, CircularProgress, Link } from '@mui/material'
+import { Grid, Button, CircularProgress } from '@mui/material'
 import List from '@mui/material/List'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import { useGetAllPatientsQuery } from '@/services/Query'
@@ -23,6 +23,8 @@ import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Tooltip from '@mui/material/Tooltip';
+import Link from 'next/link'
+
 function Chart() {
    const {
       data: ViewDoctor,

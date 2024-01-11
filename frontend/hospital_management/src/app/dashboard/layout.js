@@ -225,8 +225,9 @@ function Layout({ children }) {
             </div>
          </Drawer>
 
-        
-         <Box
+        {
+         isAdmin  ? (
+            <Box
             component='main'
             sx={{
                width: { sm: `calc(100% - ${drawerWidth}px)` },
@@ -237,6 +238,20 @@ function Layout({ children }) {
             <Toolbar />
             {children}
          </Box>
+         ):(
+            <Box
+            component='main'
+            sx={{
+               p: 3,
+               width:'100%'
+            }}
+         >
+            <Toolbar />
+            {children}
+         </Box>
+         )
+        }
+  
       </Box>
    )
 }

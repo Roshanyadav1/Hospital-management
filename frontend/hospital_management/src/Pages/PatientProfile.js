@@ -315,9 +315,9 @@ function PatientProfile() {
                                                 </Typography>
                                                 {
                                                    appointment.checked === true ? (
-                                                      <Chip label='Attended' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
+                                                      <Chip label='Checked' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
                                                    ) : (
-                                                      <Chip label='Not Attended' size='small' disabled />
+                                                      <Chip label='Not Checked' size='small' disabled />
                                                    )
                                                 }
                                              </Grid>
