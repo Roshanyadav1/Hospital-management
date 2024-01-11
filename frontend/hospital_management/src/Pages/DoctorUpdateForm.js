@@ -217,14 +217,14 @@ const DocUpdate = () => {
                               ]}
                            />
                         </Grid>
-
+                        
                         <Grid item xs={12} sm={12} md={6}>
                            <FieldArray
                               name='times'
                               render={(arrayHelpers) => (
                                  <>
                                     {values.times.map((time, index) => (
-                                       <Grid item md={12}>
+                                       <Grid item md={12} key={index}>
                                           <Grid
                                              item
                                              xs={12}
@@ -234,7 +234,7 @@ const DocUpdate = () => {
                                              key={index}
                                           >
                                              <Field
-                                                name={'Stimes'}
+                                                name={`times[${index}].Stimes`}
                                                 as={TimeText}
                                                 label={` Start Time #${index + 1}`}
                                                 autoComplete=''
@@ -254,9 +254,11 @@ const DocUpdate = () => {
                                              md={12}
                                              sx={{ marginBottom: 1, marginY: 2 }}
                                              key={index}
+
+
                                           >
                                              <Field
-                                                name={'Etimes'}
+                                                name={`times[${index}].Etimes`}
                                                 as={TimeText}
                                                 label={` End Time #${index + 1}`}
                                                 autoComplete=''
@@ -277,17 +279,16 @@ const DocUpdate = () => {
                                           variant='contained'
                                           size='large'
                                           color='primary'
-                                          onClick={() =>
-                                             arrayHelpers.push('00:00:00')
-                                          }
+                                          onClick={() => arrayHelpers.push({ Stimes: '', Etimes: '' })}
                                        >
-                                          +AddTime
+                                          +Add Time
                                        </Button>
                                     </Grid>
                                  </>
                               )}
                            />
                         </Grid>
+
 
                         <Grid item xs={6} sm={6}>
                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>

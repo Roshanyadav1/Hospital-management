@@ -54,9 +54,7 @@ function DoctorPage() {
  
    const handleSubmit = async () => {
        if (selectedFile) {
-      //   const formData = new FormData();
-      //   formData.append('file', selectedFile);
-      //   formData.append('appointment_id', appointmentInfo?.data?.[0]?.appointment_id);
+     
       console.log('calll')
     
         try {
