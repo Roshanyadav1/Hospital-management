@@ -30,7 +30,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import { useAppointmentUpdateMutation } from '@/services/Query'
 import { toast } from 'react-toastify'
-import { useGetAppointmentInfoQuery } from '@/services/Query'
+import { useGetAppointmentInformationMutation } from './../../services/Query'
 import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useLeaveViewQuery } from '../../services/Query'
@@ -51,7 +51,7 @@ const fadeInUp = {
 }
 
 
-function FetchData() {
+function DoctorProfile() {
    const requestAbortController = useRef(null)
    const userRole = localStorage.getItem('user_role')
    const doctorId = localStorage.getItem('user_id')
@@ -80,8 +80,9 @@ function FetchData() {
    const docId = localStorage.getItem("user_id")
    const { data: holidays, isSuccess: isHolidaySuccess } = useLeaveViewQuery(docId)
 
-   const appointment_id = appointments?.data[0]?.appointment_id
-   const { data: appointmentInfo } = useGetAppointmentInfoQuery(appointment_id)
+   const [getAppointmentInfo, {
+      data: appoint
+   }] = useGetAppointmentInformationMutation()
 
    let isAdmin = userRole === 'Admin' || userRole === 'Manager' ? true : false
 
@@ -203,7 +204,6 @@ function FetchData() {
       return `${hours}:${minutes}`
    }
 
-   //const doctorID =  appointments?.data[0]?.doctor?.doctor_id
 
    const shouldDisableDate = (date) => {
       const isSunday = date.day() === 0
@@ -239,17 +239,19 @@ function FetchData() {
 
             if (data) {
                try {
-                  await addPrescription({
-                     prescription_photo: data.imageUrl,
-                     appointment_id: appointmentInfo?.data?.[0]?.appointment_id,
-                  });
+                  // Add prescription for each appointment
+                  await Promise.all(appointments?.data?.map(async (appointment) => {
+                     await addPrescription({
+                        prescription_photo: data.imageUrl,
+                        appointment: appointment.appointment_id,
+                     });
+                  }));
                   setIsSuccessDialogOpen(true);
                   setIsFileChosenError(false);
                } catch (error) {
                   console.error('Error adding prescription:', error);
                }
             } else {
-
                console.error('Failed to upload image')
             }
          } catch (error) {
@@ -260,6 +262,7 @@ function FetchData() {
       }
    }
 
+
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false)
       // setSelectedFile(null)
@@ -269,7 +272,7 @@ function FetchData() {
    const handleSwitchChange = async () => {
       try {
          const obj = {
-            id: appointmentInfo?.data[0]?.appointment_id,
+            id: getAppointmentInfo?.data[0]?.appointment_id,
             pro: {
                checked: !isSwitchOn,
             },
@@ -283,14 +286,12 @@ function FetchData() {
    }
 
 
-   const handleClickOpen = () => {
+   const handleClickOpen = async (e) => {
+      await getAppointmentInfo(e.appointment_id)
       setOpen(true)
    }
 
    const handleClose = async () => {
-      if (selectedFile) {
-         await handleSubmit();
-      }
       setOpen(false);
    };
 
@@ -299,7 +300,7 @@ function FetchData() {
       return (
 
 
-         <Container maxWidth="xl">
+         <Container maxWidth="lg">
             <Grid container>
                <Grid item xs={12} sm={8}>
                   <Card
@@ -358,7 +359,7 @@ function FetchData() {
             {isAdmin ? (
                <Chart />
             ) : userRole === 'Doctor' ? (
-               <Container>
+               <Container maxWidth="lg" p={2}  >
                   <Grid container py={2}>
                      <Grid item xs={12} sm={8}>
                         <Card
@@ -414,7 +415,6 @@ function FetchData() {
                               <Box
                                  sx={{
                                     width: '100%',
-
                                     bgcolor: 'background.paper',
                                     borderRadius: 2,
                                     boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
@@ -451,7 +451,7 @@ function FetchData() {
                         <Box
                            sx={{
                               width: '100%',
-                              //   minWidth: 470,
+
                               bgcolor: 'background.paper',
                               borderRadius: 2,
                               boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
@@ -502,32 +502,32 @@ function FetchData() {
                                  (
                                     <nav aria-label='secondary mailbox folders'>
                                        <List>
-                                          {appointments?.data?.map((appointment) => (
+                                          {appointments?.data?.map((e) => (
                                              // eslint-disable-next-line react/jsx-key
                                              <ListItem>
                                                 <ListItemText
                                                    primary={
-                                                      appointment.patient
+                                                      e.patient
                                                          .patient_name
                                                    }
                                                 />
                                                 <ListItemText
                                                    primary={
-                                                      appointment.disease
+                                                      e.disease
                                                          .disease_name
                                                    }
                                                 />
                                                 <ListItemText
                                                    primary={
                                                       formatTime(
-                                                         appointment.appointment_time
+                                                         e.appointment_time
                                                       ) +
                                                       ' / ' +
-                                                      appointment.appointment_date
+                                                      e.appointment_date
                                                    }
                                                 />
 
-                                                {appointment.checked ? (
+                                                {e.checked ? (
                                                    <IconButton
                                                       style={{ color: '#35CFF4' }}
                                                    >
@@ -542,7 +542,7 @@ function FetchData() {
                                                 <Button
                                                    variant='contained'
                                                    size='small'
-                                                   onClick={handleClickOpen}
+                                                   onClick={() => handleClickOpen(e)}
                                                 >
                                                    view
                                                 </Button>
@@ -572,9 +572,9 @@ function FetchData() {
                                                    </IconButton>
                                                    <DialogContent dividers>
                                                       {Array.isArray(
-                                                         appointmentInfo?.data
+                                                         appoint?.data
                                                       ) &&
-                                                         appointmentInfo?.data?.map(
+                                                         appoint?.data?.map(
                                                             (e, i) => (
                                                                <Grid
                                                                   item
@@ -617,21 +617,21 @@ function FetchData() {
                                                                      </CardContent>
                                                                      <CardContent>
                                                                         <Switch
-                                                                           checked={isSwitchOn}
+                                                                           checked={e.checked || isSwitchOn}
                                                                            onChange={handleSwitchChange}
                                                                            color='primary'
                                                                            size='small'
-                                                                           disabled={isSwitchOn}
+                                                                           disabled={e.checked}
                                                                            sx={{
                                                                               '& .MuiSwitch-thumb': {
-                                                                                 backgroundColor: isSwitchOn ? '#13293D' : 'white',
+                                                                                 backgroundColor: e.checked || isSwitchOn ? '#13293D' : 'white',
                                                                               },
                                                                               '& .MuiSwitch-track': {
-                                                                                 backgroundColor: isSwitchOn ? 'rgba(19, 41, 61, 0.5)' : '#35CFF4',
+                                                                                 backgroundColor: e.checked || isSwitchOn ? 'rgba(19, 41, 61, 0.5)' : '#35CFF4',
                                                                               },
                                                                            }}
                                                                         />
-                                                                        {isSwitchOn ? (
+                                                                        {(e.checked || isSwitchOn )? (
                                                                            <div>
                                                                               <Input type='file' onChange={handleFileChange} />
                                                                               <Button
@@ -688,4 +688,4 @@ function FetchData() {
    }
 }
 
-export default FetchData
+export default DoctorProfile

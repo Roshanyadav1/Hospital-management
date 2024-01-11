@@ -95,9 +95,6 @@ function ResponsiveAppBar(props) {
          case 'Manager':
             return (
                <>
-                  <Link href="/dashboard" prefetch>
-                     <Button sx={{ color: '#fff' }}>Dashboard</Button>
-                  </Link>
                   {pages.map((item) => (
                      <Link key={item.label} href={item.route} prefetch passHref>
                         <Button sx={{ color: '#fff' }}>{item.label}</Button>
@@ -175,7 +172,7 @@ function ResponsiveAppBar(props) {
                setTimeout(() => {
                   setIsLoading(false);
                   setLoggedIn(true);
-               }, 2000)
+               }, 3000)
 
             } catch (err) {
                setIsLoading(false);

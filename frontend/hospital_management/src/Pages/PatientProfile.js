@@ -239,7 +239,7 @@ function PatientProfile() {
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                              {
                                                 patientInfo?.data[0].patient_name
-                                                || '...'
+                                                || 'Loading . . .'
                                              }
                                           </div>
                                        </Typography>
@@ -251,13 +251,13 @@ function PatientProfile() {
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', }}>
                                              {
                                                 patientInfo?.data[0].patient_mobile
-                                                || '...'
+                                                || 'Loading . . .'
                                              }
                                           </div>
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', }}>
-                                             {patientInfo?.data[0].patient_address || '...'}
+                                             {patientInfo?.data[0].patient_address || 'Loading . . .'}
                                           </div>
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
@@ -265,7 +265,7 @@ function PatientProfile() {
                                              maxWidth: '300px', whiteSpace: 'nowrap',
                                           }}>
                                              {patientInfo?.data[0].patient_email
-                                                || '...'}
+                                                || 'Loading . . .'}
                                           </div>
                                        </Typography>
                                     </Grid>
@@ -376,3 +376,4 @@ function PatientProfile() {
 }
 
 export default PatientProfile
+

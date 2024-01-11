@@ -22,7 +22,7 @@ import Image from 'next/image'
 import { Container } from '@mui/system'
 import useTimeSlots from '@/hooks/useTimeSlots'
 import { toast } from 'react-toastify'
-import { CircularProgress } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ProfileCard = ({ icon, title, content }) => (
    <Card bgcolor={'#fff'} borderRadius={2} boxShadow={3} margin={2}>
@@ -124,14 +124,14 @@ function BookAppoinment({ id, name, date }) {
             <Grid item bgcolor={'fff'} display={'flex'} Direction='column'>
                {
                   isLoading ? <Skeleton
-                        sx={{ border: '1px solid #E0E0E0' }}
-                        variant="circular" height={150} width={150} /> : <Image
-                        priority={true}
-                        src={doctorTimes?.data?.doctor_profile_picture || 'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'}
-                        height={185}
-                        width={185}
-                        style={{ borderRadius: '50%', padding: 10, margin: 1 }}
-                     />
+                     sx={{ border: '1px solid #E0E0E0' }}
+                     variant="circular" height={150} width={150} /> : <Image
+                     priority={true}
+                     src={doctorTimes?.data?.doctor_profile_picture || 'https://thumbs.dreamstime.com/b/doctor-portrait-21332357.jpg'}
+                     height={185}
+                     width={185}
+                     style={{ borderRadius: '50%', padding: 10, margin: 6 }}
+                  />
                }
                <Grid
                   item
@@ -143,12 +143,12 @@ function BookAppoinment({ id, name, date }) {
                   p={{ xs: 2, sm: 5 }}
                   gap={10}
                >
-                     <Typography gutterBottom variant='h4' component='div'>
-                        {name}
-                        <Typography variant='body1' color='text.secondary'>
-                           EXECUTIVE DOCTOR FORTIS C DOC | Fortis C-Doc
-                        </Typography>
+                  <Typography gutterBottom variant='h4' component='div'>
+                     {name}
+                     <Typography variant='body1' color='text.secondary'>
+                        EXECUTIVE DOCTOR FORTIS C DOC | Fortis C-Doc
                      </Typography>
+                  </Typography>
                </Grid>
             </Grid>
          </Grid>
@@ -200,13 +200,13 @@ function BookAppoinment({ id, name, date }) {
                   >
                      {isLoading ?
                         // Array.from({ length: 3 }).map((_, index) => (
-                           <Grid item xs={6} sm={6} md={6}>
-                              <Skeleton
-                                 sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
-                                 variant="rectangular" height={60} />
-                           </Grid>
+                        <Grid item xs={6} sm={6} md={6}>
+                           <Skeleton
+                              sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
+                              variant="rectangular" height={60} />
+                        </Grid>
                         // ))
-                     :
+                        :
                         times.map((timeSlot, index) => (
                            <Grid item key={index} xs={12} sm={8} md={6}>
                               <Button
@@ -247,6 +247,7 @@ function BookAppoinment({ id, name, date }) {
                      display='flex'
                      justifyContent='center'
                   >
+
                      <Button disabled={!selectedSlot} variant='contained' onClick={handleBookAppointment}>
                         Book Appointment
                      </Button>
@@ -260,22 +261,30 @@ function BookAppoinment({ id, name, date }) {
                            An email confirmation will be sent to you shortly.
                         </DialogContentText>
                      </DialogContent>
-                
+
                      <DialogActions>
+
                         <Button
                            disabled={isBooking}
                            onClick={handleCloseDialog} color='primary'>
                            Cancel
                         </Button>
-                        <Button
+
+                        {isBooking && (
+                           <CircularProgress color='primary' size={24} />
+                        )}
+                        {!isBooking && (
+                           <Button
                            disabled={isBooking}
                            onClick={handleAppointment}
                            color='primary'
                            autoFocus
-
                         >
                            Confirm
                         </Button>
+                        )}
+
+                        
                      </DialogActions>
                   </Dialog>
                </Paper>

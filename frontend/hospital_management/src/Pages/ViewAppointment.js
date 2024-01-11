@@ -71,15 +71,15 @@ function RecipeReviewCard() {
    } else if (isError || !Array.isArray(appointment?.data) || appointment.data.length === 0) {
       return (
          // <Container maxWidth='xl' sx={{ height: '90vh', alignItems: 'center' }}>
-            <Grid mt={2} container spacing={2} justifyContent='center' alignItems='center'>
-               <Image
-                  src={'https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif'}
-                  width={360}
-                  height={360}
-                  alt='No appointment Here'
-                  style={{ marginTop: 25 }}
-               />
-            </Grid>
+         <Grid mt={2} container spacing={2} justifyContent='center' alignItems='center'>
+            <Image
+               src={'https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif'}
+               width={360}
+               height={360}
+               alt='No appointment Here'
+               style={{ marginTop: 25 }}
+            />
+         </Grid>
          // </Container>
       );
       //  <p> No Appointment Here {isError}</p>
@@ -119,7 +119,11 @@ function RecipeReviewCard() {
                               <Grid item p={3}>
                                  <Chip
                                     label={e?.checked ? 'Checked' : 'Not Checked'}
-                                    sx={{ backgroundColor: e?.checked ? '#39CEF5' : 'gray', marginRight: 1 }}
+                                    sx={{
+                                       backgroundColor: e?.checked ? '#39CEF5' : '#13293D',
+                                       color: e?.checked ? 'white' : 'white',
+                                       marginRight: 1,
+                                    }}
                                  />
                               </Grid>
                            </Grid>

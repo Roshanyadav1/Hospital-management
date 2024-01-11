@@ -159,7 +159,15 @@ import { toast } from 'react-toastify'
             body: appointmentData,
          }),
       }),
+      // Manager AddPriscription
       getAppointmentInfo: build.query({
+         query: (appointment_id) => ({
+            url: `/appointment/view/?appointment_id=${appointment_id}`,
+            method: 'GET',
+         }),
+      }),
+      // doctor AddPriscription
+      getAppointmentInformation: build.mutation({
          query: (appointment_id) => ({
             url: `/appointment/view/?appointment_id=${appointment_id}`,
             method: 'GET',
@@ -263,6 +271,7 @@ export const {
    useAddAppointmentMutation,
    useGetDoctorIdQuery,
    useGetAppointmentInfoQuery,
+   useGetAppointmentInformationMutation,
    useChangeStatusMutation,
    useDiseaseStatusMutation,
    useChangeEmpDataMutation,

@@ -10,9 +10,10 @@ import {
    Button,
    Input,
    Skeleton,
-   Typography
+   Chip,
+
 } from '@mui/material'
-import { useGetAppointmentInfoQuery } from '@/services/Query'
+import { useGetAppointmentInfoQuery } from './../../../../services/Query'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
@@ -37,7 +38,7 @@ function DoctorPage() {
       data: appointmentInfo,
       isLoading,
    } = useGetAppointmentInfoQuery(appointment_id);
-   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
+   // const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
    const [isSwitchOn, setIsSwitchOn] = useState(false);
    const [selectedFile, setSelectedFile] = useState(null);
@@ -45,32 +46,38 @@ function DoctorPage() {
    const [isFileChosenError, setIsFileChosenError] = useState(false);
 
    const [appointmentUpdate] = useAppointmentUpdateMutation();
-   
+
    const [addPrescription] = useAddPrescriptionMutation();
 
    const handleFileChange = (event) => {
-     setSelectedFile(event.target.files[0]);
+      setSelectedFile(event.target.files[0]);
    };
- 
+
    const handleSubmit = async () => {
-       if (selectedFile) {
-      //   const formData = new FormData();
-      //   formData.append('file', selectedFile);
-      //   formData.append('appointment_id', appointmentInfo?.data?.[0]?.appointment_id);
-      console.log('calll')
-    
-        try {
-           await addPrescription({'file':selectedFile,'appointment_id': appointmentInfo?.data?.[0]?.appointment_id});
-    
-           setIsSuccessDialogOpen(true);
-          setIsFileChosenError(false);
-        } catch (error) {
-          console.error('Error uploading prescription photo:', error);
-        }
+      if (selectedFile) {
+         const formData = new FormData();
+         formData.append('file', selectedFile);
+         //   formData.append('appointment_id', appointmentInfo?.data?.[0]?.appointment_id);
+         console.log('calll')
+
+         try {
+
+            const response = await fetch('/api/s3-upload', {
+               method: 'POST',
+               body: formData,
+            })
+            const data = await response.json()
+            await addPrescription({ prescription_photo: data.imageUrl, 'appointment': appointmentInfo?.data?.[0]?.appointment_id });
+
+            setIsSuccessDialogOpen(true);
+            setIsFileChosenError(false);
+         } catch (error) {
+            console.error('Error uploading prescription photo:', error);
+         }
       } else {
-        setIsFileChosenError(true);
+         setIsFileChosenError(true);
       }
-    };
+   };
 
 
    const handleDialogClose = () => {
@@ -97,15 +104,15 @@ function DoctorPage() {
 
 
    return (
-      <Container maxWidth='lg'>
+      <Container maxWidth='md' justifyContent={'center'}>
 
          <Grid container spacing={2}>
 
             {isLoading && (
                <>
                   {
-                     [1, 2, 3].map((e) => (
-                        <Grid key={e} item xs={12} sm={12} md={6} lg={4} sx={{ paddingBottom: '1rem' }} component={motion.div} variants={fadeInUp} initial='hidden' animate='visible'>
+                     [1].map((e) => (
+                        <Grid key={e} item xs={12} sm={12} md={6} lg={4} sx={{ paddingBottom: '1rem', marginTop: 3, marginLeft: 30 }} component={motion.div} variants={fadeInUp} initial='hidden' animate='visible'>
                            <Skeleton variant="rectangular" width={300} height={400} animation="wave" />
                         </Grid>
                      ))
@@ -124,92 +131,80 @@ function DoctorPage() {
                      sm={12}
                      md={6}
                      lg={4}
-                     sx={{ paddingBottom: '1rem' }}
+                     justifyContent={'center'}
+                     alignItems={'center'}
+                     sx={{ paddingBottom: '1rem', marginTop: 3, marginLeft: 30 }}
                      component={motion.div}
                      variants={fadeInUp}
                      initial='hidden'
                      animate='visible'
                   >
-                     <Card sx={{ backgroundColor: '#fff', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',border:'1px solid #13293D' }}>
+                     <Card sx={{ backgroundColor: '#C4D0DC' }}>
                         <CardHeader
                            avatar={
-                              <Avatar
-                                 sx={{ bgcolor: '#13293D' }}
-                                 aria-label='recipe'
-                              >
+                              <Avatar sx={{ bgcolor: '#13293D' }} aria-label='recipe'>
                                  {e?.doctor?.employee?.employee_name.split('')[0]}
                               </Avatar>
                            }
                            title={e?.doctor?.employee?.employee_name}
-                           subheader={
-                              e.appointment_time + '   ' + e.appointment_date
-                           }
+                           subheader={e.appointment_time + ' ' + e.appointment_date}
                         />
                         <CardContent>
-                           {e?.disease?.disease_name && (
-                              // eslint-disable-next-line react/jsx-no-undef
-                              <Typography variant="body1" sx={{ padding: '3px', marginBottom: '3px' }}>
-                                 {'Disease Name : ' + e?.disease?.disease_name}
-                              </Typography>
-                           )}
+                           <Chip
+                              label={'Disease Name: ' + e?.disease?.disease_name}
+                              sx={{ backgroundColor: '#13293D', color: 'white' }}
+                           />
                         </CardContent>
                         <CardContent>
-                           {e?.patient?.patient_name && (
-                              // eslint-disable-next-line react/jsx-no-undef
-                              <Typography variant="body1" sx={{ padding: '3px', marginBottom: '3px' }}>
-                                 {'Patient Name : ' + e?.patient?.patient_name}
-                              </Typography>
-                           )}
+                           <Chip
+                              label={'Patient Name: ' + e?.patient?.patient_name}
+                              sx={{ backgroundColor: '#13293D', color: 'white' }}
+                           />
                         </CardContent>
                         <CardContent>
-                           {e?.appointment_number && (
-                              // eslint-disable-next-line react/jsx-no-undef
-                              <Typography variant="body1" sx={{ padding: '3px', marginBottom: '3px' }}>
-                                 {'Appointment No : ' + e?.appointment_number}
-                              </Typography>
-                           )}
+                           <Chip
+                              label={'Appointment No.: ' + e?.appointment_number}
+                              sx={{ backgroundColor: '#13293D', color: 'white' }}
+                           />
                         </CardContent>
-
-
                         <CardContent>
                            <Switch
-                              {...label}
-                              checked={isSwitchOn}
+                              checked={e.checked || isSwitchOn}
                               onChange={handleSwitchChange}
                               color='primary'
                               size='small'
-                              disabled={isSwitchOn}
+                              disabled={e.checked}
+                              sx={{
+                                 '& .MuiSwitch-thumb': {
+                                    backgroundColor: e.checked || isSwitchOn ? '#13293D' : 'white',
+                                 },
+                                 '& .MuiSwitch-track': {
+                                    backgroundColor: e.checked || isSwitchOn ? 'rgba(19, 41, 61, 0.5)' : '#35CFF4',
+                                 },
+                              }}
                            />
-                           {isSwitchOn ? (
-                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+                           {(e.checked || isSwitchOn )? (
+                              <div>
                                  <Input type='file' onChange={handleFileChange} />
                                  <Button
                                     variant='contained'
                                     color='primary'
                                     size='small'
                                     onClick={handleSubmit}
-                                    style={{ margin: 5 }}
                                  >
                                     Add Prescription
                                  </Button>
                                  {isFileChosenError && (
-                                    <p style={{ color: 'red' }}>
-                                       Please choose the file.
-                                    </p>
+                                    <p style={{ color: 'red' }}>Please choose the file.</p>
                                  )}
                               </div>
                            ) : (
-                              <p>Unchecked</p>
+                              <p>Unchecked Message</p>
                            )}
                         </CardContent>
 
-                        <Dialog
-                           open={isSuccessDialogOpen}
-                           onClose={handleDialogClose}
-                        >
-                           <DialogTitle>
-                              Prescription Submitted Successfully!
-                           </DialogTitle>
+                        <Dialog open={isSuccessDialogOpen} onClose={handleDialogClose}>
+                           <DialogTitle>Prescription Submitted Successfully!</DialogTitle>
                            <DialogContent>
                               <DialogContentText>
                                  {isFileChosenError
@@ -224,6 +219,7 @@ function DoctorPage() {
                            </DialogActions>
                         </Dialog>
                      </Card>
+
                   </Grid>
                ))}
          </Grid>
@@ -233,4 +229,3 @@ function DoctorPage() {
 
 export default DoctorPage
 
- 

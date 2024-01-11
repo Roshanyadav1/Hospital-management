@@ -9,7 +9,7 @@ import {
    LinearProgress,
    Card,
    Skeleton,
-   Button
+   
 } from '@mui/material';
 import Image from 'next/image';
 import moment from 'moment';
@@ -56,9 +56,7 @@ function ShowDoctors() {
                         <Skeleton />
                         <Skeleton />
                      </Typography>
-                     <Button disabled size='small' sx={{ border: '1px solid' }}>
-                        <Skeleton />
-                     </Button>
+               
                   </Card>
                </Grid>
             ))}

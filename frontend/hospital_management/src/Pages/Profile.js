@@ -73,7 +73,7 @@ const DoctorProfile = ({ id }) => {
   // console.log("doc name",DoctorName)
 
   return (
-    <Container maxWidth='lg' p={2} >
+    <Container  maxWidth='lg' p={2} >
       <Grid container spacing={2}>
         <Grid container item bgcolor={'fff'} display={'flex'} Direction='column' style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}  >
           {
@@ -203,6 +203,7 @@ const DoctorProfile = ({ id }) => {
 
       </Grid>
     </Container>
+
   )
 }
 export default DoctorProfile
