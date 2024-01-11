@@ -52,6 +52,7 @@ const customstyles = `
   }
   .No{
     background-color: rgba(19, 41, 61, 0.04) !important;
+    border: 1px solid primary !important;
   }
   .css-1kyp2zt-MuiButtonBase-root-MuiButton-root:hover {
     background-color:red;

@@ -44,12 +44,13 @@ const customstyles = `
   }
   .No{
     background-color: rgba(19, 41, 61, 0.04) !important;
+    border : 1px solid #13293D !important;
   }
   .css-1kyp2zt-MuiButtonBase-root-MuiButton-root:hover {
     color:white
   }
   .No:hover{
-   color: black !important
+   color: black !important ;
   }
   .css-jv5jpm-MuiDataGrid-root .MuiDataGrid-columnSeparator{
     display: none !important;
