@@ -96,9 +96,9 @@ class EmployeeAdd(GenericAPIView):
                     'status': 'null',
                     'day': json.dumps(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
                     "times": json.dumps([{"start_time": "09:00:00", "end_time": "12:00:00", "slots": 0},
-                                         {"start_time": "02:00:00",
-                                             "end_time": "05:00:00", "slots": 0},
-                                         {"start_time": "07:00:00", "end_time": "10:00:00", "slots": 0}])
+                                         {"start_time": "14:00:00",
+                                             "end_time": "17:00:00", "slots": 0},
+                                         {"start_time": "19:00:00", "end_time": "22:00:00", "slots": 0}])
                 }
                 doctor_serializer = DoctorSerializer(data=doctor_data)
                 doctor_serializer.is_valid(raise_exception=True)
