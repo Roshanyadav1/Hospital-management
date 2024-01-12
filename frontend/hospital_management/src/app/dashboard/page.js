@@ -240,12 +240,10 @@ function DoctorProfile() {
             if (data) {
                try {
                   // Add prescription for each appointment
-                  await Promise.all(appointments?.data?.map(async (appointment) => {
                      await addPrescription({
                         prescription_photo: data.imageUrl,
-                        appointment: appointment.appointment_id,
+                        appointment: appoint?.data[0].appointment_id,
                      });
-                  }));
                   setIsSuccessDialogOpen(true);
                   setIsFileChosenError(false);
                } catch (error) {
@@ -264,10 +262,14 @@ function DoctorProfile() {
 
 
    const handleDialogClose = () => {
-      setIsSuccessDialogOpen(false)
-      // setSelectedFile(null)
-      setIsFileChosenError(false)
-   }
+      setIsSuccessDialogOpen(false);
+      setSelectedFile(null);
+      if (!selectedFile) {
+         setIsFileChosenError(true);
+      } else {
+         setIsFileChosenError(false);
+      }
+   };
 
    const handleSwitchChange = async () => {
       // appointments
@@ -651,7 +653,6 @@ function DoctorProfile() {
                                                                            <p>Unchecked Message</p>
                                                                         )}
                                                                      </CardContent>
-
                                                                      <Dialog open={isSuccessDialogOpen} onClose={handleDialogClose}>
                                                                         <DialogTitle>Prescription Submitted Successfully!</DialogTitle>
                                                                         <DialogContent>

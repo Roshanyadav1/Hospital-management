@@ -179,7 +179,7 @@ const DoctorProfile = ({ id }) => {
                           <Typography variant='b1' component='h5'>
                             Disease
                           </Typography>
-                          <Typography variant='body2'>  {getAllDiseases?.data?.find((disease) => disease.id === appointment.disease)?.disease_name || 'No Disease'}
+                          <Typography variant='body2'>{getAllDiseases?.data?.find((disease) => disease.id === appointment.disease)?.disease_name || 'No Disease'}
                           </Typography>
                         </Grid>
                         <Grid item xs={4} sm={4}>

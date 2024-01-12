@@ -27,7 +27,7 @@ import { styled } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
+// import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
@@ -35,6 +35,7 @@ import Tooltip from '@mui/material/Tooltip'
 
 // import doctorImage from '@/assets/doctorIllustration.png'
 import { toast } from 'react-toastify'
+import Image from 'next/image'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
    '& .MuiDialogContent-root': {
@@ -53,23 +54,26 @@ function PatientProfile() {
    const requestAbortController = useRef(null)
    const [dateData, setDateData] = useState([])
    const [isLoading, setIsLoading] = useState(false)
-   const [presview , setPresView] = useState(false)
+   const [presview, setPresView] = useState(false)
    const [highlightedDays, setHighlightedDays] = useState(getSpecificDates())
    const [datesArray] = useState([])
 
-   const [viewPrescription , { data : pres }] = useViewPrescriptionMutation()
+   const [viewPrescription] = useViewPrescriptionMutation()
 
-   console.log("pres",pres)
    //for dialog
    const [open, setOpen] = React.useState(false)
 
    const handleClickOpen = async (id) => {
-      let res = await viewPrescription(id) 
-      setOpen(true)
-      if(res.status !== 200){
-         toast.error(res.message)
-      }else{
+      try {
+         let res = await viewPrescription(id)
+         console.log("The response is ", res)
+         setOpen(true)
          setPresView(res)
+         if (res.status !== 200) {
+            toast.error(res.message)
+         }
+      } catch (err) {
+         toast.error("Internal server error !")
       }
    }
    const handleClose = () => {
@@ -195,21 +199,21 @@ function PatientProfile() {
 
    const appointmentsByDate = Array.isArray(appointmentHistory?.data)
       ? appointmentHistory?.data.reduce((acc = [], appointment = []) => {
-           const date = appointment.appointment_date
-           if (!acc[date]) {
-              acc[date] = []
-           }
-           acc[date].push({
-              patient_id: appointment.patient.patient_id,
-              patient_name: appointment.patient.patient_name,
-              doctor_name: appointment.doctor.employee.employee_name,
-              disease_name: appointment.disease.disease_name,
-              appointment_time: appointment.appointment_time,
-              checked: appointment.checked,
-              appointment_id: appointment.appointment_id,
-           })
-           return acc
-        }, {})
+         const date = appointment.appointment_date
+         if (!acc[date]) {
+            acc[date] = []
+         }
+         acc[date].push({
+            patient_id: appointment?.patient?.patient_id,
+            patient_name: appointment?.patient?.patient_name,
+            doctor_name: appointment?.doctor?.employee?.employee_name,
+            disease_name: appointment?.disease?.disease_name,
+            appointment_time: appointment?.appointment_time,
+            checked: appointment?.checked,
+            appointment_id: appointment?.appointment_id,
+         })
+         return acc
+      }, {})
       : []
 
    const appointmentsArray = Object.entries(appointmentsByDate).map(
@@ -219,7 +223,6 @@ function PatientProfile() {
       })
    )
 
-   console.log('appointmentsArray', appointmentsArray)
    if (infoLoading) {
       return (
          <Container maxWidth='lg'>
@@ -414,19 +417,19 @@ function PatientProfile() {
                            appointmentGroup
                         return (
                            <div key={date}>
-                                 <Accordion
-                                    key={appointment_id}
-                                    sx={{ borderRadius: 2 }}
+                              <Accordion
+                                 key={appointment_id}
+                                 sx={{ borderRadius: 2 }}
+                              >
+                                 <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
                                  >
-                                    <AccordionSummary
-                                       expandIcon={<ExpandMoreIcon />}
-                                    >
-                                       <Typography>Date - {date}</Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                              {appointments.map((e) => (
+                                    <Typography>Date - {date}</Typography>
+                                 </AccordionSummary>
+                                 <AccordionDetails>
+                                    {appointments.map((e) => (
                                        // eslint-disable-next-line react/jsx-key
-                                       <Grid container sx={{marginBottom:2}}>
+                                       <Grid container sx={{ marginBottom: 2 }}>
                                           <Grid item xs={12} sm={4}>
                                              <Typography variant='b1' component='h5'>
                                                 Doctor
@@ -530,36 +533,53 @@ function PatientProfile() {
                                                    <CloseIcon />
                                                 </IconButton>
                                                 <DialogContent dividers>
+
                                                    {
-                                                      presview ? (
+                                                      presview?.data?.data ? (
                                                          <>
-                                                         imagw h
-                                                           {/* <img
-                                                      src='https://www.researchgate.net/publication/345830022/figure/fig4/AS:957640029003789@1605330583881/Sample-prescription-used-as-input-to-the-GUI-developed-in-the-present-work.png'
-                                                      alt='Your Image'
-                                                      style={{ width: '100%' }}
-                                                   /> */}
+                                                            {
+                                                               // prescription_photo
+                                                               presview?.data?.data.map((e, index) => {
+                                                                  return (
+                                                                     <Box
+                                                                        sx={{
+                                                                           height: '350px',
+                                                                           width: '350px',
+                                                                           margin: '1rem 0rem',
+                                                                        }}
+                                                                        key={index}
+                                                                     >
+                                                                        <Image
+                                                                           fill
+                                                                           src={e.prescription_photo}
+                                                                           alt={`image ${index}`}
+                                                                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                                        />
+                                                                     </Box>
+                                                                  )
+                                                               })
+                                                            }
+                                                            {
+                                                               presview?.data?.data.length === 0 && (
+                                                                  <>
+                                                                     Prescription Not Found
+                                                                  </>
+                                                               )
+                                                            }
                                                          </>
                                                       ) : (
                                                          <>Prescription Not Found</>
                                                       )
                                                    }
-                                                 
+
                                                 </DialogContent>
-                                                <DialogActions>
-                                                   <Button
-                                                      autoFocus
-                                                      onClick={handleClose}
-                                                   >
-                                                      Download
-                                                   </Button>
-                                                </DialogActions>
+
                                              </BootstrapDialog>
                                           </Grid>
                                        </Grid>
                                     ))}
-                                    </AccordionDetails>
-                                 </Accordion>
+                                 </AccordionDetails>
+                              </Accordion>
                            </div>
                         )
                      })}
