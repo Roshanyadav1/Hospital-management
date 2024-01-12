@@ -22,7 +22,7 @@ import { colors } from './../styles/theme'
 import { usePatientViewQuery } from '@/services/Query'
 import Avatar from '@mui/material/Avatar'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
-
+import { useViewPrescriptionMutation } from '@/services/Query'
 import { styled } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -34,6 +34,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import Tooltip from '@mui/material/Tooltip'
 
 import doctorImage from '@/assets/doctorIllustration.png'
+import { toast } from 'react-toastify'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
    '& .MuiDialogContent-root': {
@@ -52,17 +53,24 @@ function PatientProfile() {
    const requestAbortController = useRef(null)
    const [dateData, setDateData] = useState([])
    const [isLoading, setIsLoading] = useState(false)
+   const [presview , setPresView] = useState(false)
    const [highlightedDays, setHighlightedDays] = useState(getSpecificDates())
    const [datesArray] = useState([])
 
-   
+   const [viewPrescription , { data : pres }] = useViewPrescriptionMutation()
 
+   console.log("pres",pres)
    //for dialog
    const [open, setOpen] = React.useState(false)
 
-   const handleClickOpen = (id) => {
-      console.log('Present id is', id)
+   const handleClickOpen = async (id) => {
+      let res = await viewPrescription(id) 
       setOpen(true)
+      if(res.status !== 200){
+         toast.error(res.message)
+      }else{
+         setPresView(res)
+      }
    }
    const handleClose = () => {
       setOpen(false)
@@ -517,11 +525,21 @@ function PatientProfile() {
                                                    <CloseIcon />
                                                 </IconButton>
                                                 <DialogContent dividers>
-                                                   <img
+                                                   {
+                                                      presview ? (
+                                                         <>
+                                                         imagw h
+                                                           {/* <img
                                                       src='https://www.researchgate.net/publication/345830022/figure/fig4/AS:957640029003789@1605330583881/Sample-prescription-used-as-input-to-the-GUI-developed-in-the-present-work.png'
                                                       alt='Your Image'
                                                       style={{ width: '100%' }}
-                                                   />
+                                                   /> */}
+                                                         </>
+                                                      ) : (
+                                                         <>Prescription Not Found</>
+                                                      )
+                                                   }
+                                                 
                                                 </DialogContent>
                                                 <DialogActions>
                                                    <Button

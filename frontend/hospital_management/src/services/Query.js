@@ -237,6 +237,12 @@ import { toast } from 'react-toastify'
          method: 'GET',
       }),
    }),
+   viewPrescription: build.mutation({
+      query: (id) => ({
+         url: `prescription/view/?appointment_id=${id}`,
+         method: 'GET', 
+      }),
+   }),
 
    })
    })
@@ -271,6 +277,7 @@ export const {
    useGetEmployeeDetailsQuery,
    useLeaveViewQuery,
    usePatientViewQuery,
+   useViewPrescriptionMutation,
 } = queries
 
  
