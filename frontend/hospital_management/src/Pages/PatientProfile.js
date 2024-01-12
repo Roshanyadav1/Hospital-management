@@ -39,6 +39,7 @@ function PatientProfile() {
    const [isLoading, setIsLoading] = useState(false)
    const [highlightedDays, setHighlightedDays] = useState(getSpecificDates())
    const [datesArray] = useState([])
+   
 
    var names = appointmentHistory?.data?.map(appointment => appointment?.appointment_date);
    console.log("names", names)
@@ -239,7 +240,7 @@ function PatientProfile() {
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                              {
                                                 patientInfo?.data[0].patient_name
-                                                || 'Loading . . .'
+                                                ||  '...'
                                              }
                                           </div>
                                        </Typography>
@@ -251,13 +252,13 @@ function PatientProfile() {
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', }}>
                                              {
                                                 patientInfo?.data[0].patient_mobile
-                                                || 'Loading . . .'
+                                                ||  '...'
                                              }
                                           </div>
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
                                           <div style={{ maxWidth: '300px', whiteSpace: 'nowrap', }}>
-                                             {patientInfo?.data[0].patient_address || 'Loading . . .'}
+                                             {patientInfo?.data[0].patient_address ||  '...'  }
                                           </div>
                                        </Typography>
                                        <Typography variant='h6' component='h5'>
@@ -265,7 +266,7 @@ function PatientProfile() {
                                              maxWidth: '300px', whiteSpace: 'nowrap',
                                           }}>
                                              {patientInfo?.data[0].patient_email
-                                                || 'Loading . . .'}
+                                                ||  '...' }
                                           </div>
                                        </Typography>
                                     </Grid>
@@ -317,7 +318,7 @@ function PatientProfile() {
                                                    appointment.checked === true ? (
                                                       <Chip label='Checked' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
                                                    ) : (
-                                                      <Chip label='Not Checked' size='small' disabled />
+                                                      <Chip label='Not Checked' size='small' sx={{ color: 'white', backgroundColor: '#13293D' }}  />
                                                    )
                                                 }
                                              </Grid>

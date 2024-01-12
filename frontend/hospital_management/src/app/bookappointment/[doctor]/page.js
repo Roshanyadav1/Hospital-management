@@ -4,6 +4,7 @@ import BookAppoinment from '@/Pages/BookAppointment'
 import { useParams } from 'next/navigation'
 
 const page = () => {
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const info = useParams()
    const [id, date, ...rest] = info.doctor.split('%')
    const name = rest.join(' ').trim()
