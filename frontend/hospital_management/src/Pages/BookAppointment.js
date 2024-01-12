@@ -72,6 +72,7 @@ function BookAppoinment({ id, name, date}) {
    const handleOpenDialog = () => {
       setOpenDialog(true)
    }
+
    const handleCloseDialog = () => {
       setOpenDialog(false)
    }
@@ -142,6 +143,7 @@ function BookAppoinment({ id, name, date}) {
                   margin={0}
                   p={{ xs: 2, sm: 5 }}
                   gap={10}
+                  
                >
                   <Typography gutterBottom variant='h4' component='div'>
                      {name}
@@ -253,7 +255,7 @@ function BookAppoinment({ id, name, date}) {
                      </Button>
                   </Grid>
                   {/* FIRST Confirmation Dialog MODAL */}
-                  <Dialog open={openDialog} >
+                  <Dialog open={openDialog} onClose={''} disableBackdropClick disableEscapeKeyDown >
                      <DialogTitle>Confirm Appointment Booking</DialogTitle>
                      <DialogContent>
                         <DialogContentText>
@@ -283,8 +285,6 @@ function BookAppoinment({ id, name, date}) {
                            Confirm
                         </Button>
                         )}
-
-                        
                      </DialogActions>
                   </Dialog>
                </Paper>

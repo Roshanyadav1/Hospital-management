@@ -28,7 +28,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useLoginUserMutation } from '@/services/Query'
+import { useGetRefreshTokenQuery, useLoginUserMutation } from '@/services/Query'
 import { useRouter } from 'next/navigation';
 
 const drawerWidth = 240
@@ -45,12 +45,31 @@ function ResponsiveAppBar(props) {
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
    const [userLogin] = useLoginUserMutation();
-   const { user } = useUser()
-   // eslint-disable-next-line no-unused-vars
+   const { user = false } = useUser()
+
+   let t1 = localStorage.getItem('refresh_token')
+   const { data: refreshToken, isSuccess, isFeching } = useGetRefreshTokenQuery(t1, {
+      skip: !user || !t1,
+      pollingInterval: 60000 * 5,
+
+   })
+
+   const updateData = () => {
+      if (refreshToken) {
+         localStorage.setItem('refresh_token', refreshToken.refresh)
+         localStorage.setItem('access_token', refreshToken.access)
+      }
+   }
+
+   React.useEffect(() => {
+      if (isSuccess && refreshToken) {
+         updateData()
+      }
+   }, [isSuccess, isFeching, refreshToken])
+
    const [isLoading, setIsLoading] = useState(false);
    const [loggedIn, setLoggedIn] = useState(isLogin ? true : false);
    // eslint-disable-next-line no-unused-vars
-   const [showLogout, setShowLogout] = useState(false);
    const [, setAnchorElNav] = React.useState(null);
    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -95,6 +114,9 @@ function ResponsiveAppBar(props) {
          case 'Manager':
             return (
                <>
+                  <Link href="/dashboard" prefetch>
+                     <Button sx={{ color: '#fff' }}>Dashboard</Button>
+                  </Link>
                   {pages.map((item) => (
                      <Link key={item.label} href={item.route} prefetch passHref>
                         <Button sx={{ color: '#fff' }}>{item.label}</Button>
@@ -287,7 +309,7 @@ function ResponsiveAppBar(props) {
                      </Typography>
                   </Backdrop>
                )}
-               
+
             </Container>
          </AppBar>
 

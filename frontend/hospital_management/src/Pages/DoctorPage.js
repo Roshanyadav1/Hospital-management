@@ -139,7 +139,7 @@ function DoctorPage() {
                </div>
 
 
-               <Link href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}+${selectedDiseases}`} prefetch 
+               <Link href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`} prefetch 
                  style={{ textDecoration: 'none', }}
                >
                   <Button variant="contained" size="small" sx={{

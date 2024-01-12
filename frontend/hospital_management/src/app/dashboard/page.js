@@ -588,7 +588,7 @@ function DoctorProfile() {
                                                                   initial='hidden'
                                                                   animate='visible'
                                                                >
-                                                                  <Card sx={{ backgroundColor: '#C4D0DC' }}>
+                                                                  <Card sx={{ backgroundColor: '#fff' }}>
                                                                      <CardHeader
                                                                         avatar={
                                                                            <Avatar sx={{ bgcolor: '#13293D' }} aria-label='recipe'>

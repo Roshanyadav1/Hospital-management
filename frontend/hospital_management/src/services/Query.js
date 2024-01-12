@@ -290,7 +290,7 @@ export const {
    useGetEmployeeDetailsQuery,
    useLeaveViewQuery,
    usePatientViewQuery,
-   usegetRefreshTokenQuery,
+   useGetRefreshTokenQuery,
 } = queries
 
  

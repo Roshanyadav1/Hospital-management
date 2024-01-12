@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useMemo } from "react";
+import { useUser } from '@auth0/nextjs-auth0/client'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -13,9 +15,10 @@ import docter from './../assets/doctorr.png';
 import Image from 'next/image';
 import { Grid } from '@mui/material';
 import Link from 'next/link';
-
+import { useGetRefreshTokenQuery } from './../services/Query'
 function ResponsiveAppBar({ sidebarChanges }) {
    const [anchorElUser, setAnchorElUser] = React.useState(null);
+   const { user = false } = useUser()
 
    const handleOpenUserMenu = (event) => {
       setAnchorElUser(event.currentTarget);
@@ -24,6 +27,29 @@ function ResponsiveAppBar({ sidebarChanges }) {
    const handleCloseUserMenu = () => {
       setAnchorElUser(null);
    };
+
+   let t1 = localStorage.getItem('refresh_token')
+   const { data: refreshToken, isSuccess, isFeching } = useGetRefreshTokenQuery(t1, {
+      skip: !user || !t1,
+      pollingInterval: 60000 * 5,
+
+   })
+
+   const updateData = () => {
+      if (refreshToken) {
+         localStorage.setItem('refresh_token', refreshToken.refresh)
+         localStorage.setItem('access_token', refreshToken.access)
+      }
+   }
+
+   React.useEffect(() => {
+      if (isSuccess && refreshToken) {
+         updateData()
+      }
+   }, [isSuccess, isFeching, refreshToken])
+
+
+
 
    const getUserSettings = () => {
       const settings = [];
@@ -44,7 +70,6 @@ function ResponsiveAppBar({ sidebarChanges }) {
 
    const getUserImage = () => {
       const userRole = localStorage.getItem('user_role');
-
       switch (userRole) {
          case 'Admin':
          case 'Manager':
