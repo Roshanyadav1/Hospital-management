@@ -79,11 +79,14 @@ function DoctorPage() {
       }
    };
 
-
    const handleDialogClose = () => {
       setIsSuccessDialogOpen(false);
       setSelectedFile(null);
-      setIsFileChosenError(false);
+      if (!selectedFile) {
+         setIsFileChosenError(true);
+      } else {
+         setIsFileChosenError(false);
+      }
    };
 
    const handleSwitchChange = async () => {
