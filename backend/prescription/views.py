@@ -99,12 +99,14 @@ class PrescriptionView(APIView):
                 )
         else:
             appointment_id = request.GET.get('appointment_id')
-            if not appointment_id:
+            print(appointment_id)
+            if appointment_id is None:
                 prescription = Prescription.objects.all()
                 serializer = PrescriptionViewSerializer(
                     prescription, many=True)
                 response_message = ""
                 response_code = ""
+                
                 try:
                     error = Error.objects.get(error_title='RETRIEVED_SUCCESS')
                     response_message = error.error_message
@@ -122,9 +124,11 @@ class PrescriptionView(APIView):
                 )
             else:
                 try:
-                    prescription = Prescription.objects.get(
-                        appointment_id=appointment_id)
-                    serializer = PrescriptionViewSerializer(prescription)
+                    
+                    prescription = Prescription.objects.filter(appointment_id=appointment_id)
+                    print(prescription)
+                    serializer = PrescriptionViewSerializer(prescription , many = True)
+                    print(serializer.data)
                     response_message = ""
                     response_code = ""
                     try:
