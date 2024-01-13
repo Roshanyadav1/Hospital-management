@@ -81,38 +81,38 @@ const AddDoctor = () => {
 
    return (
       <div>
-         <Grid container justifyContent={"space-around"}>
+         <Grid container justifyContent={'space-around'}>
             <Grid item xs={11} sm={2} md={3}>
                <Typography>Doctor Information</Typography>
             </Grid>
             <Grid item xs={1} sm={2} md={3}>
-            <Button onClick={handleOpen}>Add Doctor +</Button>
-         <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby='modal-modal-title'
-            aria-describedby='modal-modal-description'
-         >
-            <Box sx={style}>
-               <StyledFormWrapper>
-                  <StyledPaper elevation={3}>
-                     <StyledTypography variant='h4'>
-                        Doctor Registration Form
-                     </StyledTypography>
+               <Button onClick={handleOpen}>Add Doctor +</Button>
+               <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby='modal-modal-title'
+                  aria-describedby='modal-modal-description'
+               >
+                  <Box sx={style}>
+                     <StyledFormWrapper>
+                        <StyledPaper elevation={3}>
+                           <StyledTypography variant='h4'>
+                              Doctor Registration Form
+                           </StyledTypography>
 
-                     <Formik
-                        initialValues={{
-                           ...INITIAL_FORM_STATE,
-                        }}
-                        validationSchema={DOCTOR_VALIDATION}
-                        onSubmit={(values) => {
-                           console.log(values)
-                        }}
-                     >
-                        {() => (
-                           <Form>
-                              <Grid container spacing={2}>
-                                 {/* <Grid item xs={12} sm={12}>
+                           <Formik
+                              initialValues={{
+                                 ...INITIAL_FORM_STATE,
+                              }}
+                              validationSchema={DOCTOR_VALIDATION}
+                              onSubmit={(values) => {
+                                 console.log(values)
+                              }}
+                           >
+                              {() => (
+                                 <Form>
+                                    <Grid container spacing={2}>
+                                       {/* <Grid item xs={12} sm={12}>
                                     <Text
                                        name='doc_Id'
                                        label='Doctor Id'
@@ -128,32 +128,35 @@ const AddDoctor = () => {
                                        }}
                                     />
                                  </Grid> */}
-                                 <Grid item xs={12} sm={6}>
-                                    <Text
-                                       name='disease_Specialist'
-                                       label='Disease Specialist'
-                                       autoComplete=''
-                                       InputProps={{
-                                          style: {
-                                             background: 'white',
-                                             border: 'none',
-                                             borderRadius: '20px',
-                                          },
-                                       }}
-                                    />
-                                 </Grid>
-                                 <Grid item xs={12} sm={6}>
-                                    <RadioButtonGroup
-                                       label='Doctor Type'
-                                       name='doc_Type'
-                                       options={[
-                                          { value: 'Active', label: 'Active' },
-                                          { value: 'Inactive', label: 'Inactive' },
-                                       ]}
-                                    />
-                                 </Grid>
-                                 <Divider />
-                                 {/* <Grid item xs={12} sm={6}>
+                                       <Grid item xs={12} sm={6}>
+                                          <Text
+                                             name='disease_Specialist'
+                                             label='Disease Specialist'
+                                             autoComplete=''
+                                             InputProps={{
+                                                style: {
+                                                   background: 'white',
+                                                   border: 'none',
+                                                   borderRadius: '20px',
+                                                },
+                                             }}
+                                          />
+                                       </Grid>
+                                       <Grid item xs={12} sm={6}>
+                                          <RadioButtonGroup
+                                             label='Doctor Type'
+                                             name='doc_Type'
+                                             options={[
+                                                { value: 'Active', label: 'Active' },
+                                                {
+                                                   value: 'Inactive',
+                                                   label: 'Inactive',
+                                                },
+                                             ]}
+                                          />
+                                       </Grid>
+                                       <Divider />
+                                       {/* <Grid item xs={12} sm={6}>
                                     <Text
                                        name='Created_At'
                                        label='Created At'
@@ -181,34 +184,33 @@ const AddDoctor = () => {
                                        }}
                                     />
                                  </Grid> */}
-                                 <Grid item xs={12} sm={5}>
-                                    <VisuallyHiddenInput
-                                       id='logoInput'
-                                       type='file'
-                                       accept='image/*'
-                                    />
-                                 </Grid>
-                                 <Grid item xs={12} sm={6}>
-                                    <Button
-                                       variant='contained'
-                                       color='primary'
-                                       type='submit'
-                                       size='large'
-                                    >
-                                       Submit
-                                    </Button>
-                                 </Grid>
-                              </Grid>
-                           </Form>
-                        )}
-                     </Formik>
-                  </StyledPaper>
-               </StyledFormWrapper>
-            </Box>
-         </Modal>
+                                       <Grid item xs={12} sm={5}>
+                                          <VisuallyHiddenInput
+                                             id='logoInput'
+                                             type='file'
+                                             accept='image/*'
+                                          />
+                                       </Grid>
+                                       <Grid item xs={12} sm={6}>
+                                          <Button
+                                             variant='contained'
+                                             color='primary'
+                                             type='submit'
+                                             size='large'
+                                          >
+                                             Submit
+                                          </Button>
+                                       </Grid>
+                                    </Grid>
+                                 </Form>
+                              )}
+                           </Formik>
+                        </StyledPaper>
+                     </StyledFormWrapper>
+                  </Box>
+               </Modal>
             </Grid>
          </Grid>
-        
       </div>
    )
 }

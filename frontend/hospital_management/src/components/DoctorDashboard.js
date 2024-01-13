@@ -23,8 +23,7 @@ import { Container, Grid, Button, Typography, Skeleton } from '@mui/material'
 import { colors } from '@/styles/theme'
 
 function DoctorDash() {
-   //eslint-disable-next-line
-   const doctorId = localStorage.getItem('user_id')
+   const doctorId = typeof window !== "undefined" ? window.localStorage.getItem('user_id'): '';
    const { data: appointments, isError, isLoading : dataloading,  } = useGetDoctorIdQuery(doctorId)
      const [dateData, setDateData] = useState([])
    

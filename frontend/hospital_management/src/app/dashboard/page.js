@@ -53,8 +53,8 @@ const fadeInUp = {
 
 function DoctorProfile() {
    const requestAbortController = useRef(null)
-   const userRole = localStorage.getItem('user_role')
-   const doctorId = localStorage.getItem('user_id')
+   const userRole = typeof window !== "undefined" ? window.localStorage.getItem('user_role') : '';
+   const doctorId = typeof window !== "undefined" ? window.localStorage.getItem('user_id') : '';
    const [dateData, setDateData] = useState([])
    const [isLoading, setIsLoading] = useState(false)
    const [highlightedDays, setHighlightedDays] = useState(getSpecificDates())
@@ -77,8 +77,7 @@ function DoctorProfile() {
    } = useGetDoctorIdQuery(doctorId, { skip: userRole === 'Doctor' ? false : true })
    const isAppointmentsEmpty = isSuccess && appointments?.data?.length === 0;
 
-
-   const docId = localStorage.getItem("user_id")
+   const docId = typeof window !== "undefined" ? window.localStorage.getItem("user_id") : '';
    const { data: holidays, isSuccess: isHolidaySuccess } = useLeaveViewQuery(docId)
 
    const [getAppointmentInfo, {
@@ -384,7 +383,7 @@ function DoctorProfile() {
                               </Typography>
                               <Typography variant='h3' color='secondary'>
                                  Dr.{" "} {
-                                    localStorage.getItem('user_name')
+   typeof window !== "undefined" ? window.localStorage.getItem('user_name'): ''
                                  }
                               </Typography>
 

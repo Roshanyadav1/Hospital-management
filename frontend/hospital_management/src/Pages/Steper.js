@@ -1,4 +1,3 @@
-
 import { Swiper, SwiperSlide } from 'swiper/react'
 import style from '@/styles/swiper.module.css'
 // Import Swiper styles
@@ -7,7 +6,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules'
 
 const images = [
    {
@@ -27,18 +26,18 @@ const images = [
 function SwipeableTextMobileStepper() {
    return (
       <Swiper
-      spaceBetween={30}
-      centeredSlides={true}
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: false,
-      }}
-      pagination={{
-        clickable: true,
-      }}
-      // navigation={true}
-      modules={[Autoplay, Pagination,]}
-      className="mySwiper"
+         spaceBetween={30}
+         centeredSlides={true}
+         autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+         }}
+         pagination={{
+            clickable: true,
+         }}
+         // navigation={true}
+         modules={[Autoplay, Pagination]}
+         className='mySwiper'
       >
          <Box>
             {images.map((image, index) => (

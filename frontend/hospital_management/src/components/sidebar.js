@@ -100,11 +100,10 @@ function MiniDrawer() {
                {[
                   { text: 'Dashboard', path: '/dashboard' },
                   { text: 'EmployeeData', path: '/dashboard/employeedata' },
-                 
+
                   { text: 'Doctor', path: '/dashboard/docter' },
                   { text: 'Disease', path: '/dashboard/disease' },
                   // { text: 'Add Hospital', path: '/dashboard/abouthospital' },
-
                ].map((item, _index) => (
                   <ListItem
                      key={_index}
@@ -175,11 +174,9 @@ function MiniDrawer() {
                ))}
             </List>
          </Drawer>
-         <Box component='main' sx={{ flexGrow: 1 }}>
-         </Box>
+         <Box component='main' sx={{ flexGrow: 1 }}></Box>
       </Box>
    )
 }
 
-export default MiniDrawer;
-
+export default MiniDrawer

@@ -87,7 +87,7 @@ const Drawer = styled(MuiDrawer, {
 
 function Layout({ children }) {
    const pathname = usePathname()
-   const userRole = localStorage.getItem('user_role');
+   const userRole = typeof window !== "undefined" ? window.localStorage.getItem('user_role') : '' ;
 
    const [open, setOpen] = React.useState(userRole === 'Doctor' ? false : true)
    const sidebarChanges = () => {

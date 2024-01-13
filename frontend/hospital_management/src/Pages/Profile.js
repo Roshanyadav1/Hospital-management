@@ -34,7 +34,7 @@ const DoctorProfile = ({ id }) => {
       </CardContent>
     </Card>
   )
-  const doctor_id = localStorage.getItem('user_id')
+  const doctor_id = typeof window !== "undefined" ? window.localStorage.getItem('user_id'): '';
   const { data: appointmentHistory, isLoading, isSuccess } = useGetAppointmentHistoryQuery(doctor_id);
 
 
@@ -68,7 +68,7 @@ const DoctorProfile = ({ id }) => {
 
   console.log(appointmentsByDate, "appointmentsByDate")
 
-  const DoctorName = localStorage.getItem('user_name')
+  const DoctorName = typeof window !== "undefined" ? window.localStorage.getItem('user_name'): '';
   // console.log("doc name",DoctorName)
 
   return (

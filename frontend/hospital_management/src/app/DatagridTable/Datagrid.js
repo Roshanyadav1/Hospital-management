@@ -70,7 +70,6 @@ export default function Datagrid(props) {
 
    return (
       <div style={{ overflow: 'hidden', margin: '0' }}>
-        
          <div
             style={{
                transform: 'translate(-50%, -50%)',
@@ -95,4 +94,3 @@ export default function Datagrid(props) {
       </div>
    )
 }
- 

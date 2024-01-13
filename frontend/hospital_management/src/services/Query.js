@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
    
       baseUrl: 'https://hospital-management-six-chi.vercel.app/api/',
       prepareHeaders: (headers) => {
-         const token = localStorage.getItem('access_token')
+         const token = typeof window !== "undefined" ? window.localStorage.getItem('access_token'): ''
          if (token) {
             headers.set('Authorization', `Bearer ${token}`)
          }
@@ -139,7 +139,7 @@ import { toast } from 'react-toastify'
       }),
       getAppointment: build.query({
          query: () => ({
-            url: `/appointment/view/?patient_id=${localStorage.getItem('user_id')}`,
+            url: `/appointment/view/?patient_id=${typeof window !== "undefined" ? window.localStorage.getItem('user_id'): ''}`,
             method: 'GET',
          }),
       }),
@@ -251,7 +251,7 @@ import { toast } from 'react-toastify'
    }),
    patientView: build.query({
       query: () => ({
-         url: `/patient/view/?patient_id=${localStorage.getItem('user_id')}`,
+         url: `/patient/view/?patient_id=${typeof window !== "undefined" ? window.localStorage.getItem('user_id'): ''}`,
          method: 'GET',
       }),
    }),

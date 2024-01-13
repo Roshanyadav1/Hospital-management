@@ -68,12 +68,24 @@ function RecipeReviewCard() {
             </Grid>
          </Container>
       )
-   } else if (isError || !Array.isArray(appointment?.data) || appointment.data.length === 0) {
+   } else if (
+      isError ||
+      !Array.isArray(appointment?.data) ||
+      appointment.data.length === 0
+   ) {
       return (
          // <Container maxWidth='xl' sx={{ height: '90vh', alignItems: 'center' }}>
-         <Grid mt={2} container spacing={2} justifyContent='center' alignItems='center'>
+         <Grid
+            mt={2}
+            container
+            spacing={2}
+            justifyContent='center'
+            alignItems='center'
+         >
             <Image
-               src={'https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif'}
+               src={
+                  'https://hospital0000.s3.ap-south-1.amazonaws.com/error+images/No+data.gif'
+               }
                width={360}
                height={360}
                alt='No appointment Here'
@@ -81,7 +93,7 @@ function RecipeReviewCard() {
             />
          </Grid>
          // </Container>
-      );
+      )
       //  <p> No Appointment Here {isError}</p>
    } else {
       return (
@@ -107,12 +119,18 @@ function RecipeReviewCard() {
                                           sx={{ bgcolor: '#13293D' }}
                                           aria-label='recipe'
                                        >
-                                          {e?.doctor?.employee?.employee_name.split('')[0]}
+                                          {
+                                             e?.doctor?.employee?.employee_name.split(
+                                                ''
+                                             )[0]
+                                          }
                                        </Avatar>
                                     }
                                     title={e?.doctor?.employee?.employee_name}
                                     subheader={
-                                       formatTime(e?.appointment_time) + '   ' + e?.appointment_date
+                                       formatTime(e?.appointment_time) +
+                                       '   ' +
+                                       e?.appointment_date
                                     }
                                  />
                               </Grid>
@@ -120,7 +138,9 @@ function RecipeReviewCard() {
                                  <Chip
                                     label={e?.checked ? 'Checked' : 'Not Checked'}
                                     sx={{
-                                       backgroundColor: e?.checked ? '#39CEF5' : '#13293D',
+                                       backgroundColor: e?.checked
+                                          ? '#39CEF5'
+                                          : '#13293D',
                                        color: e?.checked ? 'white' : 'white',
                                        marginRight: 1,
                                     }}
@@ -137,7 +157,10 @@ function RecipeReviewCard() {
                                  <Grid item>
                                     <Chip
                                        label={e?.disease?.disease_name}
-                                       sx={{ backgroundColor: '#7F8FA45B', marginRight: 1 }}
+                                       sx={{
+                                          backgroundColor: '#7F8FA45B',
+                                          marginRight: 1,
+                                       }}
                                     />
                                  </Grid>
                               </Grid>
@@ -152,41 +175,26 @@ function RecipeReviewCard() {
 }
 
 function formatTime(timeString) {
-   const [hours, minutes] = timeString.split(':');
-   let formattedTime = '';
-   let meridiem = '';
+   const [hours, minutes] = timeString.split(':')
+   let formattedTime = ''
+   let meridiem = ''
 
-   let hour = parseInt(hours, 10);
+   let hour = parseInt(hours, 10)
    if (hour === 0) {
-      formattedTime = `12:${minutes}`;
-      meridiem = 'AM';
+      formattedTime = `12:${minutes}`
+      meridiem = 'AM'
    } else if (hour < 12) {
-      formattedTime = `${hour}:${minutes}`;
-      meridiem = 'AM';
+      formattedTime = `${hour}:${minutes}`
+      meridiem = 'AM'
    } else if (hour === 12) {
-      formattedTime = `12:${minutes}`;
-      meridiem = 'PM';
+      formattedTime = `12:${minutes}`
+      meridiem = 'PM'
    } else {
-      hour -= 12;
-      formattedTime = `${hour}:${minutes}`;
-      meridiem = 'PM';
+      hour -= 12
+      formattedTime = `${hour}:${minutes}`
+      meridiem = 'PM'
    }
 
-   return `${formattedTime} ${meridiem}`;
+   return `${formattedTime} ${meridiem}`
 }
 export default RecipeReviewCard
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

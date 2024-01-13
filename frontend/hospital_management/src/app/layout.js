@@ -13,17 +13,17 @@ import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 const theme = createTheme(themeOptions)
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary } from 'react-error-boundary'
 
 function fallbackRender({ error }) {
    // Call resetErrorBoundary() to reset the error boundary and retry the render.
 
    return (
-      <div role="alert">
+      <div role='alert'>
          <p>Something went wrong:</p>
-         <pre style={{ color: "red" }}>{error.message}</pre>
+         <pre style={{ color: 'red' }}>{error.message}</pre>
       </div>
-   );
+   )
 }
 export default function RootLayout({ children }) {
    const path = usePathname()
@@ -36,9 +36,7 @@ export default function RootLayout({ children }) {
    return (
       <html lang='en'>
          <body className={inter.className}>
-            <ErrorBoundary
-               fallbackRender={fallbackRender}
-            >
+            <ErrorBoundary fallbackRender={fallbackRender}>
                <UserProvider>
                   <ToastContainer
                      position={'top-right'}

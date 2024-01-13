@@ -58,8 +58,6 @@ const EmpRegister = () => {
    const [addemployee] = useAddEmployeeMutation()
    const [addAuthEmployee] = useRegisterAuth()
 
-
-   
    return (
       <StyledFormWrapper>
          <StyledPaper elevation={3}>

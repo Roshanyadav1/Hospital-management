@@ -21,14 +21,13 @@ import { useChangeStatusMutation } from '@/services/Query'
 import { Delete, Create, Visibility } from '@mui/icons-material'
 import { useDeleteEmployeeMutation } from '@/services/Query'
 import AddEmployee from '@/components/AddEmployee'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 import { CircularProgress } from '@mui/material'
 const GetStatusButton = (row) => {
    const [updateStatus] = useChangeStatusMutation()
    // eslint-disable-next-line no-unused-vars
    const [selectedRow, setSelectedRow] = useState(null)
    const [openModal, setOpenModal] = useState(false)
-  
 
    const handleCloseModal = () => {
       setOpenModal(false)
@@ -56,13 +55,16 @@ const GetStatusButton = (row) => {
       <div
          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
-         <Dialog open={openModal} >
+         <Dialog open={openModal}>
             <DialogTitle
                style={{
                   boxShadow: 'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                   }}
+               }}
             >
-              <Typography variant="h5"> Confirmation for changing status </Typography>
+               <Typography variant='h5'>
+                  {' '}
+                  Confirmation for changing status{' '}
+               </Typography>
             </DialogTitle>
             <IconButton
                aria-label='close'
@@ -77,19 +79,28 @@ const GetStatusButton = (row) => {
                <CloseIcon />
             </IconButton>
             <Divider />
-            
-            <DialogContent >
+
+            <DialogContent>
                <p>
                   Do you want to Change the Status for{' '}
                   <span className='Data'>{row?.params?.row?.employee_name}</span> ?
                </p>
             </DialogContent>
             <Divider />
-            <DialogActions >
-               <Button onClick={handleCloseModal} color='primary'  sx={{ marginBottom:1}} >
+            <DialogActions>
+               <Button
+                  onClick={handleCloseModal}
+                  color='primary'
+                  sx={{ marginBottom: 1 }}
+               >
                   No
                </Button>
-               <Button onClick={ChangeStatus} color='primary' variant='contained' sx={{marginRight:1, marginBottom:1}}>
+               <Button
+                  onClick={ChangeStatus}
+                  color='primary'
+                  variant='contained'
+                  sx={{ marginRight: 1, marginBottom: 1 }}
+               >
                   Yes
                </Button>
             </DialogActions>
@@ -119,7 +130,7 @@ const GetActionButton = (row) => {
    const [openModal, setOpenModal] = useState(false)
    const [openEditModal, setOpenEditModal] = useState(false)
    const [openViewModal, setOpenViewModal] = useState(false)
-   const [isDeleting, setIsDeleting] = useState(false);
+   const [isDeleting, setIsDeleting] = useState(false)
 
    const INITIAL_FORM_STATE = {
       employee_name: row?.params?.row?.employee_name,
@@ -201,25 +212,25 @@ const GetActionButton = (row) => {
    const handleCloseEditModal = () => {
       setOpenEditModal(false)
    }
-  
-const handleConfirmDelete = async () => {
-      setIsDeleting(true); // Set loading state to true during deletion
+
+   const handleConfirmDelete = async () => {
+      setIsDeleting(true) // Set loading state to true during deletion
       try {
          // Assuming your API expects an employee ID for deletion
-         const result = await deleteEmployee(selectedRow.employee_id);
-        toast.success('Employee Deleted Successfully')
+         const result = await deleteEmployee(selectedRow.employee_id)
+         toast.success('Employee Deleted Successfully')
          // Log the result to the console
-         console.log('Result of deleteEmployee mutation:', result);
+         console.log('Result of deleteEmployee mutation:', result)
          // Perform any additional logic after successful deletion
       } catch (error) {
          // Handle error
-         console.error('Error deleting employee:', error);
-        toast.error("Something went wrong")
+         console.error('Error deleting employee:', error)
+         toast.error('Something went wrong')
       } finally {
-         setIsDeleting(false); // Reset loading state after deletion (success or failure)
-         handleCloseModal();
+         setIsDeleting(false) // Reset loading state after deletion (success or failure)
+         handleCloseModal()
       }
-   };
+   }
    const handleCloseViewModal = () => {
       setOpenViewModal(false)
    }
@@ -244,21 +255,26 @@ const handleConfirmDelete = async () => {
 
    return (
       <div>
-      {/* Loader component */}
-      {isDeleting && (
-         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-            <CircularProgress />
-         </div>
-      )}
+         {/* Loader component */}
+         {isDeleting && (
+            <div
+               style={{
+                  position: 'fixed',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+               }}
+            >
+               <CircularProgress />
+            </div>
+         )}
          <Dialog open={openModal}>
             <DialogTitle
                style={{
-                  
                   boxShadow: 'box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                  
                }}
             >
-              <Typography variant="h5">Delete Confirmation</Typography> 
+               <Typography variant='h5'>Delete Confirmation</Typography>
             </DialogTitle>
             <IconButton
                aria-label='close'
@@ -281,16 +297,28 @@ const handleConfirmDelete = async () => {
             </DialogContent>
             <Divider />
             <DialogActions>
-               <Button onClick={handleCloseModal} color='primary'  sx={{ marginBottom:1}}>
+               <Button
+                  onClick={handleCloseModal}
+                  color='primary'
+                  sx={{ marginBottom: 1 }}
+               >
                   No
                </Button>
-               <Button onClick={handleConfirmDelete} color='primary' variant='contained' sx={{marginRight:1, marginBottom:1}}>
+               <Button
+                  onClick={handleConfirmDelete}
+                  color='primary'
+                  variant='contained'
+                  sx={{ marginRight: 1, marginBottom: 1 }}
+               >
                   Yes
                </Button>
             </DialogActions>
          </Dialog>
          <Dialog open={openEditModal} onClose={handleCloseEditModal} padding={3}>
-            <DialogTitle> <Typography variant='h5'>Edit Employee</Typography> </DialogTitle>
+            <DialogTitle>
+               {' '}
+               <Typography variant='h5'>Edit Employee</Typography>{' '}
+            </DialogTitle>
             <Divider />
             <IconButton
                aria-label='close'
@@ -329,60 +357,96 @@ const handleConfirmDelete = async () => {
          </Dialog>
          {/* view///////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
          <Dialog open={openViewModal} onClose={handleCloseViewModal} padding={3}>
-            <DialogTitle><Typography variant='h5'> View Employee</Typography> </DialogTitle>
+            <DialogTitle>
+               <Typography variant='h5'> View Employee</Typography>{' '}
+            </DialogTitle>
             <Divider />
             <DialogContent>
-               {
-                  isLoading && ("Loading...")
-               }
-               {
-                  isSuccess && (<>
+               {isLoading && 'Loading...'}
+               {isSuccess && (
+                  <>
                      <DialogContent>
                         <Grid container justifyContent='space-between'>
-
-                           <Grid item  >
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 Name   : 
+                           <Grid item>
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 Name :
                               </Typography>
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 Email  :
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 Email :
                               </Typography>
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 Phone  :
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 Phone :
                               </Typography>
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                 Role {" "}  : 
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 Role :
                               </Typography>
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
                                  Status :
                               </Typography>
-
-
                            </Grid>
-                           <Grid item >
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                  {viewEmployee?.data?.employee_name}
+                           <Grid item>
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 {viewEmployee?.data?.employee_name}
                               </Typography>
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                  {viewEmployee?.data?.employee_email}
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 {viewEmployee?.data?.employee_email}
                               </Typography>
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                  {viewEmployee?.data?.employee_number}
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 {viewEmployee?.data?.employee_number}
                               </Typography>
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                  {viewEmployee?.data?.employee_role}
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 {viewEmployee?.data?.employee_role}
                               </Typography>
-                              <Typography variant='h6' color='primary' fontWeight='bold'>
-                                  {viewEmployee?.data?.employee_status ? "Active" : "Inactive"}
+                              <Typography
+                                 variant='h6'
+                                 color='primary'
+                                 fontWeight='bold'
+                              >
+                                 {viewEmployee?.data?.employee_status
+                                    ? 'Active'
+                                    : 'Inactive'}
                               </Typography>
-
                            </Grid>
                         </Grid>
                      </DialogContent>
-
-                  </>)
-               }
-
+                  </>
+               )}
             </DialogContent>
             <IconButton
                aria-label='close'
@@ -397,7 +461,7 @@ const handleConfirmDelete = async () => {
                <CloseIcon />
             </IconButton>
          </Dialog>
-         
+
          <IconButton onClick={handleDelete} color='primary' size='small'>
             <Delete />
          </IconButton>

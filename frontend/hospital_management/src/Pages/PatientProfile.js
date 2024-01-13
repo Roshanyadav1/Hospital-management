@@ -66,14 +66,14 @@ function PatientProfile() {
    const handleClickOpen = async (id) => {
       try {
          let res = await viewPrescription(id)
-         console.log("The response is ", res)
+         console.log('The response is ', res)
          setOpen(true)
          setPresView(res)
          if (res.status !== 200) {
             toast.error(res.message)
          }
       } catch (err) {
-         toast.error("Internal server error !")
+         toast.error('Internal server error !')
       }
    }
    const handleClose = () => {
@@ -199,21 +199,21 @@ function PatientProfile() {
 
    const appointmentsByDate = Array.isArray(appointmentHistory?.data)
       ? appointmentHistory?.data.reduce((acc = [], appointment = []) => {
-         const date = appointment.appointment_date
-         if (!acc[date]) {
-            acc[date] = []
-         }
-         acc[date].push({
-            patient_id: appointment?.patient?.patient_id,
-            patient_name: appointment?.patient?.patient_name,
-            doctor_name: appointment?.doctor?.employee?.employee_name,
-            disease_name: appointment?.disease?.disease_name,
-            appointment_time: appointment?.appointment_time,
-            checked: appointment?.checked,
-            appointment_id: appointment?.appointment_id,
-         })
-         return acc
-      }, {})
+           const date = appointment.appointment_date
+           if (!acc[date]) {
+              acc[date] = []
+           }
+           acc[date].push({
+              patient_id: appointment?.patient?.patient_id,
+              patient_name: appointment?.patient?.patient_name,
+              doctor_name: appointment?.doctor?.employee?.employee_name,
+              disease_name: appointment?.disease?.disease_name,
+              appointment_time: appointment?.appointment_time,
+              checked: appointment?.checked,
+              appointment_id: appointment?.appointment_id,
+           })
+           return acc
+        }, {})
       : []
 
    const appointmentsArray = Object.entries(appointmentsByDate).map(
@@ -421,9 +421,7 @@ function PatientProfile() {
                                  key={appointment_id}
                                  sx={{ borderRadius: 2 }}
                               >
-                                 <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                 >
+                                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                     <Typography>Date - {date}</Typography>
                                  </AccordionSummary>
                                  <AccordionDetails>
@@ -494,7 +492,9 @@ function PatientProfile() {
                                                    variant='contained'
                                                    size='small'
                                                    onClick={() =>
-                                                      handleClickOpen(e.appointment_id)
+                                                      handleClickOpen(
+                                                         e.appointment_id
+                                                      )
                                                    }
                                                    sx={{
                                                       display: {
@@ -533,47 +533,47 @@ function PatientProfile() {
                                                    <CloseIcon />
                                                 </IconButton>
                                                 <DialogContent dividers>
-
-                                                   {
-                                                      presview?.data?.data ? (
-                                                         <>
-                                                            {
-                                                               // prescription_photo
-                                                               presview?.data?.data.map((e, index) => {
+                                                   {presview?.data?.data ? (
+                                                      <>
+                                                         {
+                                                            // prescription_photo
+                                                            presview?.data?.data.map(
+                                                               (e, index) => {
                                                                   return (
                                                                      <Box
                                                                         sx={{
-                                                                           height: '350px',
+                                                                           height:
+                                                                              '350px',
                                                                            width: '350px',
-                                                                           margin: '1rem 0rem',
+                                                                           margin:
+                                                                              '1rem 0rem',
                                                                         }}
                                                                         key={index}
                                                                      >
                                                                         <Image
                                                                            fill
-                                                                           src={e.prescription_photo}
+                                                                           src={
+                                                                              e.prescription_photo
+                                                                           }
                                                                            alt={`image ${index}`}
-                                                                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                                           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                                                                         />
                                                                      </Box>
                                                                   )
-                                                               })
-                                                            }
-                                                            {
-                                                               presview?.data?.data.length === 0 && (
-                                                                  <>
-                                                                     Prescription Not Found
-                                                                  </>
-                                                               )
-                                                            }
-                                                         </>
-                                                      ) : (
-                                                         <>Prescription Not Found</>
-                                                      )
-                                                   }
-
+                                                               }
+                                                            )
+                                                         }
+                                                         {presview?.data?.data
+                                                            .length === 0 && (
+                                                            <>
+                                                               Prescription Not Found
+                                                            </>
+                                                         )}
+                                                      </>
+                                                   ) : (
+                                                      <>Prescription Not Found</>
+                                                   )}
                                                 </DialogContent>
-
                                              </BootstrapDialog>
                                           </Grid>
                                        </Grid>

@@ -5,7 +5,7 @@ import { Container } from '@mui/material'
 function Career() {
    return (
       <Container>
-         <Dashboard/>
+         <Dashboard />
       </Container>
    )
 }

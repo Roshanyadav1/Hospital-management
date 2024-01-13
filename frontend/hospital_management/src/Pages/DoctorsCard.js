@@ -1,4 +1,3 @@
-
 import { Grid, Card, Typography } from '@mui/material'
 import Container from '@mui/material/Container'
 import Image from 'next/image'
@@ -72,13 +71,13 @@ function DoctorCard() {
                className='mySwiper'
             >
                {getDname?.data?.results?.map((result) => (
-                <Grid
-                container
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                key={result?.doctor_id}
-              >
+                  <Grid
+                     container
+                     direction='row'
+                     justifyContent='center'
+                     alignItems='center'
+                     key={result?.doctor_id}
+                  >
                      <SwiperSlide>
                         <Grid item sx={{ minWidth: 400 }} xs={12} md={4} sm={6}>
                            <Card
@@ -94,17 +93,31 @@ function DoctorCard() {
                                  src={result.doctor_profile_picture}
                                  alt='image'
                               />
-                              <Typography gutterBottom variant='h5' component='div' >
-                                 
-                                <Typography variant='body1'sx={{display:'inline', bgcolor:'#fff' ,position:"absolute",right:'80px',left:'80px',  bottom:"2rem", justifyContent:'center',borderRadius:1,boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',margin:1 }}>
-                               {result.disease_specialist} 
+                              <Typography gutterBottom variant='h5' component='div'>
+                                 <Typography
+                                    variant='body1'
+                                    sx={{
+                                       display: 'inline',
+                                       bgcolor: '#fff',
+                                       position: 'absolute',
+                                       right: '80px',
+                                       left: '80px',
+                                       bottom: '2rem',
+                                       justifyContent: 'center',
+                                       borderRadius: 1,
+                                       boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+                                       margin: 1,
+                                    }}
+                                 >
+                                    {result.disease_specialist}
                                  </Typography>
-                                 
-                                    
-                                     {/* <Chip label={result.disease_specialist}  variant="contained" sx={{position:"absolute", right:"7rem",  bottom:"3rem" , backgroundColor: "white"}}/> */}
-                                 
+                                 {/* <Chip label={result.disease_specialist}  variant="contained" sx={{position:"absolute", right:"7rem",  bottom:"3rem" , backgroundColor: "white"}}/> */}
                                  Dr.{result.employee?.employee_name}
-                                 <Typography variant='body2' color='text.secondary'paddingBottom={"3px"}>
+                                 <Typography
+                                    variant='body2'
+                                    color='text.secondary'
+                                    paddingBottom={'3px'}
+                                 >
                                     {result.category}
                                  </Typography>
                               </Typography>

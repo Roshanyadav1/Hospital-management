@@ -21,8 +21,8 @@ import Card from '@mui/material/Card'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import Tooltip from '@mui/material/Tooltip';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import Tooltip from '@mui/material/Tooltip'
 import Link from 'next/link'
 
 function Chart() {
@@ -102,7 +102,6 @@ function Chart() {
    })
 
    const Data = appointmentData?.data?.map((appointment) => {
-
       return {
          ...appointment,
          name: appointment?.appointment_date,
@@ -123,11 +122,11 @@ function Chart() {
    // Update the Data mapping to filter based on the search term
    const filteredData = searchTerm
       ? Data?.filter((item) => {
-         const doctorName = item.primaryText.toLowerCase()
-         const searchLower = searchTerm.toLowerCase()
+           const doctorName = item.primaryText.toLowerCase()
+           const searchLower = searchTerm.toLowerCase()
 
-         return doctorName.includes(searchLower)
-      })
+           return doctorName.includes(searchLower)
+        })
       : []
 
    const displayedData = searchTerm ? filteredData : Data
@@ -172,7 +171,6 @@ function Chart() {
          alignItems: 'center',
          justifyContent: 'center',
          height: '100vh', // Full height of the viewport
-
       }
 
       // Styling for the CircularProgress component
@@ -279,7 +277,6 @@ function Chart() {
                                     +
                                  </span>
                               </Grid>
-
                            </Grid>
                         </div>
                      </Grid>
@@ -326,7 +323,7 @@ function Chart() {
                                  position: 'insideBottomRight',
                                  offset: -10,
                               }}
-                           // scale="band"
+                              // scale="band"
                            />
                            <YAxis
                               label={{
@@ -449,17 +446,22 @@ function Chart() {
                   {displayedData && displayedData.length > 0 ? (
                      displayedData.map((item, index) => (
                         <div style={{ borderRadius: '50px' }} key={index}>
-
                            <Card sx={{ backgroundColor: '#244c73', padding: 2 }}>
                               <Grid container spacing={2}>
                                  <Grid item xs={2}>
-                                    <Avatar alt="Remy Sharp" src={item.avatarSrc} />
+                                    <Avatar alt='Remy Sharp' src={item.avatarSrc} />
                                  </Grid>
                                  <Grid item xs={8}>
-                                    <Typography variant="h5" style={{ color: '#fff' }}>
+                                    <Typography
+                                       variant='h5'
+                                       style={{ color: '#fff' }}
+                                    >
                                        {item.primaryText}
                                     </Typography>
-                                    <Typography variant="body2" style={{ color: 'lightgreen' }}>
+                                    <Typography
+                                       variant='body2'
+                                       style={{ color: 'lightgreen' }}
+                                    >
                                        <span style={{ whiteSpace: 'nowrap' }}>
                                           {item.secondaryText}
                                        </span>
@@ -473,12 +475,20 @@ function Chart() {
                                        </span>
                                     </Typography>
                                  </Grid>
-                                 <Grid item xs={2} >
-                                    <Link href={`dashboard/individualappointment/${item?.appointment_id}`}>
-                                       <Tooltip title="View Prescription">
-                                          <IconButton aria-label="delete">
-                                             <RemoveRedEyeIcon onClick={() => handleViewClick(item?.appointment_id)}
-                                                style={{ color: 'white' }} />
+                                 <Grid item xs={2}>
+                                    <Link
+                                       href={`dashboard/individualappointment/${item?.appointment_id}`}
+                                    >
+                                       <Tooltip title='View Prescription'>
+                                          <IconButton aria-label='delete'>
+                                             <RemoveRedEyeIcon
+                                                onClick={() =>
+                                                   handleViewClick(
+                                                      item?.appointment_id
+                                                   )
+                                                }
+                                                style={{ color: 'white' }}
+                                             />
                                           </IconButton>
                                        </Tooltip>
                                     </Link>
@@ -487,7 +497,6 @@ function Chart() {
                            </Card>
                            <hr />
                         </div>
-
                      ))
                   ) : (
                      <div

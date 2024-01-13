@@ -1,6 +1,6 @@
 'use client'
 import { DataGrid } from '@mui/x-data-grid'
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 const customstyles = `
 .MuiDataGrid-root .MuiDataGrid-row:nth-child(even) {
@@ -60,30 +60,23 @@ const customstyles = `
   }`
 
 export default function DataGridTable(props) {
-   const {
-      data,
-      columns,
-      map_by,
-      loadinData,
-      pageState,
-      setPageState
-   } = props;
- const [paginationModel, setPaginationModel] = useState({
-    page: 1,
-    pageSize: 5,
- })
+   const { data, columns, map_by, loadinData, pageState, setPageState } = props
+   const [paginationModel, setPaginationModel] = useState({
+      page: 1,
+      pageSize: 5,
+   })
 
- useEffect(() => {
-  if (paginationModel) {
-     setPageState({
-        isLoding: pageState?.isLoding,
-        data: pageState?.data,
-        total: data?.count,
-        page: paginationModel?.page,
-        pageSize: paginationModel?.pageSize,
-     })
-  }
-}, [data?.count, pageState?.data, pageState?.isLoding, paginationModel])
+   useEffect(() => {
+      if (paginationModel) {
+         setPageState({
+            isLoding: pageState?.isLoding,
+            data: pageState?.data,
+            total: data?.count,
+            page: paginationModel?.page,
+            pageSize: paginationModel?.pageSize,
+         })
+      }
+   }, [data?.count, pageState?.data, pageState?.isLoding, paginationModel])
 
    return (
       <>
@@ -113,4 +106,3 @@ export default function DataGridTable(props) {
       </>
    )
 }
-

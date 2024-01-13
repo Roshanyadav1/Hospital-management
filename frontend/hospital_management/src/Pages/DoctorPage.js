@@ -74,7 +74,7 @@ function DoctorPage() {
 
    const handleDiseasesChange = (event, values) => {
       let r1 = getDisease?.data.filter((e)=> e.disease_name === values)
-      localStorage.setItem('disease' , r1[0].disease_id)
+      typeof window !== "undefined" ? window.localStorage.setItem('disease' , r1[0].disease_id) : '';
       setSelectedDiseases(values)
       setSelectedDoctor('')
    }

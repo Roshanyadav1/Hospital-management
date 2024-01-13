@@ -83,7 +83,7 @@ const INITIAL_FORM_STATE = {
    employee_name: '',
    employee_email: '',
    employee_number: '',
-   employee_password: '', 
+   employee_password: '',
    employee_type: '',
    employee_role: '',
    employee_status: true,
@@ -98,21 +98,19 @@ function Dashboard() {
       try {
          let res = await addemployee(values)
 
-       
-   
          // toast.success(res?.data?.message || ' Employee added successfully')
          // resetForm()
          if (res.data && res.data.status == 200) {
-            console.log("Its working")
-            toast.success(res.data.message || 'Employee added successfully');
-            resetForm();
-          } else if(res) {
-            toast.warn(res.error.message || 'Already exists');
-            resetForm();
-          }
+            console.log('Its working')
+            toast.success(res.data.message || 'Employee added successfully')
+            resetForm()
+         } else if (res) {
+            toast.warn(res.error.message || 'Already exists')
+            resetForm()
+         }
       } catch (error) {
-         console.error('Error submitting form:', error);
-         toast.error('An error occurred while submitting the form');
+         console.error('Error submitting form:', error)
+         toast.error('An error occurred while submitting the form')
       }
    }
 
@@ -160,7 +158,9 @@ function Dashboard() {
          </Grid>
 
          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle><Typography variant='h5'>Add Employee</Typography> </DialogTitle>
+            <DialogTitle>
+               <Typography variant='h5'>Add Employee</Typography>{' '}
+            </DialogTitle>
             <Divider />
             <IconButton
                aria-label='close'
@@ -181,7 +181,7 @@ function Dashboard() {
                validationSchema={FORM_VALIDATION}
                onSubmit={handleRegister}
             >
-               {({ values, handleChange, handleBlur, touched ,isSubmitting  }) => (
+               {({ values, handleChange, handleBlur, touched, isSubmitting }) => (
                   <Form>
                      <DialogContent>
                         <Grid container spacing={2}>
@@ -243,28 +243,28 @@ function Dashboard() {
                            </Grid>
 
                            <Grid item xs={12} sm={6}>
-                     <CustomAutocomplete
-                        name='employee_type'
-                        label='Employment Type'
-                        options={Empcategories}
-                        value={values.employee_type}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        touched={touched.employee_type}
-                     />
-                  </Grid>
+                              <CustomAutocomplete
+                                 name='employee_type'
+                                 label='Employment Type'
+                                 options={Empcategories}
+                                 value={values.employee_type}
+                                 onChange={handleChange}
+                                 onBlur={handleBlur}
+                                 touched={touched.employee_type}
+                              />
+                           </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                     <CustomAutocomplete
-                        name='employee_role'
-                        label='Employee Role'
-                        options={Role}
-                        value={values.employee_role}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        touched={touched.employee_role}
-                     />
-                  </Grid>
+                           <Grid item xs={12} sm={6}>
+                              <CustomAutocomplete
+                                 name='employee_role'
+                                 label='Employee Role'
+                                 options={Role}
+                                 value={values.employee_role}
+                                 onChange={handleChange}
+                                 onBlur={handleBlur}
+                                 touched={touched.employee_role}
+                              />
+                           </Grid>
                            <Grid item xs={12} sm={6}>
                               <RadioButtonGroup
                                  label='Status'
@@ -293,7 +293,7 @@ function Dashboard() {
                               size='large'
                               disabled={isSubmitting}
                            >
-                             {isSubmitting ? "Submitting ..." : "Submit"}
+                              {isSubmitting ? 'Submitting ...' : 'Submit'}
                            </Button>
                         </DialogActions>
                      </DialogContent>

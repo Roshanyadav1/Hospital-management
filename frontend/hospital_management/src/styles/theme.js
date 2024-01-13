@@ -1,4 +1,4 @@
-import { color, createTheme } from "@mui/system"
+import { color, createTheme } from '@mui/system'
 
 export const colors = {
    primary: '#13293D',
@@ -42,9 +42,6 @@ export const themeOptions = {
          },
       },
    },
-
-
-
 
    typography: {
       h1: {

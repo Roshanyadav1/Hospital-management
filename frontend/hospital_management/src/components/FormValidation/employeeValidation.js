@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+import * as Yup from 'yup'
 
 const FORM_VALIDATION = Yup.object().shape({
    employee_name: Yup.string()
@@ -22,8 +22,6 @@ const FORM_VALIDATION = Yup.object().shape({
 
    employee_type: Yup.string().required('Please select a type'),
    employee_role: Yup.string().required('Please select a role'),
- 
-
 
    employee_status: Yup.string().required('Please select a status'),
 
@@ -34,6 +32,6 @@ const FORM_VALIDATION = Yup.object().shape({
    // updated_by: Yup.string()
    //    .matches(/^[a-zA-Z\s]*$/, 'Invalid name')
    //    .required('Required'),
-});
+})
 
-export default FORM_VALIDATION;
+export default FORM_VALIDATION

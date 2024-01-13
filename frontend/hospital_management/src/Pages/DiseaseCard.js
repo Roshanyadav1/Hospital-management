@@ -1,20 +1,28 @@
-import { Grid, Card, CardContent, Typography } from '@mui/material';
-import Container from '@mui/material/Container';
-import { CardActionArea, CardMedia } from '@mui/material';
-import { patient } from '@/helpers/disease';
-import Link from 'next/link';
+import { Grid, Card, CardContent, Typography } from '@mui/material'
+import Container from '@mui/material/Container'
+import { CardActionArea, CardMedia } from '@mui/material'
+import { patient } from '@/helpers/disease'
+import Link from 'next/link'
 
 export default function DiseaseCard() {
    return (
       <div>
          <Container maxWidth='lg'>
-            <Typography variant='h3' align='center' color='primary' style={{ marginTop: '50px' }}>
+            <Typography
+               variant='h3'
+               align='center'
+               color='primary'
+               style={{ marginTop: '50px' }}
+            >
                Diseases
             </Typography>
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
                {patient.map((result) => (
                   <Grid item xs={6} md={3} sm={4} key={result?.id}>
-                     <Link style={{ textDecoration: 'none', textAlign: 'center' }} href='/doctorpage'>
+                     <Link
+                        style={{ textDecoration: 'none', textAlign: 'center' }}
+                        href='/doctorpage'
+                     >
                         <Card
                            sx={{
                               maxWidth: 300,
@@ -34,7 +42,11 @@ export default function DiseaseCard() {
                                  alt='image'
                               />
                               <CardContent>
-                                 <Typography gutterBottom variant='h6' component='div'>
+                                 <Typography
+                                    gutterBottom
+                                    variant='h6'
+                                    component='div'
+                                 >
                                     {result.title}
                                  </Typography>
                                  <Typography variant='body2' color='text.primary'>
@@ -49,5 +61,5 @@ export default function DiseaseCard() {
             </Grid>
          </Container>
       </div>
-   );
+   )
 }

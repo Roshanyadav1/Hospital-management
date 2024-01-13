@@ -40,14 +40,14 @@ const pages = [{ label: 'Doctor', route: '/showdoctors' },
 function ResponsiveAppBar(props) {
 
    //eslint-disable-next-line
-   let isLogin = localStorage.getItem('isLogin');
+   let isLogin = typeof window !== "undefined" ? window.localStorage.getItem('isLogin'): '';
    const navigate = useRouter();
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
    const [userLogin] = useLoginUserMutation();
    const { user = false } = useUser()
 
-   let t1 = localStorage.getItem('refresh_token')
+   let t1 = typeof window !== "undefined" ? window.localStorage.getItem('refresh_token'): '';
    const { data: refreshToken, isSuccess, isFeching } = useGetRefreshTokenQuery(t1, {
       skip: !user || !t1,
       pollingInterval: 60000 * 5,
@@ -56,8 +56,8 @@ function ResponsiveAppBar(props) {
 
    const updateData = () => {
       if (refreshToken) {
-         localStorage.setItem('refresh_token', refreshToken.refresh)
-         localStorage.setItem('access_token', refreshToken.access)
+         typeof window !== "undefined" ? window.localStorage.setItem('refresh_token', refreshToken.refresh): '';
+         typeof window !== "undefined" ? window.localStorage.setItem('access_token', refreshToken.access): '';
       }
    }
 
@@ -92,7 +92,7 @@ function ResponsiveAppBar(props) {
 
    const getUserSettings = () => {
       const settings = [];
-      const userRole = localStorage.getItem('user_role');
+      const userRole = typeof window !== "undefined" ? window.localStorage.getItem('user_role'): '';
 
       switch (userRole) {
          case 'Patient':
@@ -107,8 +107,7 @@ function ResponsiveAppBar(props) {
    const settings = getUserSettings();
 
    const getNavigationItems = () => {
-      //eslint-disable-next-line
-      const role = localStorage.getItem('user_role');
+      const role = typeof window !== "undefined" ? window.localStorage.getItem('user_role'): '';
       switch (role) {
          case 'Admin':
          case 'Manager':
@@ -157,8 +156,7 @@ function ResponsiveAppBar(props) {
    };
 
    const getUserImage = () => {
-      //eslint-disable-next-line
-      const userRole = localStorage.getItem('user_role');
+      const userRole = typeof window !== "undefined" ? window.localStorage.getItem('user_role'): '';
 
       switch (userRole) {
          case 'Admin':
@@ -180,12 +178,12 @@ function ResponsiveAppBar(props) {
             try {
                let res = await userLogin(user.email).unwrap();
 
-               localStorage.setItem('user_name', user.name);
-               localStorage.setItem('user_id', res.data.id);
-               localStorage.setItem('access_token', res.data.token.access);
-               localStorage.setItem('user_role', res.data.user_role);
-               localStorage.setItem('refresh_token', res.data.token.refresh);
-               localStorage.setItem('isLogin', true);
+               typeof window !== "undefined" ? window.localStorage.setItem('user_name', user.name): '';
+               typeof window !== "undefined" ? window.localStorage.setItem('user_id', res.data.id): '';
+               typeof window !== "undefined" ? window.localStorage.setItem('access_token', res.data.token.access): '';
+               typeof window !== "undefined" ? window.localStorage.setItem('user_role', res.data.user_role): '';
+               typeof window !== "undefined" ? window.localStorage.setItem('refresh_token', res.data.token.refresh): '';
+               typeof window !== "undefined" ? window.localStorage.setItem('isLogin', true): '';
 
                if (res.data.user_role !== 'Patient') {
                   // redirect to dashboard
@@ -285,10 +283,9 @@ function ResponsiveAppBar(props) {
                               </Link>
                            </MenuItem>
                         ))}
-                        {/* {['Admin', 'Doctor', 'Patient'].includes(localStorage.getItem('user_role')) && user && ( */}
                         <MenuItem
                            onClick={() => {
-                              localStorage.clear();
+                              typeof window !== "undefined" ? window.localStorage.clear(): '';
                               const a = document.createElement('a');
                               a.href = '/api/auth/logout';
                               a.click();

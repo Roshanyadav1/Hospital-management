@@ -88,11 +88,12 @@ const Footer = () => {
                      </Typography>
                   </Link>
 
-                  <Link href='https://www.facebook.com' color='#FFFFFF'
+                  <Link
+                     href='https://www.facebook.com'
+                     color='#FFFFFF'
                      sx={{ pl: 1, pr: 1 }}
                   >
                      <Facebook />
-
                   </Link>
                   <Link
                      href='https://www.instagram.com'
@@ -168,8 +169,6 @@ const Footer = () => {
                         Department of Orthopedics
                      </Typography>
                   </Link>
-
-
                </Grid>
 
                <Grid item xs={12} sm={3}>
@@ -244,7 +243,7 @@ const Footer = () => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  padding: 1
+                  padding: 1,
                }}
             >
                &copy; {new Date().getFullYear()} SGA

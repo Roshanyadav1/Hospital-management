@@ -4,8 +4,7 @@ import { useRouter } from 'next/navigation'
 
 const withRoleRedirect = (WrappedComponent, allowedRoles) => {
    const WithRoleRedirect = (props) => {
-   //eslint-disable-next-line
-      const userRole = localStorage.getItem('user_role')
+      const userRole = typeof window !== "undefined" ? window.localStorage.getItem('user_role'): '';
       const router = useRouter()
 
       useLayoutEffect(() => {

@@ -57,8 +57,6 @@ const StyledFormWrapper = styled('div')({
    },
 })
 
-
-
 const INITIAL_FORM_STATE = {
    // disease_id: '',
    disease_name: '',
@@ -106,14 +104,13 @@ const page = () => {
    const handleRegister = async (values, { resetForm }) => {
       try {
          let res = await addDisease(values)
-     console.log(res)
-         if(res.data.status === 200){
-         toast.success(res?.data?.message || 'Disease added successfully')
-         resetForm()
+         console.log(res)
+         if (res.data.status === 200) {
+            toast.success(res?.data?.message || 'Disease added successfully')
+            resetForm()
          }
-         
       } catch (error) {
-         toast.error("Disease already exist")
+         toast.error('Disease already exist')
          // Handle error
          // console.error('Error submitting form:', error);
       }
@@ -141,30 +138,23 @@ const page = () => {
 
    return (
       <div>
-
-                  <Dialog
-        fullWidth={true}
-        maxWidth={'xs'}
-        open={openModal}
-      >
-            <DialogTitle
-              sx={{ m: 0, p: 2 }} id="customized-dialog-title"
-            >
+         <Dialog fullWidth={true} maxWidth={'xs'} open={openModal}>
+            <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
                Do you want to update status?
             </DialogTitle>
             <IconButton
-          aria-label="close"
-          onClick={handleCloseModal}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
+               aria-label='close'
+               onClick={handleCloseModal}
+               sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+               }}
+            >
+               <CloseIcon />
+            </IconButton>
+            <DialogContent dividers>
                <p>
                   Change the status of
                   <span className='Data'>
@@ -174,16 +164,13 @@ const page = () => {
                </p>
             </DialogContent>
             <DialogActions>
-
-
-                
                <Button onClick={handleCloseModal} color='primary' className='No'>
                   No
                </Button>
                <Button
                   disabled={loading}
                   onClick={ChangeStatus}
-                  variant="contained"
+                  variant='contained'
                   color='primary'
                   className='Yes'
                >
@@ -191,7 +178,7 @@ const page = () => {
                </Button>
             </DialogActions>
          </Dialog>
-         
+
          <Button onClick={handleOpen} variant='outlined'>
             Add Disease
          </Button>

@@ -11,7 +11,6 @@ import {
    Input,
    Skeleton,
    Chip,
-
 } from '@mui/material'
 import { useGetAppointmentInfoQuery } from './../../../../services/Query'
 import { useParams } from 'next/navigation'
@@ -33,61 +32,61 @@ const fadeInUp = {
 }
 
 function DoctorPage() {
-   const { appointment_id } = useParams();
-   const {
-      data: appointmentInfo,
-      isLoading,
-   } = useGetAppointmentInfoQuery(appointment_id);
+   const { appointment_id } = useParams()
+   const { data: appointmentInfo, isLoading } =
+      useGetAppointmentInfoQuery(appointment_id)
    // const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
-   const [isSwitchOn, setIsSwitchOn] = useState(false);
-   const [selectedFile, setSelectedFile] = useState(null);
-   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
-   const [isFileChosenError, setIsFileChosenError] = useState(false);
+   const [isSwitchOn, setIsSwitchOn] = useState(false)
+   const [selectedFile, setSelectedFile] = useState(null)
+   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false)
+   const [isFileChosenError, setIsFileChosenError] = useState(false)
 
-   const [appointmentUpdate] = useAppointmentUpdateMutation();
+   const [appointmentUpdate] = useAppointmentUpdateMutation()
 
-   const [addPrescription] = useAddPrescriptionMutation();
+   const [addPrescription] = useAddPrescriptionMutation()
 
    const handleFileChange = (event) => {
-      setSelectedFile(event.target.files[0]);
-   };
+      setSelectedFile(event.target.files[0])
+   }
 
    const handleSubmit = async () => {
       if (selectedFile) {
-         const formData = new FormData();
-         formData.append('file', selectedFile);
+         const formData = new FormData()
+         formData.append('file', selectedFile)
          //   formData.append('appointment_id', appointmentInfo?.data?.[0]?.appointment_id);
          console.log('calll')
 
          try {
-
             const response = await fetch('/api/s3-upload', {
                method: 'POST',
                body: formData,
             })
             const data = await response.json()
-            await addPrescription({ prescription_photo: data.imageUrl, 'appointment': appointmentInfo?.data?.[0]?.appointment_id });
+            await addPrescription({
+               prescription_photo: data.imageUrl,
+               appointment: appointmentInfo?.data?.[0]?.appointment_id,
+            })
 
-            setIsSuccessDialogOpen(true);
-            setIsFileChosenError(false);
+            setIsSuccessDialogOpen(true)
+            setIsFileChosenError(false)
          } catch (error) {
-            console.error('Error uploading prescription photo:', error);
+            console.error('Error uploading prescription photo:', error)
          }
       } else {
-         setIsFileChosenError(true);
+         setIsFileChosenError(true)
       }
-   };
+   }
 
    const handleDialogClose = () => {
-      setIsSuccessDialogOpen(false);
-      setSelectedFile(null);
+      setIsSuccessDialogOpen(false)
+      setSelectedFile(null)
       if (!selectedFile) {
-         setIsFileChosenError(true);
+         setIsFileChosenError(true)
       } else {
-         setIsFileChosenError(false);
+         setIsFileChosenError(false)
       }
-   };
+   }
 
    const handleSwitchChange = async () => {
       try {
@@ -96,30 +95,42 @@ function DoctorPage() {
             pro: {
                checked: !isSwitchOn,
             },
-         };
-         await appointmentUpdate(obj);
-         toast.success('Status Changed Successfully');
+         }
+         await appointmentUpdate(obj)
+         toast.success('Status Changed Successfully')
       } catch (error) {
-         toast.error(JSON.stringify(error));
+         toast.error(JSON.stringify(error))
       }
-      setIsSwitchOn(!isSwitchOn);
-   };
-
+      setIsSwitchOn(!isSwitchOn)
+   }
 
    return (
       <Container maxWidth='md' justifyContent={'center'}>
-
          <Grid container spacing={2}>
-
             {isLoading && (
                <>
-                  {
-                     [1].map((e) => (
-                        <Grid key={e} item xs={12} sm={12} md={6} lg={4} sx={{ paddingBottom: '1rem', marginTop: 3, marginLeft: 30 }} component={motion.div} variants={fadeInUp} initial='hidden' animate='visible'>
-                           <Skeleton variant="rectangular" width={300} height={400} animation="wave" />
-                        </Grid>
-                     ))
-                  }
+                  {[1].map((e) => (
+                     <Grid
+                        key={e}
+                        item
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        lg={4}
+                        sx={{ paddingBottom: '1rem', marginTop: 3, marginLeft: 30 }}
+                        component={motion.div}
+                        variants={fadeInUp}
+                        initial='hidden'
+                        animate='visible'
+                     >
+                        <Skeleton
+                           variant='rectangular'
+                           width={300}
+                           height={400}
+                           animation='wave'
+                        />
+                     </Grid>
+                  ))}
                </>
             )}
          </Grid>
@@ -145,7 +156,10 @@ function DoctorPage() {
                      <Card sx={{ backgroundColor: '#C4D0DC' }}>
                         <CardHeader
                            avatar={
-                              <Avatar sx={{ bgcolor: '#13293D' }} aria-label='recipe'>
+                              <Avatar
+                                 sx={{ bgcolor: '#13293D' }}
+                                 aria-label='recipe'
+                              >
                                  {e?.doctor?.employee?.employee_name.split('')[0]}
                               </Avatar>
                            }
@@ -179,14 +193,18 @@ function DoctorPage() {
                               disabled={e.checked}
                               sx={{
                                  '& .MuiSwitch-thumb': {
-                                    backgroundColor: e.checked || isSwitchOn ? '#13293D' : 'white',
+                                    backgroundColor:
+                                       e.checked || isSwitchOn ? '#13293D' : 'white',
                                  },
                                  '& .MuiSwitch-track': {
-                                    backgroundColor: e.checked || isSwitchOn ? 'rgba(19, 41, 61, 0.5)' : '#35CFF4',
+                                    backgroundColor:
+                                       e.checked || isSwitchOn
+                                          ? 'rgba(19, 41, 61, 0.5)'
+                                          : '#35CFF4',
                                  },
                               }}
                            />
-                           {(e.checked || isSwitchOn )? (
+                           {e.checked || isSwitchOn ? (
                               <div>
                                  <Input type='file' onChange={handleFileChange} />
                                  <Button
@@ -198,7 +216,9 @@ function DoctorPage() {
                                     Add Prescription
                                  </Button>
                                  {isFileChosenError && (
-                                    <p style={{ color: 'red' }}>Please choose the file.</p>
+                                    <p style={{ color: 'red' }}>
+                                       Please choose the file.
+                                    </p>
                                  )}
                               </div>
                            ) : (
@@ -206,8 +226,13 @@ function DoctorPage() {
                            )}
                         </CardContent>
 
-                        <Dialog open={isSuccessDialogOpen} onClose={handleDialogClose}>
-                           <DialogTitle>Prescription Submitted Successfully!</DialogTitle>
+                        <Dialog
+                           open={isSuccessDialogOpen}
+                           onClose={handleDialogClose}
+                        >
+                           <DialogTitle>
+                              Prescription Submitted Successfully!
+                           </DialogTitle>
                            <DialogContent>
                               <DialogContentText>
                                  {isFileChosenError
@@ -222,7 +247,6 @@ function DoctorPage() {
                            </DialogActions>
                         </Dialog>
                      </Card>
-
                   </Grid>
                ))}
          </Grid>
@@ -231,4 +255,3 @@ function DoctorPage() {
 }
 
 export default DoctorPage
-
