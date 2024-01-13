@@ -12,16 +12,16 @@ import { Autoplay, Pagination } from 'swiper/modules';
 const images = [
    {
       imgPath:
-         'https://img.freepik.com/premium-photo/doctor-hold-icon-health-electronic-medical-record-interface-digital-healthcare-network_34200-712.jpg?w=1380',
+         '/Slider/steper1c.jpg',
    },
 
    {
       imgPath:
-         'https://images.unsplash.com/photo-1624343285636-aba82fd5a124?auto=format&fit=crop&q=80&w=2071&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+         '/Slider/steper2.jpg',
    },
    {
       imgPath:
-         'https://img.freepik.com/premium-photo/modern-commercial-architecture-glass-steel-forum-skyscraper-reflecting-blue-sky_250132-16918.jpg?w=1060',
+         '/Slider/steper3.jpg',
    },
 ]
 function SwipeableTextMobileStepper() {
