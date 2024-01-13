@@ -5,9 +5,9 @@
    "scripts": {
       "dev": "next dev",
       "format": "prettier --write .",
-      "build": "set NODE_ENV=development && next build --no-lint",
+      "build": "next build --no-lint",
       "start": "next start",
-      "lint": "next lint",
+      "lint": "next lint"
       
    },
    "dependencies": {
