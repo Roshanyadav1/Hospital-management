@@ -105,16 +105,23 @@ function Chart() {
 
       return {
          ...appointment,
-         name: appointment.appointment_date,
-         Patients: appointment.patient_count,
-         Appointments: appointment.appointment_count,
-         Doctors: appointment.doctor_count,
+         name: appointment?.appointment_date,
+         Patients: appointment?.patient_count,
+         Appointments: appointment?.appointment_count,
+         Doctors: appointment?.doctor_count,
          avatarSrc:
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjX02hunzz3i3dG7PG7J2AM61C5AVahSHBg&usqp=CAU',
+<<<<<<< HEAD
          primaryText: appointment?.doctor?.employee.employee_name,
          secondaryText: `Appointment Date: ${appointment.appointment_date}`,
          disease_names: `Disease Name: ${appointment.disease.disease_name}`,
          patient_name: `Patient Name: ${appointment.patient.patient_name}`, // Corrected line
+=======
+         primaryText: appointment?.doctor?.employee?.employee_name,
+         secondaryText: `Appointment Date: ${appointment?.appointment_date}`,
+         disease_names: `Disease Name: ${appointment?.disease?.disease_name}`,
+         patient_name: `Patient Name: ${appointment?.patient?.patient_name}`, // Corrected line
+>>>>>>> a061bcb3f34a30835e6cd8ebdf87fe3c8f5ccf3f
       }
    })
 

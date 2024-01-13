@@ -240,12 +240,10 @@ function DoctorProfile() {
             if (data) {
                try {
                   // Add prescription for each appointment
-                  await Promise.all(appointments?.data?.map(async (appointment) => {
-                     await addPrescription({
-                        prescription_photo: data.imageUrl,
-                        appointment: appointment.appointment_id,
-                     });
-                  }));
+                  await addPrescription({
+                     prescription_photo: data.imageUrl,
+                     appointment: appoint?.data[0].appointment_id,
+                  });
                   setIsSuccessDialogOpen(true);
                   setIsFileChosenError(false);
                } catch (error) {
@@ -264,10 +262,14 @@ function DoctorProfile() {
 
 
    const handleDialogClose = () => {
-      setIsSuccessDialogOpen(false)
-      // setSelectedFile(null)
-      setIsFileChosenError(false)
-   }
+      setIsSuccessDialogOpen(false);
+      setSelectedFile(null);
+      if (!selectedFile) {
+         setIsFileChosenError(true);
+      } else {
+         setIsFileChosenError(false);
+      }
+   };
 
    const handleSwitchChange = async () => {
       // appointments
@@ -283,7 +285,7 @@ function DoctorProfile() {
          refetch()
          toast.success('Status Changed Successfully')
       } catch (error) {
-         console.log(error , "Caught")
+         console.log(error, "Caught")
          toast.error('Something went wrong !')
       }
    }
@@ -632,7 +634,7 @@ function DoctorProfile() {
                                                                               },
                                                                            }}
                                                                         />
-                                                                        {(e.checked || isSwitchOn )? (
+                                                                        {(e.checked || isSwitchOn) ? (
                                                                            <div>
                                                                               <Input type='file' onChange={handleFileChange} />
                                                                               <Button
@@ -643,22 +645,19 @@ function DoctorProfile() {
                                                                               >
                                                                                  Add Prescription
                                                                               </Button>
-                                                                              {isFileChosenError && (
+                                                                              {/* {isFileChosenError && (
                                                                                  <p style={{ color: 'red' }}>Please choose the file.</p>
-                                                                              )}
+                                                                              )} */}
                                                                            </div>
                                                                         ) : (
-                                                                           <p>Unchecked Message</p>
+                                                                           <p>Unchecked</p>
                                                                         )}
                                                                      </CardContent>
-
                                                                      <Dialog open={isSuccessDialogOpen} onClose={handleDialogClose}>
                                                                         <DialogTitle>Prescription Submitted Successfully!</DialogTitle>
                                                                         <DialogContent>
                                                                            <DialogContentText>
-                                                                              {isFileChosenError
-                                                                                 ? 'Error: Please choose the file before closing.'
-                                                                                 : ''}
+                                                                              {isFileChosenError ? 'Error: Please choose the file before closing.' : ''}
                                                                            </DialogContentText>
                                                                         </DialogContent>
                                                                         <DialogActions>
