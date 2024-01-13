@@ -16,7 +16,6 @@ import Chip from '@mui/material/Chip'
 import { CircularProgress } from '@mui/material'
 import HistoryIcon from '@mui/icons-material/History'
 import { useGetAppointmentHistoryQuery } from '@/services/Query'
-import { useGetAllDiseasesQuery } from '@/services/Query';
 
 // eslint-disable-next-line no-unused-vars
 const DoctorProfile = ({ id }) => {
@@ -37,8 +36,7 @@ const DoctorProfile = ({ id }) => {
   )
   const doctor_id = localStorage.getItem('user_id')
   const { data: appointmentHistory, isLoading, isSuccess } = useGetAppointmentHistoryQuery(doctor_id);
-  const { data: getAllDiseases } = useGetAllDiseasesQuery()
-  console.log("id", doctor_id)
+
 
   if (isLoading || !isSuccess) {
     return (
@@ -57,12 +55,13 @@ const DoctorProfile = ({ id }) => {
         acc[date] = [];
       }
       acc[date].push({
-        patient_id: appointment.patient.patient_id,
-        patient_name: appointment.patient.patient_name,
-        doctor_name: appointment.doctor.employee.employee_name,
-        disease_name: appointment.disease.disease_name,
-        appointment_time: appointment.appointment_time,
-        checked: appointment.checked,
+        patient_id: appointment?.patient?.patient_id,
+        patient_name: appointment?.patient?.patient_name,
+        doctor_name: appointment?.doctor?.employee?.employee_name,
+        disease_name: appointment?.disease?.disease_name,
+        appointment_time: appointment?.appointment_time,
+        checked: appointment?.checked,
+        appointment_id: appointment?.appointment_id,
       });
       return acc;
     }, {}) : [];
@@ -177,19 +176,18 @@ const DoctorProfile = ({ id }) => {
                         </Grid>
                         <Grid item xs={4} sm={4}>
                           <Typography variant='b1' component='h5'>
-                            Disease
+                            Disease 
                           </Typography>
-                          <Typography variant='body2'>{getAllDiseases?.data?.find((disease) => disease.id === appointment.disease)?.disease_name || 'No Disease'}
-                          </Typography>
+                          <Typography variant='body2'>{appointment?.disease_name}</Typography>
                         </Grid>
                         <Grid item xs={4} sm={4}>
                           <Typography variant='b1' component='h5'>
                             Status
                           </Typography>
                           {appointment?.checked === true ? (
-                            <Chip label='Attended' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
+                            <Chip label='Checked' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
                           ) : (
-                            <Chip label='Not Attended' size='small' sx={{ color: 'white', backgroundColor: '#35CFF4' }} />
+                            <Chip label='Not Checked' size='small' sx={{ color: 'white', backgroundColor: '#13293D' }} />
                           )}
                         </Grid>
                       </Grid>
