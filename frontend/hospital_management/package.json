@@ -5,9 +5,10 @@
    "scripts": {
       "dev": "next dev",
       "format": "prettier --write .",
-      "build": "next build --no-lint",
+      "build": "set NODE_ENV=development && next build --no-lint",
       "start": "next start",
-      "lint": "next lint"
+      "lint": "next lint",
+      
    },
    "dependencies": {
       "@auth0/auth0-react": "^2.2.2",
