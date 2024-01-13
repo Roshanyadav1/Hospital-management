@@ -23,6 +23,7 @@ import jwt
 from employee.models import Employee
 from hospital_management.logger import logger
 from datetime import datetime
+from disease.models import Disease
 
 
 current_datetime = datetime.now()
@@ -67,7 +68,8 @@ class DoctorView(ListAPIView):
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response_data = ""
-
+        disease_data = []
+        
         pagination = CustomPagination()
         if request.GET.get('pageSize') != None:
             if request.GET.get('pageSize') == "":
@@ -88,6 +90,7 @@ class DoctorView(ListAPIView):
             for data in response_data:
                 disease_data = json.loads(data.get('disease_specialist'))
                 disease_tuple_data = tuple(disease_data)
+                
 
                 if disease_specialist is not None:
                     if disease_specialist in disease_tuple_data:
@@ -114,10 +117,18 @@ class DoctorView(ListAPIView):
         for remove_d in remove_data:
             response_data.remove(remove_d)
 
-        for data in response_data:
+        for data in response_data: 
             disease_data = json.loads(data.get('disease_specialist'))
-            data['disease_specialist'] = disease_data
-
+            disease_ids = []
+            new_dict = {}
+            for d in disease_data:
+                disease_id = Disease.objects.filter(disease_name = d)
+                for idd in disease_id:
+                    id = idd.disease_id
+                    new_dict = {'disease_name' :d,'disease_id': id }
+                    disease_ids.append(new_dict)
+               
+            data['disease_specialist'] = disease_ids
             times_data = json.loads(data.get('times'))
 
             data['times'] = times_data
