@@ -2,7 +2,7 @@
 import * as React from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
-import { Grid, Typography, Button } from '@mui/material'
+import { Grid, Typography, } from '@mui/material'
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices'
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
@@ -97,8 +97,8 @@ export default function FixedContainer() {
                      Health Checkup Packages{' '}
                   </Typography>
                   <Typography variant='body2'>
-                     "An executive checkup a year keeps your future hospital bill in
-                     control"
+                     An executive checkup a year keeps your future hospital bill in
+                     control
                   </Typography>
                </Grid>
             </Grid>

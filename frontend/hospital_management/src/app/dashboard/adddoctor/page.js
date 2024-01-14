@@ -5,16 +5,26 @@ import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
-import RadioButtonGroup from '../../../components/RadioButton/RadioButtonGroup'
-import DOCTOR_VALIDATION from '../../../components/FormValidation/DoctorValidation'
+// import RadioButtonGroup from '../../../components/RadioButton/RadioButtonGroup'
+// import DOCTOR_VALIDATION from '../../../components/FormValidation/DoctorValidation'
 import Text from '@/components/Textfield/Text'
 import { colors } from '@/styles/theme'
 import Divider from '@mui/material/Divider'
 import Modal from '@mui/material/Modal'
 import * as React from 'react'
 import Box from '@mui/material/Box'
-// import CustomAutocomplete from '../../../components/Autocompletedoc';
-// import { useRegisterHospitalMutation } from '@/services/Query';
+import dynamic from 'next/dynamic'
+
+
+const RadioButtonGroup = dynamic(() => import('../../../components/RadioButton/RadioButtonGroup'), {
+   ssr:false
+})
+const DOCTOR_VALIDATION = dynamic(() => import('../../../components/FormValidation/DoctorValidation'), {
+   ssr:false
+})
+
+
+
 
 const style = {
    position: 'absolute',
@@ -53,9 +63,6 @@ const StyledTypography = styled(Typography)(() => ({
    color: colors.primary,
 }))
 
-//for hiding the input image button
-
-//for the whole form
 const StyledFormWrapper = styled('div')({
    minHeight: '100%',
    display: 'grid',
@@ -73,6 +80,7 @@ const INITIAL_FORM_STATE = {
    // Created_At: '',
    // Updated_At: '',
 }
+
 
 const AddDoctor = () => {
    const [open, setOpen] = React.useState(false)

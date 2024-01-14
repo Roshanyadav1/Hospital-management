@@ -97,7 +97,7 @@ function DoctorCard() {
                               <Typography gutterBottom variant='h5' component='div' >
                                  
                                 <Typography variant='body1'sx={{display:'inline', bgcolor:'#fff' ,position:"absolute",right:'80px',left:'80px',  bottom:"2rem", justifyContent:'center',borderRadius:1,boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',margin:1 }}>
-                               {result.disease_name} 
+                                {result?.disease_specialist[0]?.disease_name} 
                                  </Typography>
                                  
                                     

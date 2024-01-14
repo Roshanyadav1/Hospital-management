@@ -1,5 +1,5 @@
 'use client'
-import Chart from '@/Pages/Chart'
+// import Chart from './../../Pages/Chart'
 import Card from '@mui/material/Card'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
@@ -35,7 +35,11 @@ import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useLeaveViewQuery } from '../../services/Query'
 import { useAddPrescriptionMutation } from '../../services/Query'
+import dynamic from 'next/dynamic'
 
+const Chart = dynamic(() => import('@/Pages/Chart'), {
+   ssr:false
+})
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
    '& .MuiDialogContent-root': {
       padding: theme.spacing(2),

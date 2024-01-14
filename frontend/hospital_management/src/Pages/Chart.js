@@ -14,6 +14,7 @@ import {
    YAxis,
    CartesianGrid,
    Legend,
+   Tooltip,
    Area,
 } from 'recharts'
 import '@/styles/dashboard.css'
@@ -22,7 +23,8 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import Tooltip from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
+
 import Link from 'next/link'
 
 function Chart() {
@@ -160,22 +162,18 @@ function Chart() {
 
    const handleViewClick = (appointment_id) => {
       console.log('View Clicked for Doctor ID:', appointment_id)
-
-      // Add logic to navigate to the individual appointment page
    }
 
    if (isloading) {
-      // Styling for the loader container
       const loaderContainerStyle = {
          display: 'flex',
          flexDirection: 'column',
          alignItems: 'center',
          justifyContent: 'center',
-         height: '100vh', // Full height of the viewport
+         height: '100vh', 
 
       }
-
-      // Styling for the CircularProgress component
+      
       const loaderStyle = {
          color: 'black',
       }
@@ -475,12 +473,12 @@ function Chart() {
                                  </Grid>
                                  <Grid item xs={2} >
                                     <Link href={`dashboard/individualappointment/${item?.appointment_id}`}>
-                                       <Tooltip title="View Prescription">
+                                       {/* <Tooltip title="View Prescription"> */}
                                           <IconButton aria-label="delete">
                                              <RemoveRedEyeIcon onClick={() => handleViewClick(item?.appointment_id)}
                                                 style={{ color: 'white' }} />
                                           </IconButton>
-                                       </Tooltip>
+                                       {/* </Tooltip> */}
                                     </Link>
                                  </Grid>
                               </Grid>
@@ -508,3 +506,5 @@ function Chart() {
 }
 
 export default Chart
+
+
