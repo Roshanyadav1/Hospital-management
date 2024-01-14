@@ -46,7 +46,10 @@ function BookAppoinment({ id, name, date}) {
       date: date
    }
 
+   let prevId = localStorage.getItem('disease')
+
    const { data: doctorTimes, refetch, isFetching: isLoading } = useGetDoctorTimesQuery(data)
+   const[disease , setDisease] = useState(prevId)
    const [isBooking, setIsBooking] = useState(false)
    const [addAppointment] = useAddAppointmentMutation()
    const [selectedSlot, setSelectedSlot] = useState(null)
@@ -58,6 +61,10 @@ function BookAppoinment({ id, name, date}) {
    useEffect(() => {
       if (doctorTimes?.data && !isLoading) {
          setTimes(doctorTimes?.data?.times)
+      }
+      return () => {
+         localStorage.removeItem('disease')
+         localStorage.removeItem('all_disease')
       }
    }, [doctorTimes?.data, isLoading])
 
@@ -112,6 +119,8 @@ function BookAppoinment({ id, name, date}) {
          }
       }
    }
+
+   let AllDisease = JSON.parse(localStorage.getItem('all_disease'))
 
    return (
       <Container maxWidth='lg' p={2}>
@@ -186,6 +195,57 @@ function BookAppoinment({ id, name, date}) {
                      },
                   }}
                >
+                  {/* // show all the disease  */}
+                  <Typography gutterBottom variant='h5' mb={2}>
+                     Disease
+                  </Typography>
+                  <hr />
+                  <Grid
+                     container
+                     spacing={1}
+                     sx={{
+                        display: 'flex',
+                        '@media (min-width:600px)': {
+                           // justifyContent: 'center',
+                        },
+                     }}
+                  >
+                     {isLoading ? <Skeleton
+
+                        sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
+                        variant="rectangular" height={60} /> :
+                        AllDisease.map((ele, index) => (
+                           <Grid item key={index} xs={12} sm={8} md={6}>
+                              <Button
+                                 variant='outlined'
+                                 onClick={() => {
+                                    localStorage.setItem('disease', ele.disease_id)
+                                    setDisease(ele.disease_id)
+                                 }}
+                                 sx={{
+                                    width: '100%',
+                                    borderColor: ele.disease_id === disease ? '#2CD9C5' : '#000',
+                                    borderRadius: '10px',
+                                    backgroundColor: ele.disease_id === disease ? '#2CD9C5' : '#fff',
+                                    color: ele.disease_id === disease ? '#fff' : '#000',
+                                    position: 'relative',
+                                    '&:hover': {
+                                       borderColor: '#2CD9C5',
+                                       backgroundColor: '#2CD9C5',
+                                       color: '#fff',
+                                    },
+                                 }}
+                              >
+                                 <Typography variant='body2'>
+                                    {ele.disease_name}
+                                 </Typography>
+                              </Button>
+                           </Grid>
+                        ))}
+                  </Grid>
+          
+
+
                   <Typography gutterBottom variant='h5' mb={2}>
                      Appointment Time
                   </Typography>
@@ -250,7 +310,7 @@ function BookAppoinment({ id, name, date}) {
                      justifyContent='center'
                   >
 
-                     <Button disabled={!selectedSlot} variant='contained' onClick={handleBookAppointment}>
+                     <Button disabled={!selectedSlot && !disease} variant='contained' onClick={handleBookAppointment}>
                         Book Appointment
                      </Button>
                   </Grid>

@@ -12,7 +12,6 @@ import { CardActionArea } from '@mui/material'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import LinearProgress from '@mui/material/LinearProgress'
-import Link from 'next/link'
 import { Typography, Button, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import { useSpecialistDoctorMutation } from '@/services/Query'
@@ -20,9 +19,11 @@ import { useGetAllDiseasesQuery } from '@/services/Query'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import Image from 'next/image'
 import { colors } from '../styles/theme'
+import { useRouter } from 'next/navigation'
 
 
 function DoctorPage() {
+   const router = useRouter()
    const [filterDoctor, { isLoading: filterDocLoading, isError }] =
       useSpecialistDoctorMutation()
    // filter use
@@ -74,7 +75,7 @@ function DoctorPage() {
 
    const handleDiseasesChange = (event, values) => {
       let r1 = getDisease?.data.filter((e)=> e.disease_name === values)
-      localStorage.setItem('disease' , r1[0].disease_id)
+      localStorage.setItem('disease' , r1[0].disease_id) // current disease id store in local storage
       setSelectedDiseases(values)
       setSelectedDoctor('')
    }
@@ -112,9 +113,17 @@ function DoctorPage() {
          ? filterDoc?.data?.map((doctor) => doctor?.employee?.employee_name)
          : ['No Doctor Found !']
 
-   let allDoctor = data ? data : getDoctors?.data || []
+   let allDoctor = data ? data : getDoctors?.data || [];
+
+   const addAppointment = (result) => {
+      localStorage.setItem('all_disease' , JSON.stringify(result?.disease_specialist))
+      router.push(`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`)
+   }
+
+
    const DoctorCard = ({ result }) => {
-      let diseases = result?.disease_specialist || [];
+      let diseases = result?.disease_specialist.map((e)=> e.disease_name) || [];
+
       let img2 = 'https://png.pngtree.com/png-vector/20191130/ourmid/pngtree-doctor-icon-circle-png-image_2055257.jpg';
       let image = result?.doctor_profile_picture || img2;
 
@@ -135,21 +144,23 @@ function DoctorPage() {
                   </Typography>
                   <Typography variant="body2" sx={{ marginTop: 1, color: colors.primary }}>
                      {diseases?.join(', ') || 'No specialist'}
+                     {/* {result?.disease_specialist[0]?.disease_name}  */}
+
                   </Typography>
                </div>
 
 
-               <Link href={`/bookappointment/${result?.doctor_id}+${formattedDate}+${result?.employee?.employee_name}`} prefetch 
-                 style={{ textDecoration: 'none', }}
-               >
+               <div>
                   <Button variant="contained" size="small" sx={{
                     display:'block',
                     margin:'0 auto',
                     marginTop:1
-                  }}>
+                  }}
+                  onClick={() => addAppointment(result)}
+                  >
                      Book Appointment
                   </Button>
-               </Link>
+               </div>
             </Card>
          </Grid>
       );
