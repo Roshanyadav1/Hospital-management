@@ -111,7 +111,9 @@ function ShowDoctors() {
                            {doctor.employee ? doctor.employee.employee_name : 'Unknown Doctor'}
                            <Typography variant='body2' color='text.secondary'>
                            {/* {diseases?.join(', ') || 'No specialist'} */}
-                              {doctor.disease_specialist.join(', ')}
+                           {doctor.disease_specialist.map((disease, index) => (
+                                 <span key={index}>{disease.disease_name } </span>
+                              ))}
                            </Typography>
                         </Typography>
                      </Card>

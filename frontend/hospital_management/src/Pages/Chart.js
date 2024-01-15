@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Grid, Button, CircularProgress } from '@mui/material'
+import { Grid, CircularProgress } from '@mui/material'
 import List from '@mui/material/List'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import { useGetAllPatientsQuery } from '@/services/Query'
@@ -344,7 +344,12 @@ function Chart() {
                               }}
                            // scale="band"
                            />
-                           <YAxis
+                          <YAxis
+                              ticks={
+                                 // create an array of the present data points
+                                 [...new Set(weeklyData?.map((item) => item?.Patients))]
+                              }
+                              interval={0}
                               label={{
                                  value: 'Quantity',
                                  angle: -90,

@@ -40,7 +40,7 @@ const ProfileCard = ({ icon, title, content }) => (
    </Card>
 )
 
-function BookAppoinment({ id, name, date}) {
+function BookAppoinment({ id, name, date }) {
    let data = {
       id: id,
       date: date
@@ -49,7 +49,7 @@ function BookAppoinment({ id, name, date}) {
    let prevId = localStorage.getItem('disease')
 
    const { data: doctorTimes, refetch, isFetching: isLoading } = useGetDoctorTimesQuery(data)
-   const[disease , setDisease] = useState(prevId)
+   const [disease, setDisease] = useState(prevId)
    const [isBooking, setIsBooking] = useState(false)
    const [addAppointment] = useAddAppointmentMutation()
    const [selectedSlot, setSelectedSlot] = useState(null)
@@ -152,7 +152,7 @@ function BookAppoinment({ id, name, date}) {
                   margin={0}
                   p={{ xs: 2, sm: 5 }}
                   gap={10}
-                  
+
                >
                   <Typography gutterBottom variant='h4' component='div'>
                      {name}
@@ -242,7 +242,7 @@ function BookAppoinment({ id, name, date}) {
                            </Grid>
                         ))}
                   </Grid>
-          
+
 
 
                   <Typography gutterBottom variant='h5' mb={2}>
@@ -309,7 +309,7 @@ function BookAppoinment({ id, name, date}) {
                      justifyContent='center'
                   >
 
-                     <Button disabled={!selectedSlot && !disease} variant='contained' onClick={handleBookAppointment}>
+                     <Button disabled={(!selectedSlot && !disease)} variant='contained' onClick={handleBookAppointment}>
                         Book Appointment
                      </Button>
                   </Grid>
@@ -336,13 +336,13 @@ function BookAppoinment({ id, name, date}) {
                         )}
                         {!isBooking && (
                            <Button
-                           disabled={isBooking}
-                           onClick={handleAppointment}
-                           color='primary'
-                           autoFocus
-                        >
-                           Confirm
-                        </Button>
+                              disabled={isBooking}
+                              onClick={handleAppointment}
+                              color='primary'
+                              autoFocus
+                           >
+                              Confirm
+                           </Button>
                         )}
                      </DialogActions>
                   </Dialog>
