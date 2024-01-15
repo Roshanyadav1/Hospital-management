@@ -1,11 +1,10 @@
 'use client'
 
-// import BookAppoinment from './../../Pages/BookAppointment'
 import { useParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import {Container} from '@mui/system'
 
-const BookAppoinment = dynamic(() => import('@/pages/BookAppointment'), {
+const BookAppoinment = dynamic(() => import('@/Pages/BookAppointment'), {
    loading: () => <Container  style={{
       display: 'flex',
       alignItems: 'center',

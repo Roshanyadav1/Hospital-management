@@ -304,8 +304,7 @@ function BookAppoinment({ id, name, date}) {
                      display='flex'
                      justifyContent='center'
                   >
-
-                     <Button disabled={!selectedSlot && !disease} variant='contained' onClick={handleBookAppointment}>
+                     <Button disabled={(!selectedSlot && !disease)} variant='contained' onClick={handleBookAppointment}>
                         Book Appointment
                      </Button>
                   </Grid>

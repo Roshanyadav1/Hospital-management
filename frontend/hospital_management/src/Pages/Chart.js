@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Grid, Button, CircularProgress } from '@mui/material'
+import { Grid, CircularProgress } from '@mui/material'
 import List from '@mui/material/List'
 import { useGetAllDoctorsQuery } from '@/services/Query'
 import { useGetAllPatientsQuery } from '@/services/Query'
@@ -345,6 +345,13 @@ function Chart() {
                            // scale="band"
                            />
                            <YAxis
+
+                              // tickFormatter={(value) => Math.round(value) 
+                              // do not show the same number of ticks as the number of data points
+                              // tickSize={10}
+                              // tickCount={5}
+                              // tickFormatter={(value) => Math.round(value)}
+                              // interval={0}
                               label={{
                                  value: 'Quantity',
                                  angle: -90,

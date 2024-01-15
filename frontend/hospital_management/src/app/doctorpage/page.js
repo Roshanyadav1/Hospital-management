@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic'
 import {Container} from '@mui/system'
 
-const DoctorPage = dynamic(() => import('@/pages/DoctorPage'), {
+const DoctorPage = dynamic(() => import('@/Pages/DoctorPage'), {
    loading: () => <Container  style={{
       display: 'flex',
       alignItems: 'center',
