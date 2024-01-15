@@ -2,7 +2,7 @@
 
 // import DataTable from './../../Pages/DataTable'
 import dynamic from 'next/dynamic'
-const DataTable = dynamic(() => import('@/pages/DataTable'), {
+const DataTable = dynamic(() => import('@/Pages/DataTable'), {
    ssr:false
 })
 function page() {

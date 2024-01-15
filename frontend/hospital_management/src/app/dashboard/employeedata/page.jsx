@@ -3,7 +3,7 @@
 import { Container } from '@mui/material'
 import dynamic from 'next/dynamic'
 
-const Dashboard = dynamic(() => import('@/pages/AddEmployeePage'), {
+const Dashboard = dynamic(() => import('@/Pages/AddEmployeePage'), {
    ssr:false
 })
 function Career() {

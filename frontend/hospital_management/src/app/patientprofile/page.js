@@ -4,7 +4,7 @@
 // import PatientProfile from './../../Pages/PatientProfile'
 import dynamic from 'next/dynamic'
 import {Container} from '@mui/system'
-const PatientProfile = dynamic(() => import('@/pages/PatientProfile'), {
+const PatientProfile = dynamic(() => import('@/Pages/PatientProfile'), {
   loading: () => <Container  style={{
     display: 'flex',
     alignItems: 'center',

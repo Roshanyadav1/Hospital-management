@@ -345,13 +345,10 @@ function Chart() {
                            // scale="band"
                            />
                            <YAxis
-
-                              // tickFormatter={(value) => Math.round(value) 
-                              // do not show the same number of ticks as the number of data points
-                              // tickSize={10}
-                              // tickCount={5}
-                              // tickFormatter={(value) => Math.round(value)}
-                              // interval={0}
+                              ticks={
+                                 [...new Set(weeklyData?.map((item) => item?.Patients))]
+                              }
+                              interval={0}
                               label={{
                                  value: 'Quantity',
                                  angle: -90,

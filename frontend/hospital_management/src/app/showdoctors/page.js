@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 // import CircularProgress from '@mui/material/CircularProgress';
 import { Container } from '@mui/system';
 
-const ShowDoctors = dynamic(() => import('@/pages/ShowDoctors'), {
+const ShowDoctors = dynamic(() => import('@/Pages/ShowDoctors'), {
    loading: () => <Container  style={{
       display: 'flex',
       alignItems: 'center',
