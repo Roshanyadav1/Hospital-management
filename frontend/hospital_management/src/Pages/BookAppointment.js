@@ -62,10 +62,6 @@ function BookAppoinment({ id, name, date }) {
       if (doctorTimes?.data && !isLoading) {
          setTimes(doctorTimes?.data?.times)
       }
-      return () => {
-         localStorage.removeItem('disease')
-         localStorage.removeItem('all_disease')
-      }
    }, [doctorTimes?.data, isLoading])
 
    function formatTime(timeString) {
