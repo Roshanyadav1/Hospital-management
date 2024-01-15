@@ -43,9 +43,10 @@ const GetStatusButton = (row) => {
          }
          const result = await updateStatus(obj)
          // Log the result to the console
+         toast.success('Status Change Successfully')
          console.log('Result of updateStatus mutation:', result)
          handleCloseModal()
-         // Perform any additional logic after successful deletion
+         
       } catch (error) {
          // Handle error
          console.error('Error changing status:', error)

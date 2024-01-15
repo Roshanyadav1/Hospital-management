@@ -106,6 +106,7 @@ function Dashboard() {
             console.log("Its working")
             toast.success(res.data.message || 'Employee added successfully');
             resetForm();
+            handleClose();
           } else if(res) {
             toast.warn(res.error.message || 'Already exists');
             resetForm();
