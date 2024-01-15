@@ -35,7 +35,6 @@ const GetStatusButton = (row) => {
    }
    const ChangeStatus = async () => {
       try {
-         // Assuming your API expects an employee ID for deletion
          let obj = {
             id: row?.params?.row?.employee_id,
             pro: {
@@ -44,9 +43,10 @@ const GetStatusButton = (row) => {
          }
          const result = await updateStatus(obj)
          // Log the result to the console
+         toast.success('Status Change Successfully')
          console.log('Result of updateStatus mutation:', result)
          handleCloseModal()
-         // Perform any additional logic after successful deletion
+         
       } catch (error) {
          // Handle error
          console.error('Error changing status:', error)
@@ -137,7 +137,6 @@ const GetActionButton = (row) => {
    const [addemployee] = useAddEmployeeMutation() //for add employee form
    const handleRegister = async (values, { resetForm }) => {
       try {
-         // Assuming your API expects an employee ID for deletion
          let obj = {
             id: row?.params?.row?.employee_id,
             pro: {
@@ -153,13 +152,15 @@ const GetActionButton = (row) => {
          const result = await updateEmployee(obj)
          resetForm()
          console.log('Result of updateStatus mutation:', result)
+         toast.success('Employee Updated Successfully')
+         handleCloseEditModal(); 
          handleCloseModal()
       } catch (error) {
          // Handle error
          console.error('Error changing status:', error)
+         toast.error('Error updating employee')
       }
    }
-   // const {data: viewEmployee, isLoading} = useGetEmployeeDetailsQuery(selectedRow.employee_id , {skip: true})
    // eslint-disable-next-line no-unused-vars
    const [pageState, setPageState] = useState({
       isLoding: false,
@@ -175,25 +176,21 @@ const GetActionButton = (row) => {
    })
    // eslint-disable-next-line no-unused-vars
    const [open] = useState(false)
-   // console.log(row.params , "ok")
+   
    const handleDelete = () => {
       setSelectedRow(row.params.row)
       setOpenModal(true)
    }
-   // console.log('Delete :', selectedRow);
+   
    const handleEdit = () => {
-      // Handle edit logic here
       setSelectedRow(row.params.row)
       setOpenEditModal(true)
       console.log('Edit:', row)
    }
    const handleView = () => {
-      // Handle view logic here
-      // setSelectedRow(row.params.row)
       setOpenViewModal(true)
       setskip(false)
       ViewEmployee(row.params.row)
-      // console.log('View:', row.params.row )
    }
    const handleCloseModal = () => {
       setOpenModal(false)
@@ -239,7 +236,6 @@ const handleConfirmDelete = async () => {
       }
       setId(obj.id)
       console.log(obj.pro.employee_email)
-      // const { GetEmployeeDetails }  = useGetEmployeeDetailsQuery(obj.id, setskip((prev) => !prev))
    }
 
    return (
@@ -289,6 +285,7 @@ const handleConfirmDelete = async () => {
                </Button>
             </DialogActions>
          </Dialog>
+       {/* EDIT EMPLOYEE //////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
          <Dialog open={openEditModal} onClose={handleCloseEditModal} padding={3}>
             <DialogTitle> <Typography variant='h5'>Edit Employee</Typography> </DialogTitle>
             <Divider />
@@ -468,8 +465,6 @@ export const columns = [
       sortable: false,
       renderCell: (params) => <GetStatusButton params={params} />,
    },
-   // { field: 'employee_status', headerName: 'Status', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
-   // { field: 'employee_type', headerName: 'Type', width: 120, headerClassName:'header',headerAlign: 'center', align: 'left', cellClassName: 'column-line', sortable: false },
    {
       field: 'Actions',
       headerName: 'Actions',

@@ -100,9 +100,6 @@ function DoctorCard() {
                                {result?.disease_specialist[0]?.disease_name} 
                                  </Typography>
                                  
-                                    
-                                     {/* <Chip label={result.disease_specialist}  variant="contained" sx={{position:"absolute", right:"7rem",  bottom:"3rem" , backgroundColor: "white"}}/> */}
-                                 
                                  Dr.{result.employee?.employee_name}
                                  <Typography variant='body2' color='text.secondary'paddingBottom={"3px"}>
                                     {result.category}

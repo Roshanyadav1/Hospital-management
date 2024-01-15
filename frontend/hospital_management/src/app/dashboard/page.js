@@ -1,5 +1,5 @@
 'use client'
-import Chart from '@/Pages/Chart'
+// import Chart from './../../Pages/Chart'
 import Card from '@mui/material/Card'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton'
@@ -35,7 +35,11 @@ import { Chip, Switch, Input, CardHeader, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useLeaveViewQuery } from '../../services/Query'
 import { useAddPrescriptionMutation } from '../../services/Query'
+import dynamic from 'next/dynamic'
 
+const Chart = dynamic(() => import('@/Pages/Chart'), {
+   ssr: false
+})
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
    '& .MuiDialogContent-root': {
       padding: theme.spacing(2),
@@ -508,27 +512,24 @@ function DoctorProfile() {
                                           {appointments?.data?.map((e) => (
                                              // eslint-disable-next-line react/jsx-key
                                              <ListItem>
-                                                <ListItemText
-                                                   primary={
-                                                      e.patient
-                                                         .patient_name
-                                                   }
-                                                />
-                                                <ListItemText
-                                                   primary={
-                                                      e.disease
-                                                         .disease_name
-                                                   }
-                                                />
-                                                <ListItemText
-                                                   primary={
-                                                      formatTime(
-                                                         e.appointment_time
-                                                      ) +
-                                                      ' / ' +
-                                                      e.appointment_date
-                                                   }
-                                                />
+                                                <div style={{ flex: 1 }}>
+                                                   <ListItemText
+                                                      primary={e.patient.patient_name}
+                                                      primaryTypographyProps={{ style: { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }}
+                                                   />
+                                                </div>
+                                                <div style={{ flex: 1 }}>
+                                                   <ListItemText
+                                                      primary={e.disease.disease_name}
+                                                      primaryTypographyProps={{ style: { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }}
+                                                   />
+                                                </div>
+                                                <div style={{ flex: 1 }}>
+                                                   <ListItemText
+                                                      primary={formatTime(e.appointment_time) + ' / ' + e.appointment_date}
+                                                      primaryTypographyProps={{ style: { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }}
+                                                   />
+                                                </div>
 
                                                 {e.checked ? (
                                                    <IconButton
@@ -598,7 +599,7 @@ function DoctorProfile() {
                                                                            </Avatar>
                                                                         }
                                                                         title={e?.doctor?.employee?.employee_name}
-                                                                        subheader={e.appointment_time + ' ' + e.appointment_date}
+                                                                        subheader={formatTime(e.appointment_time) + ' ' + e.appointment_date}
                                                                      />
                                                                      <CardContent>
                                                                         <Chip

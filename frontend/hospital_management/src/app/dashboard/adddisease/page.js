@@ -21,8 +21,8 @@ import { Formik, Form } from 'formik'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import { toast } from 'react-toastify'
-import RadioButtonGroup from '@/components/RadioButton/RadioButtonGroup'
-import DISEASE_VALIDATION from '@/components/FormValidation/DiseaseValidation'
+// import RadioButtonGroup from './../../../components/RadioButton/RadioButtonGroup'
+// import DISEASE_VALIDATION from './../../../components/FormValidation/DiseaseValidation'
 import Text from '@/components/Textfield/Text'
 import { styled } from '@mui/material/styles'
 import { colors } from '@/styles/theme'
@@ -31,8 +31,20 @@ import { useAddDiseasesMutation } from '@/services/Query'
 import { useGetAllDiseasesQuery } from '@/services/Query'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useDiseaseStatusMutation } from '../../../services/Query'
-
 import CardActions from '@mui/material/CardActions'
+import dynamic from 'next/dynamic'
+
+
+const RadioButtonGroup = dynamic(() => import('@/components/RadioButton/RadioButtonGroup'), {
+   ssr:false
+})
+
+const DISEASE_VALIDATION = dynamic(() => import('@/components/FormValidation/DiseaseValidation'), {
+   ssr:false
+})
+
+
+
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
    //  maxWidth: '950px',
@@ -44,9 +56,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
    minWidth: 240,
 }))
 
-//for hiding the input image button
-
-//for the whole form
 const StyledFormWrapper = styled('div')({
    marginTop: '-12.5px',
    display: 'grid',
@@ -56,8 +65,6 @@ const StyledFormWrapper = styled('div')({
       padding: '0rem',
    },
 })
-
-
 
 const INITIAL_FORM_STATE = {
    // disease_id: '',

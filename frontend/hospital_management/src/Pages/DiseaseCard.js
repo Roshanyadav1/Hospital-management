@@ -2,7 +2,6 @@ import { Grid, Card, CardContent, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { CardActionArea, CardMedia } from '@mui/material';
 import { patient } from '@/helpers/disease';
-import Link from 'next/link';
 
 export default function DiseaseCard() {
    return (
@@ -14,16 +13,11 @@ export default function DiseaseCard() {
             <Grid container spacing={6} style={{ marginTop: '20px' }}>
                {patient.map((result) => (
                   <Grid item xs={6} md={3} sm={4} key={result?.id}>
-                     <Link style={{ textDecoration: 'none', textAlign: 'center' }} href='/doctorpage'>
                         <Card
                            sx={{
                               maxWidth: 300,
                               borderRadius: 2,
-                              // boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                               textAlign: 'center',
-                              // '&:hover': {
-                              //    boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
-                              // },
                            }}
                         >
                            <CardActionArea>
@@ -43,7 +37,6 @@ export default function DiseaseCard() {
                               </CardContent>
                            </CardActionArea>
                         </Card>
-                     </Link>
                   </Grid>
                ))}
             </Grid>

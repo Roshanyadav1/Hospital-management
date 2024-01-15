@@ -14,6 +14,7 @@ import {
    YAxis,
    CartesianGrid,
    Legend,
+   Tooltip,
    Area,
 } from 'recharts'
 import '@/styles/dashboard.css'
@@ -22,7 +23,12 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import Tooltip from '@mui/material/Tooltip';
+import datanotfound from '@/assets/dataNotFound.gif'
+import Image from 'next/image'
+
+
+// import Tooltip from '@mui/material/Tooltip';
+
 import Link from 'next/link'
 
 function Chart() {
@@ -48,6 +54,7 @@ function Chart() {
       data: appointmentCount,
       isError: isErrorAppCount,
       isFetching: isFetchingAppCount,
+      // eslint-disable-next-line no-unused-vars
       refetch: refetchAppCount,
    } = useGetAppointPatientDoctorDateQuery()
 
@@ -137,6 +144,7 @@ function Chart() {
 
    const showServerError =
       isErrorDoctor || isErrorPatient || isErrorAppData || isErrorAppCount
+   // eslint-disable-next-line no-unused-vars
    const showReloadButton =
       showServerError &&
       !isFetchingDoctor &&
@@ -160,22 +168,18 @@ function Chart() {
 
    const handleViewClick = (appointment_id) => {
       console.log('View Clicked for Doctor ID:', appointment_id)
-
-      // Add logic to navigate to the individual appointment page
    }
 
    if (isloading) {
-      // Styling for the loader container
       const loaderContainerStyle = {
          display: 'flex',
          flexDirection: 'column',
          alignItems: 'center',
          justifyContent: 'center',
-         height: '100vh', // Full height of the viewport
+         height: '100vh',
 
       }
 
-      // Styling for the CircularProgress component
       const loaderStyle = {
          color: 'black',
       }
@@ -298,11 +302,23 @@ function Chart() {
                   }}
                >
                   {showServerError && (
-                     <div>
-                        <h2>Error fetching data from the server</h2>
-                        {showReloadButton && (
+                     <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: '30%'
+                     }} >
+                        <Image
+                           src={datanotfound}
+                           alt='data not found'
+                           height={150}
+                           width={150}
+                        />
+                        <Typography variant='h6' color='primary' >Error fetching data from the server</Typography>
+                        {/* {showReloadButton && (
                            <Button onClick={() => refetchAppCount()}>Reload</Button>
-                        )}
+                        )} */}
                      </div>
                   )}
                   {!showServerError && (
@@ -475,12 +491,12 @@ function Chart() {
                                  </Grid>
                                  <Grid item xs={2} >
                                     <Link href={`dashboard/individualappointment/${item?.appointment_id}`}>
-                                       <Tooltip title="View Prescription">
-                                          <IconButton aria-label="delete">
-                                             <RemoveRedEyeIcon onClick={() => handleViewClick(item?.appointment_id)}
-                                                style={{ color: 'white' }} />
-                                          </IconButton>
-                                       </Tooltip>
+                                       {/* <Tooltip title="View Prescription"> */}
+                                       <IconButton aria-label="delete">
+                                          <RemoveRedEyeIcon onClick={() => handleViewClick(item?.appointment_id)}
+                                             style={{ color: 'white' }} />
+                                       </IconButton>
+                                       {/* </Tooltip> */}
                                     </Link>
                                  </Grid>
                               </Grid>
@@ -508,3 +524,5 @@ function Chart() {
 }
 
 export default Chart
+
+

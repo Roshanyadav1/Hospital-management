@@ -62,10 +62,6 @@ function BookAppoinment({ id, name, date}) {
       if (doctorTimes?.data && !isLoading) {
          setTimes(doctorTimes?.data?.times)
       }
-      return () => {
-         localStorage.removeItem('disease')
-         localStorage.removeItem('all_disease')
-      }
    }, [doctorTimes?.data, isLoading])
 
    function formatTime(timeString) {
@@ -211,10 +207,9 @@ function BookAppoinment({ id, name, date}) {
                      }}
                   >
                      {isLoading ? <Skeleton
-
                         sx={{ border: '1px solid #13293D', borderRadius: '10px' }}
                         variant="rectangular" height={60} /> :
-                        AllDisease.map((ele, index) => (
+                        AllDisease && AllDisease.map((ele, index) => (
                            <Grid item key={index} xs={12} sm={8} md={6}>
                               <Button
                                  variant='outlined'
